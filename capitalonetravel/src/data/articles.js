@@ -1,0 +1,38 @@
+export const articles = [
+  {
+    id: 1,
+    category: "Miles & Rewards",
+    title: "How to Maximize Your Travel Rewards on Every Purchase",
+    excerpt: "Learn the best strategies to earn more miles and redeem them for maximum value on flights and hotels.",
+    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80",
+    readTime: "5 min read",
+    href: "#",
+  },
+  {
+    id: 2,
+    category: "Lounge Access",
+    title: "The Ultimate Guide to Capital One Airport Lounges",
+    excerpt: "Everything you need to know about accessing Capital One Lounges and over 1,300 Priority Pass locations worldwide.",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80",
+    readTime: "7 min read",
+    href: "#",
+  },
+  {
+    id: 3,
+    category: "Travel Tips",
+    title: "10 Ways to Save Money on Your Next International Trip",
+    excerpt: "Expert tips on finding the best flight deals, booking hotels at the right time, and stretching your travel budget further.",
+    image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=80",
+    readTime: "6 min read",
+    href: "#",
+  },
+  {
+    id: 4,
+    category: "Destination Guides",
+    title: "Top 10 Destinations to Visit with Your Travel Rewards",
+    excerpt: "From tropical beaches to European cities, discover the best destinations where your miles go furthest.",
+    image: "https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=600&q=80",
+    readTime: "8 min read",
+    href: "#",
+  },
+];
