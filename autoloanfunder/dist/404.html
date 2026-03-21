@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Auto Loan Funder</title>
+    <script>
+      // SPA redirect for GitHub Pages
+      // Stores the full path in sessionStorage and redirects to the base URL
+      // so React Router can take over on index.html load.
+      var path = window.location.pathname;
+      var base = '/Claude/autoloanfunder';
+      sessionStorage.redirect = path;
+      window.location.replace(base + '/?p=' + encodeURIComponent(path));
+    </script>
+  </head>
+</html>
