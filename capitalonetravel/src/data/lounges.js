@@ -1,17 +1,68 @@
-export const capitalOneLounges = [
-  { id: 1, airport: "Dallas Fort Worth", code: "DFW", terminal: "Terminal D" },
-  { id: 2, airport: "Denver International", code: "DEN", terminal: "Concourse C" },
-  { id: 3, airport: "Las Vegas Harry Reid", code: "LAS", terminal: "Terminal 3" },
-  { id: 4, airport: "John F. Kennedy", code: "JFK", terminal: "Terminal 4" },
-  { id: 5, airport: "Reagan National", code: "DCA", terminal: "Terminal B/C" },
-  { id: 6, airport: "Washington Dulles", code: "IAD", terminal: "Main Terminal" },
-];
+const BASE = "https://images.contentstack.io/v3/assets/blt1788ad84f88b68a8";
 
-export const loungeFeatures = [
-  "Chef-inspired food & beverages",
-  "Premium cocktails & craft beer",
-  "Relaxation rooms & shower suites",
-  "Private workspaces & fast Wi-Fi",
-  "Family-friendly areas",
-  "Wellness amenities",
+export const loungeCards = [
+  {
+    eyebrow: "Capital One Landing",
+    city: "New York City (LGA)",
+    image: `${BASE}/blt961f13d297425c7e/69384ac2a7028f35ac294c2e/LGA_CarouselCard.webp`,
+    imageAlt: "LGA Landing",
+    code: "LGA",
+    href: "/airport-lounges/lounge/?airportId=LGA&loungeId=LND:BEA8FABE-542E-4D94-A1FC-364BD4AD4DDD",
+  },
+  {
+    eyebrow: "Capital One Lounge",
+    city: "New York City (JFK)",
+    image: `${BASE}/bltda17faa883cc169a/68408420a1ab653c539b0b98/JFK-location-carousel.webp`,
+    imageAlt: "Inviting coffee bar at JFK",
+    code: "JFK",
+    href: "/airport-lounges/lounge/?airportId=JFK&loungeId=C1:4A47AF16-AB38-45BB-AD5B-1A9CBF7FD6F0",
+  },
+  {
+    eyebrow: "Capital One Lounge",
+    city: "Las Vegas (LAS)",
+    image: `${BASE}/bltfc032e0ba87ad423/67a52e6987c84dc8f617b6d4/LAS_Carousel.jpg`,
+    imageAlt: "LAS Lounge",
+    code: "LAS",
+    href: "/airport-lounges/lounge/?airportId=LAS&loungeId=C1:DEEFDC3A-FF39-4220-8919-BA8707D6D4BC",
+  },
+  {
+    eyebrow: "Capital One Landing",
+    city: "Washington, D.C. (DCA)",
+    image: `${BASE}/blt917f30c8ff9ae51e/6733823b20ed6cfeeba51cc5/lounge-card-5.jpg`,
+    imageAlt: "Landing at DCA",
+    code: "DCA",
+    href: "/airport-lounges/lounge/?airportId=DCA&loungeId=LND:12BC1CDE-1C2A-4905-898C-128DE43CD057",
+  },
+  {
+    eyebrow: "Capital One Lounge",
+    city: "Washington, D.C. (IAD)",
+    image: `${BASE}/bltbcf63c8da7952bfe/672d0c555e52eada09bf7518/iad-lounge-card-3.jpg`,
+    imageAlt: "IAD Lounge Card",
+    code: "IAD",
+    href: "/airport-lounges/lounge/?airportId=IAD&loungeId=C1:A8D52922-4931-4D6F-849A-BD8E25ACAA4F",
+  },
+  {
+    eyebrow: "Capital One Lounge",
+    city: "Denver (DEN)",
+    image: `${BASE}/blt472d28d6503491eb/672d0c5586ddd207a524bed0/lounge-card-2.jpg`,
+    imageAlt: "DEN lounge",
+    code: "DEN",
+    href: "/airport-lounges/lounge/?airportId=DEN&loungeId=C1:93FADC9E-FADD-4FF3-BFC9-7A3831C10A13",
+  },
+  {
+    eyebrow: "Capital One Lounge",
+    city: "Dallas Fort-Worth (DFW)",
+    image: `${BASE}/blt23872ead04f2fd3c/672d0c55c09b5d7767c4b766/dfw-lounge-card-1.jpg`,
+    imageAlt: "DFW Lounge",
+    code: "DFW",
+    href: "/airport-lounges/lounge/?airportId=DFW&loungeId=C1:51A4560C-5A73-481B-B241-820539F92DAA",
+  },
+  {
+    eyebrow: "Capital One Lounge",
+    city: "Charlotte (CLT)",
+    image: `${BASE}/bltfe4b9304c559e5c7/695c35f834654b78a16a4984/img.png`,
+    imageAlt: "CLT coming soon",
+    code: "CLT",
+    href: null,
+  },
 ];

@@ -1,12 +1,21 @@
 export default function HeroBanner() {
   return (
-    <div className="text-center mb-8 px-4">
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 drop-shadow-lg">
-        Your Next Journey<br />Starts Here
+    <div className="text-center px-6 pb-10 pt-16 ph:pt-20">
+      <h1
+        className="text-5xl ph:text-6xl lg:text-7xl text-[#00132b] leading-tight mb-8"
+        style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+      >
+        Elevate your travel
       </h1>
-      <p className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto drop-shadow">
-        Book flights, hotels, and more — and earn unlimited miles on every purchase.
-      </p>
+      <a
+        href="https://travel.capitalone.com/?utm_source=publicsite"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center justify-center bg-[#00132b] text-white rounded-md px-8 py-3 text-base transition-colors hover:bg-[#013d5b]"
+        style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+      >
+        Book travel
+      </a>
     </div>
   );
 }
