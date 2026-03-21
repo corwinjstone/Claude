@@ -25,10 +25,10 @@ export default {
         pistachio: "#dae8d8",
       },
       fontFamily: {
-        sans: ["OptimistRegular", "sans-serif"],
-        "optimist-light": ["OptimistLight", "sans-serif"],
-        "optimist-semibold": ["OptimistSemiBold", "sans-serif"],
-        "premium-serif": ["PremiumSerifLight", "Georgia", "serif"],
+        sans: ['"Plus Jakarta Sans"', "OptimistRegular", "sans-serif"],
+        "optimist-light": ['"Plus Jakarta Sans"', "sans-serif"],
+        "optimist-semibold": ['"Plus Jakarta Sans"', "sans-serif"],
+        "premium-serif": ["Georgia", "serif"],
       },
       maxWidth: {
         "content-full": "1440px",

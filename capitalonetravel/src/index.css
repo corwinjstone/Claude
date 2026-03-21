@@ -1,22 +1,27 @@
+/* Map Optimist font names to Plus Jakarta Sans (closest free equivalent) */
 @font-face {
-  font-display: block;
+  font-display: swap;
   font-family: OptimistRegular;
-  src: url("https://capitalonetravel.com/_next/static/media/Optimist_W_Rg.d59f0d55.woff2") format("woff2");
+  font-weight: 400;
+  src: local("Plus Jakarta Sans Regular"), local("PlusJakartaSans-Regular");
 }
 @font-face {
-  font-display: block;
+  font-display: swap;
   font-family: OptimistLight;
-  src: url("https://capitalonetravel.com/_next/static/media/Optimist_W_Lt.1b8f8c85.woff2") format("woff2");
+  font-weight: 300;
+  src: local("Plus Jakarta Sans Light"), local("PlusJakartaSans-Light");
 }
 @font-face {
-  font-display: block;
+  font-display: swap;
   font-family: OptimistSemiBold;
-  src: url("https://capitalonetravel.com/_next/static/media/Optimist_W_SBd.e10dd570.woff2") format("woff2");
+  font-weight: 600;
+  src: local("Plus Jakarta Sans SemiBold"), local("PlusJakartaSans-SemiBold");
 }
 @font-face {
-  font-display: block;
+  font-display: swap;
   font-family: PremiumSerifLight;
-  src: url("https://capitalonetravel.com/_next/static/media/PremiumSerif_W_Lt.8f2b2cd8.woff2") format("woff2");
+  font-weight: 300;
+  src: local("Georgia"), local("Times New Roman");
 }
 
 @tailwind base;
@@ -44,9 +49,27 @@ html {
 
 body {
   margin: 0;
-  font-family: OptimistRegular, sans-serif;
+  font-family: "Plus Jakarta Sans", OptimistRegular, sans-serif;
+  font-weight: 400;
   background-color: #f7f3eb;
   color: #00132b;
+}
+
+/* Map all Optimist usages to Plus Jakarta Sans weights */
+[style*="OptimistSemiBold"],
+[style*="font-family: OptimistSemiBold"] {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 600 !important;
+}
+
+[style*="OptimistLight"] {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 300 !important;
+}
+
+[style*="OptimistRegular"] {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 400 !important;
 }
 
 #root {
