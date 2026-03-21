@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - claude/recreate-website-qzWKV
 
 permissions:
   contents: read
