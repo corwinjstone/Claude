@@ -1,27 +1,32 @@
-/* Map Optimist font names to Plus Jakarta Sans (closest free equivalent) */
 @font-face {
   font-display: swap;
   font-family: OptimistRegular;
   font-weight: 400;
-  src: local("Plus Jakarta Sans Regular"), local("PlusJakartaSans-Regular");
+  src: url("/fonts/Optimist_Lt.ttf") format("truetype");
 }
 @font-face {
   font-display: swap;
   font-family: OptimistLight;
   font-weight: 300;
-  src: local("Plus Jakarta Sans Light"), local("PlusJakartaSans-Light");
+  src: url("/fonts/Optimist_Lt.ttf") format("truetype");
 }
 @font-face {
   font-display: swap;
   font-family: OptimistSemiBold;
-  font-weight: 600;
-  src: local("Plus Jakarta Sans SemiBold"), local("PlusJakartaSans-SemiBold");
+  font-weight: 700;
+  src: url("/fonts/Optimist_Bd.ttf") format("truetype");
+}
+@font-face {
+  font-display: swap;
+  font-family: OptimistBold;
+  font-weight: 700;
+  src: url("/fonts/Optimist_Bd.ttf") format("truetype");
 }
 @font-face {
   font-display: swap;
   font-family: PremiumSerifLight;
   font-weight: 300;
-  src: local("Georgia"), local("Times New Roman");
+  src: local("Georgia");
 }
 
 @tailwind base;
@@ -49,27 +54,9 @@ html {
 
 body {
   margin: 0;
-  font-family: "Plus Jakarta Sans", OptimistRegular, sans-serif;
-  font-weight: 400;
+  font-family: OptimistRegular, sans-serif;
   background-color: #f7f3eb;
   color: #00132b;
-}
-
-/* Map all Optimist usages to Plus Jakarta Sans weights */
-[style*="OptimistSemiBold"],
-[style*="font-family: OptimistSemiBold"] {
-  font-family: "Plus Jakarta Sans", sans-serif !important;
-  font-weight: 600 !important;
-}
-
-[style*="OptimistLight"] {
-  font-family: "Plus Jakarta Sans", sans-serif !important;
-  font-weight: 300 !important;
-}
-
-[style*="OptimistRegular"] {
-  font-family: "Plus Jakarta Sans", sans-serif !important;
-  font-weight: 400 !important;
 }
 
 #root {
