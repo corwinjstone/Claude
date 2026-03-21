@@ -43,7 +43,7 @@ export default function MobileMenu({ isOpen, onClose }) {
                           <a
                             href={group.headingHref}
                             className="block text-xs font-semibold uppercase tracking-widest text-[#00132b] mb-1"
-                            style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+                            style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
                             onClick={onClose}
                           >
                             {group.heading}
@@ -83,7 +83,7 @@ export default function MobileMenu({ isOpen, onClose }) {
           target="_blank"
           rel="noopener noreferrer"
           className="w-full flex items-center justify-center border-2 border-[#00132b] bg-[#00132b] text-white rounded-md px-6 py-2.5 text-base"
-          style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+          style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
           onClick={onClose}
         >
           Book travel

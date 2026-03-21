@@ -6,7 +6,7 @@ export default function FeaturedArticles() {
       <div className="mx-auto px-6 ph:px-12" style={{ maxWidth: "1440px" }}>
         <h2
           className="text-3xl lg:text-4xl text-center text-[#00132b] mb-12"
-          style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+          style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
         >
           Featured articles
         </h2>
@@ -36,7 +36,7 @@ export default function FeaturedArticles() {
                 </div>
                 <h3
                   className="text-lg lg:text-xl text-[#00132b] mb-3 leading-snug"
-                  style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+                  style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
                 >
                   {article.heading}
                 </h3>
@@ -46,7 +46,7 @@ export default function FeaturedArticles() {
                 <a
                   href={article.href}
                   className="inline-flex items-center justify-center border-2 border-[#00132b] text-[#00132b] rounded-md px-6 py-2 text-sm self-start transition-colors hover:bg-[#00132b] hover:text-white"
-                  style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+                  style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
                 >
                   {article.ctaLabel}
                 </a>

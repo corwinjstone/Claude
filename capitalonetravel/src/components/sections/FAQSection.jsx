@@ -48,7 +48,7 @@ function FAQItem({ question, answer }) {
       >
         <span
           className="text-base text-[#00132b] leading-snug"
-          style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+          style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
         >
           {question}
         </span>
@@ -80,7 +80,7 @@ export default function FAQSection() {
         <div className="max-w-3xl mx-auto">
           <h2
             className="text-3xl lg:text-4xl text-[#00132b] mb-10"
-            style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+            style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
           >
             Frequently Asked Questions
           </h2>

@@ -91,7 +91,7 @@ export default function NavBar() {
                             <a href={group.headingHref} className="block group">
                               <p
                                 className="text-xs font-semibold uppercase tracking-widest text-[#00132b] group-hover:text-[#013d5b]"
-                                style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+                                style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
                               >
                                 {group.heading}
                               </p>
@@ -127,7 +127,7 @@ export default function NavBar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden xlv2:inline-flex items-center justify-center border-2 border-[#00132b] text-[#00132b] rounded-md px-4 py-1 text-sm transition-colors hover:bg-[#00132b] hover:text-white"
-                style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+                style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
               >
                 Book travel
               </a>

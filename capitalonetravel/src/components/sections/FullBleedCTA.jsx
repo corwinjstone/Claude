@@ -23,7 +23,7 @@ export default function FullBleedCTA() {
         <div className="max-w-xl">
           <h2
             className="text-4xl lg:text-5xl text-white mb-4 leading-tight"
-            style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+            style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
           >
             Ready, jet set, go
           </h2>
@@ -35,7 +35,7 @@ export default function FullBleedCTA() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center bg-white text-[#00132b] rounded-md px-8 py-3 text-sm transition-colors hover:bg-[#f7f3eb]"
-            style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+            style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
           >
             Book travel
           </a>

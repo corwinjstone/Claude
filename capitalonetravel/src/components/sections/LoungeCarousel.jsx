@@ -9,7 +9,7 @@ export default function LoungeCarousel() {
           <div className="max-w-2xl">
             <h2
               className="text-3xl lg:text-4xl text-white mb-4"
-              style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+              style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
             >
               Reimagined airport experiences
             </h2>
@@ -20,7 +20,7 @@ export default function LoungeCarousel() {
           <a
             href="/airport-lounges/"
             className="inline-flex items-center justify-center border-2 border-white text-white rounded-md px-6 py-2.5 text-sm transition-colors hover:bg-white hover:text-[#00132b] whitespace-nowrap self-start lg:self-auto"
-            style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+            style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
           >
             Search our network
           </a>
@@ -45,7 +45,7 @@ export default function LoungeCarousel() {
                 <p className="text-xs text-[#a6cbd6] mb-1">{card.eyebrow}</p>
                 <p
                   className="text-base text-white mb-4"
-                  style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+                  style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
                 >
                   {card.city}
                 </p>

@@ -1,32 +1,20 @@
 @font-face {
   font-display: swap;
-  font-family: OptimistRegular;
+  font-family: "Optimist";
+  font-weight: 300;
+  src: url("/fonts/Optimist_Lt.ttf") format("truetype");
+}
+@font-face {
+  font-display: swap;
+  font-family: "Optimist";
   font-weight: 400;
   src: url("/fonts/Optimist_Lt.ttf") format("truetype");
 }
 @font-face {
   font-display: swap;
-  font-family: OptimistLight;
-  font-weight: 300;
-  src: url("/fonts/Optimist_Lt.ttf") format("truetype");
-}
-@font-face {
-  font-display: swap;
-  font-family: OptimistSemiBold;
+  font-family: "Optimist";
   font-weight: 700;
   src: url("/fonts/Optimist_Bd.ttf") format("truetype");
-}
-@font-face {
-  font-display: swap;
-  font-family: OptimistBold;
-  font-weight: 700;
-  src: url("/fonts/Optimist_Bd.ttf") format("truetype");
-}
-@font-face {
-  font-display: swap;
-  font-family: PremiumSerifLight;
-  font-weight: 300;
-  src: local("Georgia");
 }
 
 @tailwind base;
@@ -54,7 +42,8 @@ html {
 
 body {
   margin: 0;
-  font-family: OptimistRegular, sans-serif;
+  font-family: "Optimist", sans-serif;
+  font-weight: 300;
   background-color: #f7f3eb;
   color: #00132b;
 }

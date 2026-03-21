@@ -93,7 +93,7 @@ export default function CreditCardSection() {
       <div className="mx-auto px-6 ph:px-12" style={{ maxWidth: "1440px" }}>
         <h2
           className="text-3xl lg:text-4xl text-[#00132b] mb-12 text-center"
-          style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+          style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
         >
           Travel cards designed to take you further
         </h2>
@@ -107,7 +107,7 @@ export default function CreditCardSection() {
             >
               {card.limitedTimeOffer && (
                 <div className="absolute top-4 right-4 bg-[#bf5347] text-white text-xs px-2 py-0.5 rounded-full"
-                  style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+                  style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
                 >
                   Limited-Time Offer
                 </div>
@@ -120,7 +120,7 @@ export default function CreditCardSection() {
               />
               <h3
                 className="text-xl text-[#00132b] mb-5 text-center"
-                style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+                style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
               >
                 {card.name}
               </h3>
@@ -141,7 +141,7 @@ export default function CreditCardSection() {
                     <div>
                       <span
                         className="text-sm text-[#00132b]"
-                        style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+                        style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
                       >
                         {b.headline}
                       </span>
@@ -156,7 +156,7 @@ export default function CreditCardSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full flex items-center justify-center border-2 border-[#00132b] text-[#00132b] rounded-md py-2.5 text-sm transition-colors hover:bg-[#00132b] hover:text-white"
-                  style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+                  style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
                 >
                   {card.ctaPrimary.label}
                 </a>

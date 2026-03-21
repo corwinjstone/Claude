@@ -60,7 +60,7 @@ export default function TabsSection() {
       <div className="mx-auto px-6 ph:px-12" style={{ maxWidth: "1440px" }}>
         <h2
           className="text-3xl lg:text-4xl text-[#00132b] mb-10 text-center lg:text-left"
-          style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+          style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
         >
           Book for business or leisure
         </h2>
@@ -76,7 +76,7 @@ export default function TabsSection() {
                   ? "bg-[#00132b] text-white"
                   : "bg-white text-[#00132b] hover:bg-[#00132b]/10"
               }`}
-              style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+              style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
             >
               {t.label}
             </button>
@@ -101,7 +101,7 @@ export default function TabsSection() {
                   <div>
                     <h3
                       className="text-base text-[#00132b] mb-1"
-                      style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+                      style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
                     >
                       {item.title}
                     </h3>
@@ -113,7 +113,7 @@ export default function TabsSection() {
             <a
               href={tab.cta.href}
               className="inline-flex items-center justify-center border-2 border-[#00132b] text-[#00132b] rounded-md px-6 py-2.5 text-sm transition-colors hover:bg-[#00132b] hover:text-white"
-              style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+              style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
             >
               {tab.cta.label}
             </a>

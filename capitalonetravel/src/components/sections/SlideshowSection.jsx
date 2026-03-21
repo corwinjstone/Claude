@@ -67,7 +67,7 @@ function CollectionPanel({ collection }) {
       />
       <h3
         className="text-xl lg:text-2xl text-[#00132b] mb-3"
-        style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+        style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
       >
         {collection.headline}
       </h3>
@@ -75,7 +75,7 @@ function CollectionPanel({ collection }) {
       <a
         href={collection.ctaHref}
         className="inline-flex items-center justify-center border-2 border-[#00132b] text-[#00132b] rounded-md px-6 py-2.5 text-sm self-start transition-colors hover:bg-[#00132b] hover:text-white"
-        style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+        style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
       >
         {collection.ctaLabel}
       </a>
@@ -91,7 +91,7 @@ export default function SlideshowSection() {
         <div className="mb-12 max-w-2xl">
           <h2
             className="text-3xl lg:text-4xl text-[#00132b] mb-4"
-            style={{ fontFamily: "OptimistSemiBold, sans-serif" }}
+            style={{ fontFamily: "\"Optimist\", sans-serif", fontWeight: 700 }}
           >
             Make every stay extraordinary
           </h2>
