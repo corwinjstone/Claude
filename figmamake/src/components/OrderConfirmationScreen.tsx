@@ -7,14 +7,16 @@ interface OrderConfirmationScreenProps {
   orderDetails: OrderDetails;
   cartItems: CartItem[];
   onBackToHome: () => void;
+  onTrackOrder: () => void;
   orderNumber: string;
 }
 
-export function OrderConfirmationScreen({ 
-  orderDetails, 
-  cartItems, 
+export function OrderConfirmationScreen({
+  orderDetails,
+  cartItems,
   onBackToHome,
-  orderNumber 
+  onTrackOrder,
+  orderNumber
 }: OrderConfirmationScreenProps) {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -145,7 +147,7 @@ export function OrderConfirmationScreen({
           <p className="text-xs text-gray-600 mb-3">
             You'll receive updates via notifications as your order is prepared and delivered.
           </p>
-          <button className="text-sm text-green-600 hover:text-green-700 transition-colors">
+          <button onClick={onTrackOrder} className="text-sm text-green-600 hover:text-green-700 transition-colors">
             View Order Status →
           </button>
         </div>
@@ -161,7 +163,7 @@ export function OrderConfirmationScreen({
             <span className="text-gray-800">Continue Shopping</span>
           </button>
           <button
-            onClick={() => alert('Track order feature coming soon!')}
+            onClick={onTrackOrder}
             className="w-full border-2 border-gray-300 rounded-full py-4 hover:bg-gray-50 transition-colors"
           >
             <span className="text-gray-800">Track Order</span>
