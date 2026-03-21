@@ -4,11 +4,12 @@ import { ProductDetails } from './components/ProductDetails';
 import { CartScreen } from './components/CartScreen';
 import { CheckoutScreen, OrderDetails } from './components/CheckoutScreen';
 import { OrderConfirmationScreen } from './components/OrderConfirmationScreen';
+import { OrderTrackingScreen } from './components/OrderTrackingScreen';
 import { BottomNav } from './components/BottomNav';
 import { Product, CartItem } from './types';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'product' | 'cart' | 'checkout' | 'confirmation'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'product' | 'cart' | 'checkout' | 'confirmation' | 'tracking'>('home');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
@@ -77,6 +78,10 @@ export default function App() {
     setCurrentView('confirmation');
   };
 
+  const handleTrackOrder = () => {
+    setCurrentView('tracking');
+  };
+
   const handleOrderComplete = () => {
     // Clear cart and reset to home
     setCartItems([]);
@@ -128,6 +133,13 @@ export default function App() {
           cartItems={cartItems}
           orderNumber={orderNumber}
           onBackToHome={handleOrderComplete}
+          onTrackOrder={handleTrackOrder}
+        />
+      ) : currentView === 'tracking' && orderDetails ? (
+        <OrderTrackingScreen
+          orderNumber={orderNumber}
+          deliveryAddress={orderDetails.deliveryAddress}
+          onBack={() => setCurrentView('confirmation')}
         />
       ) : null}
     </div>
