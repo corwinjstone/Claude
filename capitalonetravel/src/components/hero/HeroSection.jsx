@@ -1,67 +1,85 @@
-import HeroBanner from "./HeroBanner";
-
-const BASE = "https://images.contentstack.io/v3/assets/blt1788ad84f88b68a8";
-
-const heroImages = [
-  {
-    src: `${BASE}/blt8b61ae1412f6b39c/6759cb50197eca75b4cdf5b9/hero-home-4-d.webp`,
-    alt: "Chapman's Peak",
-  },
-  {
-    src: `${BASE}/bltf132a963b5fbd8a2/6759cb66cbd7d6867615ab5a/hero-home-2-d.webp`,
-    alt: "Aerial view of beach",
-  },
-  {
-    src: `${BASE}/blt81ceaa67aef2c58b/6759cb79f0d6121f5eb06500/hero-home-1-d.webp`,
-    alt: "Aerial view coastline and mountains",
-  },
-  {
-    src: `${BASE}/blt1a90cf6bceb76170/68a74e8e7d7514e1e3ab544b/Homepage-hero2-9_9.webp`,
-    alt: "Beautiful coastline in Spain",
-  },
-];
+const heroImg =
+  "https://images.contentstack.io/v3/assets/blt1788ad84f88b68a8/blt8b61ae1412f6b39c/6759cb50197eca75b4cdf5b9/hero-home-4-d.webp";
 
 export default function HeroSection() {
   return (
-    <section className="bg-[#f7f3eb] overflow-hidden">
-      <div className="mx-auto px-6 ph:px-12 pt-10 pb-16" style={{ maxWidth: "1440px" }}>
-        <HeroBanner />
+    <section
+      className="relative w-full overflow-hidden"
+      style={{ height: "clamp(380px, 52vw, 680px)" }}
+    >
+      {/* Full-bleed background photo */}
+      <img
+        src={`${heroImg}?width=1800&auto=webp&quality=85`}
+        alt="Chapman's Peak coastal road"
+        className="absolute inset-0 w-full h-full object-cover object-center"
+        loading="eager"
+      />
 
-        {/* Arched photo collage */}
-        <div className="flex items-end justify-center gap-2 ph:gap-3 lg:gap-4 h-[280px] ph:h-[400px] lg:h-[500px] mt-2">
-          <div className="w-[22%] max-w-[220px] h-[85%] rounded-t-full overflow-hidden flex-shrink-0">
-            <img
-              src={`${heroImages[0].src}?width=440&height=600&auto=webp&quality=80`}
-              alt={heroImages[0].alt}
-              className="w-full h-full object-cover object-center"
-              loading="eager"
+      {/* Arch panel — centered slightly right */}
+      <div
+        className="absolute flex flex-col items-center justify-center text-center gap-5"
+        style={{
+          left: "55%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "clamp(180px, 20vw, 290px)",
+          height: "clamp(240px, 27vw, 380px)",
+          background: "#f7f3eb",
+          borderRadius: "50% 50% 0 0 / 36% 36% 0 0",
+          padding: "12% 10% 14%",
+        }}
+      >
+        <h1
+          className="text-[#00132b] leading-snug m-0"
+          style={{
+            fontFamily: '"Optimist", sans-serif',
+            fontWeight: 300,
+            fontSize: "clamp(1.1rem, 2vw, 1.6rem)",
+          }}
+        >
+          Elevate<br />your travel
+        </h1>
+        <a
+          href="https://travel.capitalone.com/?utm_source=publicsite"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center bg-[#00132b] text-white rounded-md transition-colors hover:bg-[#013d5b]"
+          style={{
+            fontFamily: '"Optimist", sans-serif',
+            fontWeight: 700,
+            fontSize: "clamp(0.7rem, 1vw, 0.85rem)",
+            padding: "0.45em 1.2em",
+          }}
+        >
+          Book travel
+        </a>
+      </div>
+
+      {/* Circular stamp — bottom right */}
+      <div
+        className="absolute"
+        style={{ bottom: "5%", right: "5%" }}
+        aria-hidden="true"
+      >
+        <svg
+          viewBox="0 0 100 100"
+          style={{ width: "clamp(52px, 5vw, 72px)", height: "clamp(52px, 5vw, 72px)" }}
+        >
+          <defs>
+            <path
+              id="circle-text-path"
+              d="M 50,50 m -30,0 a 30,30 0 1,1 60,0 a 30,30 0 1,1 -60,0"
             />
-          </div>
-          <div className="w-[26%] max-w-[260px] h-full rounded-t-full overflow-hidden flex-shrink-0">
-            <img
-              src={`${heroImages[1].src}?width=520&height=700&auto=webp&quality=80`}
-              alt={heroImages[1].alt}
-              className="w-full h-full object-cover object-center"
-              loading="eager"
-            />
-          </div>
-          <div className="w-[26%] max-w-[260px] h-[92%] rounded-t-full overflow-hidden flex-shrink-0">
-            <img
-              src={`${heroImages[2].src}?width=520&height=660&auto=webp&quality=80`}
-              alt={heroImages[2].alt}
-              className="w-full h-full object-cover object-center"
-              loading="eager"
-            />
-          </div>
-          <div className="w-[22%] max-w-[220px] h-[80%] rounded-t-full overflow-hidden flex-shrink-0">
-            <img
-              src={`${heroImages[3].src}?width=440&height=560&auto=webp&quality=80`}
-              alt={heroImages[3].alt}
-              className="w-full h-full object-cover object-center"
-              loading="eager"
-            />
-          </div>
-        </div>
+          </defs>
+          <text
+            fill="white"
+            style={{ fontSize: "10.5px", fontFamily: '"Optimist", sans-serif', letterSpacing: "2px" }}
+          >
+            <textPath href="#circle-text-path" startOffset="10%">
+              CAPITAL ONE TRAVEL ·
+            </textPath>
+          </text>
+        </svg>
       </div>
     </section>
   );
