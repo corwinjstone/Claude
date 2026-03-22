@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - claude/build-from-figma-ogWbo
 
 permissions:
   contents: read
