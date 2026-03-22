@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SellerOffersScreen } from './components/SellerOffersScreen';
 import { HomeScreen } from './components/HomeScreen';
 import { ProductDetails } from './components/ProductDetails';
 import { CartScreen } from './components/CartScreen';
@@ -9,7 +10,7 @@ import { BottomNav } from './components/BottomNav';
 import { Product, CartItem } from './types';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'product' | 'cart' | 'checkout' | 'confirmation' | 'tracking'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'product' | 'cart' | 'checkout' | 'confirmation' | 'tracking' | 'seller-offers'>('seller-offers');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
@@ -92,7 +93,9 @@ export default function App() {
 
   return (
     <div className="relative max-w-md mx-auto bg-white min-h-screen">
-      {currentView === 'home' ? (
+      {currentView === 'seller-offers' ? (
+        <SellerOffersScreen />
+      ) : currentView === 'home' ? (
         <>
           <HomeScreen 
             onProductClick={handleProductClick} 
