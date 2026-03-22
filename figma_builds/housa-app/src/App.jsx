@@ -238,12 +238,44 @@ function AgentCard({ agent }) {
   )
 }
 
+const DESIGN_WIDTH = 1440
+const DESIGN_HEIGHT = 900
+
+function ScaleViewport({ children }) {
+  const [scale, setScale] = useState(1)
+
+  useState(() => {
+    function update() {
+      const sx = window.innerWidth / DESIGN_WIDTH
+      const sy = window.innerHeight / DESIGN_HEIGHT
+      setScale(Math.min(sx, sy))
+    }
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  })
+
+  return (
+    <div
+      className="scale-viewport"
+      style={{
+        width: DESIGN_WIDTH,
+        height: DESIGN_HEIGHT,
+        transform: `scale(${scale})`,
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
 export default function App() {
   const [sortBy, setSortBy] = useState('Ratings')
   const [currentPage, setCurrentPage] = useState(1)
 
   return (
-    <div className="min-h-screen w-full" style={{ backgroundColor: '#004dab' }}>
+    <ScaleViewport>
+    <div style={{ width: DESIGN_WIDTH, height: DESIGN_HEIGHT, backgroundColor: '#004dab', overflow: 'hidden' }}>
       {/* Navigation */}
       <nav className="flex items-start justify-between px-[85px] pt-[49px] pb-4">
         {/* Logo */}
@@ -374,5 +406,6 @@ export default function App() {
         </div>
       </div>
     </div>
+    </ScaleViewport>
   )
 }
