@@ -248,7 +248,7 @@ export default function App() {
       <nav className="flex items-start justify-between px-[85px] pt-[49px] pb-4">
         {/* Logo */}
         <div className="flex flex-col items-center flex-shrink-0">
-          <img src={ASSETS.housaLogo} alt="Housa logo" className="w-12 object-contain" />
+          <img src={ASSETS.housaLogo} alt="Housa logo" className="w-12 h-12 object-contain" />
           <p style={{ color: '#fff', fontSize: '20px', fontWeight: 800, letterSpacing: '-1px', marginTop: '4px' }}>
             housa
           </p>
