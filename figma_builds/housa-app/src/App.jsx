@@ -1,26 +1,29 @@
 import { useMemo, useState } from 'react'
 import './App.css'
 
-// Figma asset URLs (valid ~7 days from fetch time)
-const ASSETS = {
-  housaLogo: 'https://www.figma.com/api/mcp/asset/ed3a9cc7-3c00-47c8-bf88-d4ae69eb3b48',
-  valerie: 'https://www.figma.com/api/mcp/asset/c79fac32-66eb-45db-8c01-1cd7bc38a78f',
-  marcus: 'https://www.figma.com/api/mcp/asset/f151154a-ca10-49a3-abde-9579cccc0389',
-  cheryl: 'https://www.figma.com/api/mcp/asset/c870a7c0-07b9-482a-a54e-44b7111bc08a',
-  tom: 'https://www.figma.com/api/mcp/asset/8cab1df2-1c65-42e7-8dd2-6300747a6b66',
-  marleen: 'https://www.figma.com/api/mcp/asset/8922acbd-af5e-4a7f-94a1-7cdc24ba13fe',
-  sara: 'https://www.figma.com/api/mcp/asset/e42e90fc-80a4-4cec-b8b2-b8d3b676f1bf',
-  alli: 'https://www.figma.com/api/mcp/asset/d468905d-de85-45f1-95fb-403d3c45f6ad',
-}
-
 const GOAL = 29375
+
+// Soft headshot-tone gradients for avatar placeholders
+const AVATAR_PALETTE = [
+  ['#f4c9a3', '#c48a5a'],
+  ['#d9b48b', '#8c6039'],
+  ['#f2b59c', '#b26a4d'],
+  ['#c89e7a', '#7a4f32'],
+  ['#e7b48a', '#9a6a45'],
+  ['#d9a58a', '#8a563d'],
+  ['#f0c49e', '#b07c56'],
+]
+
+function initialsFor(name) {
+  const parts = name.trim().split(/\s+/)
+  return ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase()
+}
 
 const agents = [
   {
     id: 1,
     name: 'Valerie Alhmady',
     company: 'Century 21',
-    photo: ASSETS.valerie,
     rating: 5,
     homePrice: '$250,000',
     fee: '2.25% fee',
@@ -29,13 +32,13 @@ const agents = [
     cashAtCloseLabel: '$29,735',
     hasDealIcon: false,
     dealMatch: false,
+    goalMatch: true,
     featured: true,
   },
   {
     id: 2,
     name: 'Marcus Thompson',
     company: 'Colliers International',
-    photo: ASSETS.marcus,
     rating: 4,
     homePrice: '$240,500',
     fee: '2.25% fee',
@@ -44,13 +47,13 @@ const agents = [
     cashAtCloseLabel: '$20,089',
     hasDealIcon: true,
     dealMatch: false,
+    goalMatch: false,
     featured: false,
   },
   {
     id: 3,
     name: 'Cheryl Brown',
     company: 'Remax',
-    photo: ASSETS.cheryl,
     rating: 5,
     homePrice: '$250,000',
     fee: '2.25% fee',
@@ -59,13 +62,13 @@ const agents = [
     cashAtCloseLabel: '$29,375',
     hasDealIcon: false,
     dealMatch: true,
+    goalMatch: true,
     featured: true,
   },
   {
     id: 4,
     name: 'Tom Fredericks',
     company: 'New Home Realtors',
-    photo: ASSETS.tom,
     rating: 4,
     homePrice: '$260,750',
     fee: '2% fee',
@@ -74,13 +77,13 @@ const agents = [
     cashAtCloseLabel: '$40,535',
     hasDealIcon: true,
     dealMatch: false,
+    goalMatch: false,
     featured: false,
   },
   {
     id: 5,
     name: 'Marleen Beckett',
     company: 'First Touch',
-    photo: ASSETS.marleen,
     rating: 4,
     homePrice: '$240,500',
     fee: '2.25% fee',
@@ -89,13 +92,13 @@ const agents = [
     cashAtCloseLabel: '$20,089',
     hasDealIcon: false,
     dealMatch: false,
+    goalMatch: false,
     featured: false,
   },
   {
     id: 6,
     name: 'Sara Washington',
     company: 'Century 21 Prime',
-    photo: ASSETS.sara,
     rating: 3,
     homePrice: '$250,000',
     fee: '3% fee',
@@ -104,13 +107,13 @@ const agents = [
     cashAtCloseLabel: '$27,500',
     hasDealIcon: true,
     dealMatch: false,
+    goalMatch: false,
     featured: false,
   },
   {
     id: 7,
     name: 'Alli Tang',
     company: 'Sothby Dallas',
-    photo: ASSETS.alli,
     rating: 3,
     homePrice: '$260,000',
     fee: '3% fee',
@@ -119,6 +122,7 @@ const agents = [
     cashAtCloseLabel: '$37,200',
     hasDealIcon: false,
     dealMatch: false,
+    goalMatch: false,
     featured: false,
   },
 ]
@@ -126,6 +130,40 @@ const agents = [
 const sortOptions = ['Agent', 'Ratings', 'Cash at close', 'Commission', 'Home price']
 
 const NAV_LINKS = ['Buy a home', 'Sell my home', 'Browse home listings', 'How this works', 'Resources']
+
+function Avatar({ name, index, size = 60 }) {
+  const [bg, fg] = AVATAR_PALETTE[index % AVATAR_PALETTE.length]
+  const initials = initialsFor(name)
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 60 60"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label={name}
+      style={{ display: 'block', borderRadius: '50%' }}
+    >
+      <defs>
+        <linearGradient id={`av-${index}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={bg} />
+          <stop offset="100%" stopColor={fg} />
+        </linearGradient>
+      </defs>
+      <circle cx="30" cy="30" r="30" fill={`url(#av-${index})`} />
+      <text
+        x="30"
+        y="38"
+        textAnchor="middle"
+        fontSize="22"
+        fontWeight="800"
+        fill="#ffffff"
+        fontFamily="Avenir, 'Avenir Next', Nunito Sans, sans-serif"
+      >
+        {initials}
+      </text>
+    </svg>
+  )
+}
 
 function StarRating({ rating, max = 5 }) {
   return (
@@ -249,8 +287,7 @@ function HousaLogo() {
   )
 }
 
-function AgentRow({ agent }) {
-  const meetsGoal = agent.cashAtClose >= GOAL
+function AgentRow({ agent, index }) {
   const direction = agent.cashAtClose >= GOAL ? 'up' : 'down'
   const rowOpacity = agent.featured ? 1 : 0.55
 
@@ -276,17 +313,7 @@ function AgentRow({ agent }) {
           height: 60,
         }}
       >
-        <img
-          src={agent.photo}
-          alt={agent.name}
-          style={{
-            width: 60,
-            height: 60,
-            borderRadius: '50%',
-            objectFit: 'cover',
-            display: 'block',
-          }}
-        />
+        <Avatar name={agent.name} index={index} size={60} />
         {agent.dealMatch && (
           <div
             className="absolute"
@@ -362,7 +389,7 @@ function AgentRow({ agent }) {
           marginRight: 12,
         }}
       >
-        {meetsGoal ? <CheckBadge size={24} /> : <TrendArrow direction={direction} />}
+        {agent.goalMatch ? <CheckBadge size={24} /> : <TrendArrow direction={direction} />}
       </div>
 
       {/* Cash at close */}
@@ -581,8 +608,8 @@ export default function App() {
             </p>
           </div>
 
-          {sortedAgents.map((agent) => (
-            <AgentRow key={agent.id} agent={agent} />
+          {sortedAgents.map((agent, i) => (
+            <AgentRow key={agent.id} agent={agent} index={i} />
           ))}
         </main>
       </div>
