@@ -7,9 +7,8 @@ import { StockSearch } from '../stock/StockSearch';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { TrendingUp, TrendingDown, Calculator } from 'lucide-react';
-import { finnhub } from '../../services/finnhub';
+import { fetchYahooCandlesByDays } from '../../services/yahoo';
 import { useQuery } from '@tanstack/react-query';
-import { CHART_RESOLUTIONS } from '../../utils/constants';
 
 const PRESETS = [
   { label: '6 Months', days: 182 },
@@ -18,41 +17,25 @@ const PRESETS = [
   { label: '5 Years',  days: 1825 },
 ];
 
-function getFromTo(days) {
-  const to = Math.floor(Date.now() / 1000);
-  const from = to - days * 24 * 3600;
-  return { from, to };
-}
-
 export function InvestmentCalculator() {
   const [ticker, setTicker] = useState('');
   const [amount, setAmount] = useState('1000');
   const [days, setDays] = useState(365);
   const [submitted, setSubmitted] = useState(false);
 
-  const { from, to } = getFromTo(days);
-
   const { data: candles, isFetching } = useQuery({
     queryKey: ['calc-candles', ticker, days],
-    queryFn: () => finnhub.candles(ticker, 'D', from, to),
+    queryFn: () => fetchYahooCandlesByDays(ticker, days),
     enabled: submitted && !!ticker,
     staleTime: 300_000,
-    select: (data) => {
-      if (!data?.t || data.s !== 'ok') return [];
-      return data.t.map((t, i) => ({ t, c: data.c[i] }));
-    },
   });
 
   // Also fetch S&P 500 for comparison
   const { data: spyCandles } = useQuery({
     queryKey: ['calc-candles', 'SPY', days],
-    queryFn: () => finnhub.candles('SPY', 'D', from, to),
+    queryFn: () => fetchYahooCandlesByDays('SPY', days),
     enabled: submitted && !!ticker,
     staleTime: 300_000,
-    select: (data) => {
-      if (!data?.t || data.s !== 'ok') return [];
-      return data.t.map((t, i) => ({ t, c: data.c[i] }));
-    },
   });
 
   const result = submitted && candles?.length ? calculateInvestmentReturn(candles, parseFloat(amount)) : null;
