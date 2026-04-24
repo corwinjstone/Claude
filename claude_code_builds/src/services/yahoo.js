@@ -1,3 +1,5 @@
+// Yahoo Finance requires a CORS proxy when called from a browser on a different origin
+const PROXY = 'https://corsproxy.io/?';
 const BASE = 'https://query1.finance.yahoo.com/v8/finance/chart';
 
 const RANGE_MAP = {
@@ -23,14 +25,17 @@ export async function fetchYahooCandles(symbol, rangeLabel) {
 
 export async function fetchYahooCandlesByDays(symbol, days) {
   const range = DAYS_TO_RANGE[days] ?? '1y';
-  const interval = days <= 30 ? '1d' : days <= 365 ? '1d' : '1wk';
+  const interval = days <= 365 ? '1d' : '1wk';
   return _fetch(symbol, interval, range);
 }
 
 async function _fetch(symbol, interval, range) {
-  const url = `${BASE}/${encodeURIComponent(symbol)}?interval=${interval}&range=${range}&events=div,splits`;
+  const yahooUrl = `${BASE}/${encodeURIComponent(symbol)}?interval=${interval}&range=${range}&events=div,splits`;
+  const url = `${PROXY}${encodeURIComponent(yahooUrl)}`;
+
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Yahoo Finance ${res.status} for ${symbol}`);
+
   const json = await res.json();
   const result = json?.chart?.result?.[0];
   if (!result) throw new Error(`No data for ${symbol}`);
@@ -40,7 +45,7 @@ async function _fetch(symbol, interval, range) {
 
   return timestamps
     .map((t, i) => ({
-      time: t,
+      time:   t,
       t,
       open:   quote.open[i],
       high:   quote.high[i],
