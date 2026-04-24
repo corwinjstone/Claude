@@ -1,8 +1,8 @@
 export const INDEX_TICKERS = [
-  { symbol: 'SPY',  label: 'S&P 500',  description: 'Tracks the 500 largest US companies' },
-  { symbol: 'DIA',  label: 'Dow Jones', description: '30 major US blue-chip companies' },
-  { symbol: 'QQQ',  label: 'NASDAQ',   description: 'Top 100 tech-heavy NASDAQ companies' },
-  { symbol: 'IWM',  label: 'Russell 2000', description: '2000 small-cap US companies' },
+  { symbol: '^GSPC', label: 'S&P 500',      description: 'Tracks the 500 largest US companies. The most-watched measure of the US stock market.' },
+  { symbol: '^DJI',  label: 'Dow Jones',    description: '30 major US blue-chip companies like Apple, Microsoft, and Goldman Sachs.' },
+  { symbol: '^IXIC', label: 'NASDAQ',       description: 'Tech-heavy index of over 3,000 stocks. Home to Apple, Google, Amazon, and NVIDIA.' },
+  { symbol: '^RUT',  label: 'Russell 2000', description: '2,000 smaller US companies. A good gauge of how everyday American businesses are doing.' },
 ];
 
 export const SECTOR_ETFS = [
