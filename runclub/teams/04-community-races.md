@@ -38,3 +38,22 @@ charity-driven pricing).
 - Optimize for first-time racers. Never use jargon like "corral," "PR," or
   "negative split" in the registration UI for this division.
 - Mobile-first. 80% of community-race registrations come from a phone.
+
+## Design System
+
+Community races still follow `../designsystem.md` — bold italic typography,
+big-numeric heroes, high-contrast surfaces. The division's `display.copy_overrides`
+softens the *copy intensity* without softening the typography.
+
+- **Distance hero** still renders large: `5K` and `10K` in `display-xl`
+  italic. First-timer-friendly does not mean small.
+- **Use the `community_first_timer` copy bank**, not the elite banks.
+  Examples: "EVERY FINISHER STARTED WITH ONE.", "YOUR FIRST 5K STARTS HERE.",
+  "GO AT YOUR PACE. JUST GO."
+- **Banned phrases** (per `ui_copy_constraints.avoid_jargon`): "corral",
+  "PR", "negative split", "BQ", "fartlek". Don't sneak them into headlines
+  to look hardcore.
+- **Family bundle UI** uses the big-numeric pattern for athlete count —
+  `6` in `display-xl` italic, `ATHLETES` underneath in `meta`.
+- **Walk-up iPad flow** uses the same type system at touch-friendly sizes
+  — never downgrade to a "lite" visual language.

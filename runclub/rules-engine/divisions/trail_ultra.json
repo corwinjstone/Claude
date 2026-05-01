@@ -141,5 +141,23 @@
   "weather_protocols": {
     "lightning_30_30_rule_enforced": true,
     "race_director_authority_to_modify_or_cancel": true
+  },
+
+  "display": {
+    "distance_primary": "100",
+    "distance_unit": "MI",
+    "distance_secondary": "160.9",
+    "distance_secondary_unit": "KM",
+    "subdistance_labels": {
+      "trail_marathon": { "primary": "26.2",  "stack": "TRAIL" },
+      "50K":            { "primary": "50",    "stack": "K" },
+      "50M":            { "primary": "50",    "stack": "MI" },
+      "100K":           { "primary": "100",   "stack": "K" },
+      "100M":           { "primary": "100",   "stack": "MI" }
+    },
+    "accent": "ember",
+    "copy_bank": "trail_ultra",
+    "tagline": "THE TRAIL DOESN'T NEGOTIATE. NEITHER DO YOU.",
+    "hero_imagery_tag": "trail_switchback_dawn"
   }
 }

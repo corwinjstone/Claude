@@ -35,3 +35,24 @@ own the canonical results record for every RunClub-hosted race.
 - Hardware vendors (third-party)
 - RulesEngine (cutoff times per division, qualifying thresholds)
 - Athlete Membership (push verified PRs back into registry)
+
+## Design System
+
+Results pages are the single highest-stakes surface for the design system —
+this is the moment the athlete sees their finish. Follow `../designsystem.md`
+strictly:
+
+- **Result reveal pattern** (designsystem.md §6.3): `meta` label "YOUR
+  FINISH", then `display-mega` italic finish time `H:MM:SS`, then
+  `headline-m` italic delta vs. previous PR.
+- **Numbers tick up.** Counters animate from 0 to the final value over
+  800ms — they never fade in. Snap to value when `prefers-reduced-motion`.
+- **Tabular figures only.** Chip time / gun time / splits all render with
+  `font-variant-numeric: tabular-nums` so columns don't shift.
+- **PR badge** uses `volt`. **DNF / cut-off** uses `ember`. Never reverse.
+- **BQ-eligible stamp** is a hero element, not a footnote — `display-l`
+  italic, `volt` on `ink`.
+- **Live tracking page** centers the live split as `display-mega` italic,
+  with the next-split countdown in `display-xl` below.
+- **Share cards** generate using the same type system at 1080×1080 — same
+  italic display tokens, same accent from `rules.display.accent`.

@@ -94,5 +94,16 @@
     "wbgt_flag_red_celsius": 26,
     "wbgt_flag_black_celsius": 29,
     "lightning_30_30_rule_enforced": true
+  },
+
+  "display": {
+    "distance_primary": "13.1",
+    "distance_unit": "MI",
+    "distance_secondary": "21.0975",
+    "distance_secondary_unit": "KM",
+    "accent": "volt",
+    "copy_bank": "road_half",
+    "tagline": "13.1 MILES. YOU. ALL THE WAY.",
+    "hero_imagery_tag": "road_pack"
   }
 }

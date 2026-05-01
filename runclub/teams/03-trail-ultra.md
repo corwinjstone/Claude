@@ -33,3 +33,20 @@ that no other category has. This team owns that complexity.
 - Athlete Membership (medical history, especially for 100M)
 - Safety & Medical (cutoff enforcement, aid-station medical staffing)
 - Course & Logistics (drop-bag manifest)
+
+## Design System
+
+Trail & Ultra surfaces follow `../designsystem.md` with these division
+specifics from `rules.display`:
+
+- **Accent is `ember`**, not `volt`. The trail-ultra division explicitly
+  overrides the default accent.
+- **Race-distance hero** uses the format-specific label (`100 MI`, `100K`,
+  `50K`) in `display-mega` italic. Cutoff hours render below in `display-l`
+  italic — `36:00 CUTOFF`.
+- **Mandatory-gear page is a checklist, not a wall of text.** Each item
+  in `headline-l` italic UPPER, with a binary check.
+- **Qualifier pages** put the qualifier requirement in `display-xl` italic
+  (`100K SUB-14 OR ITRA 600+`). No marketing copy.
+- **Motivational copy** comes from `display.copy_bank = "trail_ultra"`,
+  which skews darker — "THE TRAIL DOESN'T NEGOTIATE.", not "YOU GOT THIS."

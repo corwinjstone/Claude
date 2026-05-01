@@ -69,5 +69,17 @@
   "qualifying": {
     "supported": false,
     "rationale": "Virtual times are not eligible for qualifying-time use cases."
+  },
+
+  "display": {
+    "distance_primary": "ANY",
+    "distance_unit": "K",
+    "supported_distance_labels": [
+      "1K", "5K", "10K", "13.1", "26.2", "50K", "50M", "100K", "100M"
+    ],
+    "accent": "volt",
+    "copy_bank": "virtual",
+    "tagline": "YOUR ROAD. YOUR CLOCK. YOUR FINISH LINE.",
+    "hero_imagery_tag": "solo_runner_sunrise"
   }
 }
