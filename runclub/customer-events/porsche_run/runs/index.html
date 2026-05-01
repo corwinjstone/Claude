@@ -298,6 +298,74 @@
     margin-bottom: 0.5rem;
   }
 
+  /* Category showcase */
+  .showcase {
+    padding: 4rem 0 1rem;
+  }
+  .showcase__head {
+    margin-bottom: 2rem;
+  }
+  .showcase__eyebrow { color: var(--volt); margin-bottom: 0.5rem; }
+  .showcase__title { color: var(--chalk); }
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  @media (max-width: 760px) { .showcase-grid { grid-template-columns: 1fr; gap: 0.75rem; } }
+  .showcase-tile {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--track);
+    border: none;
+    padding: 0;
+    text-align: left;
+    color: inherit;
+  }
+  .showcase-tile img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 600ms cubic-bezier(0.2, 0.9, 0.1, 1), filter 200ms;
+    filter: brightness(0.85);
+  }
+  .showcase-tile:hover img { transform: scale(1.05); filter: brightness(1); }
+  .showcase-tile::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,0) 30%, rgba(10,10,10,0.85) 100%);
+    pointer-events: none;
+  }
+  .showcase-tile__overlay {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 1.5rem 1.75rem 1.75rem;
+    z-index: 1;
+  }
+  .showcase-tile__eyebrow {
+    color: var(--volt);
+    margin-bottom: 0.5rem;
+  }
+  .showcase-tile__title {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--chalk);
+    margin-bottom: 0.4rem;
+  }
+  .showcase-tile__count {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.04em;
+  }
+  .showcase-tile__count strong { color: var(--volt); font-weight: 600; }
+
   /* Loading */
   .loading {
     grid-column: 1 / -1;
@@ -347,6 +415,41 @@
         </svg>
         <input type="search" id="search" placeholder="Search by name, city, or state…" autocomplete="off">
       </label>
+    </div>
+  </div>
+</section>
+
+<section class="showcase">
+  <div class="container">
+    <div class="showcase__head">
+      <p class="meta showcase__eyebrow">Three ways to race</p>
+      <h2 class="display-l showcase__title">Pick a feeling.<br>Pick a place.</h2>
+    </div>
+    <div class="showcase-grid">
+      <button type="button" class="showcase-tile" data-surface="road">
+        <img src="static/categories/road.jpg" alt="Runner sprinting down a city street, Boston-style urban marathon">
+        <div class="showcase-tile__overlay">
+          <p class="meta showcase-tile__eyebrow">Road</p>
+          <h3 class="showcase-tile__title">Through the city.</h3>
+          <p class="showcase-tile__count"><strong id="count-road">—</strong> road events</p>
+        </div>
+      </button>
+      <button type="button" class="showcase-tile" data-surface="trail">
+        <img src="static/categories/trail.jpg" alt="Trail runner on a mountain ridge at golden hour">
+        <div class="showcase-tile__overlay">
+          <p class="meta showcase-tile__eyebrow">Trail</p>
+          <h3 class="showcase-tile__title">Above the treeline.</h3>
+          <p class="showcase-tile__count"><strong id="count-trail">—</strong> trail events</p>
+        </div>
+      </button>
+      <button type="button" class="showcase-tile" data-surface="all">
+        <img src="static/categories/multisport.jpg" alt="Triathlete adjusting helmet in the transition area">
+        <div class="showcase-tile__overlay">
+          <p class="meta showcase-tile__eyebrow">All disciplines</p>
+          <h3 class="showcase-tile__title">Race day ready.</h3>
+          <p class="showcase-tile__count"><strong id="count-all">—</strong> total events</p>
+        </div>
+      </button>
     </div>
   </div>
 </section>
@@ -496,6 +599,14 @@ function applyFilters() {
   }
 }
 
+function setSurfaceFilter(value) {
+  document.querySelectorAll('.filter-row .chip[data-filter="surface"]').forEach(c => {
+    c.classList.toggle('active', c.dataset.value === value);
+  });
+  state.filters.surface = value;
+  applyFilters();
+}
+
 document.querySelectorAll('.filter-row .chip').forEach(chip => {
   chip.addEventListener('click', () => {
     const f = chip.dataset.filter;
@@ -507,15 +618,32 @@ document.querySelectorAll('.filter-row .chip').forEach(chip => {
   });
 });
 
+document.querySelectorAll('.showcase-tile').forEach(tile => {
+  tile.addEventListener('click', () => {
+    setSurfaceFilter(tile.dataset.surface);
+    document.querySelector('.filters').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
 document.getElementById('search').addEventListener('input', (e) => {
   state.query = e.target.value;
   applyFilters();
 });
 
+function updateShowcaseCounts() {
+  const total = state.events.length;
+  const road  = state.events.filter(e => e.surface === 'road').length;
+  const trail = state.events.filter(e => e.surface === 'trail').length;
+  document.getElementById('count-all').textContent   = total;
+  document.getElementById('count-road').textContent  = road;
+  document.getElementById('count-trail').textContent = trail;
+}
+
 fetch('events.json')
   .then(r => r.json())
   .then(data => {
     state.events = data.events;
+    updateShowcaseCounts();
     applyFilters();
   })
   .catch(err => {
