@@ -1,0 +1,66 @@
+# RunClub CODEOWNERS
+#
+# Each team owns its team folder and its corresponding division JSON
+# in the rules engine. Cross-cutting files (designsystem.md,
+# GOVERNANCE.md) are owned by the Design System team plus product
+# leadership.
+#
+# Format: <path-pattern>  <github-team-or-user> [...]
+# Last-match-wins per GitHub CODEOWNERS semantics.
+
+# ---- Default ownership ----
+*                                                @runclub/product-leadership
+
+# ---- Cross-cutting design + governance ----
+/runclub/designsystem.md                         @runclub/design-system
+/runclub/GOVERNANCE.md                           @runclub/product-leadership @runclub/design-system
+/runclub/CODEOWNERS                              @runclub/product-leadership
+/runclub/README.md                               @runclub/product-leadership
+
+# ---- Rules engine (shared infrastructure) ----
+/runclub/rules-engine/engine.py                  @runclub/rules-engine-maintainers
+/runclub/rules-engine/README.md                  @runclub/rules-engine-maintainers
+
+# ---- Per-division JSON owned by the division's owning team ----
+/runclub/rules-engine/divisions/marathon.json        @runclub/marathon-registration
+/runclub/rules-engine/divisions/half_marathon.json   @runclub/marathon-registration
+/runclub/rules-engine/divisions/relay.json           @runclub/marathon-registration
+/runclub/rules-engine/divisions/triathlon.json       @runclub/triathlon-registration
+/runclub/rules-engine/divisions/duathlon.json        @runclub/triathlon-registration
+/runclub/rules-engine/divisions/trail_ultra.json     @runclub/trail-ultra
+/runclub/rules-engine/divisions/community.json       @runclub/community-races
+/runclub/rules-engine/divisions/ocr.json             @runclub/community-races
+/runclub/rules-engine/divisions/virtual.json         @runclub/community-races
+
+# Safety & Medical co-owns the medical/weather paths in every division.
+# (Path-level granularity inside JSON isn't supported by CODEOWNERS;
+# this is enforced at PR review by Safety & Medical being a required
+# reviewer on division JSON changes via branch protection rules.)
+
+# ---- Team folders ----
+/runclub/teams/00-design-system/                  @runclub/design-system
+/runclub/teams/01-marathon-registration/          @runclub/marathon-registration
+/runclub/teams/02-triathlon-registration/         @runclub/triathlon-registration
+/runclub/teams/03-trail-ultra/                    @runclub/trail-ultra
+/runclub/teams/04-community-races/                @runclub/community-races
+/runclub/teams/05-race-director-services/         @runclub/race-director-services
+/runclub/teams/06-athlete-membership/             @runclub/athlete-membership
+/runclub/teams/07-timing-results/                 @runclub/timing-results
+/runclub/teams/08-course-logistics/               @runclub/course-logistics
+/runclub/teams/09-sponsorship-partnerships/       @runclub/sponsorship-partnerships
+/runclub/teams/10-volunteer-coordination/         @runclub/volunteer-coordination
+/runclub/teams/11-safety-medical/                 @runclub/safety-medical
+/runclub/teams/12-merchandise-swag/               @runclub/merchandise-swag
+
+# ---- Constitutions get extra protection ----
+# Each constitution.md requires the review count specified in its
+# Amendment article; this codeowner mapping provides the auto-request,
+# branch protection rules enforce the count.
+/runclub/teams/00-design-system/constitution.md   @runclub/design-system
+/runclub/teams/11-safety-medical/constitution.md  @runclub/safety-medical @runclub/safety-medical-leads
+
+# ---- AI-agent rule files ----
+# AI-authored commits to these files are auto-rejected by branch
+# protection. The CODEOWNERS line ensures the right humans are pinged
+# for any human-authored change.
+/runclub/teams/*/ai-agents.md                     @runclub/design-system

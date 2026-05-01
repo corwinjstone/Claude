@@ -1,9 +1,26 @@
 # RunClub RulesEngine
 
-The RulesEngine is the single source of truth for all division-specific rules
-that govern registration, eligibility, and race-day operations.
+The RulesEngine is the **runtime enforcement layer** for division-specific
+rules that govern registration, eligibility, and race-day operations.
 
-## Why this exists
+## Two-layer model
+
+RunClub keeps rules in two places, with two distinct change processes:
+
+| Layer       | Location                    | Form              | Change process               |
+|-------------|-----------------------------|-------------------|------------------------------|
+| Governance  | `runclub/teams/<team>/`     | Markdown (intent) | PR + team review per CODEOWNERS |
+| Runtime     | `runclub/rules-engine/`     | JSON + Python     | PR + division-owner review + CI tests |
+
+The governance layer is **why** a rule exists; the runtime layer is **how**
+it is enforced. A change to a runtime rule that doesn't reflect the
+governance layer's intent will fail review. A change to the governance
+layer without a corresponding runtime update is permitted and common —
+the runtime catches up via follow-up PRs.
+
+See `../GOVERNANCE.md` for the full process.
+
+## Why the runtime layer exists
 
 Every team in RunClub touches "rules" — refund windows, qualifying times,
 mandatory gear, medical staffing ratios, cutoff times, etc. Before the
@@ -16,17 +33,21 @@ Each division has its own JSON file in `divisions/`. A division is a
 top-level event category — the registration team that owns it, the
 RulesEngine division name, and the rules file are 1:1:1.
 
-| Division          | File                          | Owning Team               |
-|-------------------|-------------------------------|---------------------------|
-| `marathon`        | `divisions/marathon.json`     | Marathon Registration     |
-| `half_marathon`   | `divisions/half_marathon.json`| Marathon Registration     |
-| `triathlon`       | `divisions/triathlon.json`    | Triathlon Registration    |
-| `trail_ultra`     | `divisions/trail_ultra.json`  | Trail & Ultra             |
-| `community`       | `divisions/community.json`    | Community Races           |
-| `ocr`             | `divisions/ocr.json`          | Community Races           |
-| `duathlon`        | `divisions/duathlon.json`     | Triathlon Registration    |
-| `relay`           | `divisions/relay.json`        | Marathon Registration     |
-| `virtual`         | `divisions/virtual.json`      | Community Races           |
+| Division          | File                          | Owning Team folder                                |
+|-------------------|-------------------------------|---------------------------------------------------|
+| `marathon`        | `divisions/marathon.json`     | `teams/01-marathon-registration/`                 |
+| `half_marathon`   | `divisions/half_marathon.json`| `teams/01-marathon-registration/`                 |
+| `relay`           | `divisions/relay.json`        | `teams/01-marathon-registration/`                 |
+| `triathlon`       | `divisions/triathlon.json`    | `teams/02-triathlon-registration/`                |
+| `duathlon`        | `divisions/duathlon.json`     | `teams/02-triathlon-registration/`                |
+| `trail_ultra`     | `divisions/trail_ultra.json`  | `teams/03-trail-ultra/`                           |
+| `community`       | `divisions/community.json`    | `teams/04-community-races/`                       |
+| `ocr`             | `divisions/ocr.json`          | `teams/04-community-races/`                       |
+| `virtual`         | `divisions/virtual.json`      | `teams/04-community-races/`                       |
+
+CODEOWNERS routes PR review for each division JSON to the owning team
+automatically. Changes to `medical.*` and `weather_protocols.*` paths
+in any division require Safety & Medical co-approval.
 
 ## Rule schema (per division)
 

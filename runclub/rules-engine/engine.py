@@ -1,18 +1,21 @@
 """RunClub RulesEngine.
 
-Loads per-division rule files from `divisions/` and exposes a typed
-interface that registration, race-director, timing, and safety teams
-consume.
+Runtime enforcement layer for per-division rules. Loads JSON from
+`divisions/` and exposes a typed interface to registration, results,
+director, timing, and safety surfaces.
 
 Rules are read-only at runtime. Per-event overrides are passed in
-explicitly; they layer on top of division defaults.
+explicitly via `with_event_overrides`; they layer on top of division
+defaults. Overrides on Safety & Medical-owned paths
+(`medical.*`, `weather_protocols.*`) require explicit attestation —
+see `with_event_overrides` and `GOVERNANCE.md` Authority Hierarchy.
 """
 
 from __future__ import annotations
 
 import json
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -30,6 +33,12 @@ KNOWN_DIVISIONS = {
     "virtual",
 }
 
+# Top-level rule paths that the Safety & Medical team owns. Per-event
+# overrides into these paths require co-approval at PR time and an
+# explicit `safety_medical_co_approval=True` flag at runtime, per
+# teams/11-safety-medical/constitution.md.
+SAFETY_MEDICAL_OWNED_PATHS = frozenset({"medical", "weather_protocols"})
+
 
 class UnknownDivision(KeyError):
     pass
@@ -39,6 +48,11 @@ class IneligibleAthlete(Exception):
     def __init__(self, reason: str, detail: dict[str, Any] | None = None):
         super().__init__(reason)
         self.detail = detail or {}
+
+
+class UnauthorizedOverride(PermissionError):
+    """Raised when an event override touches a path requiring authority
+    (e.g. Safety & Medical) without the required attestation flag."""
 
 
 @dataclass(frozen=True)
@@ -86,7 +100,29 @@ class DivisionRules:
         )
         return age_on_race_day >= minimum
 
-    def with_event_overrides(self, overrides: dict[str, Any]) -> "DivisionRules":
+    def with_event_overrides(
+        self,
+        overrides: dict[str, Any],
+        *,
+        safety_medical_co_approval: bool = False,
+    ) -> "DivisionRules":
+        """Apply per-event overrides on top of division defaults.
+
+        Overrides into Safety & Medical-owned paths
+        (`medical`, `weather_protocols`) require
+        `safety_medical_co_approval=True`. Callers obtain this flag from
+        the event's override-approval record, which is itself reviewed
+        per CODEOWNERS at PR time.
+
+        Raises UnauthorizedOverride if the flag is missing.
+        """
+        protected = SAFETY_MEDICAL_OWNED_PATHS & overrides.keys()
+        if protected and not safety_medical_co_approval:
+            raise UnauthorizedOverride(
+                f"Override touches Safety & Medical-owned paths "
+                f"{sorted(protected)} but safety_medical_co_approval=False. "
+                f"See teams/11-safety-medical/constitution.md."
+            )
         merged = _deep_merge(self.raw, overrides)
         return DivisionRules(division=self.division, raw=merged)
 
