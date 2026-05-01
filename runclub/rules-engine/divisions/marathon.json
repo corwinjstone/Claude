@@ -97,5 +97,16 @@
     "wbgt_flag_red_celsius": 25,
     "wbgt_flag_black_celsius": 28,
     "lightning_30_30_rule_enforced": true
+  },
+
+  "display": {
+    "distance_primary": "26.2",
+    "distance_unit": "MI",
+    "distance_secondary": "42.195",
+    "distance_secondary_unit": "KM",
+    "accent": "volt",
+    "copy_bank": "road_marathon",
+    "tagline": "26.2 MILES. ONE START LINE. NO EXCUSES.",
+    "hero_imagery_tag": "road_finish_line"
   }
 }

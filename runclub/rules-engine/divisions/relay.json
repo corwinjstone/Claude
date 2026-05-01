@@ -76,5 +76,20 @@
   "weather_protocols": {
     "lightning_30_30_rule_enforced": true,
     "extreme_heat_overnight_format_modification": true
+  },
+
+  "display": {
+    "distance_primary": "320",
+    "distance_unit": "K",
+    "format_labels": {
+      "marathon_relay_2_person":  { "primary": "26.2",  "stack": "2 RUNNERS / 1 EXCHANGE" },
+      "marathon_relay_4_person":  { "primary": "26.2",  "stack": "4 RUNNERS / 3 EXCHANGES" },
+      "ultra_relay_6_person":     { "primary": "100",   "stack": "K / 6 RUNNERS" },
+      "ragnar_style_12_person":   { "primary": "200",   "stack": "MI / 12 RUNNERS / OVERNIGHT" }
+    },
+    "accent": "volt",
+    "copy_bank": "relay",
+    "tagline": "ONE TEAM. ONE FINISH LINE. TWELVE LEGS.",
+    "hero_imagery_tag": "relay_handoff_night"
   }
 }

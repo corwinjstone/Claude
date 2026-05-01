@@ -80,5 +80,19 @@
   "weather_protocols": {
     "wbgt_run_leg_modification_celsius": 28,
     "lightning_30_30_rule_enforced": true
+  },
+
+  "display": {
+    "distance_primary": "RUN / BIKE / RUN",
+    "distance_unit": "",
+    "subdistance_labels": {
+      "sprint":   { "primary": "SPRINT",   "stack": "5K / 20K / 2.5K" },
+      "standard": { "primary": "STANDARD", "stack": "10K / 40K / 5K" },
+      "long":     { "primary": "LONG",     "stack": "10K / 60K / 10K" }
+    },
+    "accent": "volt",
+    "copy_bank": "duathlon",
+    "tagline": "TWO RUNS. ONE BIKE. ZERO QUIT.",
+    "hero_imagery_tag": "duathlon_transition"
   }
 }

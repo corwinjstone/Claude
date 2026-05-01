@@ -39,3 +39,15 @@ RulesEngine is the single source of truth for division-specific constraints
 (eligibility, refund windows, qualifying times, equipment requirements,
 medical clearance, etc.). All registration flows and director tools route
 through it.
+
+## Design System
+
+See `designsystem.md` for the visual and verbal language used across every
+athlete- and director-facing surface. The system is Nike Run Club / Nike
+Training inspired: oversized bold italic typography, big-numeric heroes
+for distance, price, and finish times, high-energy athlete imagery, and
+imperative second-person motivational copy ("YOU TRAINED FOR THIS").
+
+Each RulesEngine division carries a `display` block that tells the UI how
+to render its distance, accent color, and motivational copy bank. UI
+surfaces read `rules.display` — they never hardcode division strings.
