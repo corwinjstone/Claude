@@ -1,7 +1,7 @@
 """Generate SVG mock images for the Porsche Run 5K app.
 
 Produces:
-- 9 vehicle SVGs (3 cars x 3 views)  → porsche_run/static/vehicles/
+- 9 vehicle SVGs (3 cars x 3 views)  → runclub/customer-events/porsche_run/static/vehicles/
 - 1 hero SVG (Santa Barbara coast at sunset, runners + parked Porsches)
 - 6 gallery SVGs (event moments)
 
@@ -28,7 +28,7 @@ NIGHT_MID     = "#2A1F4D"
 DUSK_TOP      = "#241B40"
 DUSK_BOTTOM   = "#D8765F"
 
-ROOT = Path(__file__).resolve().parent.parent / "porsche_run" / "static"
+ROOT = Path(__file__).resolve().parent.parent / "runclub" / "customer-events" / "porsche_run" / "static"
 
 
 # ── Common SVG helpers ─────────────────────────────────────────
