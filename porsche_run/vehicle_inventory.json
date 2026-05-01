@@ -1,0 +1,61 @@
+{
+  "vehicles": [
+    {
+      "id": "v1_911_carrera_rs_1973",
+      "display_name": "1973 Porsche 911 Carrera RS 2.7",
+      "year": 1973,
+      "model": "911 Carrera RS 2.7",
+      "rental_price_usd": 295,
+      "tagline": "The car that defined the 911 myth.",
+      "description": "Air-cooled 2.7L flat-six, 210hp, lightweight ducktail spoiler. Originally homologated for racing.",
+      "specs": {
+        "transmission": "5-speed manual",
+        "drivetrain": "RWD",
+        "horsepower": 210
+      },
+      "images": [
+        "static/vehicles/v1_911_carrera_rs_1973/exterior_front.png",
+        "static/vehicles/v1_911_carrera_rs_1973/exterior_side.png",
+        "static/vehicles/v1_911_carrera_rs_1973/interior.png"
+      ]
+    },
+    {
+      "id": "v2_356_speedster_1958",
+      "display_name": "1958 Porsche 356 A Speedster",
+      "year": 1958,
+      "model": "356 A Speedster",
+      "rental_price_usd": 245,
+      "tagline": "Open-top, low-slung, mechanically pure.",
+      "description": "Pushrod 1.6L flat-four, 75hp. Cut-down windscreen, no roof, side curtains in the trunk.",
+      "specs": {
+        "transmission": "4-speed manual",
+        "drivetrain": "RWD",
+        "horsepower": 75
+      },
+      "images": [
+        "static/vehicles/v2_356_speedster_1958/exterior_front.png",
+        "static/vehicles/v2_356_speedster_1958/exterior_side.png",
+        "static/vehicles/v2_356_speedster_1958/interior.png"
+      ]
+    },
+    {
+      "id": "v3_944_turbo_1986",
+      "display_name": "1986 Porsche 944 Turbo",
+      "year": 1986,
+      "model": "944 Turbo",
+      "rental_price_usd": 165,
+      "tagline": "80s wedge with surprising bite.",
+      "description": "Front-engine 2.5L turbocharged inline-four, 220hp, 50/50 weight distribution.",
+      "specs": {
+        "transmission": "5-speed manual",
+        "drivetrain": "RWD",
+        "horsepower": 220
+      },
+      "images": [
+        "static/vehicles/v3_944_turbo_1986/exterior_front.png",
+        "static/vehicles/v3_944_turbo_1986/exterior_side.png",
+        "static/vehicles/v3_944_turbo_1986/interior.png"
+      ]
+    }
+  ]
+}
