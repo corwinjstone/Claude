@@ -139,8 +139,15 @@
   }
   .hero__bg {
     position: absolute; inset: 0;
-    background: linear-gradient(160deg, #0f0f0f 0%, #050505 60%, #111 100%);
+    background-image: url('static/event/hero_2025.svg');
+    background-size: cover;
+    background-position: center;
     z-index: 0;
+  }
+  .hero__bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.35) 50%, rgba(10,10,10,0.85) 100%);
   }
   /* volt stripe */
   .hero__bg::after {
@@ -468,6 +475,90 @@
   }
   .waiver-row label strong { color: var(--chalk); }
 
+  /* ─── Past event gallery ────────────────────────────────── */
+  .recap-section {
+    padding: 5rem 0 4rem;
+    border-top: 1px solid var(--track);
+    border-bottom: 1px solid var(--track);
+  }
+  .recap-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 2.5rem; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .recap-header h2 { color: var(--chalk); }
+  .recap-header__stats {
+    display: flex; gap: 2rem;
+  }
+  .recap-stat__num {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    line-height: 1; color: var(--volt);
+    font-variant-numeric: tabular-nums;
+  }
+  .recap-stat__label {
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.3rem;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  @media (max-width: 760px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+  }
+  .gallery-tile {
+    position: relative;
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--track);
+    transition: transform 200ms;
+  }
+  .gallery-tile:hover { transform: translateY(-3px); }
+  .gallery-tile img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 400ms;
+  }
+  .gallery-tile:hover img { transform: scale(1.04); }
+  .gallery-tile--feature {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  @media (max-width: 760px) {
+    .gallery-tile--feature { grid-column: span 2; grid-row: auto; }
+  }
+  @media (max-width: 480px) {
+    .gallery-tile--feature { grid-column: span 1; }
+  }
+
+  /* lightbox */
+  .lightbox {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1000;
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 95%; max-height: 95vh;
+    border: 1px solid var(--track);
+  }
+  .lightbox__close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: var(--ink); border: 1px solid var(--track);
+    color: var(--chalk); cursor: pointer;
+    width: 44px; height: 44px;
+    font-family: var(--font-display);
+    font-weight: 800; font-size: 1.4rem;
+  }
+
   /* ─── Safety note ─────────────────────────────────────────── */
   .safety-note {
     display: flex; gap: 0.75rem; align-items: flex-start;
@@ -667,6 +758,61 @@
 </div>
 
 <!-- ════════════════════════════════════════════════════════════
+     PAST EVENT GALLERY (Recap 2025)
+═══════════════════════════════════════════════════════════════ -->
+<section class="recap-section" id="recap">
+  <div class="container">
+    <div class="recap-header">
+      <div>
+        <p class="meta text-volt mb-1">Recap · Class of 2025</p>
+        <h2 class="headline-xl">Last year. Same road.<br>Different finish.</h2>
+      </div>
+      <div class="recap-header__stats">
+        <div>
+          <div class="recap-stat__num">487</div>
+          <p class="meta recap-stat__label">Finishers</p>
+        </div>
+        <div>
+          <div class="recap-stat__num">3</div>
+          <p class="meta recap-stat__label">Porsches Driven</p>
+        </div>
+        <div>
+          <div class="recap-stat__num">100%</div>
+          <p class="meta recap-stat__label">Smiles Reported</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-tile gallery-tile--feature" onclick="openLightbox('static/gallery/01_start_line.svg')">
+        <img src="static/gallery/01_start_line.svg" alt="Start line at 7AM with diverse crowd of runners on Highway 154">
+      </div>
+      <div class="gallery-tile" onclick="openLightbox('static/gallery/03_porsches_parked.svg')">
+        <img src="static/gallery/03_porsches_parked.svg" alt="Three vintage Porsches parked roadside at El Capitan">
+      </div>
+      <div class="gallery-tile" onclick="openLightbox('static/gallery/02_coastal_climb.svg')">
+        <img src="static/gallery/02_coastal_climb.svg" alt="Runners on the coastal climb at Mile 2">
+      </div>
+      <div class="gallery-tile" onclick="openLightbox('static/gallery/04_finish_line.svg')">
+        <img src="static/gallery/04_finish_line.svg" alt="A runner crossing the finish line, arms raised, with cheering crowd">
+      </div>
+      <div class="gallery-tile" onclick="openLightbox('static/gallery/05_vineyard_tasting.svg')">
+        <img src="static/gallery/05_vineyard_tasting.svg" alt="Vineyard tasting at sunset, four people raising glasses">
+      </div>
+      <div class="gallery-tile" onclick="openLightbox('static/gallery/06_class_of_2025.svg')">
+        <img src="static/gallery/06_class_of_2025.svg" alt="Class of 2025 group photo with vintage Porsche on Highway 154">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox modal -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox__close" onclick="event.stopPropagation();closeLightbox()" aria-label="Close">×</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
      REGISTRATION FORM
 ═══════════════════════════════════════════════════════════════ -->
 <section class="section" id="register">
@@ -799,9 +945,9 @@
                 <div class="vehicle-card" id="vc-v1_911_carrera_rs_1973" onclick="selectVehicle('v1_911_carrera_rs_1973')">
                   <div class="vehicle-card__badge vehicle-card__badge--selected hidden" id="badge-v1_911_carrera_rs_1973">Selected ✓</div>
                   <div class="vehicle-card__gallery" id="gallery-v1_911_carrera_rs_1973">
-                    <img src="static/vehicles/v1_911_carrera_rs_1973/exterior_front.png" alt="1973 Porsche 911 Carrera RS 2.7 — front" class="active">
-                    <img src="static/vehicles/v1_911_carrera_rs_1973/exterior_side.png" alt="1973 Porsche 911 Carrera RS 2.7 — side">
-                    <img src="static/vehicles/v1_911_carrera_rs_1973/interior.png" alt="1973 Porsche 911 Carrera RS 2.7 — interior">
+                    <img src="static/vehicles/v1_911_carrera_rs_1973/exterior_front.svg" alt="1973 Porsche 911 Carrera RS 2.7 — front" class="active">
+                    <img src="static/vehicles/v1_911_carrera_rs_1973/exterior_side.svg" alt="1973 Porsche 911 Carrera RS 2.7 — side">
+                    <img src="static/vehicles/v1_911_carrera_rs_1973/interior.svg" alt="1973 Porsche 911 Carrera RS 2.7 — interior">
                     <div class="vehicle-card__gallery-dots">
                       <button class="gallery-dot active" onclick="setGalleryImage(event,'v1_911_carrera_rs_1973',0)" title="Photo 1"></button>
                       <button class="gallery-dot" onclick="setGalleryImage(event,'v1_911_carrera_rs_1973',1)" title="Photo 2"></button>
@@ -832,9 +978,9 @@
                 <div class="vehicle-card" id="vc-v2_356_speedster_1958" onclick="selectVehicle('v2_356_speedster_1958')">
                   <div class="vehicle-card__badge vehicle-card__badge--selected hidden" id="badge-v2_356_speedster_1958">Selected ✓</div>
                   <div class="vehicle-card__gallery" id="gallery-v2_356_speedster_1958">
-                    <img src="static/vehicles/v2_356_speedster_1958/exterior_front.png" alt="1958 Porsche 356 A Speedster — front" class="active">
-                    <img src="static/vehicles/v2_356_speedster_1958/exterior_side.png" alt="1958 Porsche 356 A Speedster — side">
-                    <img src="static/vehicles/v2_356_speedster_1958/interior.png" alt="1958 Porsche 356 A Speedster — interior">
+                    <img src="static/vehicles/v2_356_speedster_1958/exterior_front.svg" alt="1958 Porsche 356 A Speedster — front" class="active">
+                    <img src="static/vehicles/v2_356_speedster_1958/exterior_side.svg" alt="1958 Porsche 356 A Speedster — side">
+                    <img src="static/vehicles/v2_356_speedster_1958/interior.svg" alt="1958 Porsche 356 A Speedster — interior">
                     <div class="vehicle-card__gallery-dots">
                       <button class="gallery-dot active" onclick="setGalleryImage(event,'v2_356_speedster_1958',0)" title="Photo 1"></button>
                       <button class="gallery-dot" onclick="setGalleryImage(event,'v2_356_speedster_1958',1)" title="Photo 2"></button>
@@ -865,9 +1011,9 @@
                 <div class="vehicle-card" id="vc-v3_944_turbo_1986" onclick="selectVehicle('v3_944_turbo_1986')">
                   <div class="vehicle-card__badge vehicle-card__badge--selected hidden" id="badge-v3_944_turbo_1986">Selected ✓</div>
                   <div class="vehicle-card__gallery" id="gallery-v3_944_turbo_1986">
-                    <img src="static/vehicles/v3_944_turbo_1986/exterior_front.png" alt="1986 Porsche 944 Turbo — front" class="active">
-                    <img src="static/vehicles/v3_944_turbo_1986/exterior_side.png" alt="1986 Porsche 944 Turbo — side">
-                    <img src="static/vehicles/v3_944_turbo_1986/interior.png" alt="1986 Porsche 944 Turbo — interior">
+                    <img src="static/vehicles/v3_944_turbo_1986/exterior_front.svg" alt="1986 Porsche 944 Turbo — front" class="active">
+                    <img src="static/vehicles/v3_944_turbo_1986/exterior_side.svg" alt="1986 Porsche 944 Turbo — side">
+                    <img src="static/vehicles/v3_944_turbo_1986/interior.svg" alt="1986 Porsche 944 Turbo — interior">
                     <div class="vehicle-card__gallery-dots">
                       <button class="gallery-dot active" onclick="setGalleryImage(event,'v3_944_turbo_1986',0)" title="Photo 1"></button>
                       <button class="gallery-dot" onclick="setGalleryImage(event,'v3_944_turbo_1986',1)" title="Photo 2"></button>
@@ -1070,6 +1216,19 @@
 
 
 <script>
+// ─── Lightbox for gallery ────────────────────────────────────
+function openLightbox(src) {
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
 // ─── State ───────────────────────────────────────────────────
 const state = {
   step: 1,
@@ -1078,9 +1237,9 @@ const state = {
   selectedVehicle: null,
   // Vehicle pricing
   vehicles: {
-    'v1_911_carrera_rs_1973': { name: '1973 Porsche 911 Carrera RS 2.7', price: 295, img: 'static/vehicles/v1_911_carrera_rs_1973/exterior_side.png' },
-    'v2_356_speedster_1958':  { name: '1958 Porsche 356 A Speedster',    price: 245, img: 'static/vehicles/v2_356_speedster_1958/exterior_side.png' },
-    'v3_944_turbo_1986':      { name: '1986 Porsche 944 Turbo',          price: 165, img: 'static/vehicles/v3_944_turbo_1986/exterior_side.png' },
+    'v1_911_carrera_rs_1973': { name: '1973 Porsche 911 Carrera RS 2.7', price: 295, img: 'static/vehicles/v1_911_carrera_rs_1973/exterior_side.svg' },
+    'v2_356_speedster_1958':  { name: '1958 Porsche 356 A Speedster',    price: 245, img: 'static/vehicles/v2_356_speedster_1958/exterior_side.svg' },
+    'v3_944_turbo_1986':      { name: '1986 Porsche 944 Turbo',          price: 165, img: 'static/vehicles/v3_944_turbo_1986/exterior_side.svg' },
   },
   // Simulate one car already reserved by another registrant
   reservedVehicles: new Set(),
