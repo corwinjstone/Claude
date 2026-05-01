@@ -14,9 +14,9 @@
         "horsepower": 210
       },
       "images": [
-        "static/vehicles/v1_911_carrera_rs_1973/exterior_front.svg",
-        "static/vehicles/v1_911_carrera_rs_1973/exterior_side.svg",
-        "static/vehicles/v1_911_carrera_rs_1973/interior.svg"
+        "static/vehicles/v1_911_carrera_rs_1973/exterior_front.jpg",
+        "static/vehicles/v1_911_carrera_rs_1973/exterior_side.jpg",
+        "static/vehicles/v1_911_carrera_rs_1973/interior.jpg"
       ]
     },
     {
@@ -33,9 +33,9 @@
         "horsepower": 75
       },
       "images": [
-        "static/vehicles/v2_356_speedster_1958/exterior_front.svg",
-        "static/vehicles/v2_356_speedster_1958/exterior_side.svg",
-        "static/vehicles/v2_356_speedster_1958/interior.svg"
+        "static/vehicles/v2_356_speedster_1958/exterior_front.jpg",
+        "static/vehicles/v2_356_speedster_1958/exterior_side.jpg",
+        "static/vehicles/v2_356_speedster_1958/interior.jpg"
       ]
     },
     {
@@ -52,9 +52,9 @@
         "horsepower": 220
       },
       "images": [
-        "static/vehicles/v3_944_turbo_1986/exterior_front.svg",
-        "static/vehicles/v3_944_turbo_1986/exterior_side.svg",
-        "static/vehicles/v3_944_turbo_1986/interior.svg"
+        "static/vehicles/v3_944_turbo_1986/exterior_front.jpg",
+        "static/vehicles/v3_944_turbo_1986/exterior_side.jpg",
+        "static/vehicles/v3_944_turbo_1986/interior.jpg"
       ]
     }
   ]
