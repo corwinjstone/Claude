@@ -86,5 +86,19 @@
     "water_obstacles_modified_below_temp_celsius": 10,
     "lightning_30_30_rule_enforced": true,
     "mud_pit_closure_after_freeze_warning": true
+  },
+
+  "display": {
+    "distance_primary": "21",
+    "distance_unit": "K",
+    "subdistance_labels": {
+      "5K_obstacle":  { "primary": "5",  "stack": "K / 15+ OBSTACLES" },
+      "10K_obstacle": { "primary": "10", "stack": "K / 25+ OBSTACLES" },
+      "21K_beast":    { "primary": "21", "stack": "K / 30+ OBSTACLES" }
+    },
+    "accent": "ember",
+    "copy_bank": "ocr",
+    "tagline": "MUD. WALLS. BARBED WIRE. YOU.",
+    "hero_imagery_tag": "ocr_mud_crawl"
   }
 }

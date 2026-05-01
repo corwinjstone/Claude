@@ -100,5 +100,27 @@
   "ui_copy_constraints": {
     "avoid_jargon": ["corral", "PR", "negative split", "BQ", "fartlek"],
     "tone": "welcoming_first_timer_friendly"
+  },
+
+  "display": {
+    "distance_primary": "5",
+    "distance_unit": "K",
+    "distance_secondary": "10",
+    "distance_secondary_unit": "K",
+    "subdistance_labels": {
+      "kids_dash":  { "primary": "DASH", "stack": "AGES 3-8" },
+      "1K_kids":    { "primary": "1",    "stack": "K KIDS" },
+      "5K":         { "primary": "5",    "stack": "K" },
+      "10K":        { "primary": "10",   "stack": "K" }
+    },
+    "accent": "volt",
+    "copy_bank": "community_first_timer",
+    "tagline": "EVERY FINISHER STARTED WITH ONE.",
+    "hero_imagery_tag": "community_finish_smiles",
+    "copy_overrides": {
+      "use_imperative_voice": true,
+      "soften_motivational_intensity": true,
+      "reason": "Community division must stay first-timer friendly per ui_copy_constraints; design system typography stays bold/italic, but copy bank avoids elite-tier intensity."
+    }
   }
 }

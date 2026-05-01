@@ -34,6 +34,22 @@ is assigned, this team owns the funnel.
 - Athlete Membership (for profile + medical attestation)
 - Course & Logistics (for corral capacity)
 
+## Design System
+
+All marathon registration surfaces follow `../designsystem.md`. In particular:
+
+- **Distance, price, and date are billboards.** Render `26.2 MI`, `$185`,
+  `OCT 12` in `display-xl` italic. Never shrink them to fit copy.
+- **Hero copy is imperative.** "REGISTER.", "CHOOSE YOUR CORRAL.", "YOU
+  TRAINED FOR THIS."
+- **Confirmation page closes with a motivational module** — full-bleed
+  hero of an athlete crossing a finish line, `display-mega` italic
+  overlay drawn from `display.copy_bank = "road_marathon"`.
+- **Accent color** comes from `rules.display.accent` (`volt` for road).
+  Never hardcode.
+- **Boston-style qualifying-time pages** treat the qualifying time as a
+  hero numeric (`3:00:00` in `display-mega`), not a label.
+
 ## On-Call
 Registration windows for majors are spike events. Team carries pager during
 open registration for any event with >5,000 expected entrants.

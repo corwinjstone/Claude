@@ -44,9 +44,31 @@ RulesEngine division name, and the rules file are 1:1:1.
   "mandatory_gear": [...],
   "medical": { ... },             // staffing, attestation, cutoffs
   "course": { ... },              // aid spacing, certification reqs
-  "weather_protocols": { ... }
+  "weather_protocols": { ... },
+  "display": { ... }              // design-system hints (see designsystem.md)
 }
 ```
+
+### `display` block
+
+Every division must declare a `display` block. It is the contract between
+the RulesEngine and the Design System (`../designsystem.md`).
+
+```jsonc
+"display": {
+  "distance_primary": "26.2",       // hero numeric, rendered display-xl italic
+  "distance_unit": "MI",            // unit, rendered as meta UPPER baseline-aligned
+  "distance_secondary": "42.195",   // optional alternate (km vs mi)
+  "distance_secondary_unit": "KM",
+  "accent": "volt",                 // design-system color token
+  "copy_bank": "road_marathon",     // motivational copy bank tag
+  "tagline": "26.2 MILES. ONE START LINE. NO EXCUSES.",
+  "hero_imagery_tag": "road_finish_line"
+}
+```
+
+UI surfaces read this via `rules.display` — they never hardcode division
+strings or pick their own accent color.
 
 ## How teams consume the engine
 
@@ -74,7 +96,9 @@ division defaults; the engine resolves them at query time.
 - It is not a feature-flag system. Use the platform feature-flag service.
 - It is not a pricing engine. It defines tier *defaults*; per-event prices
   are set by the director.
-- It is not a CMS. Athlete-facing copy lives elsewhere.
+- It is not a CMS. Athlete-facing copy lives elsewhere — but the
+  `display.copy_bank` tag tells the CMS *which* motivational copy bank
+  to draw from for that division.
 - It does not enforce anything outside the racing domain. RunClub's product
   surface is racing — registration, planning, operations. Rules belong here
   only if they govern those activities.

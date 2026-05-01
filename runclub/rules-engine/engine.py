@@ -62,6 +62,16 @@ class DivisionRules:
     def refund_policy(self) -> dict[str, Any]:
         return self.raw.get("refund_policy", {})
 
+    @property
+    def display(self) -> dict[str, Any]:
+        """Design-system hints for rendering this division.
+
+        See `designsystem.md`. UI surfaces consume this block to pick the
+        canonical distance string, accent color, and motivational copy bank
+        for the division. Surfaces must never hardcode these per division.
+        """
+        return self.raw.get("display", {})
+
     def qualifying_time_required(self) -> bool:
         return bool(self.raw.get("qualifying", {}).get("required", False))
 
@@ -130,8 +140,11 @@ if __name__ == "__main__":
     engine = RulesEngine.load()
     for name in engine.divisions():
         rules = engine.for_division(name)
+        d = rules.display
         print(
             f"{name:16s} {rules.display_name:30s} "
             f"min_age={rules.age_minimum} "
-            f"qualifying_required={rules.qualifying_time_required()}"
+            f"qualifying_required={rules.qualifying_time_required()} "
+            f"distance={d.get('distance_primary', '?')}{d.get('distance_unit', '')} "
+            f"accent={d.get('accent', '?')}"
         )
