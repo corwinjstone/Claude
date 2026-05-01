@@ -1,0 +1,49 @@
+{
+  "event_name": "Porsche Run 5K",
+  "division": "community",
+  "race_date": "2026-10-04",
+  "capacity": 500,
+  "rule_overrides": {
+    "pricing": {
+      "default_tiers": [
+        { "name": "early_bird",  "weeks_before": 12, "default_price_usd": 85  },
+        { "name": "regular",     "weeks_before": 4,  "default_price_usd": 110 },
+        { "name": "race_week",   "weeks_before": 1,  "default_price_usd": 135 },
+        { "name": "race_day",    "weeks_before": 0,  "default_price_usd": 150 }
+      ]
+    }
+  },
+  "add_ons": {
+    "porsche_drive": {
+      "enabled": true,
+      "pricing_source": "vehicle_inventory",
+      "inventory_file": "vehicle_inventory.json",
+      "capacity_model": "exclusive_per_vehicle",
+      "age_minimum": 25,
+      "requires_fields": [
+        "selected_vehicle_id",
+        "drivers_license_number",
+        "drivers_license_state",
+        "insurance_carrier",
+        "insurance_policy_number"
+      ],
+      "requires_waivers": ["driver_waiver_v1"],
+      "partner_name": "Countryside Classic Cars LLC",
+      "partner_export_format": "csv"
+    },
+    "wine_tasting": {
+      "enabled": true,
+      "price_usd": 45,
+      "capacity": 400,
+      "age_minimum": 21,
+      "requires_fields": ["age_21_attestation"],
+      "partner_name": "Ridgeline Winery",
+      "sponsor_tier": "presenting",
+      "partner_export_format": "csv"
+    }
+  },
+  "safety_notes": {
+    "post_race_transport": "Shuttle service provided from finish line to parking area for wine tasting attendees",
+    "no_drive_after_tasting_policy": true
+  }
+}

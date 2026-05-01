@@ -1,0 +1,27 @@
+name: Deploy Porsche Run to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'porsche_run/index.html'
+      - 'porsche_run/vehicle_inventory.json'
+      - 'porsche_run/static/**'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy porsche_run static files to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./porsche_run
+          destination_dir: porsche_run
+          keep_files: true
+          commit_message: 'Deploy Porsche Run 5K app to GitHub Pages'

@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Porsche Run 5K — Register</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ─── Design tokens ─────────────────────────────────────── */
+  :root {
+    --volt:  #D7FF1E;
+    --ink:   #0A0A0A;
+    --chalk: #FFFFFF;
+    --ember: #FF3B1F;
+    --track: #1F1F1F;
+    --mist:  #E5E5E5;
+    --font-display: 'Barlow Condensed', 'Helvetica Neue Condensed', Impact, sans-serif;
+    --font-body:    'Inter', system-ui, sans-serif;
+  }
+
+  /* ─── Reset ─────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    background: var(--ink);
+    color: var(--chalk);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* ─── Typography helpers ─────────────────────────────────── */
+  .display-mega {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .display-xl {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 0.92;
+    text-transform: uppercase;
+  }
+  .display-l {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+  .headline-xl {
+    font-family: var(--font-display);
+    font-weight: 700; font-style: italic;
+    font-size: clamp(1.75rem, 3.5vw, 3.5rem);
+    line-height: 1.0;
+    text-transform: uppercase;
+  }
+  .headline-l {
+    font-family: var(--font-display);
+    font-weight: 700; font-style: italic;
+    font-size: clamp(1.4rem, 2.5vw, 2.5rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+  }
+  .headline-m {
+    font-family: var(--font-display);
+    font-weight: 700; font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.75rem);
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+  .meta {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── Layout ─────────────────────────────────────────────── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  .section { padding: 5rem 0; }
+  .section--tight { padding: 3rem 0; }
+
+  /* ─── Buttons ────────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    border: none; cursor: pointer;
+    transition: background 120ms, color 120ms, transform 80ms;
+    user-select: none;
+    line-height: 1;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary {
+    background: var(--volt); color: var(--ink);
+  }
+  .btn-primary:hover { background: var(--chalk); }
+  .btn-ghost {
+    background: transparent; color: var(--chalk);
+    border: 2px solid var(--chalk);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+  .btn-danger {
+    background: transparent; color: var(--ember);
+    border: 2px solid var(--ember);
+  }
+  .btn-danger:hover { background: rgba(255,59,31,0.1); }
+  .btn-full { width: 100%; justify-content: center; }
+  .btn-lg { padding: 1.25rem 2.5rem; font-size: 1.3rem; }
+  .btn:disabled, .btn[disabled] {
+    background: var(--track); color: #555; border-color: var(--track);
+    cursor: not-allowed; transform: none;
+  }
+
+  /* ─── Hero ───────────────────────────────────────────────── */
+  .hero {
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    border-bottom: 1px solid var(--track);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__bg {
+    position: absolute; inset: 0;
+    background-image: url('static/gallery/01_start_line.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+  .hero__bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.35) 50%, rgba(10,10,10,0.85) 100%);
+  }
+  /* volt stripe */
+  .hero__bg::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+    background: var(--volt);
+  }
+  .hero__content {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    align-items: flex-start; justify-content: flex-end;
+    padding: 4rem 0 3rem;
+  }
+  .hero__eyebrow {
+    color: var(--volt);
+    margin-bottom: 1rem;
+  }
+  .hero__title {
+    color: var(--chalk);
+    margin-bottom: 2rem;
+  }
+  .hero__meta-row {
+    display: flex; flex-wrap: wrap; gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .hero__meta-item { text-align: left; }
+  .hero__meta-num {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+    color: var(--chalk);
+    font-variant-numeric: tabular-nums;
+  }
+  .hero__meta-label { color: rgba(255,255,255,0.5); margin-top: 0.25rem; }
+  .hero__countdown {
+    display: flex; gap: 0.5rem; align-items: baseline;
+    margin-bottom: 3rem;
+  }
+  .hero__countdown-block { text-align: center; }
+  .hero__countdown-num {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1; color: var(--volt);
+    font-variant-numeric: tabular-nums;
+    display: block; min-width: 2.5ch;
+  }
+  .hero__countdown-sep {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    color: rgba(215,255,30,0.3);
+    line-height: 1; padding-bottom: 1.25rem;
+  }
+  .hero__nav {
+    position: relative; z-index: 1;
+    padding: 1.5rem 0;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .hero__logo {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--chalk);
+  }
+  .hero__logo span { color: var(--volt); }
+  .hero__cta { margin-top: 0; }
+
+  /* ─── Divider ─────────────────────────────────────────────── */
+  .divider {
+    border: none; border-top: 1px solid var(--track);
+    margin: 0;
+  }
+
+  /* ─── Steps nav ──────────────────────────────────────────── */
+  .steps {
+    display: flex; gap: 0;
+    border-bottom: 1px solid var(--track);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .steps::-webkit-scrollbar { display: none; }
+  .step-tab {
+    flex: 1; min-width: 120px;
+    padding: 1.25rem 1rem;
+    background: none; border: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    border-bottom: 3px solid transparent;
+    transition: border-color 150ms;
+    color: rgba(255,255,255,0.4);
+  }
+  .step-tab.active {
+    border-bottom-color: var(--volt);
+    color: var(--chalk);
+  }
+  .step-tab.done { color: var(--volt); }
+  .step-tab__num {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: 1.5rem; line-height: 1;
+    text-transform: uppercase;
+  }
+  .step-tab__label { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ─── Form panels ────────────────────────────────────────── */
+  .form-panel { display: none; }
+  .form-panel.active { display: block; }
+
+  /* ─── Form fields ────────────────────────────────────────── */
+  .field-group { margin-bottom: 2rem; }
+  .field-group__title {
+    color: var(--volt);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--track);
+  }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .field-row--3 { grid-template-columns: 1fr 1fr 1fr; }
+  .field-row--full { grid-template-columns: 1fr; }
+  @media (max-width: 600px) {
+    .field-row, .field-row--3 { grid-template-columns: 1fr; }
+  }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .field label {
+    font-family: var(--font-body);
+    font-weight: 500; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.6);
+  }
+  .field label .req { color: var(--volt); }
+  .field input, .field select {
+    background: var(--track);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--chalk);
+    padding: 0.75rem 1rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 150ms;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .field input:focus, .field select:focus {
+    border-color: var(--volt);
+  }
+  .field input::placeholder { color: rgba(255,255,255,0.25); }
+  .field input.error, .field select.error { border-color: var(--ember); }
+  .field-error { color: var(--ember); font-size: 0.75rem; font-weight: 500; display: none; }
+  .field-error.visible { display: block; }
+  .field select option { background: var(--track); }
+
+  /* ─── Checkbox toggle ────────────────────────────────────── */
+  .addon-toggle {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--track);
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    transition: border-color 150ms;
+    user-select: none;
+  }
+  .addon-toggle:hover { border-color: rgba(255,255,255,0.3); }
+  .addon-toggle.checked { border-color: var(--volt); }
+  .addon-toggle__box {
+    width: 20px; height: 20px;
+    border: 2px solid rgba(255,255,255,0.4);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 150ms, border-color 150ms;
+  }
+  .addon-toggle.checked .addon-toggle__box {
+    background: var(--volt); border-color: var(--volt);
+  }
+  .addon-toggle__check {
+    width: 10px; height: 10px;
+    display: none;
+  }
+  .addon-toggle.checked .addon-toggle__check { display: block; }
+  .addon-toggle__text { flex: 1; }
+  .addon-toggle__name {
+    font-family: var(--font-display);
+    font-weight: 700; font-style: italic;
+    font-size: 1.1rem; text-transform: uppercase;
+    color: var(--chalk);
+  }
+  .addon-toggle__desc { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 0.2rem; }
+  .addon-toggle__price {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: 1.4rem; text-transform: uppercase;
+    color: var(--volt);
+    white-space: nowrap;
+  }
+  .addon-toggle__price.varies { font-size: 1rem; color: rgba(255,255,255,0.5); }
+
+  .addon-section { display: none; padding: 1.5rem 0 0; }
+  .addon-section.visible { display: block; }
+
+  /* ─── Vehicle picker ─────────────────────────────────────── */
+  .vehicle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .vehicle-card {
+    background: var(--track);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 150ms, transform 120ms;
+    position: relative;
+    overflow: hidden;
+  }
+  .vehicle-card:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
+  .vehicle-card.selected { border-color: var(--volt); }
+  .vehicle-card.reserved {
+    opacity: 0.45; cursor: not-allowed; transform: none;
+    pointer-events: none;
+  }
+  .vehicle-card__badge {
+    position: absolute; top: 0.75rem; right: 0.75rem; z-index: 2;
+    padding: 0.3rem 0.75rem;
+    font-family: var(--font-body);
+    font-weight: 500; font-size: 0.65rem;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .vehicle-card__badge--selected { background: var(--volt); color: var(--ink); }
+  .vehicle-card__badge--reserved { background: var(--ember); color: var(--chalk); }
+
+  .vehicle-card__gallery {
+    aspect-ratio: 16/9;
+    position: relative; overflow: hidden;
+    background: #111;
+  }
+  .vehicle-card__gallery img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+  .vehicle-card__gallery img.active { opacity: 1; }
+  .vehicle-card__gallery-dots {
+    position: absolute; bottom: 0.6rem; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 0.35rem; z-index: 2;
+  }
+  .gallery-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    cursor: pointer; border: none; padding: 0;
+    transition: background 150ms;
+  }
+  .gallery-dot.active { background: var(--volt); }
+  .vehicle-card__gallery-nav {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 0.5rem; z-index: 2; opacity: 0;
+    transition: opacity 150ms;
+  }
+  .vehicle-card:hover .vehicle-card__gallery-nav { opacity: 1; }
+  .gallery-arrow {
+    background: rgba(0,0,0,0.6); border: none; color: var(--chalk);
+    width: 28px; height: 28px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; flex-shrink: 0;
+    transition: background 120ms;
+  }
+  .gallery-arrow:hover { background: rgba(215,255,30,0.8); color: var(--ink); }
+
+  .vehicle-card__body { padding: 1rem 1.25rem 1.25rem; }
+  .vehicle-card__name {
+    font-family: var(--font-display);
+    font-weight: 700; font-style: italic;
+    font-size: 1.3rem; line-height: 1.05;
+    text-transform: uppercase;
+    color: var(--chalk);
+    margin-bottom: 0.25rem;
+  }
+  .vehicle-card__tagline {
+    font-size: 0.8rem; color: rgba(255,255,255,0.5);
+    font-style: italic;
+    margin-bottom: 0.75rem;
+  }
+  .vehicle-card__specs {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .vehicle-card__spec { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.06em; }
+  .vehicle-card__spec strong { color: rgba(255,255,255,0.7); font-weight: 600; display: block; font-size: 0.8rem; }
+  .vehicle-card__price-row {
+    display: flex; align-items: baseline; gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .vehicle-card__price {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: 2.5rem; line-height: 1;
+    text-transform: uppercase;
+    color: var(--chalk);
+    font-variant-numeric: tabular-nums;
+  }
+  .vehicle-card__currency { color: rgba(255,255,255,0.4); }
+
+  /* ─── Waiver checkbox ────────────────────────────────────── */
+  .waiver-row {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255,59,31,0.08);
+    border: 1px solid rgba(255,59,31,0.3);
+    margin-top: 1.5rem;
+  }
+  .waiver-row input[type="checkbox"] {
+    width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;
+    accent-color: var(--volt); cursor: pointer;
+  }
+  .waiver-row label {
+    font-size: 0.8rem; color: rgba(255,255,255,0.7); cursor: pointer; line-height: 1.5;
+  }
+  .waiver-row label strong { color: var(--chalk); }
+
+  /* ─── Past event gallery ────────────────────────────────── */
+  .recap-section {
+    padding: 5rem 0 4rem;
+    border-top: 1px solid var(--track);
+    border-bottom: 1px solid var(--track);
+  }
+  .recap-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 2.5rem; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .recap-header h2 { color: var(--chalk); }
+  .recap-header__stats {
+    display: flex; gap: 2rem;
+  }
+  .recap-stat__num {
+    font-family: var(--font-display);
+    font-weight: 800; font-style: italic;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    line-height: 1; color: var(--volt);
+    font-variant-numeric: tabular-nums;
+  }
+  .recap-stat__label {
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.3rem;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  @media (max-width: 760px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+  }
+  .gallery-tile {
+    position: relative;
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--track);
+    transition: transform 200ms;
+  }
+  .gallery-tile:hover { transform: translateY(-3px); }
+  .gallery-tile img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 400ms;
+  }
+  .gallery-tile:hover img { transform: scale(1.04); }
+  .gallery-tile--feature {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  @media (max-width: 760px) {
+    .gallery-tile--feature { grid-column: span 2; grid-row: auto; }
+  }
+  @media (max-width: 480px) {
+    .gallery-tile--feature { grid-column: span 1; }
+  }
+
+  /* lightbox */
+  .lightbox {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1000;
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 95%; max-height: 95vh;
+    border: 1px solid var(--track);
+  }
+  .lightbox__close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: var(--ink); border: 1px solid var(--track);
+    color: var(--chalk); cursor: pointer;
+    width: 44px; height: 44px;
+    font-family: var(--font-display);
+    font-weight: 800; font-size: 1.4rem;
+  }
+
+  /* ─── Safety note ─────────────────────────────────────────── */
+  .safety-note {
+    display: flex; gap: 0.75rem; align-items: flex-start;
+    padding: 1rem 1.25rem;
+    background: rgba(255,59,31,0.06);
+    border-left: 3px solid var(--ember);
+    margin-top: 1rem;
+  }
+  .safety-note__icon { color: var(--ember); font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+  .safety-note p { font-size: 0.8rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
+  .safety-note strong { color: var(--ember); font-weight: 600; }
+
+  /* ─── Order summary ──────────────────────────────────────── */
+  .summary-card {
+    background: var(--track);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .summary-card__title {
+    color: var(--volt);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .summary-line {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .summary-line:last-child { border-bottom: none; }
+  .summary-line__label { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+  .summary-line__value {
+    font-family: var(--font-display);
+    font-weight: 700; font-style: italic;
+    font-size: 1.2rem; text-transform: uppercase;
+    color: var(--chalk);
+  }
+  .summary-line--total .summary-line__label {
+    font-family: var(--font-display);
+    font-weight: 700; font-style: italic;
+    font-size: 1rem; text-transform: uppercase;
+    color: var(--chalk);
+  }
+  .summary-line--total .summary-line__value {
+    font-size: 2rem; color: var(--volt);
+  }
+  .summary-vehicle {
+    background: rgba(215,255,30,0.05);
+    border: 1px solid rgba(215,255,30,0.2);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .summary-vehicle__img {
+    width: 80px; height: 54px; object-fit: cover; flex-shrink: 0;
+  }
+  .summary-vehicle__name {
+    font-family: var(--font-display);
+    font-weight: 700; font-style: italic;
+    font-size: 1rem; text-transform: uppercase;
+    color: var(--chalk);
+  }
+  .summary-vehicle__sub { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 0.2rem; }
+
+  /* ─── Motivational banner ────────────────────────────────── */
+  .moto-banner {
+    background: var(--ink);
+    border-top: 4px solid var(--volt);
+    padding: 4rem 0;
+    text-align: center;
+    overflow: hidden;
+  }
+  .moto-banner__text {
+    color: var(--chalk);
+    white-space: nowrap;
+    animation: marquee 18s linear infinite;
+    display: inline-block;
+  }
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .moto-banner__text { animation: none; white-space: normal; }
+  }
+
+  /* ─── Success state ──────────────────────────────────────── */
+  #success-screen {
+    display: none;
+    min-height: 60vh;
+    align-items: center; justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 4rem 1.5rem;
+  }
+  #success-screen.active { display: flex; }
+  .success-icon { color: var(--volt); font-size: 3rem; margin-bottom: 1.5rem; }
+  #registration-form.hidden { display: none; }
+
+  /* ─── Progress bar ───────────────────────────────────────── */
+  .progress-bar {
+    height: 3px; background: var(--track);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .progress-bar__fill {
+    height: 100%; background: var(--volt);
+    transition: width 300ms ease;
+  }
+
+  /* ─── Misc ────────────────────────────────────────────────── */
+  .text-volt { color: var(--volt); }
+  .text-ember { color: var(--ember); }
+  .text-muted { color: rgba(255,255,255,0.5); }
+  .mt-1 { margin-top: 0.5rem; }
+  .mt-2 { margin-top: 1rem; }
+  .mt-3 { margin-top: 1.5rem; }
+  .mb-1 { margin-bottom: 0.5rem; }
+  .mb-2 { margin-bottom: 1rem; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar"><div class="progress-bar__fill" id="progress-fill" style="width:33%"></div></div>
+
+<!-- ════════════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero__bg"></div>
+  <div class="container">
+    <nav class="hero__nav">
+      <span class="hero__logo">RunClub <span>×</span> Porsche</span>
+      <a href="#register" class="btn btn-primary">Register Now →</a>
+    </nav>
+  </div>
+  <div class="container">
+    <div class="hero__content">
+      <p class="meta hero__eyebrow">October 4, 2026 &nbsp;·&nbsp; Community 5K</p>
+      <h1 class="display-mega hero__title">Porsche<br>Run 5K</h1>
+
+      <div class="hero__meta-row">
+        <div class="hero__meta-item">
+          <div class="hero__meta-num">5<span style="font-size:0.45em;vertical-align:middle;color:rgba(255,255,255,.4)"> K</span></div>
+          <p class="meta hero__meta-label">Distance</p>
+        </div>
+        <div class="hero__meta-item">
+          <div class="hero__meta-num">$85</div>
+          <p class="meta hero__meta-label">From (Early Bird)</p>
+        </div>
+        <div class="hero__meta-item">
+          <div class="hero__meta-num">500</div>
+          <p class="meta hero__meta-label">Spots</p>
+        </div>
+      </div>
+
+      <p class="meta text-muted mb-2">Race starts in</p>
+      <div class="hero__countdown">
+        <div class="hero__countdown-block">
+          <span class="hero__countdown-num" id="cd-days">—</span>
+          <span class="meta text-muted">Days</span>
+        </div>
+        <span class="hero__countdown-sep">:</span>
+        <div class="hero__countdown-block">
+          <span class="hero__countdown-num" id="cd-hrs">—</span>
+          <span class="meta text-muted">Hrs</span>
+        </div>
+        <span class="hero__countdown-sep">:</span>
+        <div class="hero__countdown-block">
+          <span class="hero__countdown-num" id="cd-min">—</span>
+          <span class="meta text-muted">Min</span>
+        </div>
+      </div>
+
+      <a href="#register" class="btn btn-primary btn-lg hero__cta">Register Now →</a>
+    </div>
+  </div>
+  <div style="height:4px;background:var(--volt);position:relative;z-index:1"></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     MOTIVATIONAL BANNER
+═══════════════════════════════════════════════════════════════ -->
+<div class="moto-banner">
+  <span class="display-l moto-banner__text">
+    EVERY FINISHER STARTED WITH ONE. &nbsp;&nbsp;·&nbsp;&nbsp;
+    THREE CARS. ONE DRIVE. YOUR CHOICE. &nbsp;&nbsp;·&nbsp;&nbsp;
+    GO AT YOUR PACE. JUST GO. &nbsp;&nbsp;·&nbsp;&nbsp;
+    PICK YOUR PORSCHE. &nbsp;&nbsp;·&nbsp;&nbsp;
+    EVERY FINISHER STARTED WITH ONE. &nbsp;&nbsp;·&nbsp;&nbsp;
+    THREE CARS. ONE DRIVE. YOUR CHOICE. &nbsp;&nbsp;·&nbsp;&nbsp;
+    GO AT YOUR PACE. JUST GO. &nbsp;&nbsp;·&nbsp;&nbsp;
+    PICK YOUR PORSCHE. &nbsp;&nbsp;·&nbsp;&nbsp;
+  </span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     PAST EVENT GALLERY (Recap 2025)
+═══════════════════════════════════════════════════════════════ -->
+<section class="recap-section" id="recap">
+  <div class="container">
+    <div class="recap-header">
+      <div>
+        <p class="meta text-volt mb-1">Recap · Class of 2025</p>
+        <h2 class="headline-xl">Last year. Same road.<br>Different finish.</h2>
+      </div>
+      <div class="recap-header__stats">
+        <div>
+          <div class="recap-stat__num">487</div>
+          <p class="meta recap-stat__label">Finishers</p>
+        </div>
+        <div>
+          <div class="recap-stat__num">3</div>
+          <p class="meta recap-stat__label">Porsches Driven</p>
+        </div>
+        <div>
+          <div class="recap-stat__num">100%</div>
+          <p class="meta recap-stat__label">Smiles Reported</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-tile gallery-tile--feature" onclick="openLightbox('static/gallery/01_start_line.jpg')">
+        <img src="static/gallery/01_start_line.jpg" alt="Start line — runners under the arch at sunrise">
+      </div>
+      <div class="gallery-tile" onclick="openLightbox('static/gallery/03_porsches_parked.jpg')">
+        <img src="static/gallery/03_porsches_parked.jpg" alt="Class of 2025 with a vintage Porsche on the coastal road">
+      </div>
+      <div class="gallery-tile" onclick="openLightbox('static/gallery/02_coastal_climb.jpg')">
+        <img src="static/gallery/02_coastal_climb.jpg" alt="Runners on the coastal highway with ocean views">
+      </div>
+      <div class="gallery-tile" onclick="openLightbox('static/gallery/04_finish_line.jpg')">
+        <img src="static/gallery/04_finish_line.jpg" alt="Runner crossing the finish line, arms raised, crowd cheering">
+      </div>
+      <div class="gallery-tile" onclick="openLightbox('static/gallery/05_vineyard_tasting.jpg')">
+        <img src="static/gallery/05_vineyard_tasting.jpg" alt="Post-race wine tasting at sunset — Ridgeline Winery">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox modal -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox__close" onclick="event.stopPropagation();closeLightbox()" aria-label="Close">×</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     REGISTRATION FORM
+═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="register">
+  <div class="container">
+
+    <div id="registration-form">
+      <div style="margin-bottom:2rem">
+        <p class="meta text-volt mb-1">Register</p>
+        <h2 class="headline-xl">Your spot. Your Porsche.</h2>
+      </div>
+
+      <!-- Step tabs -->
+      <div class="steps" id="step-tabs">
+        <button class="step-tab active" data-step="1">
+          <span class="step-tab__num">01</span>
+          <span class="step-tab__label">Your Info</span>
+        </button>
+        <button class="step-tab" data-step="2">
+          <span class="step-tab__num">02</span>
+          <span class="step-tab__label">Add-Ons</span>
+        </button>
+        <button class="step-tab" data-step="3">
+          <span class="step-tab__num">03</span>
+          <span class="step-tab__label">Review</span>
+        </button>
+      </div>
+
+      <!-- ── STEP 1: Basic info ── -->
+      <div class="form-panel active" id="panel-1">
+        <div class="section--tight">
+
+          <div class="field-group">
+            <p class="meta field-group__title">Personal Details</p>
+            <div class="field-row">
+              <div class="field">
+                <label>First Name <span class="req">*</span></label>
+                <input type="text" id="first_name" placeholder="Jordan" autocomplete="given-name">
+                <span class="field-error" id="err-first_name">Required</span>
+              </div>
+              <div class="field">
+                <label>Last Name <span class="req">*</span></label>
+                <input type="text" id="last_name" placeholder="Rivera" autocomplete="family-name">
+                <span class="field-error" id="err-last_name">Required</span>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Email <span class="req">*</span></label>
+                <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+                <span class="field-error" id="err-email">Valid email required</span>
+              </div>
+              <div class="field">
+                <label>Date of Birth <span class="req">*</span></label>
+                <input type="date" id="date_of_birth" autocomplete="bday">
+                <span class="field-error" id="err-date_of_birth">Required</span>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>T-Shirt Size <span class="req">*</span></label>
+                <select id="shirt_size">
+                  <option value="">— Select —</option>
+                  <option>XS</option><option>S</option><option>M</option>
+                  <option>L</option><option>XL</option><option>2XL</option><option>3XL</option>
+                </select>
+                <span class="field-error" id="err-shirt_size">Required</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <p class="meta field-group__title">Emergency Contact</p>
+            <div class="field-row">
+              <div class="field">
+                <label>Name <span class="req">*</span></label>
+                <input type="text" id="emergency_contact_name" placeholder="Full name" autocomplete="off">
+                <span class="field-error" id="err-emergency_contact_name">Required</span>
+              </div>
+              <div class="field">
+                <label>Phone <span class="req">*</span></label>
+                <input type="tel" id="emergency_contact_phone" placeholder="555-000-0000" autocomplete="off">
+                <span class="field-error" id="err-emergency_contact_phone">Required</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="waiver-row">
+            <input type="checkbox" id="waiver_v7">
+            <label for="waiver_v7">
+              <strong>Race Waiver (v7)</strong> — I understand the risks associated with participating in a running event and agree to the terms and conditions. I release the organizers from liability for injuries sustained during the event.
+            </label>
+          </div>
+          <span class="field-error" id="err-waiver_v7" style="margin-top:0.4rem">You must accept the race waiver to continue</span>
+
+          <div style="margin-top:2rem">
+            <button class="btn btn-primary btn-lg" onclick="goToStep(2)">
+              Continue to Add-Ons →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: Add-ons ── -->
+      <div class="form-panel" id="panel-2">
+        <div class="section--tight">
+
+          <div class="field-group">
+            <p class="meta field-group__title">Optional Add-Ons</p>
+
+            <!-- Porsche Drive toggle -->
+            <div class="addon-toggle" id="toggle-drive" onclick="toggleAddon('drive')">
+              <div class="addon-toggle__box">
+                <svg class="addon-toggle__check" viewBox="0 0 10 10" fill="none">
+                  <path d="M1.5 5L4 7.5L8.5 2.5" stroke="#0A0A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="addon-toggle__text">
+                <div class="addon-toggle__name">Pre-Race Porsche Drive</div>
+                <div class="addon-toggle__desc">Choose your vintage Porsche for a countryside drive before the race</div>
+              </div>
+              <div class="addon-toggle__price varies" id="drive-price-label">From $165</div>
+            </div>
+
+            <!-- Drive add-on section -->
+            <div class="addon-section" id="addon-drive">
+
+              <div class="vehicle-grid" id="vehicle-grid">
+
+                <!-- Vehicle 1: 911 Carrera RS 1973 -->
+                <div class="vehicle-card" id="vc-v1_911_carrera_rs_1973" onclick="selectVehicle('v1_911_carrera_rs_1973')">
+                  <div class="vehicle-card__badge vehicle-card__badge--selected hidden" id="badge-v1_911_carrera_rs_1973">Selected ✓</div>
+                  <div class="vehicle-card__gallery" id="gallery-v1_911_carrera_rs_1973">
+                    <img src="static/vehicles/v1_911_carrera_rs_1973/exterior_front.jpg" alt="1973 Porsche 911 Carrera RS 2.7 — front" class="active">
+                    <img src="static/vehicles/v1_911_carrera_rs_1973/exterior_side.jpg" alt="1973 Porsche 911 Carrera RS 2.7 — side">
+                    <img src="static/vehicles/v1_911_carrera_rs_1973/interior.jpg" alt="1973 Porsche 911 Carrera RS 2.7 — detail">
+                    <div class="vehicle-card__gallery-dots">
+                      <button class="gallery-dot active" onclick="setGalleryImage(event,'v1_911_carrera_rs_1973',0)" title="Photo 1"></button>
+                      <button class="gallery-dot" onclick="setGalleryImage(event,'v1_911_carrera_rs_1973',1)" title="Photo 2"></button>
+                      <button class="gallery-dot" onclick="setGalleryImage(event,'v1_911_carrera_rs_1973',2)" title="Photo 3"></button>
+                    </div>
+                    <div class="vehicle-card__gallery-nav">
+                      <button class="gallery-arrow" onclick="cycleGallery(event,'v1_911_carrera_rs_1973',-1)">‹</button>
+                      <button class="gallery-arrow" onclick="cycleGallery(event,'v1_911_carrera_rs_1973',1)">›</button>
+                    </div>
+                  </div>
+                  <div class="vehicle-card__body">
+                    <div class="vehicle-card__name">1973 Porsche 911 Carrera RS 2.7</div>
+                    <div class="vehicle-card__tagline">The car that defined the 911 myth.</div>
+                    <div class="vehicle-card__specs">
+                      <div class="vehicle-card__spec"><strong>210 HP</strong>Engine</div>
+                      <div class="vehicle-card__spec"><strong>RWD</strong>Drive</div>
+                      <div class="vehicle-card__spec"><strong>5-Spd</strong>Manual</div>
+                    </div>
+                    <div class="vehicle-card__price-row">
+                      <span class="vehicle-card__price">$295</span>
+                      <span class="meta vehicle-card__currency">USD</span>
+                    </div>
+                    <button class="btn btn-primary btn-full" id="btn-v1_911_carrera_rs_1973">Choose This Car →</button>
+                  </div>
+                </div>
+
+                <!-- Vehicle 2: 356 Speedster 1958 -->
+                <div class="vehicle-card" id="vc-v2_356_speedster_1958" onclick="selectVehicle('v2_356_speedster_1958')">
+                  <div class="vehicle-card__badge vehicle-card__badge--selected hidden" id="badge-v2_356_speedster_1958">Selected ✓</div>
+                  <div class="vehicle-card__gallery" id="gallery-v2_356_speedster_1958">
+                    <img src="static/vehicles/v2_356_speedster_1958/exterior_front.jpg" alt="1958 Porsche 356 A Speedster — front" class="active">
+                    <img src="static/vehicles/v2_356_speedster_1958/exterior_side.jpg" alt="1958 Porsche 356 A Speedster — side">
+                    <img src="static/vehicles/v2_356_speedster_1958/interior.jpg" alt="1958 Porsche 356 A Speedster — detail">
+                    <div class="vehicle-card__gallery-dots">
+                      <button class="gallery-dot active" onclick="setGalleryImage(event,'v2_356_speedster_1958',0)" title="Photo 1"></button>
+                      <button class="gallery-dot" onclick="setGalleryImage(event,'v2_356_speedster_1958',1)" title="Photo 2"></button>
+                      <button class="gallery-dot" onclick="setGalleryImage(event,'v2_356_speedster_1958',2)" title="Photo 3"></button>
+                    </div>
+                    <div class="vehicle-card__gallery-nav">
+                      <button class="gallery-arrow" onclick="cycleGallery(event,'v2_356_speedster_1958',-1)">‹</button>
+                      <button class="gallery-arrow" onclick="cycleGallery(event,'v2_356_speedster_1958',1)">›</button>
+                    </div>
+                  </div>
+                  <div class="vehicle-card__body">
+                    <div class="vehicle-card__name">1958 Porsche 356 A Speedster</div>
+                    <div class="vehicle-card__tagline">Open-top, low-slung, mechanically pure.</div>
+                    <div class="vehicle-card__specs">
+                      <div class="vehicle-card__spec"><strong>75 HP</strong>Engine</div>
+                      <div class="vehicle-card__spec"><strong>RWD</strong>Drive</div>
+                      <div class="vehicle-card__spec"><strong>4-Spd</strong>Manual</div>
+                    </div>
+                    <div class="vehicle-card__price-row">
+                      <span class="vehicle-card__price">$245</span>
+                      <span class="meta vehicle-card__currency">USD</span>
+                    </div>
+                    <button class="btn btn-primary btn-full" id="btn-v2_356_speedster_1958">Choose This Car →</button>
+                  </div>
+                </div>
+
+                <!-- Vehicle 3: 944 Turbo 1986 -->
+                <div class="vehicle-card" id="vc-v3_944_turbo_1986" onclick="selectVehicle('v3_944_turbo_1986')">
+                  <div class="vehicle-card__badge vehicle-card__badge--selected hidden" id="badge-v3_944_turbo_1986">Selected ✓</div>
+                  <div class="vehicle-card__gallery" id="gallery-v3_944_turbo_1986">
+                    <img src="static/vehicles/v3_944_turbo_1986/exterior_front.jpg" alt="1986 Porsche 944 Turbo — front" class="active">
+                    <img src="static/vehicles/v3_944_turbo_1986/exterior_side.jpg" alt="1986 Porsche 944 Turbo — side">
+                    <img src="static/vehicles/v3_944_turbo_1986/interior.jpg" alt="1986 Porsche 944 Turbo — detail">
+                    <div class="vehicle-card__gallery-dots">
+                      <button class="gallery-dot active" onclick="setGalleryImage(event,'v3_944_turbo_1986',0)" title="Photo 1"></button>
+                      <button class="gallery-dot" onclick="setGalleryImage(event,'v3_944_turbo_1986',1)" title="Photo 2"></button>
+                      <button class="gallery-dot" onclick="setGalleryImage(event,'v3_944_turbo_1986',2)" title="Photo 3"></button>
+                    </div>
+                    <div class="vehicle-card__gallery-nav">
+                      <button class="gallery-arrow" onclick="cycleGallery(event,'v3_944_turbo_1986',-1)">‹</button>
+                      <button class="gallery-arrow" onclick="cycleGallery(event,'v3_944_turbo_1986',1)">›</button>
+                    </div>
+                  </div>
+                  <div class="vehicle-card__body">
+                    <div class="vehicle-card__name">1986 Porsche 944 Turbo</div>
+                    <div class="vehicle-card__tagline">80s wedge with surprising bite.</div>
+                    <div class="vehicle-card__specs">
+                      <div class="vehicle-card__spec"><strong>220 HP</strong>Engine</div>
+                      <div class="vehicle-card__spec"><strong>RWD</strong>Drive</div>
+                      <div class="vehicle-card__spec"><strong>5-Spd</strong>Manual</div>
+                    </div>
+                    <div class="vehicle-card__price-row">
+                      <span class="vehicle-card__price">$165</span>
+                      <span class="meta vehicle-card__currency">USD</span>
+                    </div>
+                    <button class="btn btn-primary btn-full" id="btn-v3_944_turbo_1986">Choose This Car →</button>
+                  </div>
+                </div>
+
+              </div><!-- /vehicle-grid -->
+
+              <!-- Drive required fields (revealed after vehicle pick) -->
+              <div id="drive-fields" class="hidden">
+                <p class="meta text-volt mb-2" style="margin-top:1.5rem">Driver Details Required</p>
+                <div class="field-row">
+                  <div class="field">
+                    <label>Driver's License Number <span class="req">*</span></label>
+                    <input type="text" id="drivers_license_number" placeholder="e.g. R1234567">
+                    <span class="field-error" id="err-drivers_license_number">Required</span>
+                  </div>
+                  <div class="field">
+                    <label>License State / Province <span class="req">*</span></label>
+                    <input type="text" id="drivers_license_state" placeholder="e.g. CA">
+                    <span class="field-error" id="err-drivers_license_state">Required</span>
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label>Insurance Carrier <span class="req">*</span></label>
+                    <input type="text" id="insurance_carrier" placeholder="e.g. State Farm">
+                    <span class="field-error" id="err-insurance_carrier">Required</span>
+                  </div>
+                  <div class="field">
+                    <label>Policy Number <span class="req">*</span></label>
+                    <input type="text" id="insurance_policy_number" placeholder="e.g. SF-99012">
+                    <span class="field-error" id="err-insurance_policy_number">Required</span>
+                  </div>
+                </div>
+                <div class="waiver-row">
+                  <input type="checkbox" id="driver_waiver_v1">
+                  <label for="driver_waiver_v1">
+                    <strong>Driver Waiver (v1)</strong> — I hold a valid driver's license, am insured, and accept full responsibility for my conduct during the Porsche drive experience. I release Countryside Classic Cars LLC and RunClub from liability.
+                  </label>
+                </div>
+                <span class="field-error" id="err-driver_waiver_v1" style="margin-top:0.4rem">You must accept the driver waiver</span>
+              </div>
+
+              <div class="safety-note" style="margin-top:1.5rem">
+                <span class="safety-note__icon">⚠</span>
+                <p><strong>Safety notice:</strong> The Porsche drive takes place before the race. No driving after the wine tasting. Shuttle service is available from the finish line to the parking area.</p>
+              </div>
+            </div><!-- /addon-drive -->
+
+            <hr class="divider" style="margin:1.5rem 0">
+
+            <!-- Wine tasting toggle -->
+            <div class="addon-toggle" id="toggle-tasting" onclick="toggleAddon('tasting')">
+              <div class="addon-toggle__box">
+                <svg class="addon-toggle__check" viewBox="0 0 10 10" fill="none">
+                  <path d="M1.5 5L4 7.5L8.5 2.5" stroke="#0A0A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="addon-toggle__text">
+                <div class="addon-toggle__name">Post-Race Wine Tasting</div>
+                <div class="addon-toggle__desc">Ridgeline Winery — celebrating at the finish line. Must be 21+.</div>
+              </div>
+              <div class="addon-toggle__price">$45</div>
+            </div>
+
+            <!-- Tasting section -->
+            <div class="addon-section" id="addon-tasting">
+              <div class="waiver-row" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.04)">
+                <input type="checkbox" id="age_21_attestation">
+                <label for="age_21_attestation">
+                  <strong>Age Confirmation</strong> — I confirm that I am 21 years of age or older on the date of the event (October 4, 2026) and understand that valid ID will be required at the tasting.
+                </label>
+              </div>
+              <span class="field-error" id="err-age_21_attestation" style="margin-top:0.4rem">You must confirm you are 21+ to add the wine tasting</span>
+            </div><!-- /addon-tasting -->
+          </div><!-- /field-group -->
+
+          <div style="display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap">
+            <button class="btn btn-ghost" onclick="goToStep(1)">← Back</button>
+            <button class="btn btn-primary btn-lg" onclick="goToStep(3)">Review Order →</button>
+          </div>
+        </div>
+      </div><!-- /panel-2 -->
+
+      <!-- ── STEP 3: Review ── -->
+      <div class="form-panel" id="panel-3">
+        <div class="section--tight">
+
+          <div class="summary-card">
+            <p class="meta summary-card__title">Order Summary</p>
+
+            <div class="summary-line">
+              <span class="summary-line__label">Porsche Run 5K — Community</span>
+              <span class="summary-line__value" id="sum-base">$85</span>
+            </div>
+
+            <div id="sum-drive-row" class="hidden">
+              <div class="summary-vehicle" id="sum-vehicle-preview">
+                <img src="" alt="" class="summary-vehicle__img" id="sum-vehicle-img">
+                <div>
+                  <div class="summary-vehicle__name" id="sum-vehicle-name">—</div>
+                  <div class="summary-vehicle__sub">Pre-race Porsche drive</div>
+                </div>
+              </div>
+              <div class="summary-line">
+                <span class="summary-line__label">Porsche Drive Add-on</span>
+                <span class="summary-line__value" id="sum-drive">—</span>
+              </div>
+            </div>
+
+            <div id="sum-tasting-row" class="hidden">
+              <div class="summary-line">
+                <span class="summary-line__label">Wine Tasting — Ridgeline Winery</span>
+                <span class="summary-line__value">$45</span>
+              </div>
+            </div>
+
+            <div class="summary-line summary-line--total" style="margin-top:0.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.15);border-bottom:none">
+              <span class="summary-line__label">Total Due Today</span>
+              <span class="summary-line__value" id="sum-total">$85</span>
+            </div>
+          </div>
+
+          <div class="summary-card" style="margin-bottom:2rem">
+            <p class="meta summary-card__title">Registrant</p>
+            <div class="summary-line">
+              <span class="summary-line__label">Name</span>
+              <span class="summary-line__value" id="sum-name">—</span>
+            </div>
+            <div class="summary-line">
+              <span class="summary-line__label">Email</span>
+              <span class="summary-line__value" id="sum-email" style="font-size:1rem">—</span>
+            </div>
+            <div class="summary-line">
+              <span class="summary-line__label">Race Date</span>
+              <span class="summary-line__value">Oct 4, 2026</span>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:1rem;flex-wrap:wrap">
+            <button class="btn btn-ghost" onclick="goToStep(2)">← Back</button>
+            <button class="btn btn-primary btn-lg" onclick="submitRegistration()">
+              Confirm Registration →
+            </button>
+          </div>
+        </div>
+      </div><!-- /panel-3 -->
+
+    </div><!-- /registration-form -->
+
+    <!-- ── SUCCESS SCREEN ── -->
+    <div id="success-screen">
+      <div class="success-icon">✓</div>
+      <p class="meta text-volt mb-1">You're in</p>
+      <h2 class="display-l" style="margin-bottom:1rem">See you<br>at the start line.</h2>
+      <p class="text-muted" style="max-width:400px;margin-bottom:2rem;text-align:center">
+        Confirmation sent to <strong id="confirm-email" class="text-chalk"></strong>.
+        Your bib number will arrive two weeks before race day.
+      </p>
+      <div id="confirm-vehicle-block" class="hidden" style="margin-bottom:2rem;text-align:center">
+        <p class="meta text-volt mb-1">Your Porsche</p>
+        <p class="headline-m" id="confirm-vehicle-name">—</p>
+      </div>
+      <a href="#hero" class="btn btn-ghost">← Back to top</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════════ -->
+<footer style="border-top:1px solid var(--track);padding:2rem 0">
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem">
+    <span class="hero__logo" style="font-size:1rem">RunClub <span>×</span> Porsche</span>
+    <p class="meta text-muted">Oct 4, 2026 &nbsp;·&nbsp; Community 5K &nbsp;·&nbsp; Presented by Ridgeline Winery</p>
+  </div>
+</footer>
+
+
+<script>
+// ─── Lightbox for gallery ────────────────────────────────────
+function openLightbox(src) {
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+// ─── State ───────────────────────────────────────────────────
+const state = {
+  step: 1,
+  driveEnabled: false,
+  tastingEnabled: false,
+  selectedVehicle: null,
+  // Vehicle pricing
+  vehicles: {
+    'v1_911_carrera_rs_1973': { name: '1973 Porsche 911 Carrera RS 2.7', price: 295, img: 'static/vehicles/v1_911_carrera_rs_1973/exterior_side.jpg' },
+    'v2_356_speedster_1958':  { name: '1958 Porsche 356 A Speedster',    price: 245, img: 'static/vehicles/v2_356_speedster_1958/exterior_side.jpg' },
+    'v3_944_turbo_1986':      { name: '1986 Porsche 944 Turbo',          price: 165, img: 'static/vehicles/v3_944_turbo_1986/exterior_side.jpg' },
+  },
+  // Simulate one car already reserved by another registrant
+  reservedVehicles: new Set(),
+  galleryIndex: {},
+};
+
+// ─── Pricing ─────────────────────────────────────────────────
+function basePrice() {
+  const race = new Date('2026-10-04');
+  const now = new Date();
+  const weeks = (race - now) / (7 * 24 * 60 * 60 * 1000);
+  if (weeks >= 12) return 85;
+  if (weeks >= 4)  return 110;
+  if (weeks >= 1)  return 135;
+  return 150;
+}
+
+function totalPrice() {
+  let t = basePrice();
+  if (state.driveEnabled && state.selectedVehicle)
+    t += state.vehicles[state.selectedVehicle].price;
+  if (state.tastingEnabled) t += 45;
+  return t;
+}
+
+function fmt(n) { return '$' + n; }
+
+// ─── Countdown ────────────────────────────────────────────────
+function updateCountdown() {
+  const race = new Date('2026-10-04T07:00:00');
+  const diff = race - new Date();
+  if (diff <= 0) { document.getElementById('cd-days').textContent = '0'; return; }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+  document.getElementById('cd-hrs').textContent  = String(h).padStart(2,'0');
+  document.getElementById('cd-min').textContent  = String(m).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 30000);
+
+// ─── Gallery ─────────────────────────────────────────────────
+function setGalleryImage(evt, vid, idx) {
+  if (evt) evt.stopPropagation();
+  const gallery = document.getElementById('gallery-' + vid);
+  const imgs = gallery.querySelectorAll('img');
+  const dots = gallery.querySelectorAll('.gallery-dot');
+  imgs.forEach((img, i) => img.classList.toggle('active', i === idx));
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  state.galleryIndex[vid] = idx;
+}
+
+function cycleGallery(evt, vid, dir) {
+  evt.stopPropagation();
+  const current = state.galleryIndex[vid] || 0;
+  const next = (current + dir + 3) % 3;
+  setGalleryImage(evt, vid, next);
+}
+
+// ─── Add-on toggles ──────────────────────────────────────────
+function toggleAddon(which) {
+  if (which === 'drive') {
+    state.driveEnabled = !state.driveEnabled;
+    document.getElementById('toggle-drive').classList.toggle('checked', state.driveEnabled);
+    document.getElementById('addon-drive').classList.toggle('visible', state.driveEnabled);
+    const priceLabel = document.getElementById('drive-price-label');
+    if (state.driveEnabled && state.selectedVehicle) {
+      priceLabel.textContent = fmt(state.vehicles[state.selectedVehicle].price);
+      priceLabel.classList.remove('varies');
+    } else {
+      priceLabel.textContent = 'From $165';
+      priceLabel.classList.add('varies');
+    }
+    if (!state.driveEnabled) {
+      // Deselect vehicle
+      if (state.selectedVehicle) {
+        document.getElementById('vc-' + state.selectedVehicle).classList.remove('selected');
+        document.getElementById('badge-' + state.selectedVehicle).classList.add('hidden');
+      }
+      state.selectedVehicle = null;
+      document.getElementById('drive-fields').classList.add('hidden');
+    }
+  } else {
+    state.tastingEnabled = !state.tastingEnabled;
+    document.getElementById('toggle-tasting').classList.toggle('checked', state.tastingEnabled);
+    document.getElementById('addon-tasting').classList.toggle('visible', state.tastingEnabled);
+  }
+}
+
+// ─── Vehicle selection ────────────────────────────────────────
+function selectVehicle(vid) {
+  if (state.reservedVehicles.has(vid)) return;
+
+  // Deselect previous
+  if (state.selectedVehicle && state.selectedVehicle !== vid) {
+    document.getElementById('vc-' + state.selectedVehicle).classList.remove('selected');
+    document.getElementById('badge-' + state.selectedVehicle).classList.add('hidden');
+    const prevBtn = document.getElementById('btn-' + state.selectedVehicle);
+    if (prevBtn) { prevBtn.textContent = 'Choose This Car →'; prevBtn.disabled = false; }
+  }
+
+  state.selectedVehicle = vid;
+  document.getElementById('vc-' + vid).classList.add('selected');
+  document.getElementById('badge-' + vid).classList.remove('hidden');
+  const btn = document.getElementById('btn-' + vid);
+  if (btn) { btn.textContent = '✓ Selected'; btn.disabled = true; }
+
+  // Update drive price label
+  const priceLabel = document.getElementById('drive-price-label');
+  priceLabel.textContent = fmt(state.vehicles[vid].price);
+  priceLabel.classList.remove('varies');
+
+  // Show driver fields
+  document.getElementById('drive-fields').classList.remove('hidden');
+}
+
+// ─── Step navigation ──────────────────────────────────────────
+function goToStep(n) {
+  // Validate current step before proceeding
+  if (n > state.step && !validateStep(state.step)) return;
+
+  state.step = n;
+
+  document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + n).classList.add('active');
+
+  document.querySelectorAll('.step-tab').forEach(t => {
+    const s = parseInt(t.dataset.step);
+    t.classList.toggle('active', s === n);
+    t.classList.toggle('done', s < n);
+  });
+
+  document.getElementById('progress-fill').style.width = (n / 3 * 100) + '%';
+
+  if (n === 3) buildSummary();
+
+  window.scrollTo({ top: document.getElementById('register').offsetTop - 20, behavior: 'smooth' });
+}
+
+// ─── Validation ───────────────────────────────────────────────
+function showErr(id, msg) {
+  const el = document.getElementById('err-' + id);
+  const inp = document.getElementById(id);
+  if (el) { el.textContent = msg || el.textContent; el.classList.add('visible'); }
+  if (inp) inp.classList.add('error');
+}
+function clearErr(id) {
+  const el = document.getElementById('err-' + id);
+  const inp = document.getElementById(id);
+  if (el) el.classList.remove('visible');
+  if (inp) inp.classList.remove('error');
+}
+
+function validateStep(step) {
+  let ok = true;
+
+  if (step === 1) {
+    const required = ['first_name','last_name','email','date_of_birth','shirt_size',
+                      'emergency_contact_name','emergency_contact_phone'];
+    required.forEach(id => {
+      const v = document.getElementById(id)?.value.trim();
+      if (!v) { showErr(id); ok = false; } else clearErr(id);
+    });
+    // Email format
+    const email = document.getElementById('email')?.value.trim();
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showErr('email', 'Valid email required'); ok = false;
+    }
+    // Age check: must be old enough for a 5K (8+)
+    const dob = document.getElementById('date_of_birth')?.value;
+    if (dob) {
+      const age = getAge(dob, '2026-10-04');
+      if (age < 5) { showErr('date_of_birth', 'Minimum age is 5 for the community 5K'); ok = false; }
+    }
+    // Waiver
+    if (!document.getElementById('waiver_v7').checked) {
+      showErr('waiver_v7'); ok = false;
+    } else clearErr('waiver_v7');
+  }
+
+  if (step === 2) {
+    if (state.driveEnabled) {
+      // Must have selected a vehicle
+      if (!state.selectedVehicle) {
+        alert('Please select a Porsche to continue, or uncheck the drive add-on.');
+        ok = false;
+      }
+      // Age check: 25+ for drive
+      const dob = document.getElementById('date_of_birth')?.value;
+      if (dob && getAge(dob, '2026-10-04') < 25) {
+        alert('You must be 25 or older on race day to take part in the Porsche drive.');
+        ok = false;
+      }
+      if (ok) {
+        const driveFields = ['drivers_license_number','drivers_license_state','insurance_carrier','insurance_policy_number'];
+        driveFields.forEach(id => {
+          const v = document.getElementById(id)?.value.trim();
+          if (!v) { showErr(id); ok = false; } else clearErr(id);
+        });
+        if (!document.getElementById('driver_waiver_v1').checked) {
+          showErr('driver_waiver_v1'); ok = false;
+        } else clearErr('driver_waiver_v1');
+      }
+    }
+    if (state.tastingEnabled) {
+      // Age check: 21+ for tasting
+      const dob = document.getElementById('date_of_birth')?.value;
+      if (dob && getAge(dob, '2026-10-04') < 21) {
+        alert('You must be 21 or older on race day to attend the wine tasting.');
+        ok = false;
+      }
+      if (!document.getElementById('age_21_attestation').checked) {
+        showErr('age_21_attestation'); ok = false;
+      } else clearErr('age_21_attestation');
+    }
+  }
+
+  return ok;
+}
+
+function getAge(dob, raceDate) {
+  const d = new Date(dob), r = new Date(raceDate);
+  let age = r.getFullYear() - d.getFullYear();
+  if ((r.getMonth() < d.getMonth()) || (r.getMonth() === d.getMonth() && r.getDate() < d.getDate())) age--;
+  return age;
+}
+
+// ─── Summary builder ─────────────────────────────────────────
+function buildSummary() {
+  const first = document.getElementById('first_name').value.trim();
+  const last = document.getElementById('last_name').value.trim();
+  document.getElementById('sum-name').textContent = first + ' ' + last;
+  document.getElementById('sum-email').textContent = document.getElementById('email').value.trim();
+  document.getElementById('sum-base').textContent = fmt(basePrice());
+
+  const driveRow = document.getElementById('sum-drive-row');
+  if (state.driveEnabled && state.selectedVehicle) {
+    const v = state.vehicles[state.selectedVehicle];
+    driveRow.classList.remove('hidden');
+    document.getElementById('sum-drive').textContent = fmt(v.price);
+    document.getElementById('sum-vehicle-name').textContent = v.name;
+    document.getElementById('sum-vehicle-img').src = v.img;
+    document.getElementById('sum-vehicle-img').alt = v.name;
+  } else {
+    driveRow.classList.add('hidden');
+  }
+
+  document.getElementById('sum-tasting-row').classList.toggle('hidden', !state.tastingEnabled);
+  document.getElementById('sum-total').textContent = fmt(totalPrice());
+}
+
+// ─── Submit ───────────────────────────────────────────────────
+function submitRegistration() {
+  if (!validateStep(3)) return;
+
+  // Simulate success
+  document.getElementById('registration-form').classList.add('hidden');
+  const ss = document.getElementById('success-screen');
+  ss.classList.add('active');
+
+  document.getElementById('confirm-email').textContent = document.getElementById('email').value.trim();
+
+  if (state.selectedVehicle && state.driveEnabled) {
+    const block = document.getElementById('confirm-vehicle-block');
+    block.classList.remove('hidden');
+    document.getElementById('confirm-vehicle-name').textContent = state.vehicles[state.selectedVehicle].name;
+    // Mark as reserved
+    state.reservedVehicles.add(state.selectedVehicle);
+  }
+
+  window.scrollTo({ top: document.getElementById('register').offsetTop - 20, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
