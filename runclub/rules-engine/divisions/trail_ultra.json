@@ -1,0 +1,145 @@
+{
+  "division": "trail_ultra",
+  "display_name": "Trail & Ultramarathon",
+  "owning_team": "Trail & Ultra",
+
+  "subdistances": {
+    "trail_marathon": { "distance_km": 42.2,  "cutoff_hours": 8 },
+    "50K":            { "distance_km": 50,    "cutoff_hours": 10 },
+    "50M":            { "distance_km": 80.5,  "cutoff_hours": 16 },
+    "100K":           { "distance_km": 100,   "cutoff_hours": 22 },
+    "100M":           { "distance_km": 160.9, "cutoff_hours": 36 }
+  },
+
+  "eligibility": {
+    "age_minimum_years_50K": 18,
+    "age_minimum_years_50M": 19,
+    "age_minimum_years_100K": 20,
+    "age_minimum_years_100M": 21,
+    "qualifier_required_50M": false,
+    "qualifier_required_100K": true,
+    "qualifier_required_100M": true,
+    "qualifier_options_100M": [
+      "prior_100K_finish_within_24_months",
+      "prior_50M_finish_under_12_hours_within_18_months",
+      "itra_performance_index_600_plus",
+      "utmb_index_600_plus"
+    ]
+  },
+
+  "registration_required_fields": [
+    "legal_name",
+    "date_of_birth",
+    "gender_division",
+    "email",
+    "phone",
+    "emergency_contact_name",
+    "emergency_contact_phone",
+    "blood_type_optional",
+    "allergies",
+    "current_medications",
+    "prior_ultra_finishes",
+    "itra_or_utmb_index_optional",
+    "drop_bag_locations_selected",
+    "pacer_declarations",
+    "crew_declarations",
+    "shirt_size",
+    "medical_attestation_v3_ultra_addendum",
+    "mandatory_gear_attestation",
+    "waiver_v7"
+  ],
+
+  "pricing": {
+    "default_tiers_50K": [
+      { "name": "early_bird", "weeks_before": 30, "default_price_usd": 110 },
+      { "name": "regular",    "weeks_before": 12, "default_price_usd": 145 }
+    ],
+    "default_tiers_100M": [
+      { "name": "early_bird", "weeks_before": 40, "default_price_usd": 285 },
+      { "name": "regular",    "weeks_before": 20, "default_price_usd": 350 }
+    ]
+  },
+
+  "refund_policy": {
+    "full_refund_until_days_before": 120,
+    "partial_refund_percent": 30,
+    "partial_refund_until_days_before": 60,
+    "no_refund_inside_days_before": 60,
+    "medical_exception_with_documentation": true
+  },
+
+  "transfer_policy": {
+    "athlete_to_athlete_allowed": false,
+    "rationale": "Qualifier verification is athlete-specific."
+  },
+
+  "deferral_policy": {
+    "allowed": true,
+    "max_years": 1,
+    "fee_usd": 0,
+    "deadline_days_before": 30,
+    "dns_auto_deferral_for_lottery_weight_next_year": true
+  },
+
+  "lottery": {
+    "applies_to": ["100M"],
+    "weighted_entries_per_consecutive_unsuccessful_year": 2,
+    "weighted_entries_for_volunteering_8_hours": 1
+  },
+
+  "mandatory_gear": [
+    "headlamp_with_spare_batteries",
+    "whistle",
+    "emergency_thermal_blanket",
+    "waterproof_jacket_with_seams",
+    "minimum_water_capacity_liters_1.0",
+    "cup_or_collapsible_flask_no_disposable_cups",
+    "fully_charged_phone",
+    "trail_map_or_offline_gpx",
+    "first_aid_basics"
+  ],
+
+  "pacer_rules": {
+    "allowed_after_km_50M": 41.8,
+    "allowed_after_km_100K": 50,
+    "allowed_after_km_100M": 80,
+    "max_pacers_simultaneously": 1,
+    "pacer_must_register_and_sign_waiver": true,
+    "pacer_may_not_carry_runner_gear": true,
+    "muling_disqualification": true
+  },
+
+  "crew_rules": {
+    "crew_credential_required": true,
+    "crew_vehicles_per_athlete_max": 1,
+    "crew_aid_only_at_designated_aid_stations": true
+  },
+
+  "drop_bag_rules": {
+    "max_bags_per_athlete": 4,
+    "max_bag_weight_kg": 7,
+    "no_glass_containers": true,
+    "tagged_with_bib_number_required": true
+  },
+
+  "medical": {
+    "attestation_required": true,
+    "physician_signoff_required_for_100M": true,
+    "course_aid_spacing_max_km": 8,
+    "medical_personnel_at_every_aid_station": true,
+    "weight_check_at_aid_stations_100M": true,
+    "weight_loss_disqualification_percent": 7,
+    "cutoff_enforced_at_every_aid_station": true
+  },
+
+  "course": {
+    "course_marking_max_gap_meters": 400,
+    "reflective_markings_required_for_night_sections": true,
+    "course_certification_body": "ITRA_or_UTMB_optional"
+  },
+
+  "weather_protocols": {
+    "lightning_30_30_rule_enforced": true,
+    "race_director_authority_to_modify_or_cancel": true
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "division": "marathon",
+  "display_name": "Road Marathon",
+  "owning_team": "Marathon Registration",
+  "distance_km": 42.195,
+
+  "eligibility": {
+    "age_minimum_years": 18,
+    "age_minimum_with_guardian_waiver": 16,
+    "age_groups": [
+      "18-24", "25-29", "30-34", "35-39", "40-44", "45-49",
+      "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80+"
+    ],
+    "para_divisions": [
+      "wheelchair_open", "handcycle_open", "visually_impaired_guided",
+      "ambulatory_t11_t13", "ambulatory_t44_t47"
+    ]
+  },
+
+  "registration_required_fields": [
+    "legal_name",
+    "date_of_birth",
+    "gender_division",
+    "email",
+    "phone",
+    "emergency_contact_name",
+    "emergency_contact_phone",
+    "shirt_size",
+    "predicted_finish_time",
+    "medical_attestation_v3",
+    "waiver_v7"
+  ],
+
+  "pricing": {
+    "default_tiers": [
+      { "name": "early_bird",   "weeks_before": 26, "default_price_usd": 95 },
+      { "name": "regular",      "weeks_before": 12, "default_price_usd": 125 },
+      { "name": "late",         "weeks_before": 4,  "default_price_usd": 155 },
+      { "name": "race_week",    "weeks_before": 1,  "default_price_usd": 185 }
+    ],
+    "charity_entry_minimum_fundraising_usd": 1500
+  },
+
+  "refund_policy": {
+    "full_refund_until_days_before": 60,
+    "partial_refund_percent": 50,
+    "partial_refund_until_days_before": 14,
+    "no_refund_inside_days_before": 14,
+    "medical_exception_with_documentation": true
+  },
+
+  "transfer_policy": {
+    "athlete_to_athlete_allowed": true,
+    "deadline_days_before": 21,
+    "transfer_fee_usd": 25
+  },
+
+  "deferral_policy": {
+    "allowed": true,
+    "max_years": 1,
+    "fee_usd": 50,
+    "deadline_days_before": 30
+  },
+
+  "qualifying": {
+    "required": false,
+    "boston_qualifier_supported": true,
+    "verification_sources": ["runclub_registry", "abbott_majors_registry", "official_certified_courses"]
+  },
+
+  "corral_assignment": {
+    "method": "predicted_or_verified_finish_time",
+    "tiers_minutes": [180, 210, 240, 270, 300, 330, 360, 420, 480]
+  },
+
+  "mandatory_gear": [],
+
+  "medical": {
+    "attestation_required": true,
+    "physician_signoff_required": false,
+    "course_aid_spacing_max_km": 3.2,
+    "medical_tent_count_per_1000_athletes": 1,
+    "ambulance_count_per_2000_athletes": 1,
+    "cutoff_hours": 7
+  },
+
+  "course": {
+    "certification_required": true,
+    "certification_body": "USATF",
+    "mile_markers_required_every_mile": true,
+    "kilometer_markers_required_every_km": true,
+    "must_be_loop_or_point_to_point": true
+  },
+
+  "weather_protocols": {
+    "wbgt_flag_yellow_celsius": 21,
+    "wbgt_flag_red_celsius": 25,
+    "wbgt_flag_black_celsius": 28,
+    "lightning_30_30_rule_enforced": true
+  }
+}
