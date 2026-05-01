@@ -18,9 +18,9 @@
       "capacity": 500,
       "registered": 312,
       "status": "early_bird",
-      "registration_url": "../porsche_run/",
+      "registration_url": "../",
       "accent": "volt",
-      "hero_image": "../porsche_run/static/gallery/01_start_line.jpg"
+      "hero_image": "../static/gallery/01_start_line.jpg"
     },
     {
       "id": "big-sur-coastal-half",

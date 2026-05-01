@@ -4,9 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'porsche_run/index.html'
-      - 'porsche_run/vehicle_inventory.json'
-      - 'porsche_run/static/**'
+      - 'runclub/customer-events/porsche_run/**'
 
 permissions:
   contents: write
@@ -21,7 +19,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./porsche_run
+          publish_dir: ./runclub/customer-events/porsche_run
           destination_dir: porsche_run
           keep_files: true
           commit_message: 'Deploy Porsche Run 5K app to GitHub Pages'
