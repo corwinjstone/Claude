@@ -1,0 +1,84 @@
+{
+  "division": "duathlon",
+  "display_name": "Duathlon (Run-Bike-Run)",
+  "owning_team": "Triathlon Registration",
+
+  "subdistances": {
+    "sprint":    { "run1_km": 5,  "bike_km": 20, "run2_km": 2.5, "cutoff_hours": 2 },
+    "standard":  { "run1_km": 10, "bike_km": 40, "run2_km": 5,   "cutoff_hours": 3.5 },
+    "long":      { "run1_km": 10, "bike_km": 60, "run2_km": 10,  "cutoff_hours": 5 }
+  },
+
+  "eligibility": {
+    "age_minimum_years": 15,
+    "age_groups": [
+      "15-19", "20-24", "25-29", "30-34", "35-39", "40-44",
+      "45-49", "50-54", "55-59", "60-64", "65-69", "70-74", "75+"
+    ]
+  },
+
+  "registration_required_fields": [
+    "legal_name",
+    "date_of_birth",
+    "gender_division",
+    "email",
+    "phone",
+    "emergency_contact_name",
+    "emergency_contact_phone",
+    "usat_membership_number_or_one_day_license",
+    "bike_make_model",
+    "shirt_size",
+    "medical_attestation_v3",
+    "waiver_v7"
+  ],
+
+  "pricing": {
+    "default_tiers": [
+      { "name": "early_bird", "weeks_before": 16, "default_price_usd": 75 },
+      { "name": "regular",    "weeks_before": 6,  "default_price_usd": 95 }
+    ]
+  },
+
+  "refund_policy": {
+    "full_refund_until_days_before": 60,
+    "partial_refund_percent": 50,
+    "partial_refund_until_days_before": 21,
+    "no_refund_inside_days_before": 21,
+    "medical_exception_with_documentation": true
+  },
+
+  "transfer_policy": {
+    "athlete_to_athlete_allowed": true,
+    "deadline_days_before": 21,
+    "transfer_fee_usd": 25
+  },
+
+  "deferral_policy": {
+    "allowed": true,
+    "max_years": 1,
+    "fee_usd": 40
+  },
+
+  "transition_rules": {
+    "rack_assignment_method": "by_age_group_then_bib",
+    "helmet_required_buckled_before_bike_off_rack": true,
+    "no_drafting_zone_meters": 12
+  },
+
+  "mandatory_gear": [
+    "approved_helmet",
+    "race_belt_or_safety_pinned_bib",
+    "closed_toe_run_shoes"
+  ],
+
+  "medical": {
+    "attestation_required": true,
+    "course_aid_spacing_max_km_run_legs": 2.5,
+    "medical_tent_at_t1_t2_finish": true
+  },
+
+  "weather_protocols": {
+    "wbgt_run_leg_modification_celsius": 28,
+    "lightning_30_30_rule_enforced": true
+  }
+}

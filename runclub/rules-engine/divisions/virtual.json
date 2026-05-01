@@ -1,0 +1,73 @@
+{
+  "division": "virtual",
+  "display_name": "Virtual Race",
+  "owning_team": "Community Races",
+
+  "supported_distances_km": [1, 5, 10, 21.0975, 42.195, 50, 80.5, 100, 160.9],
+
+  "eligibility": {
+    "age_minimum_years": 8,
+    "guardian_signature_required_under_age": 18,
+    "para_divisions_supported": true,
+    "any_geographic_location_allowed": true
+  },
+
+  "registration_required_fields": [
+    "first_name",
+    "last_name",
+    "date_of_birth",
+    "email",
+    "shirt_size",
+    "shipping_address",
+    "country",
+    "waiver_v7"
+  ],
+
+  "pricing": {
+    "default_price_usd_5K": 30,
+    "default_price_usd_marathon": 60,
+    "shirt_and_medal_shipping_included_domestic": true,
+    "international_shipping_surcharge_usd": 15
+  },
+
+  "refund_policy": {
+    "full_refund_until_days_before_event_window_open": 7,
+    "no_refund_after_swag_shipped": true
+  },
+
+  "transfer_policy": {
+    "athlete_to_athlete_allowed": false,
+    "rationale": "Swag is shipped to original registrant address."
+  },
+
+  "deferral_policy": {
+    "allowed": false,
+    "rationale": "Virtual events have a wide completion window already."
+  },
+
+  "completion_rules": {
+    "result_submission_methods": [
+      "strava_activity_link",
+      "garmin_connect_share_link",
+      "apple_health_export",
+      "manual_entry_with_photo_evidence"
+    ],
+    "completion_window_days": 14,
+    "gps_track_required_for_distances_over_km": 10,
+    "treadmill_completion_allowed_under_distance_km": 21.0975,
+    "treadmill_completion_disallowed_for_qualifying_purposes": true
+  },
+
+  "mandatory_gear": [],
+
+  "medical": {
+    "attestation_required": true,
+    "athlete_self_assesses_route_safety": true,
+    "rationale": "RunClub does not control virtual courses; athletes are responsible for their own safety."
+  },
+
+  "qualifying": {
+    "supported": false,
+    "rationale": "Virtual times are not eligible for qualifying-time use cases."
+  }
+}

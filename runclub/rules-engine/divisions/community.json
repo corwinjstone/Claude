@@ -1,0 +1,104 @@
+{
+  "division": "community",
+  "display_name": "Community 5K / 10K",
+  "owning_team": "Community Races",
+
+  "subdistances": {
+    "1K_kids":      { "distance_km": 1,    "min_age": 4, "max_age": 12, "cutoff_hours": 0.5 },
+    "kids_dash":    { "distance_km": 0.4,  "min_age": 3, "max_age": 8,  "cutoff_hours": 0.25 },
+    "5K":           { "distance_km": 5,    "min_age": 8,                "cutoff_hours": 1.5 },
+    "10K":          { "distance_km": 10,   "min_age": 12,               "cutoff_hours": 2.5 }
+  },
+
+  "eligibility": {
+    "guardian_signature_required_under_age": 18,
+    "stroller_division_supported": true,
+    "leashed_dog_division_supported": true,
+    "walker_division_supported": true
+  },
+
+  "registration_required_fields": [
+    "first_name",
+    "last_name",
+    "date_of_birth",
+    "email",
+    "shirt_size",
+    "emergency_contact_name",
+    "emergency_contact_phone",
+    "waiver_v7"
+  ],
+
+  "registration_optional_fields": [
+    "phone",
+    "team_or_company_name",
+    "charity_designation"
+  ],
+
+  "pricing": {
+    "default_tiers": [
+      { "name": "early_bird", "weeks_before": 8, "default_price_usd": 25 },
+      { "name": "regular",    "weeks_before": 2, "default_price_usd": 35 },
+      { "name": "race_week",  "weeks_before": 1, "default_price_usd": 45 },
+      { "name": "race_day",   "weeks_before": 0, "default_price_usd": 50 }
+    ],
+    "kids_distance_default_price_usd": 10,
+    "family_bundle_max_athletes": 6,
+    "family_bundle_discount_percent": 15
+  },
+
+  "refund_policy": {
+    "full_refund_until_days_before": 14,
+    "partial_refund_percent": 50,
+    "partial_refund_until_days_before": 3,
+    "no_refund_inside_days_before": 3,
+    "medical_exception_with_documentation": false
+  },
+
+  "transfer_policy": {
+    "athlete_to_athlete_allowed": true,
+    "deadline_days_before": 1,
+    "transfer_fee_usd": 0
+  },
+
+  "deferral_policy": {
+    "allowed": false,
+    "rationale": "Community races are low-cost; refund within window instead."
+  },
+
+  "qualifying": {
+    "required": false
+  },
+
+  "walk_up_registration": {
+    "allowed": true,
+    "cash_accepted": true,
+    "card_accepted": true,
+    "bib_printed_on_site": true
+  },
+
+  "mandatory_gear": [],
+
+  "medical": {
+    "attestation_required": false,
+    "physician_signoff_required": false,
+    "course_aid_spacing_max_km": 2.5,
+    "medical_tent_count_per_1000_athletes": 1,
+    "ambulance_count_minimum": 1
+  },
+
+  "course": {
+    "certification_required": false,
+    "mile_or_km_markers_recommended_not_required": true
+  },
+
+  "weather_protocols": {
+    "wbgt_flag_yellow_celsius": 23,
+    "wbgt_flag_red_celsius": 27,
+    "lightning_30_30_rule_enforced": true
+  },
+
+  "ui_copy_constraints": {
+    "avoid_jargon": ["corral", "PR", "negative split", "BQ", "fartlek"],
+    "tone": "welcoming_first_timer_friendly"
+  }
+}

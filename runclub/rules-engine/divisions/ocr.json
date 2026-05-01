@@ -1,0 +1,90 @@
+{
+  "division": "ocr",
+  "display_name": "Obstacle Course Race",
+  "owning_team": "Community Races",
+
+  "subdistances": {
+    "5K_obstacle":  { "distance_km":  5, "obstacle_count_min": 15, "cutoff_hours": 2 },
+    "10K_obstacle": { "distance_km": 10, "obstacle_count_min": 25, "cutoff_hours": 3.5 },
+    "21K_beast":    { "distance_km": 21, "obstacle_count_min": 30, "cutoff_hours": 6 }
+  },
+
+  "eligibility": {
+    "age_minimum_years": 14,
+    "age_minimum_with_guardian_waiver": 12,
+    "age_groups": [
+      "U18", "18-29", "30-39", "40-49", "50-59", "60+"
+    ],
+    "competitive_wave_qualifications_required": true,
+    "open_wave_no_qualification_required": true
+  },
+
+  "registration_required_fields": [
+    "legal_name",
+    "date_of_birth",
+    "gender_division",
+    "email",
+    "phone",
+    "emergency_contact_name",
+    "emergency_contact_phone",
+    "wave_choice_competitive_or_open",
+    "shirt_size",
+    "medical_attestation_v3_ocr_addendum",
+    "obstacle_failure_penalty_acknowledgment",
+    "waiver_v7_ocr_addendum"
+  ],
+
+  "pricing": {
+    "default_tiers": [
+      { "name": "early_bird", "weeks_before": 16, "default_price_usd": 75 },
+      { "name": "regular",    "weeks_before": 6,  "default_price_usd": 110 },
+      { "name": "race_week",  "weeks_before": 1,  "default_price_usd": 150 }
+    ]
+  },
+
+  "refund_policy": {
+    "full_refund_until_days_before": 30,
+    "partial_refund_percent": 0,
+    "no_refund_inside_days_before": 30,
+    "medical_exception_with_documentation": true
+  },
+
+  "transfer_policy": {
+    "athlete_to_athlete_allowed": true,
+    "deadline_days_before": 7,
+    "transfer_fee_usd": 25
+  },
+
+  "deferral_policy": {
+    "allowed": true,
+    "max_years": 1,
+    "fee_usd": 40
+  },
+
+  "obstacle_rules": {
+    "competitive_wave_failure_penalty": "disqualification_or_repeat_attempt_per_race",
+    "open_wave_failure_penalty": "burpees_or_skip_with_no_dq",
+    "headphones_allowed_open_wave": true,
+    "headphones_allowed_competitive_wave": false,
+    "course_marshals_at_every_obstacle": true
+  },
+
+  "mandatory_gear": [
+    "closed_toe_athletic_shoes",
+    "no_gloves_on_grip_obstacles_competitive_wave"
+  ],
+
+  "medical": {
+    "attestation_required": true,
+    "physician_signoff_required": false,
+    "course_aid_spacing_max_km": 2,
+    "medical_personnel_at_every_water_obstacle": true,
+    "rescue_swimmers_at_water_submersion_obstacles": true
+  },
+
+  "weather_protocols": {
+    "water_obstacles_modified_below_temp_celsius": 10,
+    "lightning_30_30_rule_enforced": true,
+    "mud_pit_closure_after_freeze_warning": true
+  }
+}

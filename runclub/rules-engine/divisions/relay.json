@@ -1,0 +1,80 @@
+{
+  "division": "relay",
+  "display_name": "Relay Race",
+  "owning_team": "Marathon Registration",
+
+  "formats": {
+    "marathon_relay_2_person":  { "total_km": 42.195, "leg_count": 2,  "exchange_zones": 1 },
+    "marathon_relay_4_person":  { "total_km": 42.195, "leg_count": 4,  "exchange_zones": 3 },
+    "ultra_relay_6_person":     { "total_km": 100,    "leg_count": 6,  "exchange_zones": 5 },
+    "ragnar_style_12_person":   { "total_km": 320,    "leg_count": 36, "exchange_zones": 35, "overnight": true }
+  },
+
+  "eligibility": {
+    "age_minimum_years": 16,
+    "team_captain_must_be_18_plus": true,
+    "co_ed_division_supported": true,
+    "all_male_division_supported": true,
+    "all_female_division_supported": true,
+    "corporate_division_supported": true
+  },
+
+  "registration_required_fields": [
+    "team_name",
+    "captain_legal_name",
+    "captain_email",
+    "captain_phone",
+    "team_size",
+    "division_choice",
+    "vehicle_count_for_overnight_formats",
+    "all_runner_legal_names",
+    "all_runner_dob",
+    "all_runner_emergency_contacts",
+    "shirt_sizes_per_runner",
+    "waiver_v7_per_runner"
+  ],
+
+  "pricing": {
+    "marathon_relay_4_person_default_price_usd": 280,
+    "ragnar_style_12_person_default_price_usd": 1800
+  },
+
+  "refund_policy": {
+    "full_refund_until_days_before": 90,
+    "partial_refund_percent": 50,
+    "partial_refund_until_days_before": 30,
+    "no_refund_inside_days_before": 30,
+    "team_size_reduction_allowed": true
+  },
+
+  "transfer_policy": {
+    "individual_runner_substitution_allowed": true,
+    "deadline_days_before": 7,
+    "transfer_fee_usd": 0
+  },
+
+  "exchange_zone_rules": {
+    "physical_handoff_required": true,
+    "slap_bracelet_or_baton_provided_by_event": true,
+    "vehicle_support_allowed_in_designated_zones_only": true
+  },
+
+  "mandatory_gear_overnight_relay": [
+    "headlamp_per_runner_for_night_legs",
+    "reflective_vest_per_runner_for_night_legs",
+    "rear_red_blinking_light_for_night_legs",
+    "team_first_aid_kit"
+  ],
+
+  "medical": {
+    "attestation_required_per_runner": true,
+    "course_aid_spacing_max_km": 5,
+    "medical_personnel_at_every_exchange_zone": true,
+    "cutoff_hours_per_format": "see_format_total"
+  },
+
+  "weather_protocols": {
+    "lightning_30_30_rule_enforced": true,
+    "extreme_heat_overnight_format_modification": true
+  }
+}
