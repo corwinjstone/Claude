@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mortgage Rate Overlay</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="popup">
+    <!-- Header -->
+    <div class="popup-header">
+      <div class="popup-header-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+          <path d="M3 9.5L12 3L21 9.5V20C21 20.55 20.55 21 20 21H4C3.45 21 3 20.55 3 20V9.5Z" stroke="white" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M9 21V13H15V21" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="popup-title">Mortgage Overlay</div>
+        <div class="popup-version">v1.0</div>
+      </div>
+      <div class="popup-toggle-wrap">
+        <label class="toggle-switch">
+          <input type="checkbox" id="enabled-toggle" checked />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Current Rates -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Current Rates</span>
+        <button class="refresh-btn" id="refresh-rates" title="Refresh rates">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 3v5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Refresh
+        </button>
+      </div>
+      <div class="rates-row" id="rates-display">
+        <div class="rate-chip rate-chip--primary">
+          <span class="rate-chip-label">30yr</span>
+          <span class="rate-chip-val" id="rate-30">—</span>
+        </div>
+        <div class="rate-chip">
+          <span class="rate-chip-label">15yr</span>
+          <span class="rate-chip-val" id="rate-15">—</span>
+        </div>
+        <div class="rate-chip">
+          <span class="rate-chip-label">ARM</span>
+          <span class="rate-chip-val" id="rate-arm">—</span>
+        </div>
+      </div>
+      <div class="rate-source" id="rate-source"></div>
+    </div>
+
+    <!-- Keywords -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Trigger Keywords</span>
+        <span class="keyword-count" id="kw-count">0</span>
+      </div>
+      <div class="keyword-list" id="keyword-list"></div>
+      <div class="keyword-add-row">
+        <input type="text" id="new-keyword" class="keyword-input" placeholder="Add keyword…" maxlength="40" />
+        <button class="add-btn" id="add-keyword">Add</button>
+      </div>
+    </div>
+
+    <!-- API Key -->
+    <div class="section">
+      <div class="section-title">FRED API Key <span class="optional-badge">optional</span></div>
+      <p class="section-desc">
+        Get live rates from the St. Louis Fed.
+        <a href="https://fred.stlouisfed.org/docs/api/api_key.html" target="_blank" class="link">Get free key →</a>
+      </p>
+      <div class="api-input-row">
+        <input type="password" id="fred-api-key" class="api-input" placeholder="Paste your FRED API key…" />
+        <button class="save-btn" id="save-api-key">Save</button>
+      </div>
+      <div class="api-status" id="api-status"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="popup-footer">
+      <button class="reset-btn" id="reset-all">Reset to defaults</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

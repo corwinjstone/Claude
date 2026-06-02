@@ -1,0 +1,388 @@
+/* Mortgage Overlay — injected into every page */
+
+/* Reset and scope everything under #mortgage-overlay-root */
+#mortgage-overlay-root * {
+  all: initial;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ─── Backdrop ─────────────────────────────────────────────────── */
+#mortgage-overlay-root .mo-backdrop {
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  z-index: 2147483645;
+  transition: background 0.3s ease;
+  pointer-events: none;
+}
+
+#mortgage-overlay-root .mo-panel--open ~ .mo-backdrop {
+  background: rgba(0, 0, 0, 0.15);
+  pointer-events: auto;
+}
+
+/* ─── Panel ─────────────────────────────────────────────────────── */
+#mortgage-overlay-root .mo-panel {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 360px;
+  max-width: 95vw;
+  height: 100vh;
+  background: #ffffff;
+  z-index: 2147483646;
+  box-shadow: -4px 0 32px rgba(0, 0, 0, 0.18);
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+#mortgage-overlay-root .mo-panel--open {
+  transform: translateX(0);
+}
+
+/* ─── Header ────────────────────────────────────────────────────── */
+#mortgage-overlay-root .mo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 16px 16px;
+  background: linear-gradient(135deg, #1a3a5c 0%, #0d6efd 100%);
+  flex-shrink: 0;
+}
+
+#mortgage-overlay-root .mo-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#mortgage-overlay-root .mo-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+#mortgage-overlay-root .mo-title {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+#mortgage-overlay-root .mo-subtitle {
+  display: block;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+#mortgage-overlay-root .mo-keyword {
+  color: rgba(255, 255, 255, 0.95);
+  font-style: italic;
+}
+
+#mortgage-overlay-root .mo-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+
+#mortgage-overlay-root .mo-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Body ──────────────────────────────────────────────────────── */
+#mortgage-overlay-root .mo-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+  flex: 1;
+  padding: 0;
+}
+
+#mortgage-overlay-root .mo-section {
+  display: block;
+  padding: 18px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+#mortgage-overlay-root .mo-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+#mortgage-overlay-root .mo-section-title {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+#mortgage-overlay-root .mo-section-header .mo-section-title {
+  margin-bottom: 0;
+}
+
+#mortgage-overlay-root .mo-updated {
+  display: block;
+  font-size: 10px;
+  color: #9ca3af;
+}
+
+/* ─── Rate cards ────────────────────────────────────────────────── */
+#mortgage-overlay-root .mo-rates-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+#mortgage-overlay-root .mo-rate-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  background: #f8faff;
+  border-radius: 10px;
+  border: 1px solid #e8eef7;
+}
+
+#mortgage-overlay-root .mo-rate-card--primary {
+  background: linear-gradient(145deg, #f0f7ff, #e8f0fe);
+  border-color: #bdd3f5;
+}
+
+#mortgage-overlay-root .mo-rate-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #6b7280;
+  text-align: center;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+#mortgage-overlay-root .mo-rate-value {
+  display: block;
+  font-size: 22px;
+  font-weight: 800;
+  color: #1a3a5c;
+  line-height: 1;
+}
+
+#mortgage-overlay-root .mo-rate-card--primary .mo-rate-value {
+  color: #0d6efd;
+}
+
+#mortgage-overlay-root .mo-rate-pct {
+  font-size: 14px;
+  font-weight: 600;
+  color: inherit;
+  vertical-align: super;
+}
+
+#mortgage-overlay-root .mo-rate-trend {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  margin-top: 4px;
+  color: #6b7280;
+}
+
+#mortgage-overlay-root .mo-trend--up {
+  color: #ef4444;
+}
+
+#mortgage-overlay-root .mo-trend--down {
+  color: #10b981;
+}
+
+/* ─── Calculator ────────────────────────────────────────────────── */
+#mortgage-overlay-root .mo-calc {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#mortgage-overlay-root .mo-calc-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+}
+
+#mortgage-overlay-root .mo-input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  transition: border-color 0.15s ease;
+}
+
+#mortgage-overlay-root .mo-input-wrap:focus-within {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+}
+
+#mortgage-overlay-root .mo-input-prefix {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  background: #f9fafb;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  border-right: 1.5px solid #d1d5db;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+#mortgage-overlay-root .mo-input {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  background: transparent;
+  border: none;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+#mortgage-overlay-root .mo-input::-webkit-inner-spin-button,
+#mortgage-overlay-root .mo-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+/* ─── Term tabs ─────────────────────────────────────────────────── */
+#mortgage-overlay-root .mo-term-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+#mortgage-overlay-root .mo-term-btn {
+  display: block;
+  flex: 1;
+  padding: 7px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  background: #f3f4f6;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 7px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+#mortgage-overlay-root .mo-term-btn:hover {
+  border-color: #0d6efd;
+  color: #0d6efd;
+  background: #eff6ff;
+}
+
+#mortgage-overlay-root .mo-term-btn--active {
+  background: #0d6efd;
+  border-color: #0d6efd;
+  color: #ffffff;
+}
+
+#mortgage-overlay-root .mo-term-btn--active:hover {
+  background: #0b5ed7;
+  border-color: #0b5ed7;
+  color: #ffffff;
+}
+
+/* ─── Payment result ────────────────────────────────────────────── */
+#mortgage-overlay-root .mo-payment-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px;
+  background: linear-gradient(145deg, #f0f7ff, #eff6ff);
+  border-radius: 10px;
+  border: 1px solid #bdd3f5;
+  text-align: center;
+}
+
+#mortgage-overlay-root .mo-payment-amount {
+  display: block;
+  font-size: 28px;
+  font-weight: 800;
+  color: #0d6efd;
+  line-height: 1.1;
+}
+
+#mortgage-overlay-root .mo-payment-note {
+  display: block;
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* ─── Footer ────────────────────────────────────────────────────── */
+#mortgage-overlay-root .mo-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-top: 1px solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+#mortgage-overlay-root .mo-disclaimer {
+  display: block;
+  font-size: 10px;
+  color: #9ca3af;
+  line-height: 1.4;
+  max-width: 200px;
+}
+
+#mortgage-overlay-root .mo-dismiss-link {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: #9ca3af;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+#mortgage-overlay-root .mo-dismiss-link:hover {
+  color: #ef4444;
+}
