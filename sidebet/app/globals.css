@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  background: #2E2A8E;
+  color: #FFFFFF;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-image: linear-gradient(180deg, #3F3AB8 0%, #2E2A8E 35%, #3850B8 75%, #6A8AE6 100%);
+  background-attachment: fixed;
+}
+
+@layer components {
+  .card {
+    @apply bg-surface/90 border border-border rounded-2xl shadow-card backdrop-blur-sm;
+  }
+  .card-elevated {
+    @apply bg-elevated border border-border rounded-2xl shadow-card;
+  }
+  .pill {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+  .cta-bar {
+    @apply fixed inset-x-0 bottom-0 bg-cta text-white text-center py-4 text-lg font-medium tracking-wide active:bg-blue-700 transition;
+  }
+  .icon-action {
+    @apply flex flex-col items-center gap-2 text-white/90 hover:text-white transition;
+  }
+  .avatar {
+    @apply rounded-full bg-white/10 border-2 border-white/20 object-cover;
+  }
+  .input-base {
+    @apply w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-accent/60 focus:border-transparent;
+  }
+}
+
+/* Hide scrollbar on horizontal scroll rows */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
