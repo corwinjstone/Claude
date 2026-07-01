@@ -1,0 +1,93 @@
+/*
+  Theme tokens only. Structure lives in magazine.css and never changes —
+  each [data-theme] block below just re-points the same variables, the way
+  CSS Zen Garden stylesheets reskin one shared document.
+*/
+
+[data-theme='gonzo'] {
+  --bg: #d8d2c2;
+  --paper: #f3efe6;
+  --ink: #121212;
+  --ink-soft: #4a4640;
+  --accent: #e0122c;
+  --accent-contrast: #f3efe6;
+  --rule: #121212;
+  --font-display: 'Anton', 'Archivo Black', sans-serif;
+  --font-kicker: 'Bebas Neue', 'Archivo Black', sans-serif;
+  --font-body: 'PT Serif', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --display-tracking: 0.01em;
+  --kicker-tracking: 0.14em;
+  --kicker-transform: uppercase;
+  --rule-weight: 4px;
+  --radius: 0px;
+  --folio-bg: var(--ink);
+  --folio-fg: var(--paper);
+  --hero-gradient: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 45%, #e0122c 100%);
+}
+
+[data-theme='atelier'] {
+  --bg: #ece5da;
+  --paper: #faf7f2;
+  --ink: #20140f;
+  --ink-soft: #6b5b4f;
+  --accent: #b8905a;
+  --accent-contrast: #faf7f2;
+  --rule: #b8905a;
+  --font-display: 'Playfair Display', serif;
+  --font-kicker: 'Archivo', sans-serif;
+  --font-body: 'Source Serif 4', 'PT Serif', serif;
+  --font-mono: 'Archivo', sans-serif;
+  --display-tracking: 0em;
+  --kicker-tracking: 0.32em;
+  --kicker-transform: uppercase;
+  --rule-weight: 1px;
+  --radius: 0px;
+  --folio-bg: transparent;
+  --folio-fg: var(--ink);
+  --hero-gradient: linear-gradient(160deg, #efe6d8 0%, #d8c3a0 55%, #b8905a 100%);
+}
+
+[data-theme='circuit'] {
+  --bg: #05070a;
+  --paper: #0c0f0d;
+  --ink: #e9fbee;
+  --ink-soft: #8fa89a;
+  --accent: #39ff8f;
+  --accent-contrast: #05070a;
+  --rule: #39ff8f;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-kicker: 'JetBrains Mono', monospace;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --display-tracking: -0.01em;
+  --kicker-tracking: 0.2em;
+  --kicker-transform: uppercase;
+  --rule-weight: 1px;
+  --radius: 2px;
+  --folio-bg: #0c0f0d;
+  --folio-fg: #39ff8f;
+  --hero-gradient: linear-gradient(135deg, #05070a 0%, #0e2b1c 55%, #39ff8f 100%);
+}
+
+[data-theme='ledger'] {
+  --bg: #e6dcc2;
+  --paper: #f4ecd8;
+  --ink: #2b2620;
+  --ink-soft: #625a4c;
+  --accent: #2f5233;
+  --accent-contrast: #f4ecd8;
+  --rule: #2b2620;
+  --font-display: 'Libre Caslon Text', 'PT Serif', serif;
+  --font-kicker: 'Libre Caslon Text', serif;
+  --font-body: 'PT Serif', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --display-tracking: 0em;
+  --kicker-tracking: 0.24em;
+  --kicker-transform: uppercase;
+  --rule-weight: 1px;
+  --radius: 0px;
+  --folio-bg: transparent;
+  --folio-fg: var(--ink);
+  --hero-gradient: linear-gradient(160deg, #f4ecd8 0%, #cfc39e 60%, #2f5233 130%);
+}
