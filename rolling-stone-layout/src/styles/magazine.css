@@ -1,0 +1,411 @@
+/* Structural styles for the rendered magazine pages. Every rule here reads
+   its colors/fonts from theme variables (see themes.css) — nothing themed
+   is hardcoded, so swapping data-theme reskins the whole spread. */
+
+.magazine {
+  background: var(--bg);
+  padding: 48px 0 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.page {
+  position: relative;
+  width: 820px;
+  max-width: 92vw;
+  min-height: 1120px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+}
+
+.page__body {
+  flex: 1;
+  padding: 64px 72px 24px;
+}
+
+/* ---------- Masthead / running head ---------- */
+
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 20px 72px 12px;
+  border-bottom: var(--rule-weight) solid var(--rule);
+  font-family: var(--font-kicker);
+  font-size: 12px;
+  letter-spacing: var(--kicker-tracking);
+  text-transform: var(--kicker-transform);
+  color: var(--ink-soft);
+}
+
+.masthead strong {
+  color: var(--ink);
+  font-size: 13px;
+}
+
+/* ---------- Cover page ---------- */
+
+.cover-page .page__body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cover-hero {
+  height: 46%;
+  background-image: var(--hero-gradient);
+  display: flex;
+  align-items: flex-end;
+  padding: 28px 40px;
+}
+
+.cover-kicker {
+  font-family: var(--font-kicker);
+  letter-spacing: var(--kicker-tracking);
+  text-transform: var(--kicker-transform);
+  font-size: 13px;
+  color: var(--accent-contrast);
+  background: var(--accent);
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: var(--radius);
+}
+
+.cover-text {
+  padding: 32px 48px 40px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.cover-headline {
+  font-family: var(--font-display);
+  letter-spacing: var(--display-tracking);
+  font-size: clamp(40px, 6vw, 66px);
+  line-height: 1.02;
+  margin: 0;
+  color: var(--ink);
+}
+
+.cover-dek {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 60ch;
+}
+
+.cover-byline {
+  font-family: var(--font-kicker);
+  text-transform: var(--kicker-transform);
+  letter-spacing: var(--kicker-tracking);
+  font-size: 13px;
+  color: var(--accent);
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+  width: fit-content;
+}
+
+/* ---------- Article page ---------- */
+
+.article-heading {
+  font-family: var(--font-display);
+  letter-spacing: var(--display-tracking);
+  font-size: 26px;
+  margin: 0 0 16px;
+  padding-top: 8px;
+  color: var(--accent);
+}
+
+.article-columns {
+  columns: 2;
+  column-gap: 36px;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.article-columns p {
+  margin: 0 0 16px;
+  break-inside: avoid;
+}
+
+.article-columns p.has-dropcap::first-letter {
+  font-family: var(--font-display);
+  font-size: 76px;
+  line-height: 56px;
+  float: left;
+  padding: 6px 8px 0 0;
+  color: var(--accent);
+}
+
+.inline-quote {
+  break-inside: avoid;
+  margin: 6px 0 20px;
+  padding: 4px 0 4px 18px;
+  border-left: var(--rule-weight) solid var(--accent);
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.dialogue-block {
+  break-inside: avoid;
+  margin: 0 0 18px;
+}
+
+.dialogue-speaker {
+  font-family: var(--font-kicker);
+  text-transform: var(--kicker-transform);
+  letter-spacing: var(--kicker-tracking);
+  font-size: 12px;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.dialogue-text {
+  margin: 0;
+}
+
+/* ---------- Quote spread ---------- */
+
+.quote-page .page__body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 72px 88px;
+}
+
+.quote-spread {
+  text-align: center;
+  max-width: 640px;
+}
+
+.quote-mark {
+  font-family: var(--font-display);
+  font-size: 96px;
+  line-height: 0.6;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.quote-spread blockquote {
+  font-family: var(--font-display);
+  letter-spacing: var(--display-tracking);
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.15;
+  margin: 0;
+  color: var(--ink);
+}
+
+.quote-attribution {
+  margin-top: 24px;
+  font-family: var(--font-kicker);
+  letter-spacing: var(--kicker-tracking);
+  text-transform: var(--kicker-transform);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* ---------- Chart page ---------- */
+
+.chart-page .page__body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.chart-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--accent);
+  margin: 0;
+}
+
+.chart-caption {
+  font-style: italic;
+  color: var(--ink-soft);
+  max-width: 60ch;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+  height: 320px;
+  padding: 24px 12px 0;
+  border-bottom: var(--rule-weight) solid var(--rule);
+}
+
+.bar-chart__bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  height: 100%;
+}
+
+.bar-chart__fill {
+  width: 100%;
+  background: var(--accent);
+  border-radius: var(--radius);
+  min-height: 6px;
+}
+
+.bar-chart__value {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.bar-chart__label {
+  font-family: var(--font-kicker);
+  font-size: 11px;
+  letter-spacing: var(--kicker-tracking);
+  text-transform: var(--kicker-transform);
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 0 12px 16px;
+}
+
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.stat-card {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.stat-card__value {
+  font-family: var(--font-display);
+  font-size: 44px;
+  color: var(--accent);
+  display: block;
+}
+
+.stat-card__caption {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-top: 8px;
+}
+
+/* ---------- Countdown (listicle) page ---------- */
+
+.countdown-page .page__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  padding: 72px 88px;
+}
+
+.countdown-rank {
+  font-family: var(--font-display);
+  font-size: 120px;
+  line-height: 1;
+  color: var(--accent);
+  margin: 0;
+}
+
+.countdown-total {
+  font-family: var(--font-kicker);
+  font-size: 14px;
+  letter-spacing: var(--kicker-tracking);
+  color: var(--ink-soft);
+}
+
+.countdown-text {
+  font-family: var(--font-body);
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+/* ---------- List block (inline) ---------- */
+
+.article-list {
+  margin: 0 0 18px;
+  padding-left: 22px;
+  break-inside: avoid;
+}
+
+.article-list li {
+  margin-bottom: 8px;
+}
+
+/* ---------- End page ---------- */
+
+.end-page .page__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  color: var(--ink-soft);
+}
+
+.end-mark {
+  font-family: var(--font-display);
+  font-size: 40px;
+  color: var(--accent);
+}
+
+/* ---------- Folio ---------- */
+
+.folio {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 72px;
+  background: var(--folio-bg);
+  color: var(--folio-fg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-top: 1px solid var(--rule);
+}
+
+@media (max-width: 900px) {
+  .page__body,
+  .masthead,
+  .quote-page .page__body,
+  .countdown-page .page__body {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+  .article-columns {
+    columns: 1;
+  }
+}
+
+@media print {
+  .magazine {
+    background: none;
+    padding: 0;
+    gap: 0;
+  }
+  .page {
+    box-shadow: none;
+    width: 100%;
+    min-height: 100vh;
+    page-break-after: always;
+  }
+}
