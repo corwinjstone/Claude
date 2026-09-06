@@ -42,6 +42,7 @@
 }
 
 *{ box-sizing: border-box; }
+[hidden]{ display: none !important; }
 
 body{
   margin:0;
@@ -241,6 +242,22 @@ body{
 .ws .grp:first-child{ margin-top:0; padding-top:0; border-top:0; }
 .ws .grp > .lbl{ margin-bottom: 5px; display:block; }
 .neg{ color: var(--ink-3); }
+
+/* ---------- lender brand marks ---------- */
+.logo{
+  width:30px; height:30px; flex:none; border-radius:2px; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  background: var(--b, var(--raised)); border:1px solid rgba(255,255,255,.13);
+}
+.logo img{ width:100%; height:100%; object-fit: contain; background:#fff; display:block; }
+.logo .mk{
+  font-family: var(--f-ui); font-size: 10.5px; font-weight: 700;
+  letter-spacing: -.02em; color: #fff; line-height:1;
+}
+.logostrip{ padding: 10px 14px 12px; border-top:1px solid var(--line); background: var(--surface-2); }
+.logorow{ display:flex; align-items:center; gap:9px; padding: 5px 0; }
+.logorow .nm{ flex:1; min-width:0; font-size: 11.5px; color: var(--ink-2); }
+.logostrip .note{ font-size: 10.5px; color: var(--ink-3); margin: 7px 0 0; line-height:1.5; }
 
 /* ---------- lender callbacks: accordion ---------- */
 .lender{ border-bottom: 1px solid var(--line); border-left: 2px solid transparent; }
@@ -659,6 +676,18 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
 /* =================================================================
    1. Deal facts, lender policy, and the callback set
    ================================================================= */
+
+/* Image assets. These are relative paths for the repo build; build-artifact.py
+   rewrites each value to a data URI for the self-contained Artifact. Any entry
+   whose file is missing simply falls back to the built-in mark. */
+var IMG = {
+  camry: 'images/camry.jpg',
+  cap1:  'images/capital-one.png',
+  ally:  'images/ally.png',
+  sant:  'images/santander.png',
+  wf:    'images/wells-fargo.png'
+};
+var fileLogos = {};          /* filled in by probeAssets() for files that exist */
 
 var VEHICLE  = { book: 26400, cost: 25610, msrp: 29410 };
 var CUSTOMER = { income: 5400, otherDebt: 1420 };
@@ -1229,8 +1258,9 @@ try{ logos = JSON.parse(window.localStorage.getItem(LOGO_KEY) || '{}') || {}; } 
 function saveLogos(){ try{ window.localStorage.setItem(LOGO_KEY, JSON.stringify(logos)); } catch(e){} }
 
 function logoChip(L){
-  return logos[L.id]
-    ? '<span class="logo" style="--b:#ffffff"><img src="' + logos[L.id] + '" alt="' + L.name + ' logo"></span>'
+  var src = logos[L.id] || fileLogos[L.id];
+  return src
+    ? '<span class="logo" style="--b:#ffffff"><img src="' + src + '" alt="' + L.name + ' logo"></span>'
     : '<span class="logo" style="--b:' + L.brand + '" title="' + L.name + '"><span class="mk">' + L.mark + '</span></span>';
 }
 
@@ -1810,10 +1840,37 @@ $('vphoto-btn').addEventListener('click', function(){ $('vphoto-input').click();
 $('vphoto-input').addEventListener('change', function(e){
   if (e.target.files && e.target.files[0]) readPhoto(e.target.files[0]);
 });
+var photoAttached = false;
 try{
   var saved = window.localStorage.getItem(PKEY);
-  if (saved) setPhoto(saved);
+  if (saved){ setPhoto(saved); photoAttached = true; }
 } catch(e){}
+
+/* Load whatever images/ actually contains. Missing files are not an error —
+   the monogram marks and the placeholder are the designed fallback. */
+function probeAssets(){
+  var pending = LENDERS.length, found = false;
+
+  function settle(){
+    if (--pending > 0 || !found) return;
+    renderLenders();
+    renderLenderStruct();
+    if (!$('logostrip').hidden) renderLogoStrip();
+  }
+
+  LENDERS.forEach(function(L){
+    var im = new Image();
+    im.onload  = function(){ fileLogos[L.id] = IMG[L.id]; found = true; settle(); };
+    im.onerror = settle;
+    im.src = IMG[L.id];
+  });
+
+  if (!photoAttached){
+    var c = new Image();
+    c.onload = function(){ setPhoto(IMG.camry); };
+    c.src = IMG.camry;
+  }
+}
 
 /* =================================================================
    11. Boot
@@ -1862,6 +1919,7 @@ $('resetLayout').addEventListener('click', function(){
 });
 
 renderAll();
+probeAssets();
 
 })();
 </script>
