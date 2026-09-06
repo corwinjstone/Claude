@@ -141,8 +141,6 @@ body{
 
 /* every panel body absorbs the slack when a row is taller than its content */
 .pbody, .rails, .ctl{ flex: 1 1 auto; }
-#opts{ flex: 1 1 auto; display:flex; flex-direction:column; }
-#opts > .cards{ flex: 1 1 auto; }
 #lenders{ flex: 0 0 auto; }
 .rail{ flex: 1 1 auto; }
 
@@ -244,103 +242,103 @@ body{
 .ws .grp > .lbl{ margin-bottom: 5px; display:block; }
 .neg{ color: var(--ink-3); }
 
-/* ---------- lender callbacks ---------- */
-.lender{
-  display:block; width:100%; text-align:left; cursor:pointer;
-  background: transparent; border:0; border-bottom: 1px solid var(--line);
-  border-left: 2px solid transparent;
-  padding: 11px 14px 12px; color: inherit; font: inherit;
-  transition: background .12s ease, border-color .12s ease;
-}
-.lender:last-of-type{ border-bottom:0; }
-.lender:hover{ background: var(--surface-2); }
-.lender:focus-visible{ outline:2px solid var(--opt); outline-offset:-2px; }
-.lender[aria-pressed="true"]{ background: var(--raised); border-left-color: var(--opt); }
-.lender .l1{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-.lender .ok{ display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
-.lender .nm{ font-size: 12.5px; font-weight: 600; letter-spacing:-.008em; flex:1; min-width:0; }
-.lender .l2{
-  display:flex; align-items:center; gap:7px; margin-top:4px; padding-left: 17px;
-  font-family: var(--f-num); font-size: 11px; color: var(--ink-3); flex-wrap:wrap;
-}
-.lender .l2 em{ font-style:normal; color: var(--ink-2); }
+/* ---------- lender callbacks: accordion ---------- */
+.lender{ border-bottom: 1px solid var(--line); border-left: 2px solid transparent; }
+.lender:last-child{ border-bottom:0; }
+.lender.open{ border-left-color: var(--opt); background: var(--surface-2); }
 
-.logo{
-  width:30px; height:30px; flex:none; border-radius:2px; overflow:hidden;
-  display:flex; align-items:center; justify-content:center;
-  background: var(--b, var(--raised)); border:1px solid rgba(255,255,255,.13);
+.lhead{
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  width:100%; text-align:left; cursor:pointer; font: inherit; color: inherit;
+  background: transparent; border:0; padding: 10px 12px 10px 11px;
 }
-.logo img{ width:100%; height:100%; object-fit: contain; background:#fff; display:block; }
-.logo .mk{
-  font-family: var(--f-ui); font-size: 10.5px; font-weight: 700;
-  letter-spacing: -.02em; color: #fff; line-height:1;
-}
-.logostrip{ padding: 10px 14px 12px; border-top:1px solid var(--line); background: var(--surface-2); }
-.logorow{ display:flex; align-items:center; gap:9px; padding: 5px 0; }
-.logorow .nm{ flex:1; min-width:0; font-size: 11.5px; color: var(--ink-2); }
-.logostrip .note{ font-size: 10.5px; color: var(--ink-3); margin: 7px 0 0; line-height:1.5; }
+.lhead:hover{ background: rgba(255,255,255,.03); }
+.lhead:focus-visible{ outline:2px solid var(--opt); outline-offset:-2px; }
+.lhead .nm{ font-size: 12.5px; font-weight:600; letter-spacing:-.008em; flex:1; min-width:0; }
+.lhead .ok{ display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+.lhead .chev{ color: var(--ink-3); font-size: 10px; width:10px; text-align:center; flex:none; }
 
 .tick{ width:9px; height:9px; border-radius:50%; background: var(--good); flex:none; box-shadow: 0 0 0 3px rgba(12,163,12,.16); }
 .appr{ font-size: 9px; white-space:nowrap; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color: var(--good); }
 
 .plus{
-  display:inline-flex; align-items:center; gap:4px;
+  display:inline-flex; align-items:center;
   font-family: var(--f-num); font-size: 11px; font-weight: 600;
   color: #0d0d0d; background: var(--warn);
   border-radius: 2px; padding: 1px 6px 2px; letter-spacing: -.01em;
 }
 
-.stips{ padding: 11px 14px 13px; border-top: 1px solid var(--line); background: var(--surface-2); }
-.stips ul{ margin: 7px 0 0; padding-left: 15px; color: var(--ink-2); font-size: 11.5px; }
-.stips li{ margin-bottom: 3px; }
-
-/* ---------- smart option cards ---------- */
-.cards{
-  display:grid; grid-template-columns: repeat(auto-fit, minmax(236px, 1fr)); gap:10px;
-  padding: 12px 14px 14px;
+.lbody{ padding: 0 12px 12px 11px; }
+.lmeta{
+  font-family: var(--f-num); font-size: 10.5px; color: var(--ink-3);
+  line-height: 1.65; padding-bottom: 9px;
 }
-.card{
-  display:flex; flex-direction:column; text-align:left; cursor:pointer;
-  background: var(--surface-2); border:1px solid var(--line);
-  border-radius: var(--r); padding: 0; color: inherit; font: inherit;
-  transition: border-color .13s ease, background .13s ease;
-}
-.card:hover{ border-color: var(--line-strong); background: var(--raised); }
-.card:focus-visible{ outline:2px solid var(--opt); outline-offset:2px; }
-.card[aria-pressed="true"]{ border-color: var(--opt); background: var(--raised); box-shadow: inset 3px 0 0 var(--opt); }
-.card .top{ padding: 11px 13px 10px; border-bottom: 1px solid var(--line); }
-.card .idx{
-  display:inline-flex; align-items:center; justify-content:center;
-  width:17px; height:17px; border-radius:2px; flex:none;
-  background: var(--opt); color: #0d0d0d; font-family: var(--f-num); font-size: 10.5px; font-weight: 600;
-}
-.card h3{ margin:0; font-size: 13.5px; font-weight: 700; letter-spacing:-.012em; }
-.card .cap{ font-size: 11.5px; color: var(--ink-2); margin-top: 6px; line-height:1.4; }
+.lmeta em{ font-style:normal; color: var(--ink-2); }
+.lbody > .lbl{ display:block; padding: 4px 0 7px; }
 
-.terms{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:0 8px; padding: 10px 13px 4px; }
-.terms > div{ min-width:0; }
-.terms .v{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 14px; font-weight:500; margin-top:3px; letter-spacing:-.01em; }
-
-.counters{ padding: 8px 13px 11px; display:flex; flex-direction:column; gap:4px; }
-.counters div{ font-family: var(--f-num); font-size: 10.5px; color: var(--ink-2); display:flex; gap:6px; align-items:baseline; }
-.counters div::before{ content:"→"; color: var(--opt); flex:none; }
-
-.card .foot{
-  margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px;
-  padding: 9px 13px; border-top: 1px solid var(--line); background: rgba(0,0,0,.22);
-  border-radius: 0 0 3px 3px;
+/* compact option chooser */
+.ocard{
+  display:block; width:100%; text-align:left; cursor:pointer; font: inherit; color: inherit;
+  background: var(--surface); border:1px solid var(--line); border-radius: var(--r);
+  padding: 8px 10px 9px; margin-bottom: 6px;
+  transition: border-color .12s ease, background .12s ease;
 }
+.ocard:hover{ border-color: var(--line-strong); background: var(--raised); }
+.ocard:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
+.ocard[aria-pressed="true"]{ border-color: var(--opt); background: var(--raised); box-shadow: inset 2px 0 0 var(--opt); }
+.oc1{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+.oc1 .on{ font-size: 12px; font-weight:700; letter-spacing:-.01em; flex:1; min-width:0; }
+.ocard .idx{
+  display:inline-flex; align-items:center; justify-content:center; flex:none;
+  width:16px; height:16px; border-radius:2px;
+  background: var(--opt); color:#0d0d0d; font-family: var(--f-num); font-size:10px; font-weight:600;
+}
+.ocard[data-opt="base"] .idx{ background: var(--ink-3); }
+.oc2, .oc3{ display:block; font-family: var(--f-num); font-size: 10.5px; color: var(--ink-3); margin-top: 3px; }
+.oc2{ color: var(--ink-2); }
+
 .pill{
   display:inline-flex; align-items:center; gap:5px;
-  font-size: 9.5px; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
-  border-radius: 2px; padding: 3px 7px; border:1px solid;
+  font-size: 9px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  border-radius: 2px; padding: 2px 6px; border:1px solid; white-space:nowrap;
 }
 .pill::before{ content:""; width:5px; height:5px; border-radius:50%; background: currentColor; }
 .p-in  { color: var(--good); border-color: rgba(12,163,12,.4);  background: rgba(12,163,12,.09); }
 .p-edge{ color: var(--warn); border-color: rgba(250,178,25,.4); background: rgba(250,178,25,.09); }
 .p-out { color: var(--crit); border-color: rgba(208,59,59,.45); background: rgba(208,59,59,.10); }
-.card .load{ font-size: 10.5px; font-weight:600; color: var(--ink-3); letter-spacing:.02em; }
-.card[aria-pressed="true"] .load{ color: var(--opt); }
+
+.stips{ padding: 9px 0 0; border-top: 1px solid var(--line); margin-top: 4px; }
+.stips ul{ margin: 6px 0 0; padding-left: 15px; color: var(--ink-2); font-size: 11px; }
+.stips li{ margin-bottom: 3px; }
+
+/* ---------- lender structure: the mirror of the dealer worksheet ---------- */
+.lsid{
+  display:flex; align-items:center; gap:9px; padding: 10px 14px 11px;
+  border-bottom: 1px solid var(--line); background: var(--surface-2);
+}
+.lsid .who{ min-width:0; flex:1; }
+.lsid .who b,
+.lsid .who span{ display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.lsid .who b{ font-size: 12.5px; font-weight:700; letter-spacing:-.01em; }
+.lsid .who span{ font-family: var(--f-num); font-size: 10.5px; color: var(--ink-3); margin-top:2px; }
+.lscap{
+  font-size: 11px; color: var(--ink-2); line-height:1.45;
+  padding: 9px 14px 0;
+}
+
+.cmp .row{ grid-template-columns: 1fr auto auto; display:grid; align-items:baseline; gap: 0 10px; }
+.dl{ font-family: var(--f-num); font-size: 11px; min-width: 62px; text-align:right; }
+.dl.same{ color: var(--line-strong); }
+.dl.neu { color: var(--ink-3); }
+.dl.pos { color: var(--good); }
+.dl.bad { color: var(--crit); }
+
+.lsfoot{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding: 9px 14px; min-height: 47px;   /* both footers match, so the rows line up */
+  border-top:1px solid var(--line); background: var(--surface-2);
+  border-radius: 0 0 3px 3px; margin-top:auto; flex-wrap:wrap;
+}
 
 /* ---------- buying box ---------- */
 .legend{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding: 10px 14px 2px; }
@@ -474,7 +472,7 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
   <div class="canvas" id="canvas">
 
     <!-- 1. working summary -->
-    <section class="panel tile" data-tile="summary" data-span="6" aria-label="Working summary">
+    <section class="panel tile" data-tile="summary" data-span="1" aria-label="Working summary">
       <div class="phead"><span class="left"><span class="lbl">Working summary</span></span><span class="right"></span></div>
       <div class="rail">
         <div>
@@ -501,7 +499,7 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
     </section>
 
     <!-- 2. vehicle, trade and applicant -->
-    <section class="panel tile" data-tile="vehicle" data-span="2" aria-label="Vehicle, trade and applicant">
+    <section class="panel tile" data-tile="vehicle" data-span="1" aria-label="Vehicle, trade and applicant">
       <div class="phead"><span class="left"><span class="lbl">Vehicle &amp; applicant</span></span><span class="right"></span></div>
       <div class="photo">
         <img id="vphoto" alt="2025 Toyota Camry SE, front three-quarter view" hidden>
@@ -515,44 +513,57 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
       <div class="pbody ws" id="vspecs"></div>
     </section>
 
-    <!-- 3. deal structure -->
-    <section class="panel tile" data-tile="structure" data-span="2" aria-label="Deal structure">
+    <!-- 3. what the dealer submitted / is working -->
+    <section class="panel tile" data-tile="structure" data-span="1" aria-label="Dealer structure">
       <div class="phead">
-        <span class="left"><span class="lbl">Deal structure</span></span>
-        <span class="right"><span class="hint" id="struct-src">Base worksheet</span></span>
+        <span class="left"><span class="lbl">Dealer structure</span></span>
+        <span class="right"><span class="hint" id="struct-src">As submitted</span></span>
+      </div>
+      <div class="lsid">
+        <span class="logo" style="--b:#3a3a37"><span class="mk">DLR</span></span>
+        <span class="who"><b>Bluegrass Toyota &mdash; desk</b>
+        <span>Structure 3 of 3 &middot; submitted 09:38</span></span>
       </div>
       <div class="pbody ws" id="ws"></div>
+      <div class="lsfoot">
+        <span id="dspill" class="pill p-in">&mdash;</span>
+        <span class="hint" id="dsnote">&mdash;</span>
+      </div>
     </section>
 
-    <!-- 4. lender callbacks -->
-    <section class="panel tile" data-tile="callbacks" data-span="2" aria-label="Lender callbacks">
+    <!-- 4. what the lender came back with — same rows, with deltas -->
+    <section class="panel tile" data-tile="lenderstruct" data-span="1" aria-label="Lender structure">
+      <div class="phead">
+        <span class="left"><span class="lbl">Lender structure</span></span>
+        <span class="right"><span class="hint">vs. dealer</span></span>
+      </div>
+      <div id="lsid"></div>
+      <div class="pbody ws cmp" id="lsrows"></div>
+      <div class="lsfoot">
+        <span id="lspill" class="pill p-in">&mdash;</span>
+        <button class="btn" id="applyLender" type="button">Apply to dealer structure &rarr;</button>
+      </div>
+    </section>
+
+    <!-- 5. lender callbacks, as an accordion -->
+    <section class="panel tile" data-tile="callbacks" data-span="1" aria-label="Lender callbacks">
       <div class="phead">
         <span class="left"><span class="lbl">Lender callbacks</span></span>
         <span class="right">
-          <span class="hint">4 of 4 returned</span>
+          <span class="hint">4 of 4</span>
           <button class="btn" id="logoBtn" type="button" aria-expanded="false">Logos</button>
         </span>
       </div>
       <div id="lenders"></div>
       <div class="logostrip" id="logostrip" hidden></div>
       <input type="file" id="logo-input" accept="image/*" hidden>
-      <div class="stips" id="stips"></div>
-    </section>
-
-    <!-- 5. smart options -->
-    <section class="panel tile" data-tile="options" data-span="4" aria-label="Smart options">
-      <div class="phead">
-        <span class="left"><span class="lbl">Smart options</span></span>
-        <span class="right"><span class="hint" id="opts-hint">&mdash;</span></span>
-      </div>
-      <div id="opts"></div>
     </section>
 
     <!-- 6. negotiate -->
-    <section class="panel tile" data-tile="negotiate" data-span="2" aria-label="Negotiate the structure">
+    <section class="panel tile" data-tile="negotiate" data-span="1" aria-label="Negotiate the structure">
       <div class="phead">
         <span class="left"><span class="lbl">Negotiate</span></span>
-        <span class="right"><button class="btn" id="reset" type="button">Reset to callback</button></span>
+        <span class="right"><button class="btn" id="reset" type="button">Reset to submitted</button></span>
       </div>
 
       <div class="ctl">
@@ -601,7 +612,7 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
     <section class="panel tile" data-tile="buyingbox" data-span="4" aria-label="Buying box">
       <div class="phead">
         <span class="left"><span class="lbl">Buying box &mdash; advance vs. payment burden</span></span>
-        <span class="right"><span class="hint">Capital One policy grid, 712 tier</span></span>
+        <span class="right"><span class="hint" id="bb-hint">Capital One policy grid, 712 tier</span></span>
       </div>
       <div class="legend">
         <span class="it"><span class="sw" style="background:#d95926"></span>Deal as written</span>
@@ -666,6 +677,23 @@ var POLICY = {
   maxReserve: 1500
 };
 
+/* POLICY above is Capital One's sheet; every lender publishes its own box
+   and the guardrails, the pills and the plot all follow the selected one. */
+function P(){
+  var L = lender();
+  return {
+    ltv:    { core: L.core, limit: L.adv },
+    pti:    { core: 12,   limit: 15 },
+    dti:    { core: null, limit: 45 },
+    term:   { core: null, limit: L.maxTerm },
+    back:   { core: null, limit: L.back },
+    fee:    { core: null, limit: L.fee },
+    markup: { core: null, limit: POLICY.markup.limit },
+    negEq:  { core: null, limit: POLICY.negEq.limit },
+    maxReserve: POLICY.maxReserve
+  };
+}
+
 var BASE = { price: 27985, fee: 699, backEnd: 2690, down: 2500, term: 72, markup: 1.25,
              tradeAllow: 0, tradePayoff: 0 };
 
@@ -678,16 +706,16 @@ function withTrade(o){
 }
 
 var LENDERS = [
-  { id:'cap1', name:'Capital One Auto Finance', brand:'#004977', mark:'C1', tier:'Tier 2', buy:7.29, term:72, adv:128, back:4500, fee:799,
+  { id:'cap1', core:110, spread:0.00, name:'Capital One Auto Finance', brand:'#004977', mark:'C1', tier:'Tier 2', buy:7.29, term:72, maxTerm:75, adv:128, back:4500, fee:799,
     optionCount:4,
     stips:['Proof of residence — utility bill dated within 60 days','Verbal employment verification at funding'] },
-  { id:'ally', name:'Ally Financial', brand:'#6B0F62', mark:'ally', tier:'Tier 2', buy:7.59, term:72, adv:125, back:3000, fee:699,
+  { id:'ally', core:108, spread:0.30, name:'Ally Financial', brand:'#6B0F62', mark:'ally', tier:'Tier 2', buy:7.59, term:72, maxTerm:75, adv:125, back:3000, fee:699,
     optionCount:0,
     stips:['Signed odometer statement','No alternate structures returned on this callback.'] },
-  { id:'sant', name:'Santander Consumer', brand:'#EC0000', mark:'S', tier:'Tier B', buy:8.49, term:75, adv:130, back:3500, fee:699,
+  { id:'sant', core:112, spread:1.20, name:'Santander Consumer', brand:'#EC0000', mark:'S', tier:'Tier B', buy:8.49, term:75, maxTerm:84, adv:130, back:3500, fee:699,
     optionCount:0,
     stips:['Proof of income — 2 most recent pay stubs','10 personal references','No alternate structures returned on this callback.'] },
-  { id:'wf',   name:'Wells Fargo Dealer Services', brand:'#D71E28', mark:'WF', tier:'Tier 2', buy:7.44, term:72, adv:120, back:2500, fee:799,
+  { id:'wf', core:105, spread:0.15,   name:'Wells Fargo Dealer Services', brand:'#D71E28', mark:'WF', tier:'Tier 2', buy:7.44, term:72, maxTerm:72, adv:120, back:2500, fee:799,
     optionCount:0,
     stips:['Existing deposit relationship confirmed','No alternate structures returned on this callback.'] }
 ];
@@ -744,7 +772,7 @@ function compute(i){
   var af      = i.price + i.fee + i.backEnd + tax + FIXED.titleReg - i.down - equity;
   var ltv     = af / VEHICLE.book * 100;
   var downPct = i.price > 0 ? i.down / i.price * 100 : 0;
-  var buy     = buyRate(i.term, ltv, downPct);
+  var buy     = Math.round((buyRate(i.term, ltv, downPct) + (i.spread || 0)) * 100) / 100;
   var sell    = buy + i.markup;
   var pmt     = amortize(af, sell, i.term);
 
@@ -772,15 +800,16 @@ function compute(i){
 var EDGE = 0.98; /* within 2% of a cap reads as "at limit" */
 
 function railSet(d){
+  var b = P();
   return [
-    { k:'Advance vs. book',  v:d.ltv,      f:pct1, min:80,  max:145,  p:POLICY.ltv,    cap:'128% of book',  short:'Advance' },
-    { k:'Payment to income', v:d.pti,      f:pct1, min:4,   max:20,   p:POLICY.pti,    cap:'15% PTI',       short:'Payment-to-income' },
-    { k:'Debt to income',    v:d.dti,      f:pct1, min:20,  max:55,   p:POLICY.dti,    cap:'45% DTI',       short:'Debt-to-income' },
-    { k:'Term',              v:d.i.term,   f:mo,   min:36,  max:84,   p:POLICY.term,   cap:'75 months',     short:'Term' },
-    { k:'Back-end advance',  v:d.i.backEnd,f:money,min:0,   max:5500, p:POLICY.back,   cap:'$4,500',        short:'Back-end advance' },
-    { k:'Dealer fee',        v:d.i.fee,    f:money,min:0,   max:1100, p:POLICY.fee,    cap:'$799',          short:'Dealer fee' },
-    { k:'Rate markup',       v:d.i.markup, f:pts,  min:0,   max:2.5,  p:POLICY.markup, cap:'2.00 points',   short:'Rate markup' },
-    { k:'Negative equity',   v:d.negEq,    f:money,min:0,   max:6000, p:POLICY.negEq,  cap:'$5,000 rolled', short:'Negative equity' }
+    { k:'Advance vs. book',  v:d.ltv,      f:pct1, min:80,  max:145,  p:b.ltv,    cap:b.ltv.limit + '% of book', short:'Advance' },
+    { k:'Payment to income', v:d.pti,      f:pct1, min:4,   max:20,   p:b.pti,    cap:b.pti.limit + '% PTI',     short:'Payment-to-income' },
+    { k:'Debt to income',    v:d.dti,      f:pct1, min:20,  max:55,   p:b.dti,    cap:b.dti.limit + '% DTI',     short:'Debt-to-income' },
+    { k:'Term',              v:d.i.term,   f:mo,   min:36,  max:84,   p:b.term,   cap:b.term.limit + ' months',  short:'Term' },
+    { k:'Back-end advance',  v:d.i.backEnd,f:money,min:0,   max:5500, p:b.back,   cap:money(b.back.limit),       short:'Back-end advance' },
+    { k:'Dealer fee',        v:d.i.fee,    f:money,min:0,   max:1100, p:b.fee,    cap:money(b.fee.limit),        short:'Dealer fee' },
+    { k:'Rate markup',       v:d.i.markup, f:pts,  min:0,   max:2.5,  p:b.markup, cap:'2.00 points',             short:'Rate markup' },
+    { k:'Negative equity',   v:d.negEq,    f:money,min:0,   max:6000, p:b.negEq,  cap:'$5,000 rolled',           short:'Negative equity' }
   ];
 }
 
@@ -804,12 +833,14 @@ function verdict(d){
                msg:'<b>' + rs[i].short + '</b> is sitting on the ' + rs[i].cap + ' ceiling. No room left to counter.' };
     }
   }
-  if (d.ltv <= POLICY.ltv.core && d.pti <= POLICY.pti.core){
-    return { s:'in', label:'Tier 1 core', msg:'Inside the core box on every rail — best rate sheet available.' };
+  var b = P();
+  if (d.ltv <= b.ltv.core && d.pti <= b.pti.core){
+    return { s:'in', label:'Tier 1 core',
+             msg:'Inside ' + lender().name + '&rsquo;s core box on every rail — best rate sheet available.' };
   }
-  s = d.ltv > POLICY.ltv.core
-      ? 'Tier 1 core needs advance at or under ' + POLICY.ltv.core + '% — this is ' + pct1(d.ltv) + '.'
-      : 'Tier 1 core needs payment-to-income at or under ' + POLICY.pti.core + '%.';
+  s = d.ltv > b.ltv.core
+      ? 'Tier 1 core needs advance at or under ' + b.ltv.core + '% — this is ' + pct1(d.ltv) + '.'
+      : 'Tier 1 core needs payment-to-income at or under ' + b.pti.core + '%.';
   return { s:'in', label:'In policy', msg:s };
 }
 
@@ -881,7 +912,7 @@ function svgText(x, y, str, attrs){
 var marks;
 
 function buildChart(){
-  var svg = $('chart'), i, x, y;
+  var svg = $('chart'), i, x, y, b = P(), LEN = lender();
   measure();
   while (svg.firstChild) svg.removeChild(svg.firstChild);
   var L = px(XD[0]), R = px(XD[1]), T = py(YD[1]), B = py(YD[0]);
@@ -890,14 +921,14 @@ function buildChart(){
   svg.appendChild(svgEl('rect', { x:L, y:T, width:R-L, height:B-T, fill:'rgba(208,59,59,.055)' }));
 
   /* inside the approval box */
-  svg.appendChild(svgEl('rect', { x:L, y:py(POLICY.pti.limit), width:px(POLICY.ltv.limit)-L,
-    height:B-py(POLICY.pti.limit), fill:'#1a1a19' }));
-  svg.appendChild(svgEl('rect', { x:L, y:py(POLICY.pti.limit), width:px(POLICY.ltv.limit)-L,
-    height:B-py(POLICY.pti.limit), fill:'rgba(12,163,12,.07)' }));
+  svg.appendChild(svgEl('rect', { x:L, y:py(b.pti.limit), width:px(b.ltv.limit)-L,
+    height:B-py(b.pti.limit), fill:'#1a1a19' }));
+  svg.appendChild(svgEl('rect', { x:L, y:py(b.pti.limit), width:px(b.ltv.limit)-L,
+    height:B-py(b.pti.limit), fill:'rgba(12,163,12,.07)' }));
 
   /* Tier 1 core */
-  svg.appendChild(svgEl('rect', { x:L, y:py(POLICY.pti.core), width:px(POLICY.ltv.core)-L,
-    height:B-py(POLICY.pti.core), fill:'rgba(12,163,12,.16)', stroke:'rgba(12,163,12,.5)', 'stroke-width':1 }));
+  svg.appendChild(svgEl('rect', { x:L, y:py(b.pti.core), width:px(b.ltv.core)-L,
+    height:B-py(b.pti.core), fill:'rgba(12,163,12,.16)', stroke:'rgba(12,163,12,.5)', 'stroke-width':1 }));
 
   /* gridlines */
   for (i = XD[0] + xStep(); i < XD[1]; i += xStep()){
@@ -911,8 +942,8 @@ function buildChart(){
 
   /* policy ceiling */
   svg.appendChild(svgEl('path', {
-    d:'M' + px(POLICY.ltv.limit) + ' ' + T + ' L' + px(POLICY.ltv.limit) + ' ' + py(POLICY.pti.limit) +
-      ' L' + L + ' ' + py(POLICY.pti.limit),
+    d:'M' + px(b.ltv.limit) + ' ' + T + ' L' + px(b.ltv.limit) + ' ' + py(b.pti.limit) +
+      ' L' + L + ' ' + py(b.pti.limit),
     fill:'none', stroke:'rgba(250,178,25,.8)', 'stroke-width':1.5, 'stroke-dasharray':'5 4' }));
 
   /* axes */
@@ -935,11 +966,13 @@ function buildChart(){
   /* zone labels */
   svg.appendChild(svgText(L + 9, B - 9, 'TIER 1 CORE',
     { 'font-size':10, 'letter-spacing':'1.2', fill:'#0ca30c', 'font-weight':600 }));
-  svg.appendChild(svgText(px(POLICY.ltv.limit) - 9, py(POLICY.pti.limit) - 9,
-    W < 560 ? 'POLICY MAX' : 'POLICY MAX  128% / 15%',
+  svg.appendChild(svgText(px(b.ltv.limit) - 9, py(b.pti.limit) - 9,
+    W < 560 ? 'POLICY MAX' : 'POLICY MAX  ' + b.ltv.limit + '% / ' + b.pti.limit + '%',
     { 'text-anchor':'end', 'font-size':10, 'letter-spacing':'1.2', fill:'#fab219', 'font-weight':600 }));
   svg.appendChild(svgText(R - 4, T + 13, W < 560 ? 'OUT OF POLICY' : 'DECLINE / OUT OF POLICY',
     { 'text-anchor':'end', 'font-size':10, 'letter-spacing':'1.2', fill:'#d03b3b', 'font-weight':600 }));
+
+  $('bb-hint').textContent = LEN.name.split(' ').slice(0, 2).join(' ') + ' policy grid, 712 tier';
 
   marks = svgEl('g', {});
   svg.appendChild(marks);
@@ -1051,39 +1084,144 @@ function wsRow(k, v, cls){
          '</span><span class="v">' + v + '</span></div>';
 }
 
-function renderWorksheet(){
-  var d = compute(desk);
-  $('struct-src').textContent =
-    optionIndex === null ? 'Base worksheet'
-    : 'Smart option ' + SMART[optionIndex].n +
-      (isDirty() ? ' — edited' : '');
+/* =================================================================
+   7a. One row spec drives both worksheets, so they mirror each other
+   ================================================================= */
 
-  $('ws').innerHTML =
-    '<div class="grp"><span class="lbl">Purchase</span>' +
-      wsRow('Sale price', money(desk.price)) +
-      wsRow('Dealer fee', money(desk.fee)) +
-      wsRow('Back-end products', money(desk.backEnd)) +
-      wsRow('Sales tax 6.5%', money(d.tax)) +
-      wsRow('Title, reg &amp; plate', money(FIXED.titleReg)) +
-      wsRow('Cash down', '<span class="neg">(' + money(desk.down) + ')</span>') +
-      (d.equity > 0 ? wsRow('Trade equity', '<span class="neg">(' + money(d.equity) + ')</span>') :
-       d.equity < 0 ? wsRow('Negative equity rolled in', '<span class="down">+' + money(d.negEq) + '</span>') : '') +
-      wsRow('Amount financed', money(d.af), 'tot') +
-    '</div>' +
-    '<div class="grp"><span class="lbl">Terms</span>' +
-      wsRow('Buy rate', pct2(d.buy)) +
-      wsRow('Reserve markup', pts(desk.markup)) +
-      wsRow('Sell rate (APR)', pct2(d.sell)) +
-      wsRow('Term', mo(desk.term)) +
-      wsRow('Payment', money(d.pmt), 'tot') +
-    '</div>' +
-    '<div class="grp"><span class="lbl">Gross</span>' +
-      wsRow('Front gross', money(d.front)) +
-      wsRow('Back-end gross', money(d.back)) +
-      wsRow('Rate reserve', money(d.reserve)) +
-      wsRow('Total gross', money(d.gross), 'tot') +
-    '</div>';
+/* fav: +1 higher is better for the dealer, -1 higher is worse, 0 neutral */
+function rowSpec(d){
+  return [
+    { g:'Purchase' },
+    { k:'Sale price',         v:d.i.price,      f:money, fav: 1 },
+    { k:'Dealer fee',         v:d.i.fee,        f:money, fav: 1 },
+    { k:'Back-end products',  v:d.i.backEnd,    f:money, fav: 1 },
+    { k:'Sales tax 6.5%',     v:d.tax,          f:money, fav: 0 },
+    { k:'Title, reg &amp; plate', v:FIXED.titleReg, f:money, fav: 0 },
+    { k:'Cash down',          v:d.i.down,       f:money, fav:-1, paren:true },
+    { k:'Trade equity',       v:d.equity,       f:money, fav: 1 },
+    { k:'Amount financed',    v:d.af,           f:money, fav: 0, tot:true },
+    { g:'Terms' },
+    { k:'Buy rate',           v:d.buy,          f:pct2,  fav:-1 },
+    { k:'Reserve markup',     v:d.i.markup,     f:pts,   fav: 1 },
+    { k:'Sell rate (APR)',    v:d.sell,         f:pct2,  fav:-1 },
+    { k:'Term',               v:d.i.term,       f:mo,    fav: 0 },
+    { k:'Payment',            v:d.pmt,          f:money, fav:-1, tot:true },
+    { g:'Gross' },
+    { k:'Front gross',        v:d.front,        f:money, fav: 1 },
+    { k:'Back-end gross',     v:d.back,         f:money, fav: 1 },
+    { k:'Rate reserve',       v:d.reserve,      f:money, fav: 1 },
+    { k:'Total gross',        v:d.gross,        f:money, fav: 1, tot:true }
+  ];
 }
+
+function cellValue(r){
+  if (r.paren && r.v > 0) return '<span class="neg">(' + r.f(r.v) + ')</span>';
+  if (r.k === 'Trade equity' && r.v < 0) return '<span class="down">' + signed(r.v, money) + '</span>';
+  return r.f(r.v);
+}
+
+/* the arrow cell: which way the lender moved, and whether that helps */
+function deltaCell(r, base){
+  var d = r.v - base;
+  if (Math.abs(d) < 0.005) return '<span class="dl same">&mdash;</span>';
+  var cls = r.fav === 0 ? 'neu' : ((d > 0) === (r.fav > 0) ? 'pos' : 'bad');
+  return '<span class="dl ' + cls + '">' + (d > 0 ? '▲' : '▼') + ' ' + r.f(Math.abs(d)) + '</span>';
+}
+
+function renderWorksheet(){
+  var d = compute(desk), html = '', open = false;
+  rowSpec(d).forEach(function(r){
+    if (r.g){
+      if (open) html += '</div>';
+      html += '<div class="grp"><span class="lbl">' + r.g + '</span>';
+      open = true;
+      return;
+    }
+    html += wsRow(r.k, cellValue(r), r.tot ? 'tot' : '');
+  });
+  $('ws').innerHTML = html + (open ? '</div>' : '');
+
+  $('struct-src').textContent =
+    JSON.stringify(desk) === JSON.stringify(BASE) ? 'As submitted' : 'Edited on desk';
+
+  var pl = pillFor(d);
+  $('dspill').className = 'pill ' + pl.cls;
+  $('dspill').textContent = pl.text;
+  $('dsnote').textContent = 'against ' + lender().name.split(' ').slice(0, 2).join(' ');
+}
+
+/* =================================================================
+   7b. What each lender will actually buy
+   ================================================================= */
+
+/* The lender takes the submitted structure and pulls every line back
+   inside its own ceilings — that counter is what it "called back" with. */
+function lenderCounter(L, i){
+  var o = Object.assign({}, i);
+  o.spread  = L.spread;
+  o.term    = Math.min(o.term, L.maxTerm);
+  o.fee     = Math.min(o.fee, L.fee);
+  o.backEnd = Math.min(o.backEnd, L.back);
+  o.markup  = Math.min(o.markup, POLICY.markup.limit);
+
+  var over = compute(o).ltv - L.adv;
+  if (over > 0){                                   /* ask for the cash that brings it inside */
+    o.down = o.down + Math.ceil(over / 100 * VEHICLE.book / 50) * 50;
+    if (compute(o).ltv > L.adv) o.down += 50;
+  }
+  return o;
+}
+
+function lenderStructure(){
+  var L = lender();
+  if (L.id === 'cap1' && optionIndex !== null) return SMART[optionIndex].inputs;
+  return lenderCounter(L, desk);
+}
+function lender(){
+  return LENDERS.filter(function(x){ return x.id === lenderId; })[0];
+}
+function pillFor(d){
+  var v = verdict(d), b = P();
+  var core = v.s === 'in' && d.ltv <= b.ltv.core && d.pti <= b.pti.core;
+  return { cls:'p-' + v.s, text: core ? 'Tier 1 core' : v.label };
+}
+
+function renderLenderStruct(){
+  var L  = lender();
+  var ld = compute(lenderStructure());
+  var dd = compute(desk);
+  var opt = (L.id === 'cap1' && optionIndex !== null) ? SMART[optionIndex] : null;
+
+  $('lsid').innerHTML =
+    '<div class="lsid">' + logoChip(L) +
+      '<span class="who"><b>' + L.name + '</b>' +
+      '<span>' + (opt ? 'Smart option ' + opt.n + ' &middot; ' + opt.name
+                      : 'Base approval &middot; counters the desk') + '</span></span>' +
+    '</div>';
+
+  var base = rowSpec(dd), html = '', open = false;
+  rowSpec(ld).forEach(function(r, k){
+    if (r.g){
+      if (open) html += '</div>';
+      html += '<div class="grp"><span class="lbl">' + r.g + '</span>';
+      open = true;
+      return;
+    }
+    html += '<div class="row' + (r.tot ? ' tot' : '') + '">' +
+            '<span class="k">' + r.k + '</span>' +
+            '<span class="v">' + cellValue(r) + '</span>' +
+            deltaCell(r, base[k].v) + '</div>';
+  });
+  $('lsrows').innerHTML = html + (open ? '</div>' : '');
+
+  var pl = pillFor(ld);
+  $('lspill').className = 'pill ' + pl.cls;
+  $('lspill').textContent = pl.text;
+}
+
+/* =================================================================
+   7c. Callbacks accordion
+   ================================================================= */
 
 var LOGO_KEY = 'buyingbox.logos.v1';
 var logos = {};
@@ -1094,6 +1232,82 @@ function logoChip(L){
   return logos[L.id]
     ? '<span class="logo" style="--b:#ffffff"><img src="' + logos[L.id] + '" alt="' + L.name + ' logo"></span>'
     : '<span class="logo" style="--b:' + L.brand + '" title="' + L.name + '"><span class="mk">' + L.mark + '</span></span>';
+}
+
+function optionCard(L, k){
+  var isBase = k === null;
+  var d  = compute(isBase ? lenderCounter(L, desk) : SMART[k].inputs);
+  var pl = pillFor(d);
+  var on = optionIndex === k;
+  return '<button class="ocard" type="button" data-opt="' + (isBase ? 'base' : k) + '" aria-pressed="' + on + '">' +
+    '<span class="oc1"><span class="idx">' + (isBase ? 'B' : SMART[k].n) + '</span>' +
+      '<span class="on">' + (isBase ? 'Base approval' : SMART[k].name) + '</span>' +
+      '<span class="pill ' + pl.cls + '">' + pl.text + '</span></span>' +
+    '<span class="oc2">' + money(d.pmt) + ' &middot; ' + pct2(d.sell) + ' &middot; ' + d.i.term + ' mo</span>' +
+    '<span class="oc3">' + pct1(d.ltv) + ' advance &middot; ' + money(d.gross) + ' gross &middot; ' +
+      money(d.i.down) + ' down</span>' +
+    '</button>';
+}
+
+function lenderBody(L){
+  var html =
+    '<div class="lmeta"><em>' + L.tier + '</em> &middot; ' + pct2(L.buy) + ' buy &middot; ' + L.term + ' mo quoted, ' + L.maxTerm + ' max<br>' +
+    L.adv + '% advance &middot; ' + money(L.back) + ' back-end cap &middot; ' + money(L.fee) + ' fee cap</div>';
+
+  if (L.optionCount){
+    html += '<span class="lbl">' + L.optionCount + ' smart options &middot; click to compare</span>' +
+            optionCard(L, null) +
+            SMART.map(function(o, k){ return optionCard(L, k); }).join('');
+  } else {
+    html += '<span class="lbl">No alternate structures</span>' + optionCard(L, null);
+  }
+
+  return html + '<div class="stips"><span class="lbl">Stipulations</span><ul>' +
+    L.stips.map(function(x){ return '<li>' + x + '</li>'; }).join('') + '</ul></div>';
+}
+
+function renderLenders(){
+  $('lenders').innerHTML = LENDERS.map(function(L){
+    var open = L.id === lenderId;
+    return '<div class="lender' + (open ? ' open' : '') + '" data-lender="' + L.id + '">' +
+      '<button class="lhead" type="button" data-head="' + L.id + '" aria-expanded="' + open + '">' +
+        logoChip(L) + '<span class="nm">' + L.name + '</span>' +
+        (L.optionCount ? '<span class="plus">+' + L.optionCount + '</span>' : '') +
+        '<span class="ok"><span class="tick"></span>' +
+          (open ? '<span class="appr">Approved</span>' : '') + '</span>' +
+        '<span class="chev">' + (open ? '▾' : '▸') + '</span>' +
+      '</button>' +
+      (open ? '<div class="lbody">' + lenderBody(L) + '</div>' : '') +
+    '</div>';
+  }).join('');
+
+  Array.prototype.forEach.call(document.querySelectorAll('.lhead'), function(b){
+    b.addEventListener('click', function(){
+      var id = b.dataset.head;
+      if (id !== lenderId){ lenderId = id; optionIndex = null; }
+      renderLenders();
+      renderLenderStruct();
+      renderRails();
+      renderSummary();
+      syncControls();
+      buildChart();          /* the box itself changes with the lender */
+    });
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.ocard'), function(b){
+    var raw = b.dataset.opt;
+    var k = raw === 'base' ? null : Number(raw);
+    b.addEventListener('click', function(){
+      optionIndex = k;
+      renderLenders();
+      renderLenderStruct();
+      drawMarks();
+    });
+    if (k !== null){
+      b.addEventListener('pointerenter', function(){ hoverIndex = k; drawMarks(); });
+      b.addEventListener('pointerleave', function(){ hoverIndex = null; drawMarks(); });
+    }
+  });
 }
 
 function renderLogoStrip(){
@@ -1117,7 +1331,7 @@ function renderLogoStrip(){
   Array.prototype.forEach.call($('logostrip').querySelectorAll('[data-clearlogo]'), function(b){
     b.addEventListener('click', function(){
       delete logos[b.dataset.clearlogo];
-      saveLogos(); renderLenders(); renderLogoStrip();
+      saveLogos(); renderLenders(); renderLenderStruct(); renderLogoStrip();
     });
   });
 }
@@ -1135,7 +1349,7 @@ function renderVehicle(){
       wsRow('Odometer', '12 mi') +
       wsRow('MSRP', money(29410)) +
       wsRow('Clean book', money(VEHICLE.book)) +
-      wsRow('Advance ceiling', money(VEHICLE.book * POLICY.ltv.limit / 100)) +
+      wsRow('Advance ceiling', money(VEHICLE.book * P().ltv.limit / 100)) +
     '</div>' +
     '<div class="grp"><span class="lbl">Trade-in</span>' +
       (d.allow || d.payoff
@@ -1153,102 +1367,6 @@ function renderVehicle(){
       wsRow('Time on job', '4 yr 2 mo') +
       wsRow('Housing', 'Owns, mortgaged') +
     '</div>';
-}
-
-function renderLenders(){
-  var html = LENDERS.map(function(L){
-    var chip = L.optionCount
-      ? '<span class="plus" title="' + L.optionCount + ' alternate structures returned">+' + L.optionCount + '</span>'
-      : '';
-    return '<button class="lender" type="button" data-lender="' + L.id + '" aria-pressed="' +
-             (L.id === lenderId) + '">' +
-             '<span class="l1">' + logoChip(L) + '<span class="nm">' + L.name + '</span>' +
-             chip + '<span class="ok"><span class="tick"></span><span class="appr">Approved</span></span></span>' +
-             '<span class="l2"><em>' + L.tier + '</em> &middot; ' + pct2(L.buy) + ' buy &middot; ' +
-             L.term + ' mo max</span>' +
-             '<span class="l2">' + L.adv + '% advance &middot; ' + money(L.back) + ' back-end cap ' +
-             (L.optionCount ? '&middot; <em>' + L.optionCount + ' smart options</em>' : '') + '</span>' +
-           '</button>';
-  }).join('');
-  document.getElementById('lenders').innerHTML = html;
-
-  var L = LENDERS.filter(function(x){ return x.id === lenderId; })[0];
-  $('stips').innerHTML = '<div class="lbl">Stipulations &middot; ' + L.name + '</div><ul>' +
-    L.stips.map(function(s){ return '<li>' + s + '</li>'; }).join('') + '</ul>';
-
-  Array.prototype.forEach.call(document.querySelectorAll('.lender'), function(b){
-    b.addEventListener('click', function(){ lenderId = b.dataset.lender; renderAll(); });
-  });
-}
-
-function optVerdict(d){
-  var v = verdict(d);
-  return '<span class="pill p-' + v.s + '">' +
-    (v.s === 'in' && d.ltv <= POLICY.ltv.core && d.pti <= POLICY.pti.core ? 'Tier 1 core' : v.label) +
-    '</span>';
-}
-
-function renderOptions(){
-  var host = $('opts');
-
-  if (lenderId !== 'cap1'){
-    var L = LENDERS.filter(function(x){ return x.id === lenderId; })[0];
-    $('opts-hint').textContent = 'None returned';
-    host.innerHTML =
-      '<div class="cards" style="grid-template-columns:1fr">' +
-        '<div class="card" style="cursor:default">' +
-          '<div class="top"><h3>' + L.name + ' — base approval</h3>' +
-          '<div class="cap">' + L.name + ' approved the structure as written but returned no alternate ' +
-          'structures. Its ceilings are tighter than Capital One’s on ' +
-          (L.adv < 128 ? 'advance' : 'back-end advance') + ', so there is less room to counter.</div></div>' +
-          '<div class="terms">' +
-            '<div><div class="lbl">Buy rate</div><div class="v">' + pct2(L.buy) + '</div></div>' +
-            '<div><div class="lbl">Max term</div><div class="v">' + L.term + ' mo</div></div>' +
-            '<div><div class="lbl">Max advance</div><div class="v">' + L.adv + '%</div></div>' +
-            '<div><div class="lbl">Back-end cap</div><div class="v">' + money(L.back) + '</div></div>' +
-            '<div><div class="lbl">Fee cap</div><div class="v">' + money(L.fee) + '</div></div>' +
-            '<div><div class="lbl">Tier</div><div class="v">' + L.tier + '</div></div>' +
-          '</div>' +
-          '<div class="counters"><div>Select Capital One to work its four smart options</div></div>' +
-        '</div>' +
-      '</div>';
-    return;
-  }
-
-  $('opts-hint').textContent = '4 structures inside policy — click to load';
-  host.innerHTML = '<div class="cards">' + SMART.map(function(o, k){
-    var d = smartDeals[k];
-    return '<button class="card" type="button" data-opt="' + k + '" aria-pressed="' + (optionIndex === k) + '">' +
-      '<div class="top">' +
-        '<div style="display:flex;align-items:center;gap:8px">' +
-          '<span class="idx">' + o.n + '</span><h3>' + o.name + '</h3></div>' +
-        '<div class="cap">' + o.cap + '</div>' +
-      '</div>' +
-      '<div class="terms">' +
-        '<div><div class="lbl">Payment</div><div class="v">' + money(d.pmt) + '</div></div>' +
-        '<div><div class="lbl">Rate / term</div><div class="v">' + pct2(d.sell) + '<br>' + d.i.term + ' mo</div></div>' +
-        '<div><div class="lbl">Dealer gross</div><div class="v">' + money(d.gross) + '</div></div>' +
-        '<div><div class="lbl">Advance</div><div class="v">' + pct1(d.ltv) + '</div></div>' +
-        '<div><div class="lbl">PTI</div><div class="v">' + pct1(d.pti) + '</div></div>' +
-        '<div><div class="lbl">Cash down</div><div class="v">' + money(d.i.down) + '</div></div>' +
-      '</div>' +
-      '<div class="counters">' + o.counters.map(function(c){ return '<div>' + c + '</div>'; }).join('') + '</div>' +
-      '<div class="foot">' + optVerdict(d) +
-        '<span class="load">' + (optionIndex === k ? 'Loaded on desk' : 'Load into desk →') + '</span>' +
-      '</div>' +
-    '</button>';
-  }).join('') + '</div>';
-
-  Array.prototype.forEach.call(document.querySelectorAll('.card[data-opt]'), function(b){
-    var k = Number(b.dataset.opt);
-    b.addEventListener('click', function(){
-      optionIndex = k;
-      desk = Object.assign({}, SMART[k].inputs);
-      renderAll();
-    });
-    b.addEventListener('pointerenter', function(){ hoverIndex = k; drawMarks(); });
-    b.addEventListener('pointerleave', function(){ hoverIndex = null; drawMarks(); });
-  });
 }
 
 function renderRails(){
@@ -1312,15 +1430,9 @@ function renderSummary(){
 
 var TERMS = [48, 60, 72, 75, 84];
 
-function isDirty(){
-  if (optionIndex === null) return JSON.stringify(desk) !== JSON.stringify(BASE);
-  return JSON.stringify(desk) !== JSON.stringify(SMART[optionIndex].inputs);
-}
-
 function buildTerms(){
   $('terms').innerHTML = TERMS.map(function(t){
     return '<button type="button" data-term="' + t + '"' +
-      (t > POLICY.term.limit ? ' class="over"' : '') +
       ' aria-pressed="false">' + t + '</button>';
   }).join('');
   Array.prototype.forEach.call(document.querySelectorAll('#terms button'), function(b){
@@ -1351,11 +1463,13 @@ function syncControls(){
   $('v-fee').innerHTML   = money(desk.fee)   + '<span class="d">' + deltaHTML(desk.fee   - ref.fee,   money) + '</span>';
   $('v-back').innerHTML  = money(desk.backEnd) + '<span class="d">' + deltaHTML(desk.backEnd - ref.backEnd, money) + '</span>';
   $('v-mkp').innerHTML   = pts(desk.markup) + '<span class="d">' + deltaHTML(desk.markup - ref.markup, pts) + '</span>';
+  var maxTerm = P().term.limit;
   $('v-term').innerHTML  = mo(desk.term) +
-    (desk.term > POLICY.term.limit ? '<span class="d down">over 75 mo cap</span>' : '');
+    (desk.term > maxTerm ? '<span class="d down">over ' + maxTerm + ' mo cap</span>' : '');
 
-  Array.prototype.forEach.call(document.querySelectorAll('#terms button'), function(b){
-    b.setAttribute('aria-pressed', String(Number(b.dataset.term) === desk.term));
+  Array.prototype.forEach.call(document.querySelectorAll('#terms button'), function(t){
+    t.setAttribute('aria-pressed', String(Number(t.dataset.term) === desk.term));
+    t.classList.toggle('over', Number(t.dataset.term) > maxTerm);
   });
 }
 
@@ -1365,13 +1479,10 @@ function onDeskChange(){
   renderWorksheet();
   renderRails();
   renderSummary();
+  /* a base approval is the lender's counter to the desk, so it moves with it */
+  renderLenders();
+  renderLenderStruct();
   drawMarks();
-  Array.prototype.forEach.call(document.querySelectorAll('.card[data-opt]'), function(b){
-    var k = Number(b.dataset.opt);
-    b.setAttribute('aria-pressed', String(optionIndex === k && !isDirty()));
-    b.querySelector('.load').textContent =
-      optionIndex === k ? (isDirty() ? 'Loaded, edited' : 'Loaded on desk') : 'Load into desk →';
-  });
 }
 
 function bindSlider(id, key, cast){
@@ -1380,8 +1491,6 @@ function bindSlider(id, key, cast){
 
 function renderAll(){
   renderVehicle();
-  renderLenders();
-  renderOptions();
   onDeskChange();
 }
 
@@ -1389,15 +1498,15 @@ function renderAll(){
    9. Canvas — drag to rearrange, resize by column span
    ================================================================= */
 
-var TILES = ['summary','vehicle','structure','callbacks','options','negotiate','buyingbox','guardrails'];
-var DEFAULT_SPANS = { summary:6, vehicle:2, structure:2, callbacks:2,
-                      options:4, negotiate:2, buyingbox:4, guardrails:2 };
-var DEFAULT_ROWS  = { summary:1, vehicle:1, structure:1, callbacks:1,
-                      options:1, negotiate:1, buyingbox:1, guardrails:1 };
-var TITLES = { summary:'Working summary', vehicle:'Vehicle & applicant', structure:'Deal structure',
-               callbacks:'Lender callbacks', options:'Smart options', negotiate:'Negotiate',
-               buyingbox:'Buying box', guardrails:'Policy guardrails' };
-var LKEY   = 'buyingbox.layout.v3';
+var TILES = ['vehicle','summary','negotiate','structure','lenderstruct','callbacks','buyingbox','guardrails'];
+var DEFAULT_SPANS = { vehicle:1, summary:1, negotiate:1, structure:1,
+                      lenderstruct:1, callbacks:1, buyingbox:4, guardrails:2 };
+var DEFAULT_ROWS  = { vehicle:1, summary:1, negotiate:1, structure:1,
+                      lenderstruct:1, callbacks:1, buyingbox:1, guardrails:1 };
+var TITLES = { vehicle:'Vehicle & applicant', summary:'Working summary', negotiate:'Negotiate',
+               structure:'Dealer structure', lenderstruct:'Lender structure',
+               callbacks:'Lender callbacks', buyingbox:'Buying box', guardrails:'Policy guardrails' };
+var LKEY   = 'buyingbox.layout.v4';
 var canvas = $('canvas');
 var layout = { colMode:'auto', order:TILES.slice(),
                spans:Object.assign({}, DEFAULT_SPANS), rows:Object.assign({}, DEFAULT_ROWS) };
@@ -1548,7 +1657,7 @@ function buildChrome(){
 }
 
 /* ---- pointer drag: mouse, pen and touch, with edge auto-scroll ---- */
-var drag = null, EDGE = 96;
+var drag = null, DRAG_EDGE = 96;
 
 function startDrag(e, id){
   if (e.button > 0) return;
@@ -1579,8 +1688,8 @@ function beginDrag(){
 function dragTick(){
   if (!drag || !drag.moved) return;
   var y = drag.cy, d = 0, vh = window.innerHeight;
-  if (y < EDGE)            d = -Math.ceil((EDGE - y) / 4);
-  else if (y > vh - EDGE)  d =  Math.ceil((y - (vh - EDGE)) / 4);
+  if (y < DRAG_EDGE)            d = -Math.ceil((DRAG_EDGE - y) / 4);
+  else if (y > vh - DRAG_EDGE)  d =  Math.ceil((y - (vh - DRAG_EDGE)) / 4);
   if (d){
     window.scrollBy(0, d);
     hitTest();
@@ -1720,7 +1829,14 @@ bindSlider('r-allow', 'tradeAllow',  Number);
 bindSlider('r-payoff','tradePayoff', Number);
 
 $('reset').addEventListener('click', function(){
-  desk = Object.assign({}, optionIndex === null ? BASE : SMART[optionIndex].inputs);
+  desk = Object.assign({}, BASE);
+  onDeskChange();
+});
+
+$('applyLender').addEventListener('click', function(){
+  var o = Object.assign({}, lenderStructure());
+  delete o.spread;                       /* the desk prices off the selected lender itself */
+  desk = o;
   onDeskChange();
 });
 
