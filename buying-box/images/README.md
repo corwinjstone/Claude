@@ -4,16 +4,15 @@ Drop the five files below in this folder and they are picked up automatically �
 no code change. Until a file exists, the page falls back to its built-in mark
 (a brand-coloured monogram for lenders, a hatched placeholder for the vehicle).
 
-| Filename            | Used for                    | Recommended                                |
-|---------------------|-----------------------------|--------------------------------------------|
-| `camry.jpg`         | Vehicle thumbnail           | 16:9, ~1000px wide, JPEG                    |
-| `capital-one.png`   | Capital One Auto Finance    | ~220px wide, transparent or white ground    |
-| `ally.png`          | Ally Financial              | ~220px wide, transparent or white ground    |
-| `santander.png`     | Santander Consumer          | ~220px wide, transparent or white ground    |
-| `wells-fargo.png`   | Wells Fargo Dealer Services | ~220px wide, transparent or white ground    |
+| Filename    | Used for          | Recommended              |
+|-------------|-------------------|--------------------------|
+| `camry.jpg` | Vehicle thumbnail | 16:9, ~1000px wide, JPEG |
 
-SVG works too — change the extension in the `IMG` map at the top of the script
-in `../index.html`.
+To add another asset, put the file here and add an entry to the `IMG` map at the
+top of the script in `../index.html`; the build step picks it up from there.
+
+Lender logos were removed — they crowded the callback rows and the structure
+headers out of alignment. Lenders are identified by name alone.
 
 ## How they reach each build
 
@@ -26,12 +25,9 @@ and writes `../dist/buying-box-desk.html`. Run it before publishing:
 
     python3 build-artifact.py
 
-Viewers can also attach their own images from the Logos button and the vehicle
-tile's Add photo button; those are stored per-browser and override these files.
+Viewers can also attach their own photo from the vehicle tile's Add photo
+button; it is stored per-browser and overrides the file here.
 
 ## Provenance
 
-These files are not committed here. The four lender logos are third-party
-trademarks, included only to identify each lender in the callback list — supply
-copies you are licensed to use. The vehicle photo should likewise be one you
-hold rights to.
+The vehicle photo is not committed here — supply one you hold rights to.

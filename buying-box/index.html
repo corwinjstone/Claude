@@ -243,22 +243,6 @@ body{
 .ws .grp > .lbl{ margin-bottom: 5px; display:block; }
 .neg{ color: var(--ink-3); }
 
-/* ---------- lender brand marks ---------- */
-.logo{
-  width:30px; height:30px; flex:none; border-radius:2px; overflow:hidden;
-  display:flex; align-items:center; justify-content:center;
-  background: var(--b, var(--raised)); border:1px solid rgba(255,255,255,.13);
-}
-.logo img{ width:100%; height:100%; object-fit: contain; background:#fff; display:block; }
-.logo .mk{
-  font-family: var(--f-ui); font-size: 10.5px; font-weight: 700;
-  letter-spacing: -.02em; color: #fff; line-height:1;
-}
-.logostrip{ padding: 10px 14px 12px; border-top:1px solid var(--line); background: var(--surface-2); }
-.logorow{ display:flex; align-items:center; gap:9px; padding: 5px 0; }
-.logorow .nm{ flex:1; min-width:0; font-size: 11.5px; color: var(--ink-2); }
-.logostrip .note{ font-size: 10.5px; color: var(--ink-3); margin: 7px 0 0; line-height:1.5; }
-
 /* ---------- lender callbacks: accordion ---------- */
 .lender{ border-bottom: 1px solid var(--line); border-left: 2px solid transparent; }
 .lender:last-child{ border-bottom:0; }
@@ -537,7 +521,6 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
         <span class="right"><span class="hint" id="struct-src">As submitted</span></span>
       </div>
       <div class="lsid">
-        <span class="logo" style="--b:#3a3a37"><span class="mk">DLR</span></span>
         <span class="who"><b>Bluegrass Toyota &mdash; desk</b>
         <span>Structure 3 of 3 &middot; submitted 09:38</span></span>
       </div>
@@ -566,14 +549,9 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
     <section class="panel tile" data-tile="callbacks" data-span="1" aria-label="Lender callbacks">
       <div class="phead">
         <span class="left"><span class="lbl">Lender callbacks</span></span>
-        <span class="right">
-          <span class="hint">4 of 4</span>
-          <button class="btn" id="logoBtn" type="button" aria-expanded="false">Logos</button>
-        </span>
+        <span class="right"><span class="hint">4 of 4 returned</span></span>
       </div>
       <div id="lenders"></div>
-      <div class="logostrip" id="logostrip" hidden></div>
-      <input type="file" id="logo-input" accept="image/*" hidden>
     </section>
 
     <!-- 6. negotiate -->
@@ -681,13 +659,8 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
    rewrites each value to a data URI for the self-contained Artifact. Any entry
    whose file is missing simply falls back to the built-in mark. */
 var IMG = {
-  camry: 'images/camry.jpg',
-  cap1:  'images/capital-one.png',
-  ally:  'images/ally.png',
-  sant:  'images/santander.png',
-  wf:    'images/wells-fargo.png'
+  camry: 'images/camry.jpg'
 };
-var fileLogos = {};          /* filled in by probeAssets() for files that exist */
 
 var VEHICLE  = { book: 26400, cost: 25610, msrp: 29410 };
 var CUSTOMER = { income: 5400, otherDebt: 1420 };
@@ -735,16 +708,16 @@ function withTrade(o){
 }
 
 var LENDERS = [
-  { id:'cap1', core:110, spread:0.00, name:'Capital One Auto Finance', brand:'#004977', mark:'C1', tier:'Tier 2', buy:7.29, term:72, maxTerm:75, adv:128, back:4500, fee:799,
+  { id:'cap1', core:110, spread:0.00, name:'Capital One Auto Finance', tier:'Tier 2', buy:7.29, term:72, maxTerm:75, adv:128, back:4500, fee:799,
     optionCount:4,
     stips:['Proof of residence — utility bill dated within 60 days','Verbal employment verification at funding'] },
-  { id:'ally', core:108, spread:0.30, name:'Ally Financial', brand:'#6B0F62', mark:'ally', tier:'Tier 2', buy:7.59, term:72, maxTerm:75, adv:125, back:3000, fee:699,
+  { id:'ally', core:108, spread:0.30, name:'Ally Financial', tier:'Tier 2', buy:7.59, term:72, maxTerm:75, adv:125, back:3000, fee:699,
     optionCount:0,
     stips:['Signed odometer statement','No alternate structures returned on this callback.'] },
-  { id:'sant', core:112, spread:1.20, name:'Santander Consumer', brand:'#EC0000', mark:'S', tier:'Tier B', buy:8.49, term:75, maxTerm:84, adv:130, back:3500, fee:699,
+  { id:'sant', core:112, spread:1.20, name:'Santander Consumer', tier:'Tier B', buy:8.49, term:75, maxTerm:84, adv:130, back:3500, fee:699,
     optionCount:0,
     stips:['Proof of income — 2 most recent pay stubs','10 personal references','No alternate structures returned on this callback.'] },
-  { id:'wf', core:105, spread:0.15,   name:'Wells Fargo Dealer Services', brand:'#D71E28', mark:'WF', tier:'Tier 2', buy:7.44, term:72, maxTerm:72, adv:120, back:2500, fee:799,
+  { id:'wf', core:105, spread:0.15,   name:'Wells Fargo Dealer Services', tier:'Tier 2', buy:7.44, term:72, maxTerm:72, adv:120, back:2500, fee:799,
     optionCount:0,
     stips:['Existing deposit relationship confirmed','No alternate structures returned on this callback.'] }
 ];
@@ -1222,7 +1195,7 @@ function renderLenderStruct(){
   var opt = (L.id === 'cap1' && optionIndex !== null) ? SMART[optionIndex] : null;
 
   $('lsid').innerHTML =
-    '<div class="lsid">' + logoChip(L) +
+    '<div class="lsid">' +
       '<span class="who"><b>' + L.name + '</b>' +
       '<span>' + (opt ? 'Smart option ' + opt.n + ' &middot; ' + opt.name
                       : 'Base approval &middot; counters the desk') + '</span></span>' +
@@ -1251,18 +1224,6 @@ function renderLenderStruct(){
 /* =================================================================
    7c. Callbacks accordion
    ================================================================= */
-
-var LOGO_KEY = 'buyingbox.logos.v1';
-var logos = {};
-try{ logos = JSON.parse(window.localStorage.getItem(LOGO_KEY) || '{}') || {}; } catch(e){ logos = {}; }
-function saveLogos(){ try{ window.localStorage.setItem(LOGO_KEY, JSON.stringify(logos)); } catch(e){} }
-
-function logoChip(L){
-  var src = logos[L.id] || fileLogos[L.id];
-  return src
-    ? '<span class="logo" style="--b:#ffffff"><img src="' + src + '" alt="' + L.name + ' logo"></span>'
-    : '<span class="logo" style="--b:' + L.brand + '" title="' + L.name + '"><span class="mk">' + L.mark + '</span></span>';
-}
 
 function optionCard(L, k){
   var isBase = k === null;
@@ -1301,7 +1262,7 @@ function renderLenders(){
     var open = L.id === lenderId;
     return '<div class="lender' + (open ? ' open' : '') + '" data-lender="' + L.id + '">' +
       '<button class="lhead" type="button" data-head="' + L.id + '" aria-expanded="' + open + '">' +
-        logoChip(L) + '<span class="nm">' + L.name + '</span>' +
+        '<span class="nm">' + L.name + '</span>' +
         (L.optionCount ? '<span class="plus">+' + L.optionCount + '</span>' : '') +
         '<span class="ok"><span class="tick"></span>' +
           (open ? '<span class="appr">Approved</span>' : '') + '</span>' +
@@ -1339,34 +1300,6 @@ function renderLenders(){
     }
   });
 }
-
-function renderLogoStrip(){
-  $('logostrip').innerHTML = LENDERS.map(function(L){
-    return '<div class="logorow">' + logoChip(L) +
-      '<span class="nm">' + L.name + '</span>' +
-      '<button class="btn" type="button" data-logo="' + L.id + '">' + (logos[L.id] ? 'Replace' : 'Attach') + '</button>' +
-      (logos[L.id] ? '<button class="btn" type="button" data-clearlogo="' + L.id + '">Clear</button>' : '') +
-      '</div>';
-  }).join('') +
-  '<p class="note">Read from this device and kept in this browser only &mdash; never uploaded. ' +
-  'A PNG or SVG on a white or transparent background works best.</p>';
-
-  Array.prototype.forEach.call($('logostrip').querySelectorAll('[data-logo]'), function(b){
-    b.addEventListener('click', function(){
-      pendingLogo = b.dataset.logo;
-      $('logo-input').value = '';
-      $('logo-input').click();
-    });
-  });
-  Array.prototype.forEach.call($('logostrip').querySelectorAll('[data-clearlogo]'), function(b){
-    b.addEventListener('click', function(){
-      delete logos[b.dataset.clearlogo];
-      saveLogos(); renderLenders(); renderLenderStruct(); renderLogoStrip();
-    });
-  });
-}
-
-var pendingLogo = null;
 
 function renderVehicle(){
   var d = compute(desk);
@@ -1820,22 +1753,6 @@ function readPhoto(file){
   });
 }
 
-$('logoBtn').addEventListener('click', function(){
-  var st = $('logostrip');
-  st.hidden = !st.hidden;
-  $('logoBtn').setAttribute('aria-expanded', String(!st.hidden));
-  if (!st.hidden) renderLogoStrip();
-});
-$('logo-input').addEventListener('change', function(e){
-  var f = e.target.files && e.target.files[0];
-  if (!f || !pendingLogo) return;
-  readImage(f, 220, function(url){
-    logos[pendingLogo] = url;
-    saveLogos(); renderLenders(); renderLogoStrip();
-    pendingLogo = null;
-  });
-});
-
 $('vphoto-btn').addEventListener('click', function(){ $('vphoto-input').click(); });
 $('vphoto-input').addEventListener('change', function(e){
   if (e.target.files && e.target.files[0]) readPhoto(e.target.files[0]);
@@ -1846,30 +1763,13 @@ try{
   if (saved){ setPhoto(saved); photoAttached = true; }
 } catch(e){}
 
-/* Load whatever images/ actually contains. Missing files are not an error —
-   the monogram marks and the placeholder are the designed fallback. */
+/* Use images/camry.jpg when it is there. A missing file is not an error —
+   the hatched placeholder is the designed fallback. */
 function probeAssets(){
-  var pending = LENDERS.length, found = false;
-
-  function settle(){
-    if (--pending > 0 || !found) return;
-    renderLenders();
-    renderLenderStruct();
-    if (!$('logostrip').hidden) renderLogoStrip();
-  }
-
-  LENDERS.forEach(function(L){
-    var im = new Image();
-    im.onload  = function(){ fileLogos[L.id] = IMG[L.id]; found = true; settle(); };
-    im.onerror = settle;
-    im.src = IMG[L.id];
-  });
-
-  if (!photoAttached){
-    var c = new Image();
-    c.onload = function(){ setPhoto(IMG.camry); };
-    c.src = IMG.camry;
-  }
+  if (photoAttached) return;
+  var c = new Image();
+  c.onload = function(){ setPhoto(IMG.camry); };
+  c.src = IMG.camry;
 }
 
 /* =================================================================
