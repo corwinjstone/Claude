@@ -53,7 +53,7 @@ body{
   -webkit-font-smoothing: antialiased;
 }
 
-.shell{ max-width: 1580px; margin: 0 auto; padding: 0 18px 64px; }
+.shell{ width: 100%; margin: 0; padding: 0 16px 64px; }
 
 /* ---------- micro-typography ---------- */
 .lbl{
@@ -65,40 +65,101 @@ body{
 /* ---------- masthead ---------- */
 .mast{
   display:flex; align-items:flex-end; justify-content:space-between;
-  gap:24px; flex-wrap:wrap;
-  padding: 22px 0 14px;
-  border-bottom: 1px solid var(--line);
+  gap:24px; flex-wrap:wrap; padding: 20px 0 13px;
 }
-.mast h1{
-  font-size: 21px; font-weight: 700; letter-spacing: -.015em;
-  margin: 3px 0 0; text-wrap: balance;
-}
+.mast h1{ font-size: 21px; font-weight: 700; letter-spacing: -.015em; margin: 3px 0 0; text-wrap: balance; }
 .mast .vin{ font-family: var(--f-num); font-size: 11px; color: var(--ink-3); margin-top: 5px; }
 .mast .vin span{ color: var(--line-strong); padding: 0 5px; }
-.mast-right{ display:flex; align-items:center; gap:10px; }
 
 .sim{
   display:inline-flex; align-items:center; gap:6px;
   border:1px solid rgba(250,178,25,.45); color: var(--warn);
-  background: rgba(250,178,25,.08);
-  border-radius: 2px; padding: 3px 8px;
+  background: rgba(250,178,25,.08); border-radius: 2px; padding: 3px 8px;
   font-size: 9.5px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase;
 }
 .sim::before{ content:""; width:5px; height:5px; border-radius:50%; background: var(--warn); }
 
-.cust{
-  display:flex; gap:0; border:1px solid var(--line); border-radius: var(--r);
-  background: var(--surface); overflow:hidden;
+/* ---------- canvas toolbar ---------- */
+.toolbar{
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  padding: 9px 0 11px; border-top:1px solid var(--line); border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
 }
-.cust > div{ padding: 7px 13px; border-left: 1px solid var(--line); }
-.cust > div:first-child{ border-left: 0; }
-.cust b{ display:block; font-family: var(--f-num); font-size: 13px; font-weight: 500; color: var(--ink); margin-top: 2px; }
+.toolbar .grp{ display:flex; align-items:center; gap:6px; }
+.toolbar .tip-txt{ font-size: 11px; color: var(--ink-3); flex:1; min-width: 220px; }
+.toolbar .tip-txt kbd{
+  font-family: var(--f-num); font-size: 10px; color: var(--ink-2);
+  border:1px solid var(--line-strong); border-radius:2px; padding: 0 4px; background: var(--surface);
+}
+
+.seg{ display:flex; gap:3px; }
+.seg button{
+  min-width: 27px; padding: 4px 7px; cursor:pointer; color: var(--ink-2);
+  background: var(--surface); border:1px solid var(--line); border-radius:2px;
+  font-family: var(--f-num); font-size: 11px;
+}
+.seg button:hover{ border-color: var(--line-strong); color: var(--ink); }
+.seg button:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
+.seg button[aria-pressed="true"]{ background: var(--ink); border-color: var(--ink); color: #0d0d0d; font-weight:600; }
+
+.btn{
+  cursor:pointer; font-family: var(--f-ui); font-size: 11px; font-weight:600;
+  color: var(--ink-2); background: var(--surface-2);
+  border:1px solid var(--line-strong); border-radius:2px; padding: 5px 10px;
+}
+.btn:hover{ color: var(--ink); border-color: var(--ink-3); }
+.btn:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
+
+/* ---------- the canvas grid ---------- */
+.canvas{
+  display:grid;
+  grid-template-columns: repeat(var(--cols, 6), minmax(0, 1fr));
+  gap: 12px; align-items: start;
+}
+
+.panel{
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r); display:flex; flex-direction:column; min-width:0;
+}
+.tile{ min-width: 0; }
+.tile.dragging{ opacity:.5; outline: 2px dashed var(--opt); outline-offset: 2px; }
+.tile.dragging *{ pointer-events: none; }
+
+.phead{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding: 8px 10px 8px 8px; border-bottom: 1px solid var(--line);
+}
+.phead .left,
+.phead .right{ display:flex; align-items:center; gap:8px; min-width:0; }
+.phead .hint{ font-size: 10.5px; color: var(--ink-3); }
+.pbody{ padding: 11px 14px 14px; }
+
+.grip{
+  display:inline-flex; align-items:center; justify-content:center; flex:none;
+  width:20px; height:20px; padding:0; border:0; border-radius:2px;
+  background:transparent; color: var(--line-strong); cursor: grab; touch-action: none;
+}
+.grip:hover{ color: var(--ink-2); background: var(--raised); }
+.grip:active{ cursor: grabbing; }
+.grip:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; color: var(--ink-2); }
+
+.spanctl{ display:flex; align-items:center; flex:none; border:1px solid var(--line); border-radius:2px; overflow:hidden; }
+.spanctl button{
+  width:19px; height:19px; padding:0; cursor:pointer; line-height:1;
+  background: var(--surface-2); border:0; color: var(--ink-3); font-size:13px;
+}
+.spanctl button:hover{ background: var(--raised); color: var(--ink); }
+.spanctl button:focus-visible{ outline:2px solid var(--opt); outline-offset:-2px; }
+.spanctl button[disabled]{ opacity:.3; cursor:default; }
+.spanctl .n{
+  min-width:21px; text-align:center; font-family: var(--f-num);
+  font-size: 10.5px; color: var(--ink-2); border-left:1px solid var(--line); border-right:1px solid var(--line);
+}
 
 /* ---------- summary rail ---------- */
 .rail{
-  display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:1px;
-  background: var(--line); border:1px solid var(--line);
-  border-radius: var(--r); overflow:hidden; margin: 14px 0;
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(196px, 1fr));
+  gap:1px; background: var(--line);
 }
 .rail > div{ background: var(--surface); padding: 12px 15px 13px; }
 .rail .v{
@@ -106,35 +167,38 @@ body{
   font-size: 25px; font-weight: 500; letter-spacing: -.02em; line-height: 1.1; margin-top: 6px;
 }
 .rail .sub{ font-size: 11px; color: var(--ink-3); margin-top: 4px; font-family: var(--f-num); }
-.rail .delta{ font-family: var(--f-num); font-size: 11px; }
 .up{ color: var(--good); } .down{ color: var(--crit); } .flat{ color: var(--ink-3); }
 
 .verdict{ display:flex; align-items:center; gap:8px; margin-top:6px; }
 .verdict .dot{ width:9px; height:9px; border-radius:50%; flex:none; }
 .verdict .t{ font-size:17px; font-weight:700; letter-spacing:-.01em; }
-.s-in    .dot{ background: var(--good); } .s-in    .t{ color: var(--good); }
-.s-edge  .dot{ background: var(--warn); } .s-edge  .t{ color: var(--warn); }
-.s-out   .dot{ background: var(--crit); } .s-out   .t{ color: var(--crit); }
+.s-in   .dot{ background: var(--good); } .s-in   .t{ color: var(--good); }
+.s-edge .dot{ background: var(--warn); } .s-edge .t{ color: var(--warn); }
+.s-out  .dot{ background: var(--crit); } .s-out  .t{ color: var(--crit); }
 
-/* ---------- panels ---------- */
-.panel{
-  background: var(--surface); border: 1px solid var(--line);
-  border-radius: var(--r); display:flex; flex-direction:column; min-width:0;
+/* ---------- vehicle tile ---------- */
+.photo{
+  position:relative; aspect-ratio: 16 / 9; max-height: 215px; background: var(--surface-2);
+  border-bottom: 1px solid var(--line); overflow:hidden;
 }
-.phead{
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
-  padding: 10px 14px; border-bottom: 1px solid var(--line);
+.photo img{ width:100%; height:100%; object-fit: cover; display:block; }
+.photo .ph{
+  position:absolute; inset:0; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:8px; text-align:center; padding: 14px;
+  background:
+    repeating-linear-gradient(135deg, #141413 0 9px, #171716 9px 18px);
 }
-.phead .hint{ font-size: 10.5px; color: var(--ink-3); }
-.pbody{ padding: 11px 14px 14px; }
+.photo .ph b{ font-size: 12px; color: var(--ink-2); font-weight:600; }
+.photo .ph span{ font-size: 10.5px; color: var(--ink-3); max-width: 30ch; line-height:1.45; }
+.photo .cam{
+  position:absolute; right:8px; bottom:8px;
+  background: rgba(6,6,6,.82); border:1px solid var(--line-strong); color: var(--ink-2);
+  border-radius:2px; padding: 4px 8px; font-size: 10px; font-weight:600; cursor:pointer;
+}
+.photo .cam:hover{ color: var(--ink); border-color: var(--ink-3); }
+.photo .cam:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
 
-/* ---------- deck ---------- */
-.deck{
-  display:grid; grid-template-columns: 288px 322px minmax(0,1fr); gap:12px;
-  align-items: start;
-}
-
-/* worksheet rows */
+/* ---------- worksheet rows ---------- */
 .ws{ display:flex; flex-direction:column; }
 .ws .row{
   display:flex; align-items:baseline; justify-content:space-between; gap:12px;
@@ -148,6 +212,7 @@ body{
 .ws .row.tot .v{ font-size: 15px; font-weight:600; }
 .ws .grp{ margin-top: 13px; padding-top: 10px; border-top: 1px solid var(--line); }
 .ws .grp:first-child{ margin-top:0; padding-top:0; border-top:0; }
+.ws .grp > .lbl{ margin-bottom: 5px; display:block; }
 .neg{ color: var(--ink-3); }
 
 /* ---------- lender callbacks ---------- */
@@ -162,7 +227,6 @@ body{
 .lender:hover{ background: var(--surface-2); }
 .lender:focus-visible{ outline:2px solid var(--opt); outline-offset:-2px; }
 .lender[aria-pressed="true"]{ background: var(--raised); border-left-color: var(--opt); }
-
 .lender .l1{ display:flex; align-items:center; gap:8px; }
 .lender .nm{ font-size: 12.5px; font-weight: 600; letter-spacing:-.008em; flex:1; min-width:0; }
 .lender .l2{
@@ -180,7 +244,6 @@ body{
   color: #0d0d0d; background: var(--warn);
   border-radius: 2px; padding: 1px 6px 2px; letter-spacing: -.01em;
 }
-.plus.quiet{ background: transparent; color: var(--ink-3); border:1px solid var(--line-strong); }
 
 .stips{ padding: 11px 14px 13px; border-top: 1px solid var(--line); background: var(--surface-2); }
 .stips ul{ margin: 7px 0 0; padding-left: 15px; color: var(--ink-2); font-size: 11.5px; }
@@ -188,27 +251,23 @@ body{
 
 /* ---------- smart option cards ---------- */
 .cards{
-  display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px;
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(236px, 1fr)); gap:10px;
   padding: 12px 14px 14px;
 }
 .card{
-  display:flex; flex-direction:column; gap:0; text-align:left; cursor:pointer;
+  display:flex; flex-direction:column; text-align:left; cursor:pointer;
   background: var(--surface-2); border:1px solid var(--line);
   border-radius: var(--r); padding: 0; color: inherit; font: inherit;
-  transition: border-color .13s ease, background .13s ease, transform .13s ease;
+  transition: border-color .13s ease, background .13s ease;
 }
 .card:hover{ border-color: var(--line-strong); background: var(--raised); }
 .card:focus-visible{ outline:2px solid var(--opt); outline-offset:2px; }
-.card[aria-pressed="true"]{
-  border-color: var(--opt); background: var(--raised);
-  box-shadow: inset 3px 0 0 var(--opt);
-}
+.card[aria-pressed="true"]{ border-color: var(--opt); background: var(--raised); box-shadow: inset 3px 0 0 var(--opt); }
 .card .top{ padding: 11px 13px 10px; border-bottom: 1px solid var(--line); }
 .card .idx{
   display:inline-flex; align-items:center; justify-content:center;
   width:17px; height:17px; border-radius:2px; flex:none;
-  background: var(--opt); color: #0d0d0d;
-  font-family: var(--f-num); font-size: 10.5px; font-weight: 600;
+  background: var(--opt); color: #0d0d0d; font-family: var(--f-num); font-size: 10.5px; font-weight: 600;
 }
 .card h3{ margin:0; font-size: 13.5px; font-weight: 700; letter-spacing:-.012em; }
 .card .cap{ font-size: 11.5px; color: var(--ink-2); margin-top: 6px; line-height:1.4; }
@@ -218,10 +277,7 @@ body{
 .terms .v{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 14px; font-weight:500; margin-top:3px; letter-spacing:-.01em; }
 
 .counters{ padding: 8px 13px 11px; display:flex; flex-direction:column; gap:4px; }
-.counters div{
-  font-family: var(--f-num); font-size: 10.5px; color: var(--ink-2);
-  display:flex; gap:6px; align-items:baseline;
-}
+.counters div{ font-family: var(--f-num); font-size: 10.5px; color: var(--ink-2); display:flex; gap:6px; align-items:baseline; }
 .counters div::before{ content:"→"; color: var(--opt); flex:none; }
 
 .card .foot{
@@ -241,13 +297,8 @@ body{
 .card .load{ font-size: 10.5px; font-weight:600; color: var(--ink-3); letter-spacing:.02em; }
 .card[aria-pressed="true"] .load{ color: var(--opt); }
 
-.empty{ padding: 26px 16px 30px; text-align:center; color: var(--ink-3); font-size: 12px; }
-.empty b{ display:block; color: var(--ink-2); font-size: 13px; margin-bottom: 6px; font-weight:600; }
-
 /* ---------- buying box ---------- */
-.bbox{ display:grid; grid-template-columns: minmax(0,1.28fr) minmax(0,1fr); gap:12px; margin-top:12px; align-items:start; }
-
-.legend{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; padding: 10px 14px 2px; }
+.legend{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding: 10px 14px 2px; }
 .legend .it{ display:flex; align-items:center; gap:6px; font-size: 11px; color: var(--ink-2); }
 .legend .sw{ width:9px; height:9px; border-radius:50%; flex:none; box-shadow: 0 0 0 2px var(--surface); }
 .legend .zone{ width:14px; height:9px; border-radius:1px; flex:none; }
@@ -270,22 +321,26 @@ body{
 .tip td:last-child{ font-family: var(--f-num); font-variant-numeric: tabular-nums; text-align:right; color: var(--ink); }
 
 /* ---------- controls ---------- */
-.ctl{ padding: 12px 14px 6px; display:flex; flex-direction:column; gap:13px; }
+.ctl{ padding: 12px 14px 14px; display:flex; flex-direction:column; gap:13px; }
 .ctl .f{ display:flex; flex-direction:column; gap:6px; }
 .ctl .fh{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
+.ctl .fk{ font-size: 9.5px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color: var(--ink-2); }
 .ctl .fv{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 13px; color: var(--ink); }
 .ctl .fv .d{ font-size: 10.5px; margin-left: 6px; }
+.ctl .sect{ border-top:1px solid var(--line); padding-top: 12px; margin-top: 1px; }
 
-input[type=range]{
-  -webkit-appearance:none; appearance:none; width:100%; height: 16px;
-  background: transparent; cursor: pointer; margin:0;
+.equity{
+  display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+  background: var(--surface-2); border:1px solid var(--line); border-radius:2px; padding: 7px 10px;
 }
+.equity .v{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 14px; font-weight:600; }
+
+input[type=range]{ -webkit-appearance:none; appearance:none; width:100%; height: 16px; background: transparent; cursor: pointer; margin:0; }
 input[type=range]::-webkit-slider-runnable-track{ height:3px; border-radius:2px; background: var(--line-strong); }
 input[type=range]::-moz-range-track{ height:3px; border-radius:2px; background: var(--line-strong); }
 input[type=range]::-webkit-slider-thumb{
   -webkit-appearance:none; width:13px; height:13px; border-radius:50%;
-  background: var(--desk); border:2px solid var(--surface); margin-top:-5px;
-  box-shadow: 0 0 0 1px var(--desk);
+  background: var(--desk); border:2px solid var(--surface); margin-top:-5px; box-shadow: 0 0 0 1px var(--desk);
 }
 input[type=range]::-moz-range-thumb{
   width:13px; height:13px; border-radius:50%; background: var(--desk);
@@ -293,9 +348,9 @@ input[type=range]::-moz-range-thumb{
 }
 input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3px; border-radius:3px; }
 
-.segs{ display:flex; gap:4px; }
+.segs{ display:flex; gap:4px; flex-wrap:wrap; }
 .segs button{
-  flex:1; padding: 6px 4px; cursor:pointer; color: var(--ink-2);
+  flex:1; min-width:38px; padding: 6px 4px; cursor:pointer; color: var(--ink-2);
   background: var(--surface-2); border:1px solid var(--line); border-radius:2px;
   font-family: var(--f-num); font-size: 11.5px;
 }
@@ -304,23 +359,15 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
 .segs button[aria-pressed="true"]{ background: var(--desk); border-color: var(--desk); color:#07120d; font-weight:600; }
 .segs button.over[aria-pressed="true"]{ background: var(--crit); border-color: var(--crit); color:#150404; }
 
-.btn{
-  cursor:pointer; font: inherit; font-size: 11px; font-weight:600;
-  color: var(--ink-2); background: var(--surface-2);
-  border:1px solid var(--line-strong); border-radius:2px; padding: 5px 10px;
-}
-.btn:hover{ color: var(--ink); border-color: var(--ink-3); }
-.btn:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
-
 /* ---------- guardrails ---------- */
-.rails{ padding: 4px 14px 14px; display:flex; flex-direction:column; gap:11px; }
+.rails{ padding: 12px 14px 14px; display:flex; flex-direction:column; gap:11px; }
 .rails .g{ display:flex; flex-direction:column; gap:5px; }
 .rails .gh{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
 .rails .gk{ font-size: 11.5px; color: var(--ink-2); }
 .rails .gv{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 12px; }
 .rails .gv small{ color: var(--ink-3); font-size: 10.5px; margin-left: 5px; }
 
-.track{ position:relative; height: 7px; border-radius: 2px; background: var(--surface-2); border:1px solid var(--line); overflow:visible; }
+.track{ position:relative; height: 7px; border-radius: 2px; background: var(--surface-2); border:1px solid var(--line); }
 .track .core{ position:absolute; inset: 0 auto 0 0; background: rgba(12,163,12,.14); border-radius: 1px 0 0 1px; }
 .track .fill{ position:absolute; top:0; bottom:0; left:0; border-radius: 1px; transition: width .12s ease, background .12s ease; }
 .track .cap{ position:absolute; top:-3px; bottom:-3px; width:2px; background: var(--ink-3); }
@@ -330,23 +377,16 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
 .railfoot{
   display:flex; align-items:center; justify-content:space-between; gap:10px;
   padding: 10px 14px; border-top:1px solid var(--line); background: var(--surface-2);
-  border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px; margin-top:auto;
 }
 .railfoot .msg{ font-size: 11.5px; color: var(--ink-2); }
 .railfoot .msg b{ color: var(--ink); }
 
-.foot{ margin-top: 22px; padding-top: 14px; border-top:1px solid var(--line); color: var(--ink-3); font-size: 11px; line-height:1.6; max-width: 78ch; }
+.foot{ margin-top: 22px; padding-top: 14px; border-top:1px solid var(--line); color: var(--ink-3); font-size: 11px; line-height:1.6; max-width: 88ch; }
 
-@media (max-width: 1240px){
-  .deck{ grid-template-columns: 1fr 1fr; }
-  .deck > .opts{ grid-column: 1 / -1; }
-  .bbox{ grid-template-columns: 1fr; }
-}
-@media (max-width: 780px){
-  .deck{ grid-template-columns: 1fr; }
+@media (max-width: 700px){
+  .rail{ grid-template-columns: 1fr; }
   .cards{ grid-template-columns: 1fr; }
-  .rail{ grid-template-columns: 1fr 1fr; }
-  .terms{ grid-template-columns: repeat(3, minmax(0,1fr)); }
 }
 @media (prefers-reduced-motion: reduce){
   *{ transition: none !important; animation: none !important; }
@@ -363,77 +403,148 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
       <h1>2025 Toyota Camry SE</h1>
       <div class="vin">
         STK T25&#8209;4417 <span>/</span> VIN 4T1C11AK9SU418826 <span>/</span> 12 mi
-        <span>/</span> MSRP $29,410 <span>/</span> Book $26,400
+        <span>/</span> MSRP $29,410 <span>/</span> Clean book $26,400
       </div>
     </div>
-    <div class="mast-right">
-      <div class="cust">
-        <div><div class="lbl">Applicant</div><b>D. Alvarez</b></div>
-        <div><div class="lbl">FICO</div><b>712</b></div>
-        <div><div class="lbl">Gross / mo</div><b>$5,400</b></div>
-        <div><div class="lbl">Other debt</div><b>$1,420</b></div>
-      </div>
-      <span class="sim">Simulated data</span>
-    </div>
+    <span class="sim">Simulated data</span>
   </header>
 
-  <!-- summary rail -->
-  <section class="rail" aria-label="Working structure summary">
-    <div>
-      <div class="lbl">Monthly payment</div>
-      <div class="v" id="s-pmt">$0</div>
-      <div class="sub" id="s-pmt-sub">&mdash;</div>
-    </div>
-    <div>
-      <div class="lbl">Amount financed</div>
-      <div class="v" id="s-af">$0</div>
-      <div class="sub" id="s-af-sub">&mdash;</div>
-    </div>
-    <div>
-      <div class="lbl">Total dealer gross</div>
-      <div class="v" id="s-gross">$0</div>
-      <div class="sub" id="s-gross-sub">&mdash;</div>
-    </div>
-    <div>
-      <div class="lbl">Buying box</div>
-      <div class="verdict" id="s-verdict"><span class="dot"></span><span class="t">&mdash;</span></div>
-      <div class="sub" id="s-verdict-sub">&mdash;</div>
-    </div>
-  </section>
+  <div class="toolbar">
+    <span class="lbl">Canvas</span>
+    <div class="seg" id="colseg" role="group" aria-label="Canvas column count"></div>
+    <span class="tip-txt">
+      Drag any panel by the grip at its top-left to rearrange &middot; <kbd>&minus;</kbd><kbd>+</kbd> sets how many
+      columns it spans &middot; with a grip focused, <kbd>←</kbd><kbd>→</kbd> move it and <kbd>shift</kbd>+<kbd>←</kbd><kbd>→</kbd> resize
+    </span>
+    <button class="btn" id="resetLayout" type="button">Reset layout</button>
+  </div>
 
-  <!-- deck -->
-  <div class="deck">
+  <div class="canvas" id="canvas">
 
-    <!-- structure -->
-    <section class="panel">
-      <div class="phead"><span class="lbl">Deal structure</span><span class="hint" id="struct-src">Base worksheet</span></div>
+    <!-- 1. working summary -->
+    <section class="panel tile" data-tile="summary" data-span="6" aria-label="Working summary">
+      <div class="phead"><span class="left"><span class="lbl">Working summary</span></span><span class="right"></span></div>
+      <div class="rail">
+        <div>
+          <div class="lbl">Monthly payment</div>
+          <div class="v" id="s-pmt">$0</div>
+          <div class="sub" id="s-pmt-sub">&mdash;</div>
+        </div>
+        <div>
+          <div class="lbl">Amount financed</div>
+          <div class="v" id="s-af">$0</div>
+          <div class="sub" id="s-af-sub">&mdash;</div>
+        </div>
+        <div>
+          <div class="lbl">Total dealer gross</div>
+          <div class="v" id="s-gross">$0</div>
+          <div class="sub" id="s-gross-sub">&mdash;</div>
+        </div>
+        <div>
+          <div class="lbl">Buying box</div>
+          <div class="verdict" id="s-verdict"><span class="dot"></span><span class="t">&mdash;</span></div>
+          <div class="sub" id="s-verdict-sub">&mdash;</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. vehicle, trade and applicant -->
+    <section class="panel tile" data-tile="vehicle" data-span="2" aria-label="Vehicle, trade and applicant">
+      <div class="phead"><span class="left"><span class="lbl">Vehicle &amp; applicant</span></span><span class="right"></span></div>
+      <div class="photo">
+        <img id="vphoto" alt="2025 Toyota Camry SE, front three-quarter view" hidden>
+        <div class="ph" id="vphoto-ph">
+          <b>2025 Toyota Camry SE</b>
+          <span>No photo attached. Use <em>Add photo</em> to pull one from this device &mdash; it stays on this device only.</span>
+        </div>
+        <button class="cam" id="vphoto-btn" type="button">Add photo</button>
+        <input type="file" id="vphoto-input" accept="image/*" hidden>
+      </div>
+      <div class="pbody ws" id="vspecs"></div>
+    </section>
+
+    <!-- 3. deal structure -->
+    <section class="panel tile" data-tile="structure" data-span="2" aria-label="Deal structure">
+      <div class="phead">
+        <span class="left"><span class="lbl">Deal structure</span></span>
+        <span class="right"><span class="hint" id="struct-src">Base worksheet</span></span>
+      </div>
       <div class="pbody ws" id="ws"></div>
     </section>
 
-    <!-- callbacks -->
-    <section class="panel">
-      <div class="phead"><span class="lbl">Lender callbacks</span><span class="hint">4 of 4 returned</span></div>
+    <!-- 4. lender callbacks -->
+    <section class="panel tile" data-tile="callbacks" data-span="2" aria-label="Lender callbacks">
+      <div class="phead">
+        <span class="left"><span class="lbl">Lender callbacks</span></span>
+        <span class="right"><span class="hint">4 of 4 returned</span></span>
+      </div>
       <div id="lenders"></div>
       <div class="stips" id="stips"></div>
     </section>
 
-    <!-- smart options -->
-    <section class="panel opts">
+    <!-- 5. smart options -->
+    <section class="panel tile" data-tile="options" data-span="4" aria-label="Smart options">
       <div class="phead">
-        <span class="lbl">Smart options</span>
-        <span class="hint" id="opts-hint">&mdash;</span>
+        <span class="left"><span class="lbl">Smart options</span></span>
+        <span class="right"><span class="hint" id="opts-hint">&mdash;</span></span>
       </div>
       <div id="opts"></div>
     </section>
-  </div>
 
-  <!-- buying box -->
-  <div class="bbox">
-
-    <section class="panel">
+    <!-- 6. negotiate -->
+    <section class="panel tile" data-tile="negotiate" data-span="2" aria-label="Negotiate the structure">
       <div class="phead">
-        <span class="lbl">Buying box &mdash; advance vs. payment burden</span>
-        <span class="hint">Capital One policy grid, 712 tier</span>
+        <span class="left"><span class="lbl">Negotiate</span></span>
+        <span class="right"><button class="btn" id="reset" type="button">Reset to callback</button></span>
+      </div>
+
+      <div class="ctl">
+        <div class="f">
+          <div class="fh"><span class="fk">Sale price</span><span class="fv" id="v-price">&mdash;</span></div>
+          <input type="range" id="r-price" min="26500" max="29500" step="25" aria-label="Sale price">
+        </div>
+        <div class="f">
+          <div class="fh"><span class="fk">Cash down</span><span class="fv" id="v-down">&mdash;</span></div>
+          <input type="range" id="r-down" min="0" max="7000" step="50" aria-label="Cash down payment">
+        </div>
+        <div class="f">
+          <div class="fh"><span class="fk">Dealer fee</span><span class="fv" id="v-fee">&mdash;</span></div>
+          <input type="range" id="r-fee" min="0" max="1000" step="25" aria-label="Dealer documentary fee">
+        </div>
+        <div class="f">
+          <div class="fh"><span class="fk">Back-end products</span><span class="fv" id="v-back">&mdash;</span></div>
+          <input type="range" id="r-back" min="0" max="5000" step="50" aria-label="Back-end product total">
+        </div>
+
+        <div class="f sect">
+          <div class="fh"><span class="fk">Trade allowance</span><span class="fv" id="v-allow">&mdash;</span></div>
+          <input type="range" id="r-allow" min="0" max="18000" step="100" aria-label="Trade-in allowance shown to the customer">
+        </div>
+        <div class="f">
+          <div class="fh"><span class="fk">Trade payoff</span><span class="fv" id="v-payoff">&mdash;</span></div>
+          <input type="range" id="r-payoff" min="0" max="18000" step="100" aria-label="Amount owed on the trade-in">
+        </div>
+        <div class="equity">
+          <span class="fk" id="eq-k">Trade equity</span>
+          <span class="v" id="v-equity">&mdash;</span>
+        </div>
+
+        <div class="f sect">
+          <div class="fh"><span class="fk">Rate markup over buy</span><span class="fv" id="v-mkp">&mdash;</span></div>
+          <input type="range" id="r-mkp" min="0" max="2.5" step="0.05" aria-label="Rate markup in points over buy rate">
+        </div>
+        <div class="f">
+          <div class="fh"><span class="fk">Term</span><span class="fv" id="v-term">&mdash;</span></div>
+          <div class="segs" id="terms" role="group" aria-label="Term in months"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. buying box -->
+    <section class="panel tile" data-tile="buyingbox" data-span="4" aria-label="Buying box">
+      <div class="phead">
+        <span class="left"><span class="lbl">Buying box &mdash; advance vs. payment burden</span></span>
+        <span class="right"><span class="hint">Capital One policy grid, 712 tier</span></span>
       </div>
       <div class="legend">
         <span class="it"><span class="sw" style="background:#d95926"></span>Deal as written</span>
@@ -449,47 +560,11 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
       </div>
     </section>
 
-    <section class="panel">
+    <!-- 8. guardrails -->
+    <section class="panel tile" data-tile="guardrails" data-span="2" aria-label="Policy guardrails">
       <div class="phead">
-        <span class="lbl">Negotiate the structure</span>
-        <button class="btn" id="reset" type="button">Reset to callback</button>
-      </div>
-
-      <div class="ctl" id="ctl">
-        <div class="f">
-          <div class="fh"><span class="gk lbl" style="color:var(--ink-2);letter-spacing:.04em">Sale price</span>
-            <span class="fv" id="v-price">&mdash;<span class="d" id="d-price"></span></span></div>
-          <input type="range" id="r-price" min="26500" max="29500" step="25" aria-label="Sale price">
-        </div>
-        <div class="f">
-          <div class="fh"><span class="gk lbl" style="color:var(--ink-2);letter-spacing:.04em">Cash down</span>
-            <span class="fv" id="v-down">&mdash;<span class="d" id="d-down"></span></span></div>
-          <input type="range" id="r-down" min="0" max="7000" step="50" aria-label="Cash down payment">
-        </div>
-        <div class="f">
-          <div class="fh"><span class="gk lbl" style="color:var(--ink-2);letter-spacing:.04em">Dealer fee</span>
-            <span class="fv" id="v-fee">&mdash;<span class="d" id="d-fee"></span></span></div>
-          <input type="range" id="r-fee" min="0" max="1000" step="25" aria-label="Dealer documentary fee">
-        </div>
-        <div class="f">
-          <div class="fh"><span class="gk lbl" style="color:var(--ink-2);letter-spacing:.04em">Back-end products</span>
-            <span class="fv" id="v-back">&mdash;<span class="d" id="d-back"></span></span></div>
-          <input type="range" id="r-back" min="0" max="5000" step="50" aria-label="Back-end product total">
-        </div>
-        <div class="f">
-          <div class="fh"><span class="gk lbl" style="color:var(--ink-2);letter-spacing:.04em">Rate markup over buy</span>
-            <span class="fv" id="v-mkp">&mdash;<span class="d" id="d-mkp"></span></span></div>
-          <input type="range" id="r-mkp" min="0" max="2.5" step="0.05" aria-label="Rate markup in points over buy rate">
-        </div>
-        <div class="f">
-          <div class="fh"><span class="gk lbl" style="color:var(--ink-2);letter-spacing:.04em">Term</span>
-            <span class="fv" id="v-term">&mdash;<span class="d" id="d-term"></span></span></div>
-          <div class="segs" id="terms" role="group" aria-label="Term in months"></div>
-        </div>
-      </div>
-
-      <div class="phead" style="border-top:1px solid var(--line);margin-top:8px">
-        <span class="lbl">Policy guardrails</span><span class="hint">value / limit</span>
+        <span class="left"><span class="lbl">Policy guardrails</span></span>
+        <span class="right"><span class="hint">value / limit</span></span>
       </div>
       <div class="rails" id="rails"></div>
       <div class="railfoot">
@@ -497,12 +572,15 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
         <span class="pill p-in" id="railpill">&mdash;</span>
       </div>
     </section>
+
   </div>
 
   <p class="foot">
-    Prototype. Rates, book values, policy grids and the applicant are invented for demonstration &mdash; no lender
-    system is contacted. Advance is measured against clean book, not sale price. Reserve is a simplified
-    present-value approximation capped at the lender&rsquo;s maximum participation.
+    Prototype. Rates, book values, policy grids, the trade and the applicant are invented for demonstration &mdash;
+    no lender system is contacted. Advance is measured against clean book, not sale price. Trade is modelled as
+    allowance less payoff, with the allowance credited against the taxable amount; reserve is a simplified
+    present-value approximation capped at the lender&rsquo;s maximum participation. A photo you add stays in this
+    browser and is never uploaded.
   </p>
 </div>
 
@@ -527,10 +605,20 @@ var POLICY = {
   back:   { core: null, limit: 4500 },
   fee:    { core: null, limit: 799 },
   markup: { core: null, limit: 2.00 },
+  negEq:  { core: null, limit: 5000 },
   maxReserve: 1500
 };
 
-var BASE = { price: 27985, fee: 699, backEnd: 2690, down: 2500, term: 72, markup: 1.25 };
+var BASE = { price: 27985, fee: 699, backEnd: 2690, down: 2500, term: 72, markup: 1.25,
+             tradeAllow: 0, tradePayoff: 0 };
+
+/* No trade on the base deal — the sliders let the desk model one, including
+   the upside-down case that pushes advance through the ceiling. */
+function withTrade(o){
+  if (o.tradeAllow  === undefined) o.tradeAllow  = 0;
+  if (o.tradePayoff === undefined) o.tradePayoff = 0;
+  return o;
+}
 
 var LENDERS = [
   { id:'cap1', name:'Capital One Auto Finance', tier:'Tier 2', buy:7.29, term:72, adv:128, back:4500, fee:799,
@@ -591,8 +679,12 @@ function amortize(principal, apr, n){
 }
 
 function compute(i){
-  var tax     = (i.price + i.fee) * FIXED.taxRate;
-  var af      = i.price + i.fee + i.backEnd + tax + FIXED.titleReg - i.down;
+  var allow   = i.tradeAllow  || 0;
+  var payoff  = i.tradePayoff || 0;
+  var equity  = allow - payoff;                       /* negative = upside down */
+  var credit  = Math.min(allow, i.price + i.fee);     /* trade reduces the taxable amount */
+  var tax     = Math.max(0, i.price + i.fee - credit) * FIXED.taxRate;
+  var af      = i.price + i.fee + i.backEnd + tax + FIXED.titleReg - i.down - equity;
   var ltv     = af / VEHICLE.book * 100;
   var downPct = i.price > 0 ? i.down / i.price * 100 : 0;
   var buy     = buyRate(i.term, ltv, downPct);
@@ -605,6 +697,9 @@ function compute(i){
 
   return {
     i: i, tax: tax, af: af, ltv: ltv, downPct: downPct,
+    allow: allow, payoff: payoff, equity: equity,
+    taxCredit: credit * FIXED.taxRate,
+    negEq: Math.max(0, -equity),
     buy: buy, sell: sell, pmt: pmt,
     pti: pmt / CUSTOMER.income * 100,
     dti: (CUSTOMER.otherDebt + pmt) / CUSTOMER.income * 100,
@@ -627,7 +722,8 @@ function railSet(d){
     { k:'Term',              v:d.i.term,   f:mo,   min:36,  max:84,   p:POLICY.term,   cap:'75 months',     short:'Term' },
     { k:'Back-end advance',  v:d.i.backEnd,f:money,min:0,   max:5500, p:POLICY.back,   cap:'$4,500',        short:'Back-end advance' },
     { k:'Dealer fee',        v:d.i.fee,    f:money,min:0,   max:1100, p:POLICY.fee,    cap:'$799',          short:'Dealer fee' },
-    { k:'Rate markup',       v:d.i.markup, f:pts,  min:0,   max:2.5,  p:POLICY.markup, cap:'2.00 points',   short:'Rate markup' }
+    { k:'Rate markup',       v:d.i.markup, f:pts,  min:0,   max:2.5,  p:POLICY.markup, cap:'2.00 points',   short:'Rate markup' },
+    { k:'Negative equity',   v:d.negEq,    f:money,min:0,   max:6000, p:POLICY.negEq,  cap:'$5,000 rolled', short:'Negative equity' }
   ];
 }
 
@@ -680,6 +776,7 @@ function $(id){ return document.getElementById(id); }
    5. State
    ================================================================= */
 
+SMART.forEach(function(o){ withTrade(o.inputs); });
 var baseDeal    = compute(BASE);
 var smartDeals  = SMART.map(function(o){ return compute(o.inputs); });
 var lenderId    = 'cap1';
@@ -693,7 +790,7 @@ var desk        = Object.assign({}, BASE);
 
 var NS = 'http://www.w3.org/2000/svg';
 var W = 780, H = 470, PAD = { l:62, r:30, t:28, b:58 };
-var XD = [80, 150], YD = [5, 19];
+var XD = [80, 160], YD = [5, 21];
 
 function px(v){ return PAD.l + (v - XD[0]) / (XD[1] - XD[0]) * (W - PAD.l - PAD.r); }
 function py(v){ return H - PAD.b - (v - YD[0]) / (YD[1] - YD[0]) * (H - PAD.t - PAD.b); }
@@ -789,12 +886,10 @@ function point(g, d, color, r, label, meta, emphasis){
   g.appendChild(svgEl('circle', { cx:x, cy:y, r:r, fill:color }));
 
   if (label)
-    g.appendChild(svgText(
-      x + (meta.below ? 0 : r + 7),
-      y + (meta.below ? r + 16 : meta.above ? -(r + 9) : 4),
-      label,
+    g.appendChild(svgText(x,
+      meta.pos === 'above' ? y - r - 7 : y + r + (meta.dy || 15), label,
       { 'font-size':10.5, fill:'#c3c2b7', 'font-weight':600, 'letter-spacing':'.6',
-        'text-anchor': meta.below ? 'middle' : 'start' }));
+        'text-anchor':'middle' }));
 
   hit.addEventListener('pointerenter', function(){ showTip(hit, d, color, meta); });
   hit.addEventListener('pointerleave', hideTip);
@@ -817,19 +912,25 @@ function drawMarks(){
   if (lenderId === 'cap1'){
     smartDeals.forEach(function(d, k){
       point(marks, d, '#3987e5', 6.5, String(SMART[k].n),
-        { name:'Smart option ' + SMART[k].n + ' — ' + SMART[k].name },
+        { name:'Smart option ' + SMART[k].n + ' — ' + SMART[k].name, pos:'above' },
         optionIndex === k || hoverIndex === k);
     });
   }
 
   /* on load the desk sits exactly on the written deal — ring it so both read */
   var same = Math.abs(live.ltv - baseDeal.ltv) < 0.05 && Math.abs(live.pti - baseDeal.pti) < 0.02;
-  point(marks, baseDeal, '#d95926', 6.5, 'AS WRITTEN', { name:'Deal as written', below:true }, false);
+  var off = live.ltv > XD[1] || live.ltv < XD[0] || live.pti > YD[1] || live.pti < YD[0];
+
+  point(marks, baseDeal, '#d95926', 6.5, same ? 'AS WRITTEN · DESK' : 'AS WRITTEN',
+    { name:'Deal as written', dy:16 }, false);
   if (same)
     marks.appendChild(svgEl('circle', { cx:x, cy:y, r:14, fill:'none',
       stroke:'#d95926', 'stroke-width':1.5 }));
-  point(marks, live, '#199e70', 7.5, same ? 'DESK — UNCHANGED' : 'DESK',
-    { name:'Your adjustment', above:true }, true);
+
+  /* second line down, so it never lands on the written deal's label */
+  point(marks, live, '#199e70', 7.5,
+    same ? null : off ? 'DESK ▸ OFF SCALE' : 'DESK',
+    { name:'Your adjustment', dy:30 }, true);
 }
 
 function showTip(node, d, color, meta){
@@ -876,6 +977,8 @@ function renderWorksheet(){
       wsRow('Sales tax 6.5%', money(d.tax)) +
       wsRow('Title, reg &amp; plate', money(FIXED.titleReg)) +
       wsRow('Cash down', '<span class="neg">(' + money(desk.down) + ')</span>') +
+      (d.equity > 0 ? wsRow('Trade equity', '<span class="neg">(' + money(d.equity) + ')</span>') :
+       d.equity < 0 ? wsRow('Negative equity rolled in', '<span class="down">+' + money(d.negEq) + '</span>') : '') +
       wsRow('Amount financed', money(d.af), 'tot') +
     '</div>' +
     '<div class="grp">' +
@@ -890,6 +993,37 @@ function renderWorksheet(){
       wsRow('Back-end gross', money(d.back)) +
       wsRow('Rate reserve', money(d.reserve)) +
       wsRow('Total gross', money(d.gross), 'tot') +
+    '</div>';
+}
+
+function renderVehicle(){
+  var d = compute(desk);
+  var eqCls = d.equity > 0 ? 'up' : d.equity < 0 ? 'down' : '';
+
+  $('vspecs').innerHTML =
+    '<div class="grp"><span class="lbl">Collateral</span>' +
+      wsRow('Stock', 'T25-4417') +
+      wsRow('VIN', '…AK9SU418826') +
+      wsRow('Odometer', '12 mi') +
+      wsRow('MSRP', money(29410)) +
+      wsRow('Clean book', money(VEHICLE.book)) +
+      wsRow('Advance ceiling', money(VEHICLE.book * POLICY.ltv.limit / 100)) +
+    '</div>' +
+    '<div class="grp"><span class="lbl">Trade-in</span>' +
+      (d.allow || d.payoff
+        ? wsRow('Allowance', money(d.allow)) +
+          wsRow('Payoff', '<span class="neg">(' + money(d.payoff) + ')</span>') +
+          wsRow('Equity', '<span class="' + eqCls + '">' + signed(d.equity, money) + '</span>') +
+          wsRow('Tax credit on trade', money(d.taxCredit))
+        : wsRow('Trade', '<span class="neg">None on file</span>') +
+          wsRow('Model one', '<span class="neg">Negotiate panel</span>')) +
+    '</div>' +
+    '<div class="grp"><span class="lbl">Applicant</span>' +
+      wsRow('FICO', '712') +
+      wsRow('Gross monthly', money(CUSTOMER.income)) +
+      wsRow('Other monthly debt', money(CUSTOMER.otherDebt)) +
+      wsRow('Time on job', '4 yr 2 mo') +
+      wsRow('Housing', 'Owns, mortgaged') +
     '</div>';
 }
 
@@ -1072,8 +1206,17 @@ function syncControls(){
   $('r-fee').value   = desk.fee;
   $('r-back').value  = desk.backEnd;
   $('r-mkp').value   = desk.markup;
+  $('r-allow').value  = desk.tradeAllow;
+  $('r-payoff').value = desk.tradePayoff;
 
   var ref = optionIndex === null ? BASE : SMART[optionIndex].inputs;
+  var eq  = desk.tradeAllow - desk.tradePayoff;
+
+  $('v-allow').innerHTML  = money(desk.tradeAllow)  + '<span class="d">' + deltaHTML(desk.tradeAllow  - ref.tradeAllow,  money) + '</span>';
+  $('v-payoff').innerHTML = money(desk.tradePayoff) + '<span class="d">' + deltaHTML(desk.tradePayoff - ref.tradePayoff, money) + '</span>';
+  $('eq-k').textContent   = eq < 0 ? 'Negative equity rolled in' : 'Trade equity';
+  $('v-equity').className = 'v ' + (eq > 0 ? 'up' : eq < 0 ? 'down' : 'flat');
+  $('v-equity').textContent = eq === 0 ? 'No trade' : signed(eq, money);
 
   $('v-price').innerHTML = money(desk.price) + '<span class="d">' + deltaHTML(desk.price - ref.price, money) + '</span>';
   $('v-down').innerHTML  = money(desk.down)  + '<span class="d">' + deltaHTML(desk.down  - ref.down,  money) + '</span>';
@@ -1090,6 +1233,7 @@ function syncControls(){
 
 function onDeskChange(){
   syncControls();
+  renderVehicle();
   renderWorksheet();
   renderRails();
   renderSummary();
@@ -1107,13 +1251,235 @@ function bindSlider(id, key, cast){
 }
 
 function renderAll(){
+  renderVehicle();
   renderLenders();
   renderOptions();
   onDeskChange();
 }
 
 /* =================================================================
-   9. Boot
+   9. Canvas — drag to rearrange, resize by column span
+   ================================================================= */
+
+var TILES = ['summary','vehicle','structure','callbacks','options','negotiate','buyingbox','guardrails'];
+var DEFAULT_SPANS = { summary:6, vehicle:2, structure:2, callbacks:2,
+                      options:4, negotiate:2, buyingbox:4, guardrails:2 };
+var LKEY   = 'buyingbox.layout.v2';
+var canvas = $('canvas');
+var layout = { colMode:'auto', order:TILES.slice(), spans:Object.assign({}, DEFAULT_SPANS) };
+
+function tileEl(id){ return canvas.querySelector('[data-tile="' + id + '"]'); }
+
+function loadLayout(){
+  try{
+    var raw = window.localStorage.getItem(LKEY);
+    if (!raw) return;
+    var v = JSON.parse(raw), ok = [], i;
+    for (i = 0; i < (v.order || []).length; i++)
+      if (TILES.indexOf(v.order[i]) > -1 && ok.indexOf(v.order[i]) < 0) ok.push(v.order[i]);
+    TILES.forEach(function(t){ if (ok.indexOf(t) < 0) ok.push(t); });
+    layout.order   = ok;
+    layout.colMode = v.colMode === 'auto' || (v.colMode >= 1 && v.colMode <= 6) ? v.colMode : 'auto';
+    TILES.forEach(function(t){
+      var n = v.spans && v.spans[t];
+      layout.spans[t] = (n >= 1 && n <= 6) ? n : DEFAULT_SPANS[t];
+    });
+  } catch(e){ /* private mode, blocked storage — defaults are fine */ }
+}
+function saveLayout(){
+  try{ window.localStorage.setItem(LKEY, JSON.stringify(layout)); } catch(e){}
+}
+
+/* the widest column count this viewport can carry a readable panel at */
+function maxCols(w){
+  return w < 620 ? 1 : w < 880 ? 2 : w < 1180 ? 3 : w < 1460 ? 4 : w < 1760 ? 5 : 6;
+}
+function effCols(){
+  var cap = maxCols(canvas.clientWidth);
+  return layout.colMode === 'auto' ? cap : Math.min(layout.colMode, cap);
+}
+
+function applyLayout(){
+  var cols = effCols();
+  canvas.style.setProperty('--cols', cols);
+
+  layout.order.forEach(function(id, i){
+    var el = tileEl(id);
+    if (!el) return;
+    var span = Math.min(layout.spans[id], cols);
+    el.style.order = i;
+    el.style.gridColumn = 'span ' + span;
+
+    var n = el.querySelector('.spanctl .n');
+    if (n){
+      n.textContent = span;
+      el.querySelector('.spanctl .minus').disabled = span <= 1;
+      el.querySelector('.spanctl .plus').disabled  = span >= cols;
+    }
+    var g = el.querySelector('.grip');
+    if (g) g.setAttribute('aria-label',
+      'Move panel. Position ' + (i + 1) + ' of ' + layout.order.length + ', ' + span + ' of ' + cols + ' columns wide');
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('#colseg button'), function(b){
+    b.setAttribute('aria-pressed', String(b.dataset.cols === String(layout.colMode)));
+  });
+  saveLayout();
+}
+
+function setSpan(id, n){
+  layout.spans[id] = Math.max(1, Math.min(6, n));
+  applyLayout();
+}
+function moveTile(id, to){
+  var from = layout.order.indexOf(id);
+  to = Math.max(0, Math.min(layout.order.length - 1, to));
+  if (from === to) return;
+  layout.order.splice(from, 1);
+  layout.order.splice(to, 0, id);
+  applyLayout();
+}
+
+/* ---- panel chrome: grip + span stepper, added to every tile ---- */
+var GRIP_SVG =
+  '<svg width="11" height="14" viewBox="0 0 11 14" aria-hidden="true" focusable="false">' +
+  [2,7].map(function(cx){
+    return [2,5.5,9,12.5].map(function(cy){
+      return '<circle cx="' + (cx + 1.5) + '" cy="' + cy + '" r="1.35" fill="currentColor"/>';
+    }).join('');
+  }).join('') + '</svg>';
+
+function buildChrome(){
+  TILES.forEach(function(id){
+    var el = tileEl(id); if (!el) return;
+    var head = el.querySelector('.phead');
+
+    var grip = document.createElement('button');
+    grip.type = 'button';
+    grip.className = 'grip';
+    grip.innerHTML = GRIP_SVG;
+    grip.addEventListener('pointerdown', function(e){ startDrag(e, id); });
+    grip.addEventListener('keydown', function(e){
+      var i = layout.order.indexOf(id), k = e.key, handled = true;
+      if (e.shiftKey && (k === 'ArrowLeft'  || k === 'ArrowRight')) setSpan(id, layout.spans[id] + (k === 'ArrowRight' ? 1 : -1));
+      else if (k === 'ArrowLeft'  || k === 'ArrowUp')   moveTile(id, i - 1);
+      else if (k === 'ArrowRight' || k === 'ArrowDown') moveTile(id, i + 1);
+      else if (k === '-' || k === '_') setSpan(id, layout.spans[id] - 1);
+      else if (k === '+' || k === '=') setSpan(id, layout.spans[id] + 1);
+      else handled = false;
+      if (handled){ e.preventDefault(); grip.focus(); }
+    });
+    head.querySelector('.left').insertBefore(grip, head.querySelector('.left').firstChild);
+
+    var ctl = document.createElement('span');
+    ctl.className = 'spanctl';
+    ctl.innerHTML = '<button type="button" class="minus" aria-label="Narrow panel">&minus;</button>' +
+                    '<span class="n">1</span>' +
+                    '<button type="button" class="plus" aria-label="Widen panel">+</button>';
+    ctl.querySelector('.minus').addEventListener('click', function(){ setSpan(id, layout.spans[id] - 1); });
+    ctl.querySelector('.plus').addEventListener('click',  function(){ setSpan(id, layout.spans[id] + 1); });
+    head.querySelector('.right').appendChild(ctl);
+  });
+}
+
+/* ---- pointer drag: works with mouse, pen and touch ---- */
+var drag = null;
+
+function startDrag(e, id){
+  if (e.button > 0) return;
+  e.preventDefault();
+  drag = { id:id, x:e.clientX, y:e.clientY, moved:false };
+  window.addEventListener('pointermove', onDragMove);
+  window.addEventListener('pointerup', endDrag);
+  window.addEventListener('pointercancel', endDrag);
+}
+
+function onDragMove(e){
+  if (!drag) return;
+  var el = tileEl(drag.id);
+  if (!drag.moved){
+    if (Math.abs(e.clientX - drag.x) + Math.abs(e.clientY - drag.y) < 6) return;
+    drag.moved = true;
+    el.classList.add('dragging');
+    document.body.style.userSelect = 'none';
+  }
+  /* hide the dragged tile from hit-testing so we find what is underneath */
+  el.style.pointerEvents = 'none';
+  var under = document.elementFromPoint(e.clientX, e.clientY);
+  el.style.pointerEvents = '';
+  under = under && under.closest ? under.closest('[data-tile]') : null;
+  if (under && under.dataset.tile !== drag.id)
+    moveTile(drag.id, layout.order.indexOf(under.dataset.tile));
+}
+
+function endDrag(){
+  if (drag && drag.moved){
+    tileEl(drag.id).classList.remove('dragging');
+    document.body.style.userSelect = '';
+  }
+  drag = null;
+  window.removeEventListener('pointermove', onDragMove);
+  window.removeEventListener('pointerup', endDrag);
+  window.removeEventListener('pointercancel', endDrag);
+}
+
+function buildColSeg(){
+  $('colseg').innerHTML = ['auto','1','2','3','4','5','6'].map(function(c){
+    return '<button type="button" data-cols="' + c + '" aria-pressed="false">' +
+           (c === 'auto' ? 'Auto' : c) + '</button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('#colseg button'), function(b){
+    b.addEventListener('click', function(){
+      layout.colMode = b.dataset.cols === 'auto' ? 'auto' : Number(b.dataset.cols);
+      applyLayout();
+    });
+  });
+}
+
+/* =================================================================
+   10. Vehicle photo — read locally, kept on this device only
+   ================================================================= */
+
+var PKEY = 'buyingbox.photo.v2';
+
+function setPhoto(src){
+  var img = $('vphoto');
+  img.hidden = !src;
+  $('vphoto-ph').hidden = !!src;
+  $('vphoto-btn').textContent = src ? 'Replace photo' : 'Add photo';
+  if (src) img.src = src;
+}
+
+function readPhoto(file){
+  var fr = new FileReader();
+  fr.onload = function(){
+    var im = new Image();
+    im.onload = function(){
+      /* downscale so it fits in storage and stays sharp at tile width */
+      var w = Math.min(1000, im.width), h = Math.round(im.height * (w / im.width));
+      var c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      c.getContext('2d').drawImage(im, 0, 0, w, h);
+      var url = c.toDataURL('image/jpeg', 0.82);
+      setPhoto(url);
+      try{ window.localStorage.setItem(PKEY, url); } catch(err){ /* too big to keep — shown anyway */ }
+    };
+    im.src = fr.result;
+  };
+  fr.readAsDataURL(file);
+}
+
+$('vphoto-btn').addEventListener('click', function(){ $('vphoto-input').click(); });
+$('vphoto-input').addEventListener('change', function(e){
+  if (e.target.files && e.target.files[0]) readPhoto(e.target.files[0]);
+});
+try{
+  var saved = window.localStorage.getItem(PKEY);
+  if (saved) setPhoto(saved);
+} catch(e){}
+
+/* =================================================================
+   11. Boot
    ================================================================= */
 
 buildChart();
@@ -1123,10 +1489,30 @@ bindSlider('r-down',  'down',    Number);
 bindSlider('r-fee',   'fee',     Number);
 bindSlider('r-back',  'backEnd', Number);
 bindSlider('r-mkp',   'markup',  parseFloat);
+bindSlider('r-allow', 'tradeAllow',  Number);
+bindSlider('r-payoff','tradePayoff', Number);
 
 $('reset').addEventListener('click', function(){
   desk = Object.assign({}, optionIndex === null ? BASE : SMART[optionIndex].inputs);
   onDeskChange();
+});
+
+buildChrome();
+buildColSeg();
+loadLayout();
+applyLayout();
+
+var rt;
+window.addEventListener('resize', function(){
+  clearTimeout(rt);
+  rt = setTimeout(applyLayout, 80);
+});
+
+$('resetLayout').addEventListener('click', function(){
+  layout.colMode = 'auto';
+  layout.order   = TILES.slice();
+  layout.spans   = Object.assign({}, DEFAULT_SPANS);
+  applyLayout();
 });
 
 renderAll();
