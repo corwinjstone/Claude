@@ -114,21 +114,45 @@ body{
 .canvas{
   display:grid;
   grid-template-columns: repeat(var(--cols, 6), minmax(0, 1fr));
-  gap: 12px; align-items: start;
+  grid-auto-rows: minmax(var(--rowh, 176px), auto);
+  gap: 12px; align-items: stretch;
 }
 
 .panel{
   background: var(--surface); border: 1px solid var(--line);
-  border-radius: var(--r); display:flex; flex-direction:column; min-width:0;
+  border-radius: var(--r); display:flex; flex-direction:column;
+  min-width:0; min-height:0; height:100%;
 }
 .tile{ min-width: 0; }
-.tile.dragging{ opacity:.5; outline: 2px dashed var(--opt); outline-offset: 2px; }
+.tile.dragging{ opacity:.32; outline: 2px dashed var(--opt); outline-offset: 2px; }
 .tile.dragging *{ pointer-events: none; }
+.canvas.is-dragging .panel{ cursor: grabbing; }
+
+/* the ghost that follows the pointer while dragging */
+.dragghost{
+  position: fixed; z-index: 90; pointer-events: none; left:0; top:0;
+  display:flex; align-items:center; gap:8px;
+  background: var(--raised); border:1px solid var(--opt);
+  border-radius: var(--r); padding: 8px 12px;
+  box-shadow: 0 14px 34px rgba(0,0,0,.66);
+  font-size: 11px; font-weight: 600; letter-spacing:.11em; text-transform: uppercase; color: var(--ink);
+}
+.dragghost::before{ content:""; width:6px; height:6px; border-radius:50%; background: var(--opt); }
+
+/* every panel body absorbs the slack when a row is taller than its content */
+.pbody, .rails, .ctl{ flex: 1 1 auto; }
+#opts{ flex: 1 1 auto; display:flex; flex-direction:column; }
+#opts > .cards{ flex: 1 1 auto; }
+#lenders{ flex: 0 0 auto; }
+.rail{ flex: 1 1 auto; }
 
 .phead{
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
-  padding: 8px 10px 8px 8px; border-bottom: 1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;
+  padding: 7px 9px 7px 7px; border-bottom: 1px solid var(--line);
+  cursor: grab; touch-action: none; user-select: none;
 }
+.phead:active{ cursor: grabbing; }
+.phead button:not(.grip){ cursor: pointer; }
 .phead .left,
 .phead .right{ display:flex; align-items:center; gap:8px; min-width:0; }
 .phead .hint{ font-size: 10.5px; color: var(--ink-3); }
@@ -143,7 +167,12 @@ body{
 .grip:active{ cursor: grabbing; }
 .grip:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; color: var(--ink-2); }
 
+.dims{ display:flex; align-items:center; gap:4px; flex:none; }
 .spanctl{ display:flex; align-items:center; flex:none; border:1px solid var(--line); border-radius:2px; overflow:hidden; }
+.spanctl .ax{
+  font-size: 8.5px; font-weight:700; letter-spacing:.06em; color: var(--ink-3);
+  padding: 0 3px 0 4px; background: var(--surface-2);
+}
 .spanctl button{
   width:19px; height:19px; padding:0; cursor:pointer; line-height:1;
   background: var(--surface-2); border:0; color: var(--ink-3); font-size:13px;
@@ -199,7 +228,7 @@ body{
 .photo .cam:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
 
 /* ---------- worksheet rows ---------- */
-.ws{ display:flex; flex-direction:column; }
+.ws{ display:flex; flex-direction:column; justify-content: space-between; }
 .ws .row{
   display:flex; align-items:baseline; justify-content:space-between; gap:12px;
   padding: 6px 0; border-bottom: 1px solid var(--surface-2);
@@ -227,13 +256,29 @@ body{
 .lender:hover{ background: var(--surface-2); }
 .lender:focus-visible{ outline:2px solid var(--opt); outline-offset:-2px; }
 .lender[aria-pressed="true"]{ background: var(--raised); border-left-color: var(--opt); }
-.lender .l1{ display:flex; align-items:center; gap:8px; }
+.lender .l1{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.lender .ok{ display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
 .lender .nm{ font-size: 12.5px; font-weight: 600; letter-spacing:-.008em; flex:1; min-width:0; }
 .lender .l2{
   display:flex; align-items:center; gap:7px; margin-top:4px; padding-left: 17px;
   font-family: var(--f-num); font-size: 11px; color: var(--ink-3); flex-wrap:wrap;
 }
 .lender .l2 em{ font-style:normal; color: var(--ink-2); }
+
+.logo{
+  width:30px; height:30px; flex:none; border-radius:2px; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  background: var(--b, var(--raised)); border:1px solid rgba(255,255,255,.13);
+}
+.logo img{ width:100%; height:100%; object-fit: contain; background:#fff; display:block; }
+.logo .mk{
+  font-family: var(--f-ui); font-size: 10.5px; font-weight: 700;
+  letter-spacing: -.02em; color: #fff; line-height:1;
+}
+.logostrip{ padding: 10px 14px 12px; border-top:1px solid var(--line); background: var(--surface-2); }
+.logorow{ display:flex; align-items:center; gap:9px; padding: 5px 0; }
+.logorow .nm{ flex:1; min-width:0; font-size: 11.5px; color: var(--ink-2); }
+.logostrip .note{ font-size: 10.5px; color: var(--ink-3); margin: 7px 0 0; line-height:1.5; }
 
 .tick{ width:9px; height:9px; border-radius:50%; background: var(--good); flex:none; box-shadow: 0 0 0 3px rgba(12,163,12,.16); }
 .appr{ font-size: 9px; white-space:nowrap; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color: var(--good); }
@@ -303,8 +348,14 @@ body{
 .legend .sw{ width:9px; height:9px; border-radius:50%; flex:none; box-shadow: 0 0 0 2px var(--surface); }
 .legend .zone{ width:14px; height:9px; border-radius:1px; flex:none; }
 
-.chartwrap{ position:relative; padding: 4px 8px 10px; }
-.chartwrap svg{ display:block; width:100%; height:auto; overflow: visible; }
+.chartwrap{
+  position:relative; padding: 4px 8px 8px;
+  flex: 1 1 auto; min-height: clamp(300px, 34vh, 560px);
+}
+.chartwrap svg{
+  display:block; position:absolute; inset: 4px 8px 8px;
+  width: calc(100% - 16px); height: calc(100% - 12px);
+}
 
 .tip{
   position:absolute; pointer-events:none; opacity:0; transform: translate(-50%, -114%);
@@ -413,8 +464,9 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
     <span class="lbl">Canvas</span>
     <div class="seg" id="colseg" role="group" aria-label="Canvas column count"></div>
     <span class="tip-txt">
-      Drag any panel by the grip at its top-left to rearrange &middot; <kbd>&minus;</kbd><kbd>+</kbd> sets how many
-      columns it spans &middot; with a grip focused, <kbd>←</kbd><kbd>→</kbd> move it and <kbd>shift</kbd>+<kbd>←</kbd><kbd>→</kbd> resize
+      Drag any panel by its header to rearrange &middot; <kbd>W</kbd> sets the columns it spans,
+      <kbd>H</kbd> the rows &middot; with a grip focused, <kbd>←</kbd><kbd>→</kbd> move it and
+      <kbd>shift</kbd>+arrows resize
     </span>
     <button class="btn" id="resetLayout" type="button">Reset layout</button>
   </div>
@@ -476,9 +528,14 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
     <section class="panel tile" data-tile="callbacks" data-span="2" aria-label="Lender callbacks">
       <div class="phead">
         <span class="left"><span class="lbl">Lender callbacks</span></span>
-        <span class="right"><span class="hint">4 of 4 returned</span></span>
+        <span class="right">
+          <span class="hint">4 of 4 returned</span>
+          <button class="btn" id="logoBtn" type="button" aria-expanded="false">Logos</button>
+        </span>
       </div>
       <div id="lenders"></div>
+      <div class="logostrip" id="logostrip" hidden></div>
+      <input type="file" id="logo-input" accept="image/*" hidden>
       <div class="stips" id="stips"></div>
     </section>
 
@@ -621,16 +678,16 @@ function withTrade(o){
 }
 
 var LENDERS = [
-  { id:'cap1', name:'Capital One Auto Finance', tier:'Tier 2', buy:7.29, term:72, adv:128, back:4500, fee:799,
+  { id:'cap1', name:'Capital One Auto Finance', brand:'#004977', mark:'C1', tier:'Tier 2', buy:7.29, term:72, adv:128, back:4500, fee:799,
     optionCount:4,
     stips:['Proof of residence — utility bill dated within 60 days','Verbal employment verification at funding'] },
-  { id:'ally', name:'Ally Financial', tier:'Tier 2', buy:7.59, term:72, adv:125, back:3000, fee:699,
+  { id:'ally', name:'Ally Financial', brand:'#6B0F62', mark:'ally', tier:'Tier 2', buy:7.59, term:72, adv:125, back:3000, fee:699,
     optionCount:0,
     stips:['Signed odometer statement','No alternate structures returned on this callback.'] },
-  { id:'sant', name:'Santander Consumer', tier:'Tier B', buy:8.49, term:75, adv:130, back:3500, fee:699,
+  { id:'sant', name:'Santander Consumer', brand:'#EC0000', mark:'S', tier:'Tier B', buy:8.49, term:75, adv:130, back:3500, fee:699,
     optionCount:0,
     stips:['Proof of income — 2 most recent pay stubs','10 personal references','No alternate structures returned on this callback.'] },
-  { id:'wf',   name:'Wells Fargo Dealer Services', tier:'Tier 2', buy:7.44, term:72, adv:120, back:2500, fee:799,
+  { id:'wf',   name:'Wells Fargo Dealer Services', brand:'#D71E28', mark:'WF', tier:'Tier 2', buy:7.44, term:72, adv:120, back:2500, fee:799,
     optionCount:0,
     stips:['Existing deposit relationship confirmed','No alternate structures returned on this callback.'] }
 ];
@@ -792,6 +849,20 @@ var NS = 'http://www.w3.org/2000/svg';
 var W = 780, H = 470, PAD = { l:62, r:30, t:28, b:58 };
 var XD = [80, 160], YD = [5, 21];
 
+/* The plot is drawn at the pixel size of its container and redrawn when that
+   changes, so labels stay a constant size while the drawing area flexes. */
+function measure(){
+  var wrap = document.querySelector('.chartwrap');
+  var r = wrap.getBoundingClientRect();
+  W = Math.max(250, Math.round(r.width  - 16));
+  H = Math.max(210, Math.round(r.height - 12));
+  PAD = { l: W < 460 ? 46 : 60, r: W < 460 ? 16 : 28,
+          t: 24,                b: H < 320 ? 42 : 54 };
+  $('chart').setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+}
+function xStep(){ return W < 520 ? 20 : 10; }
+function yStep(){ return H < 340 ? 4  : 2;  }
+
 function px(v){ return PAD.l + (v - XD[0]) / (XD[1] - XD[0]) * (W - PAD.l - PAD.r); }
 function py(v){ return H - PAD.b - (v - YD[0]) / (YD[1] - YD[0]) * (H - PAD.t - PAD.b); }
 
@@ -811,6 +882,8 @@ var marks;
 
 function buildChart(){
   var svg = $('chart'), i, x, y;
+  measure();
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
   var L = px(XD[0]), R = px(XD[1]), T = py(YD[1]), B = py(YD[0]);
 
   /* out-of-policy plane */
@@ -827,11 +900,11 @@ function buildChart(){
     height:B-py(POLICY.pti.core), fill:'rgba(12,163,12,.16)', stroke:'rgba(12,163,12,.5)', 'stroke-width':1 }));
 
   /* gridlines */
-  for (i = XD[0] + 10; i < XD[1]; i += 10){
+  for (i = XD[0] + xStep(); i < XD[1]; i += xStep()){
     x = px(i);
     svg.appendChild(svgEl('line', { x1:x, y1:T, x2:x, y2:B, stroke:'#2c2c2a', 'stroke-width':1 }));
   }
-  for (i = YD[0] + 2; i < YD[1]; i += 2){
+  for (i = YD[0] + yStep(); i < YD[1]; i += yStep()){
     y = py(i);
     svg.appendChild(svgEl('line', { x1:L, y1:y, x2:R, y2:y, stroke:'#2c2c2a', 'stroke-width':1 }));
   }
@@ -846,27 +919,43 @@ function buildChart(){
   svg.appendChild(svgEl('line', { x1:L, y1:B, x2:R, y2:B, stroke:'#3a3a37', 'stroke-width':1 }));
   svg.appendChild(svgEl('line', { x1:L, y1:T, x2:L, y2:B, stroke:'#3a3a37', 'stroke-width':1 }));
 
-  for (i = XD[0]; i <= XD[1]; i += 10)
-    svg.appendChild(svgText(px(i), B + 18, i + '%', { 'text-anchor':'middle' }));
-  for (i = YD[0]; i <= YD[1]; i += 2)
-    svg.appendChild(svgText(L - 10, py(i) + 4, i + '%', { 'text-anchor':'end' }));
+  for (i = XD[0]; i <= XD[1]; i += xStep())
+    svg.appendChild(svgText(px(i), B + 17, i + '%', { 'text-anchor':'middle' }));
+  for (i = YD[0]; i <= YD[1]; i += yStep())
+    svg.appendChild(svgText(L - 9, py(i) + 4, i + '%', { 'text-anchor':'end' }));
 
-  svg.appendChild(svgText((L + R) / 2, B + 42, 'AMOUNT FINANCED AS % OF CLEAN BOOK  —  ADVANCE',
-    { 'text-anchor':'middle', 'font-size':10, 'letter-spacing':'1.4', fill:'#898781' }));
-  svg.appendChild(svgText(0, 0, 'PAYMENT AS % OF GROSS MONTHLY INCOME',
-    { 'text-anchor':'middle', 'font-size':10, 'letter-spacing':'1.4', fill:'#898781',
-      transform:'translate(16,' + (T + B) / 2 + ') rotate(-90)' }));
+  if (H >= 320 && W >= 460)
+    svg.appendChild(svgText((L + R) / 2, B + 40, 'AMOUNT FINANCED AS % OF CLEAN BOOK  —  ADVANCE',
+      { 'text-anchor':'middle', 'font-size':10, 'letter-spacing':'1.4', fill:'#898781' }));
+  if (W >= 460)
+    svg.appendChild(svgText(0, 0, 'PAYMENT AS % OF GROSS MONTHLY INCOME',
+      { 'text-anchor':'middle', 'font-size':10, 'letter-spacing':'1.4', fill:'#898781',
+        transform:'translate(14,' + (T + B) / 2 + ') rotate(-90)' }));
 
   /* zone labels */
   svg.appendChild(svgText(L + 9, B - 9, 'TIER 1 CORE',
     { 'font-size':10, 'letter-spacing':'1.2', fill:'#0ca30c', 'font-weight':600 }));
-  svg.appendChild(svgText(px(POLICY.ltv.limit) - 9, py(POLICY.pti.limit) - 9, 'POLICY MAX  128% / 15%',
+  svg.appendChild(svgText(px(POLICY.ltv.limit) - 9, py(POLICY.pti.limit) - 9,
+    W < 560 ? 'POLICY MAX' : 'POLICY MAX  128% / 15%',
     { 'text-anchor':'end', 'font-size':10, 'letter-spacing':'1.2', fill:'#fab219', 'font-weight':600 }));
-  svg.appendChild(svgText(R - 4, T + 13, 'DECLINE / OUT OF POLICY',
+  svg.appendChild(svgText(R - 4, T + 13, W < 560 ? 'OUT OF POLICY' : 'DECLINE / OUT OF POLICY',
     { 'text-anchor':'end', 'font-size':10, 'letter-spacing':'1.2', fill:'#d03b3b', 'font-weight':600 }));
 
   marks = svgEl('g', {});
   svg.appendChild(marks);
+  drawMarks();
+}
+
+/* redraw whenever the panel it lives in changes size */
+function watchChart(){
+  var wrap = document.querySelector('.chartwrap');
+  if (typeof ResizeObserver === 'undefined') return;
+  var pending = false;
+  new ResizeObserver(function(){
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(function(){ pending = false; buildChart(); });
+  }).observe(wrap);
 }
 
 function clampX(v){ return Math.min(XD[1], Math.max(XD[0], v)); }
@@ -970,7 +1059,7 @@ function renderWorksheet(){
       (isDirty() ? ' — edited' : '');
 
   $('ws').innerHTML =
-    '<div class="grp">' +
+    '<div class="grp"><span class="lbl">Purchase</span>' +
       wsRow('Sale price', money(desk.price)) +
       wsRow('Dealer fee', money(desk.fee)) +
       wsRow('Back-end products', money(desk.backEnd)) +
@@ -981,20 +1070,59 @@ function renderWorksheet(){
        d.equity < 0 ? wsRow('Negative equity rolled in', '<span class="down">+' + money(d.negEq) + '</span>') : '') +
       wsRow('Amount financed', money(d.af), 'tot') +
     '</div>' +
-    '<div class="grp">' +
+    '<div class="grp"><span class="lbl">Terms</span>' +
       wsRow('Buy rate', pct2(d.buy)) +
       wsRow('Reserve markup', pts(desk.markup)) +
       wsRow('Sell rate (APR)', pct2(d.sell)) +
       wsRow('Term', mo(desk.term)) +
       wsRow('Payment', money(d.pmt), 'tot') +
     '</div>' +
-    '<div class="grp">' +
+    '<div class="grp"><span class="lbl">Gross</span>' +
       wsRow('Front gross', money(d.front)) +
       wsRow('Back-end gross', money(d.back)) +
       wsRow('Rate reserve', money(d.reserve)) +
       wsRow('Total gross', money(d.gross), 'tot') +
     '</div>';
 }
+
+var LOGO_KEY = 'buyingbox.logos.v1';
+var logos = {};
+try{ logos = JSON.parse(window.localStorage.getItem(LOGO_KEY) || '{}') || {}; } catch(e){ logos = {}; }
+function saveLogos(){ try{ window.localStorage.setItem(LOGO_KEY, JSON.stringify(logos)); } catch(e){} }
+
+function logoChip(L){
+  return logos[L.id]
+    ? '<span class="logo" style="--b:#ffffff"><img src="' + logos[L.id] + '" alt="' + L.name + ' logo"></span>'
+    : '<span class="logo" style="--b:' + L.brand + '" title="' + L.name + '"><span class="mk">' + L.mark + '</span></span>';
+}
+
+function renderLogoStrip(){
+  $('logostrip').innerHTML = LENDERS.map(function(L){
+    return '<div class="logorow">' + logoChip(L) +
+      '<span class="nm">' + L.name + '</span>' +
+      '<button class="btn" type="button" data-logo="' + L.id + '">' + (logos[L.id] ? 'Replace' : 'Attach') + '</button>' +
+      (logos[L.id] ? '<button class="btn" type="button" data-clearlogo="' + L.id + '">Clear</button>' : '') +
+      '</div>';
+  }).join('') +
+  '<p class="note">Read from this device and kept in this browser only &mdash; never uploaded. ' +
+  'A PNG or SVG on a white or transparent background works best.</p>';
+
+  Array.prototype.forEach.call($('logostrip').querySelectorAll('[data-logo]'), function(b){
+    b.addEventListener('click', function(){
+      pendingLogo = b.dataset.logo;
+      $('logo-input').value = '';
+      $('logo-input').click();
+    });
+  });
+  Array.prototype.forEach.call($('logostrip').querySelectorAll('[data-clearlogo]'), function(b){
+    b.addEventListener('click', function(){
+      delete logos[b.dataset.clearlogo];
+      saveLogos(); renderLenders(); renderLogoStrip();
+    });
+  });
+}
+
+var pendingLogo = null;
 
 function renderVehicle(){
   var d = compute(desk);
@@ -1034,8 +1162,8 @@ function renderLenders(){
       : '';
     return '<button class="lender" type="button" data-lender="' + L.id + '" aria-pressed="' +
              (L.id === lenderId) + '">' +
-             '<span class="l1"><span class="tick"></span><span class="nm">' + L.name + '</span>' +
-             chip + '<span class="appr">Approved</span></span>' +
+             '<span class="l1">' + logoChip(L) + '<span class="nm">' + L.name + '</span>' +
+             chip + '<span class="ok"><span class="tick"></span><span class="appr">Approved</span></span></span>' +
              '<span class="l2"><em>' + L.tier + '</em> &middot; ' + pct2(L.buy) + ' buy &middot; ' +
              L.term + ' mo max</span>' +
              '<span class="l2">' + L.adv + '% advance &middot; ' + money(L.back) + ' back-end cap ' +
@@ -1264,9 +1392,15 @@ function renderAll(){
 var TILES = ['summary','vehicle','structure','callbacks','options','negotiate','buyingbox','guardrails'];
 var DEFAULT_SPANS = { summary:6, vehicle:2, structure:2, callbacks:2,
                       options:4, negotiate:2, buyingbox:4, guardrails:2 };
-var LKEY   = 'buyingbox.layout.v2';
+var DEFAULT_ROWS  = { summary:1, vehicle:1, structure:1, callbacks:1,
+                      options:1, negotiate:1, buyingbox:1, guardrails:1 };
+var TITLES = { summary:'Working summary', vehicle:'Vehicle & applicant', structure:'Deal structure',
+               callbacks:'Lender callbacks', options:'Smart options', negotiate:'Negotiate',
+               buyingbox:'Buying box', guardrails:'Policy guardrails' };
+var LKEY   = 'buyingbox.layout.v3';
 var canvas = $('canvas');
-var layout = { colMode:'auto', order:TILES.slice(), spans:Object.assign({}, DEFAULT_SPANS) };
+var layout = { colMode:'auto', order:TILES.slice(),
+               spans:Object.assign({}, DEFAULT_SPANS), rows:Object.assign({}, DEFAULT_ROWS) };
 
 function tileEl(id){ return canvas.querySelector('[data-tile="' + id + '"]'); }
 
@@ -1283,6 +1417,8 @@ function loadLayout(){
     TILES.forEach(function(t){
       var n = v.spans && v.spans[t];
       layout.spans[t] = (n >= 1 && n <= 6) ? n : DEFAULT_SPANS[t];
+      var r = v.rows && v.rows[t];
+      layout.rows[t] = (r >= 1 && r <= 4) ? r : DEFAULT_ROWS[t];
     });
   } catch(e){ /* private mode, blocked storage — defaults are fine */ }
 }
@@ -1307,18 +1443,27 @@ function applyLayout(){
     var el = tileEl(id);
     if (!el) return;
     var span = Math.min(layout.spans[id], cols);
+    var rows = layout.rows[id];
     el.style.order = i;
     el.style.gridColumn = 'span ' + span;
+    el.style.gridRow    = 'span ' + rows;
 
-    var n = el.querySelector('.spanctl .n');
-    if (n){
-      n.textContent = span;
-      el.querySelector('.spanctl .minus').disabled = span <= 1;
-      el.querySelector('.spanctl .plus').disabled  = span >= cols;
+    var wc = el.querySelector('.spanctl.w');
+    if (wc){
+      wc.querySelector('.n').textContent = span;
+      wc.querySelector('.minus').disabled = span <= 1;
+      wc.querySelector('.plus').disabled  = span >= cols;
+    }
+    var hc = el.querySelector('.spanctl.h');
+    if (hc){
+      hc.querySelector('.n').textContent = rows;
+      hc.querySelector('.minus').disabled = rows <= 1;
+      hc.querySelector('.plus').disabled  = rows >= 4;
     }
     var g = el.querySelector('.grip');
     if (g) g.setAttribute('aria-label',
-      'Move panel. Position ' + (i + 1) + ' of ' + layout.order.length + ', ' + span + ' of ' + cols + ' columns wide');
+      'Move ' + TITLES[id] + '. Position ' + (i + 1) + ' of ' + layout.order.length +
+      ', ' + span + ' of ' + cols + ' columns wide, ' + rows + ' rows tall');
   });
 
   Array.prototype.forEach.call(document.querySelectorAll('#colseg button'), function(b){
@@ -1329,6 +1474,10 @@ function applyLayout(){
 
 function setSpan(id, n){
   layout.spans[id] = Math.max(1, Math.min(6, n));
+  applyLayout();
+}
+function setRows(id, n){
+  layout.rows[id] = Math.max(1, Math.min(4, n));
   applyLayout();
 }
 function moveTile(id, to){
@@ -1354,14 +1503,21 @@ function buildChrome(){
     var el = tileEl(id); if (!el) return;
     var head = el.querySelector('.phead');
 
+    /* the entire header is the drag surface — the grip is the affordance */
+    head.addEventListener('pointerdown', function(e){
+      var b = e.target.closest ? e.target.closest('button, input, a') : null;
+      if (b && !b.classList.contains('grip')) return;
+      startDrag(e, id);
+    });
+
     var grip = document.createElement('button');
     grip.type = 'button';
     grip.className = 'grip';
     grip.innerHTML = GRIP_SVG;
-    grip.addEventListener('pointerdown', function(e){ startDrag(e, id); });
     grip.addEventListener('keydown', function(e){
       var i = layout.order.indexOf(id), k = e.key, handled = true;
       if (e.shiftKey && (k === 'ArrowLeft'  || k === 'ArrowRight')) setSpan(id, layout.spans[id] + (k === 'ArrowRight' ? 1 : -1));
+      else if (e.shiftKey && (k === 'ArrowUp' || k === 'ArrowDown')) setRows(id, layout.rows[id] + (k === 'ArrowDown' ? 1 : -1));
       else if (k === 'ArrowLeft'  || k === 'ArrowUp')   moveTile(id, i - 1);
       else if (k === 'ArrowRight' || k === 'ArrowDown') moveTile(id, i + 1);
       else if (k === '-' || k === '_') setSpan(id, layout.spans[id] - 1);
@@ -1371,51 +1527,96 @@ function buildChrome(){
     });
     head.querySelector('.left').insertBefore(grip, head.querySelector('.left').firstChild);
 
-    var ctl = document.createElement('span');
-    ctl.className = 'spanctl';
-    ctl.innerHTML = '<button type="button" class="minus" aria-label="Narrow panel">&minus;</button>' +
-                    '<span class="n">1</span>' +
-                    '<button type="button" class="plus" aria-label="Widen panel">+</button>';
-    ctl.querySelector('.minus').addEventListener('click', function(){ setSpan(id, layout.spans[id] - 1); });
-    ctl.querySelector('.plus').addEventListener('click',  function(){ setSpan(id, layout.spans[id] + 1); });
-    head.querySelector('.right').appendChild(ctl);
+    var dims = document.createElement('span');
+    dims.className = 'dims';
+    dims.innerHTML =
+      '<span class="spanctl w"><span class="ax">W</span>' +
+        '<button type="button" class="minus" aria-label="Narrow panel">&minus;</button>' +
+        '<span class="n">1</span>' +
+        '<button type="button" class="plus" aria-label="Widen panel">+</button></span>' +
+      '<span class="spanctl h"><span class="ax">H</span>' +
+        '<button type="button" class="minus" aria-label="Shorten panel">&minus;</button>' +
+        '<span class="n">1</span>' +
+        '<button type="button" class="plus" aria-label="Heighten panel">+</button></span>';
+    var w = dims.querySelector('.w'), h = dims.querySelector('.h');
+    w.querySelector('.minus').addEventListener('click', function(){ setSpan(id, layout.spans[id] - 1); });
+    w.querySelector('.plus').addEventListener('click',  function(){ setSpan(id, layout.spans[id] + 1); });
+    h.querySelector('.minus').addEventListener('click', function(){ setRows(id, layout.rows[id] - 1); });
+    h.querySelector('.plus').addEventListener('click',  function(){ setRows(id, layout.rows[id] + 1); });
+    head.querySelector('.right').appendChild(dims);
   });
 }
 
-/* ---- pointer drag: works with mouse, pen and touch ---- */
-var drag = null;
+/* ---- pointer drag: mouse, pen and touch, with edge auto-scroll ---- */
+var drag = null, EDGE = 96;
 
 function startDrag(e, id){
   if (e.button > 0) return;
   e.preventDefault();
-  drag = { id:id, x:e.clientX, y:e.clientY, moved:false };
+  drag = { id:id, x:e.clientX, y:e.clientY, cx:e.clientX, cy:e.clientY, moved:false, raf:0 };
   window.addEventListener('pointermove', onDragMove);
   window.addEventListener('pointerup', endDrag);
   window.addEventListener('pointercancel', endDrag);
 }
 
-function onDragMove(e){
-  if (!drag) return;
+function beginDrag(){
   var el = tileEl(drag.id);
-  if (!drag.moved){
-    if (Math.abs(e.clientX - drag.x) + Math.abs(e.clientY - drag.y) < 6) return;
-    drag.moved = true;
-    el.classList.add('dragging');
-    document.body.style.userSelect = 'none';
+  drag.moved = true;
+  el.classList.add('dragging');
+  canvas.classList.add('is-dragging');
+  document.body.style.userSelect = 'none';
+
+  drag.ghost = document.createElement('div');
+  drag.ghost.className = 'dragghost';
+  drag.ghost.textContent = TITLES[drag.id];
+  document.body.appendChild(drag.ghost);
+
+  drag.raf = requestAnimationFrame(dragTick);
+}
+
+/* runs every frame while dragging, so scrolling near an edge keeps
+   re-testing the drop position even when the pointer is still */
+function dragTick(){
+  if (!drag || !drag.moved) return;
+  var y = drag.cy, d = 0, vh = window.innerHeight;
+  if (y < EDGE)            d = -Math.ceil((EDGE - y) / 4);
+  else if (y > vh - EDGE)  d =  Math.ceil((y - (vh - EDGE)) / 4);
+  if (d){
+    window.scrollBy(0, d);
+    hitTest();
   }
-  /* hide the dragged tile from hit-testing so we find what is underneath */
-  el.style.pointerEvents = 'none';
-  var under = document.elementFromPoint(e.clientX, e.clientY);
+  drag.raf = requestAnimationFrame(dragTick);
+}
+
+function hitTest(){
+  var el = tileEl(drag.id);
+  el.style.pointerEvents = 'none';           /* see through the tile we are holding */
+  var under = document.elementFromPoint(drag.cx, drag.cy);
   el.style.pointerEvents = '';
   under = under && under.closest ? under.closest('[data-tile]') : null;
   if (under && under.dataset.tile !== drag.id)
     moveTile(drag.id, layout.order.indexOf(under.dataset.tile));
 }
 
+function onDragMove(e){
+  if (!drag) return;
+  drag.cx = e.clientX;
+  drag.cy = e.clientY;
+  if (!drag.moved){
+    if (Math.abs(e.clientX - drag.x) + Math.abs(e.clientY - drag.y) < 6) return;
+    beginDrag();
+  }
+  drag.ghost.style.transform = 'translate(' + (drag.cx + 16) + 'px,' + (drag.cy + 14) + 'px)';
+  hitTest();
+}
+
 function endDrag(){
   if (drag && drag.moved){
+    cancelAnimationFrame(drag.raf);
     tileEl(drag.id).classList.remove('dragging');
+    canvas.classList.remove('is-dragging');
     document.body.style.userSelect = '';
+    if (drag.ghost) drag.ghost.remove();
   }
   drag = null;
   window.removeEventListener('pointermove', onDragMove);
@@ -1450,24 +1651,51 @@ function setPhoto(src){
   if (src) img.src = src;
 }
 
-function readPhoto(file){
+/* downscale in the browser so images fit in storage and stay sharp */
+function readImage(file, maxW, done){
   var fr = new FileReader();
   fr.onload = function(){
     var im = new Image();
     im.onload = function(){
-      /* downscale so it fits in storage and stays sharp at tile width */
-      var w = Math.min(1000, im.width), h = Math.round(im.height * (w / im.width));
+      var w = Math.min(maxW, im.width), h = Math.round(im.height * (w / im.width));
       var c = document.createElement('canvas');
       c.width = w; c.height = h;
-      c.getContext('2d').drawImage(im, 0, 0, w, h);
-      var url = c.toDataURL('image/jpeg', 0.82);
-      setPhoto(url);
-      try{ window.localStorage.setItem(PKEY, url); } catch(err){ /* too big to keep — shown anyway */ }
+      var g = c.getContext('2d');
+      if (file.type === 'image/png' || file.type === 'image/svg+xml'){
+        g.drawImage(im, 0, 0, w, h);
+        done(c.toDataURL('image/png'));            /* keep transparency */
+      } else {
+        g.drawImage(im, 0, 0, w, h);
+        done(c.toDataURL('image/jpeg', 0.85));
+      }
     };
     im.src = fr.result;
   };
   fr.readAsDataURL(file);
 }
+
+function readPhoto(file){
+  readImage(file, 1000, function(url){
+    setPhoto(url);
+    try{ window.localStorage.setItem(PKEY, url); } catch(err){ /* too big to keep — shown anyway */ }
+  });
+}
+
+$('logoBtn').addEventListener('click', function(){
+  var st = $('logostrip');
+  st.hidden = !st.hidden;
+  $('logoBtn').setAttribute('aria-expanded', String(!st.hidden));
+  if (!st.hidden) renderLogoStrip();
+});
+$('logo-input').addEventListener('change', function(e){
+  var f = e.target.files && e.target.files[0];
+  if (!f || !pendingLogo) return;
+  readImage(f, 220, function(url){
+    logos[pendingLogo] = url;
+    saveLogos(); renderLenders(); renderLogoStrip();
+    pendingLogo = null;
+  });
+});
 
 $('vphoto-btn').addEventListener('click', function(){ $('vphoto-input').click(); });
 $('vphoto-input').addEventListener('change', function(e){
@@ -1482,7 +1710,6 @@ try{
    11. Boot
    ================================================================= */
 
-buildChart();
 buildTerms();
 bindSlider('r-price', 'price',   Number);
 bindSlider('r-down',  'down',    Number);
@@ -1501,6 +1728,8 @@ buildChrome();
 buildColSeg();
 loadLayout();
 applyLayout();
+buildChart();
+watchChart();
 
 var rt;
 window.addEventListener('resize', function(){
@@ -1512,6 +1741,7 @@ $('resetLayout').addEventListener('click', function(){
   layout.colMode = 'auto';
   layout.order   = TILES.slice();
   layout.spans   = Object.assign({}, DEFAULT_SPANS);
+  layout.rows    = Object.assign({}, DEFAULT_ROWS);
   applyLayout();
 });
 
