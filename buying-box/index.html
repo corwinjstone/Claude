@@ -6,7 +6,7 @@
 <title>Buying Box Desk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
 /* ------------------------------------------------------------------
    Single-theme by intent: an F&I desking terminal. Every color is
@@ -15,16 +15,18 @@
 :root{
   color-scheme: dark;
 
-  --plane:        #0d0d0d;
-  --surface:      #1a1a19;
-  --surface-2:    #141413;
-  --raised:       #212120;
-  --line:         #2c2c2a;
-  --line-strong:  #3a3a37;
+  /* Grounded on Capital One dark blue. The chart surface (#002B49) was run
+     through the palette validator: the three series clear every gate on it. */
+  --plane:        #001526;
+  --surface:      #002B49;
+  --surface-2:    #002138;
+  --raised:       #003A61;
+  --line:         #0c3a5d;
+  --line-strong:  #16557e;
 
   --ink:          #ffffff;
-  --ink-2:        #c3c2b7;
-  --ink-3:        #898781;
+  --ink-2:        #b8c6d2;
+  --ink-3:        #7e93a3;
 
   --good:         #0ca30c;
   --warn:         #fab219;
@@ -35,7 +37,10 @@
   --opt:          #3987e5;  /* lender smart options   */
   --desk:         #199e70;  /* your live adjustment   */
 
-  --f-ui:  'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Optimist first, so it renders wherever it is installed; Hanken Grotesk is
+     the loading fallback. Figures stay monospaced — the money columns depend
+     on it, and tabular support in a fallback face cannot be assumed. */
+  --f-ui:  'Optimist', 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --f-num: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --r: 4px;
@@ -101,7 +106,7 @@ body{
 }
 .seg button:hover{ border-color: var(--line-strong); color: var(--ink); }
 .seg button:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
-.seg button[aria-pressed="true"]{ background: var(--ink); border-color: var(--ink); color: #0d0d0d; font-weight:600; }
+.seg button[aria-pressed="true"]{ background: var(--ink); border-color: var(--ink); color: #001526; font-weight:600; }
 
 .btn{
   cursor:pointer; font-family: var(--f-ui); font-size: 11px; font-weight:600;
@@ -148,9 +153,10 @@ body{
 .phead{
   display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;
   padding: 7px 9px 7px 7px; border-bottom: 1px solid var(--line);
-  cursor: grab; touch-action: none; user-select: none;
+  user-select: none;
 }
-.phead:active{ cursor: grabbing; }
+.canvas.editable .phead{ cursor: grab; touch-action: none; }
+.canvas.editable .phead:active{ cursor: grabbing; }
 .phead button:not(.grip){ cursor: pointer; }
 .phead .left,
 .phead .right{ display:flex; align-items:center; gap:8px; min-width:0; }
@@ -214,13 +220,13 @@ body{
   position:absolute; inset:0; display:flex; flex-direction:column;
   align-items:center; justify-content:center; gap:8px; text-align:center; padding: 14px;
   background:
-    repeating-linear-gradient(135deg, #141413 0 9px, #171716 9px 18px);
+    repeating-linear-gradient(135deg, #002138 0 9px, #00263F 9px 18px);
 }
 .photo .ph b{ font-size: 12px; color: var(--ink-2); font-weight:600; }
 .photo .ph span{ font-size: 10.5px; color: var(--ink-3); max-width: 30ch; line-height:1.45; }
 .photo .cam{
   position:absolute; right:8px; bottom:8px;
-  background: rgba(6,6,6,.82); border:1px solid var(--line-strong); color: var(--ink-2);
+  background: rgba(0,14,26,.85); border:1px solid var(--line-strong); color: var(--ink-2);
   border-radius:2px; padding: 4px 8px; font-size: 10px; font-weight:600; cursor:pointer;
 }
 .photo .cam:hover{ color: var(--ink); border-color: var(--ink-3); }
@@ -246,7 +252,7 @@ select.tin{ padding:0 3px; }
 
 /* ---------- dealer compensation readout ---------- */
 .comp{
-  display:grid; grid-template-columns: 1fr 1fr; gap:5px 10px;
+  display:grid; grid-template-columns: 1fr; gap:4px 10px;
   background: var(--surface-2); border:1px solid var(--line);
   border-radius:2px; padding: 8px 10px; margin-top:8px;
 }
@@ -312,7 +318,7 @@ select.tin{ padding:0 3px; }
 .plus{
   display:inline-flex; align-items:center;
   font-family: var(--f-num); font-size: 11px; font-weight: 600;
-  color: #0d0d0d; background: var(--warn);
+  color: #001526; background: var(--warn);
   border-radius: 2px; padding: 1px 6px 2px; letter-spacing: -.01em;
 }
 
@@ -339,7 +345,7 @@ select.tin{ padding:0 3px; }
 .ocard .idx{
   display:inline-flex; align-items:center; justify-content:center; flex:none;
   width:16px; height:16px; border-radius:2px;
-  background: var(--opt); color:#0d0d0d; font-family: var(--f-num); font-size:10px; font-weight:600;
+  background: var(--opt); color:#001526; font-family: var(--f-num); font-size:10px; font-weight:600;
 }
 .ocard[data-opt="base"] .idx{ background: var(--ink-3); }
 .oc2, .oc3{ display:block; font-family: var(--f-num); font-size: 10.5px; color: var(--ink-3); margin-top: 3px; }
@@ -405,7 +411,7 @@ select.tin{ padding:0 3px; }
 
 .tip{
   position:absolute; pointer-events:none; opacity:0; transform: translate(-50%, -114%);
-  background: #060606; border:1px solid var(--line-strong); border-radius: var(--r);
+  background: #000E1A; border:1px solid var(--line-strong); border-radius: var(--r);
   padding: 8px 10px 9px; min-width: 168px; z-index: 5;
   box-shadow: 0 8px 22px rgba(0,0,0,.6); transition: opacity .1s ease;
 }
@@ -1017,6 +1023,15 @@ var desk        = Object.assign({}, BASE);
    6. Chart
    ================================================================= */
 
+/* chart chrome, kept beside the CSS tokens it mirrors */
+var CHART = {
+  surface: '#002B49',   /* knocks the out-of-policy wash out of the approval box */
+  grid:    '#0c3a5d',
+  axis:    '#16557e',
+  tick:    '#7e93a3',
+  label:   '#b8c6d2'
+};
+
 var NS = 'http://www.w3.org/2000/svg';
 var W = 780, H = 470, PAD = { l:62, r:30, t:28, b:58 };
 var XD = [80, 160], YD = [5, 21];
@@ -1044,7 +1059,7 @@ function svgEl(name, attrs){
   return e;
 }
 function svgText(x, y, str, attrs){
-  var t = svgEl('text', Object.assign({ x:x, y:y, fill:'#898781', 'font-size':11,
+  var t = svgEl('text', Object.assign({ x:x, y:y, fill:CHART.tick, 'font-size':11,
     'font-family':"'IBM Plex Mono', monospace" }, attrs || {}));
   t.textContent = str;
   return t;
@@ -1059,26 +1074,26 @@ function buildChart(){
   var L = px(XD[0]), R = px(XD[1]), T = py(YD[1]), B = py(YD[0]);
 
   /* out-of-policy plane */
-  svg.appendChild(svgEl('rect', { x:L, y:T, width:R-L, height:B-T, fill:'rgba(208,59,59,.055)' }));
+  svg.appendChild(svgEl('rect', { x:L, y:T, width:R-L, height:B-T, fill:'rgba(208,59,59,.085)' }));
 
   /* inside the approval box */
   svg.appendChild(svgEl('rect', { x:L, y:py(b.pti.limit), width:px(b.ltv.limit)-L,
-    height:B-py(b.pti.limit), fill:'#1a1a19' }));
+    height:B-py(b.pti.limit), fill:CHART.surface }));
   svg.appendChild(svgEl('rect', { x:L, y:py(b.pti.limit), width:px(b.ltv.limit)-L,
-    height:B-py(b.pti.limit), fill:'rgba(12,163,12,.07)' }));
+    height:B-py(b.pti.limit), fill:'rgba(12,163,12,.05)' }));
 
   /* Tier 1 core */
   svg.appendChild(svgEl('rect', { x:L, y:py(b.pti.core), width:px(b.ltv.core)-L,
-    height:B-py(b.pti.core), fill:'rgba(12,163,12,.16)', stroke:'rgba(12,163,12,.5)', 'stroke-width':1 }));
+    height:B-py(b.pti.core), fill:'rgba(12,163,12,.11)', stroke:'rgba(12,163,12,.55)', 'stroke-width':1 }));
 
   /* gridlines */
   for (i = XD[0] + xStep(); i < XD[1]; i += xStep()){
     x = px(i);
-    svg.appendChild(svgEl('line', { x1:x, y1:T, x2:x, y2:B, stroke:'#2c2c2a', 'stroke-width':1 }));
+    svg.appendChild(svgEl('line', { x1:x, y1:T, x2:x, y2:B, stroke:CHART.grid, 'stroke-width':1 }));
   }
   for (i = YD[0] + yStep(); i < YD[1]; i += yStep()){
     y = py(i);
-    svg.appendChild(svgEl('line', { x1:L, y1:y, x2:R, y2:y, stroke:'#2c2c2a', 'stroke-width':1 }));
+    svg.appendChild(svgEl('line', { x1:L, y1:y, x2:R, y2:y, stroke:CHART.grid, 'stroke-width':1 }));
   }
 
   /* policy ceiling */
@@ -1088,8 +1103,8 @@ function buildChart(){
     fill:'none', stroke:'rgba(250,178,25,.8)', 'stroke-width':1.5, 'stroke-dasharray':'5 4' }));
 
   /* axes */
-  svg.appendChild(svgEl('line', { x1:L, y1:B, x2:R, y2:B, stroke:'#3a3a37', 'stroke-width':1 }));
-  svg.appendChild(svgEl('line', { x1:L, y1:T, x2:L, y2:B, stroke:'#3a3a37', 'stroke-width':1 }));
+  svg.appendChild(svgEl('line', { x1:L, y1:B, x2:R, y2:B, stroke:CHART.axis, 'stroke-width':1 }));
+  svg.appendChild(svgEl('line', { x1:L, y1:T, x2:L, y2:B, stroke:CHART.axis, 'stroke-width':1 }));
 
   for (i = XD[0]; i <= XD[1]; i += xStep())
     svg.appendChild(svgText(px(i), B + 17, i + '%', { 'text-anchor':'middle' }));
@@ -1098,10 +1113,10 @@ function buildChart(){
 
   if (H >= 320 && W >= 460)
     svg.appendChild(svgText((L + R) / 2, B + 40, 'AMOUNT FINANCED AS % OF CLEAN BOOK  —  ADVANCE',
-      { 'text-anchor':'middle', 'font-size':10, 'letter-spacing':'1.4', fill:'#898781' }));
+      { 'text-anchor':'middle', 'font-size':10, 'letter-spacing':'1.4', fill:CHART.tick }));
   if (W >= 460)
     svg.appendChild(svgText(0, 0, 'PAYMENT AS % OF GROSS MONTHLY INCOME',
-      { 'text-anchor':'middle', 'font-size':10, 'letter-spacing':'1.4', fill:'#898781',
+      { 'text-anchor':'middle', 'font-size':10, 'letter-spacing':'1.4', fill:CHART.tick,
         transform:'translate(14,' + (T + B) / 2 + ') rotate(-90)' }));
 
   /* zone labels */
@@ -1145,13 +1160,13 @@ function point(g, d, color, r, label, meta, emphasis){
     g.appendChild(svgEl('circle', { cx:x, cy:y, r:r + 6, fill:'none', stroke:color,
       'stroke-width':1, opacity:.5 }));
 
-  g.appendChild(svgEl('circle', { cx:x, cy:y, r:r + 2, fill:'#1a1a19' }));
+  g.appendChild(svgEl('circle', { cx:x, cy:y, r:r + 2, fill:CHART.surface }));
   g.appendChild(svgEl('circle', { cx:x, cy:y, r:r, fill:color }));
 
   if (label)
     g.appendChild(svgText(x,
       meta.pos === 'above' ? y - r - 7 : y + r + (meta.dy || 15), label,
-      { 'font-size':10.5, fill:'#c3c2b7', 'font-weight':600, 'letter-spacing':'.6',
+      { 'font-size':10.5, fill:CHART.label, 'font-weight':600, 'letter-spacing':'.6',
         'text-anchor':'middle' }));
 
   hit.addEventListener('pointerenter', function(){ showTip(hit, d, color, meta); });
@@ -1713,6 +1728,11 @@ function renderAll(){
    9. Canvas — drag to rearrange, resize by column span
    ================================================================= */
 
+/* The arrangement is settled, so the canvas controls are hidden and the
+   stored layout is ignored. Flip this to true to get them back — the drag,
+   resize and column engine below is untouched. */
+var EDIT_LAYOUT = false;
+
 var TILES = ['vehicle','summary','negotiate','structure','lenderstruct','callbacks','buyingbox','guardrails'];
 var DEFAULT_SPANS = { vehicle:1, summary:1, negotiate:1, structure:1,
                       lenderstruct:1, callbacks:1, buyingbox:4, guardrails:2 };
@@ -1761,6 +1781,7 @@ function effCols(){
 
 function applyLayout(){
   var cols = effCols();
+  canvas.classList.toggle('editable', EDIT_LAYOUT);
   canvas.style.setProperty('--cols', cols);
 
   layout.order.forEach(function(id, i){
@@ -1772,13 +1793,13 @@ function applyLayout(){
     el.style.gridColumn = 'span ' + span;
     el.style.gridRow    = 'span ' + rows;
 
-    var wc = el.querySelector('.spanctl.w');
+    var wc = EDIT_LAYOUT ? el.querySelector('.spanctl.w') : null;
     if (wc){
       wc.querySelector('.n').textContent = span;
       wc.querySelector('.minus').disabled = span <= 1;
       wc.querySelector('.plus').disabled  = span >= cols;
     }
-    var hc = el.querySelector('.spanctl.h');
+    var hc = EDIT_LAYOUT ? el.querySelector('.spanctl.h') : null;
     if (hc){
       hc.querySelector('.n').textContent = rows;
       hc.querySelector('.minus').disabled = rows <= 1;
@@ -1790,10 +1811,12 @@ function applyLayout(){
       ', ' + span + ' of ' + cols + ' columns wide, ' + rows + ' rows tall');
   });
 
-  Array.prototype.forEach.call(document.querySelectorAll('#colseg button'), function(b){
-    b.setAttribute('aria-pressed', String(b.dataset.cols === String(layout.colMode)));
-  });
-  saveLayout();
+  if (EDIT_LAYOUT){
+    Array.prototype.forEach.call(document.querySelectorAll('#colseg button'), function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.cols === String(layout.colMode)));
+    });
+    saveLayout();
+  }
 }
 
 function setSpan(id, n){
@@ -1823,6 +1846,7 @@ var GRIP_SVG =
   }).join('') + '</svg>';
 
 function buildChrome(){
+  if (!EDIT_LAYOUT) return;
   TILES.forEach(function(id){
     var el = tileEl(id); if (!el) return;
     var head = el.querySelector('.phead');
@@ -2053,9 +2077,13 @@ $('applyLender').addEventListener('click', function(){
   onDeskChange();
 });
 
+if (EDIT_LAYOUT){
+  buildColSeg();
+  loadLayout();
+} else {
+  document.querySelector('.toolbar').hidden = true;
+}
 buildChrome();
-buildColSeg();
-loadLayout();
 applyLayout();
 buildChart();
 watchChart();
@@ -2066,7 +2094,7 @@ window.addEventListener('resize', function(){
   rt = setTimeout(applyLayout, 80);
 });
 
-$('resetLayout').addEventListener('click', function(){
+if (EDIT_LAYOUT) $('resetLayout').addEventListener('click', function(){
   layout.colMode = 'auto';
   layout.order   = TILES.slice();
   layout.spans   = Object.assign({}, DEFAULT_SPANS);
