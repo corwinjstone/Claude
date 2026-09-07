@@ -1188,7 +1188,8 @@ function drawMarks(){
     'stroke-width':1, 'stroke-dasharray':'3 3', opacity:.6 }));
 
   if (lenderId === 'cap1'){
-    smartDeals.forEach(function(d, k){
+    SMART.forEach(function(o, k){
+      var d = compute(optionInputs(k));
       point(marks, d, '#3987e5', 6.5, String(SMART[k].n),
         { name:'Smart option ' + SMART[k].n + ' — ' + SMART[k].name, pos:'above' },
         optionIndex === k || hoverIndex === k);
@@ -1336,7 +1337,7 @@ function lenderCounter(L, i){
   o.term    = Math.min(o.term, L.maxTerm);
   o.fee     = Math.min(o.fee, L.fee);
   o.backEnd = Math.min(o.backEnd, L.back);
-  o.buydown = Math.min(o.buydown || 0, POLICY.buydown.limit);
+  clampBuydown(o);
 
   var over = compute(o).ltv - L.adv;
   if (over > 0){                                   /* ask for the cash that brings it inside */
@@ -1346,10 +1347,19 @@ function lenderCounter(L, i){
   return o;
 }
 
+/* A buy-down is a dealer election funded by flat comp, not a term of the
+   callback — the lender is paid the same either way. So it carries onto
+   whichever structure is being compared, and the side-by-side then isolates
+   what the smart options are actually about: price, term, down and product. */
+function optionInputs(k){
+  if (k === null) return lenderCounter(lender(), desk);
+  var o = Object.assign({}, SMART[k].inputs);
+  o.buydown = desk.buydown;
+  return clampBuydown(o);
+}
+
 function lenderStructure(){
-  var L = lender();
-  if (L.id === 'cap1' && optionIndex !== null) return SMART[optionIndex].inputs;
-  return lenderCounter(L, desk);
+  return optionInputs(lender().id === 'cap1' ? optionIndex : null);
 }
 function lender(){
   return LENDERS.filter(function(x){ return x.id === lenderId; })[0];
@@ -1399,7 +1409,7 @@ function renderLenderStruct(){
 
 function optionCard(L, k){
   var isBase = k === null;
-  var d  = compute(isBase ? lenderCounter(L, desk) : SMART[k].inputs);
+  var d  = compute(optionInputs(isBase ? null : k));
   var pl = pillFor(d);
   var on = optionIndex === k;
   return '<button class="ocard" type="button" data-opt="' + (isBase ? 'base' : k) + '" aria-pressed="' + on + '">' +
@@ -1683,14 +1693,18 @@ function syncControls(){
   });
 }
 
-/* The buy-down is paid out of comp, so its ceiling moves with the deal:
-   5% of the amount financed buys 120/term points. Hold the input there so a
-   field never shows points the contract cannot actually deliver. */
-function normalizeDesk(){
-  var lim = compute(Object.assign({}, desk, { buydown: 0 })).maxBuydown;
-  lim = Math.floor(Math.min(lim, FIELDS.buydown.max) * 100) / 100;
-  if (desk.buydown > lim) desk.buydown = Math.max(0, lim);
+/* The buy-down is paid out of comp, so its ceiling moves with the structure:
+   5% of the amount financed buys 120/term points, and the lender caps it too.
+   Every structure is held to its own ceiling, so no column ever shows points
+   that contract cannot actually deliver. */
+function clampBuydown(o){
+  var lim = compute(Object.assign({}, o, { buydown: 0 })).maxBuydown;
+  lim = Math.floor(Math.min(lim, P().buydown.limit, FIELDS.buydown.max) * 100) / 100;
+  o.buydown = Math.max(0, Math.min(o.buydown || 0, lim));
+  return o;
 }
+
+function normalizeDesk(){ clampBuydown(desk); }
 
 function onDeskChange(){
   normalizeDesk();
