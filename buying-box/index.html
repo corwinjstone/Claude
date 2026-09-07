@@ -226,6 +226,38 @@ body{
 .photo .cam:hover{ color: var(--ink); border-color: var(--ink-3); }
 .photo .cam:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
 
+/* ---------- trade-in, kept tight inside the vehicle tile ---------- */
+.tgrid{ display:grid; grid-template-columns: 1fr 1fr; gap:5px; margin: 2px 0 8px; }
+.tf{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+.tf.wide{ grid-column: 1 / -1; }
+.tf > span{
+  font-size: 8.5px; font-weight:600; letter-spacing:.11em;
+  text-transform:uppercase; color: var(--ink-3);
+}
+.tin{
+  width:100%; box-sizing:border-box; height:22px; padding:0 6px; margin:0;
+  font-family: var(--f-num); font-size: 11px; color: var(--ink);
+  background: var(--surface-2); border:1px solid var(--line); border-radius:2px;
+}
+select.tin{ padding:0 3px; }
+.tin:hover{ border-color: var(--line-strong); }
+.tin:focus{ border-color: var(--desk); outline:none; }
+.trow{ display:flex; justify-content:flex-end; padding-top:8px; }
+
+/* ---------- dealer compensation readout ---------- */
+.comp{
+  display:grid; grid-template-columns: 1fr 1fr; gap:5px 10px;
+  background: var(--surface-2); border:1px solid var(--line);
+  border-radius:2px; padding: 8px 10px; margin-top:8px;
+}
+.comp .cw{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; min-width:0; }
+.comp .ck{ font-size: 10px; color: var(--ink-3); }
+.comp b{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 11.5px; font-weight:600; }
+.comp .cn{
+  grid-column: 1 / -1; font-size: 10px; color: var(--ink-3); line-height:1.5;
+  border-top:1px solid var(--line); padding-top:6px; margin-top:1px;
+}
+
 /* ---------- worksheet rows ---------- */
 .ws{ display:flex; flex-direction:column; justify-content: flex-start; }
 .ws .row{
@@ -617,8 +649,13 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
         </div>
 
         <div class="f sect">
-          <div class="fh"><span class="fk">Rate markup over buy</span><span class="fv" id="v-mkp"><input class="num" type="text" inputmode="decimal" data-k="markup" aria-label="Rate markup over buy"><span class="d"></span></span></div>
-          <input type="range" id="r-mkp" min="0" max="4" step="0.05" aria-label="Rate markup in points over buy rate">
+          <div class="fh"><span class="fk">Rate buy-down</span>
+            <span class="fv" id="v-bd">
+              <input class="num" type="text" inputmode="decimal" data-k="buydown" aria-label="Rate buy-down in points">
+              <span class="d"></span>
+            </span></div>
+          <input type="range" id="r-bd" min="0" max="4" step="0.05" aria-label="Rate buy-down in points">
+          <div class="comp" id="compbox"></div>
         </div>
         <div class="f">
           <div class="fh"><span class="fk">Term</span>
@@ -702,10 +739,14 @@ var POLICY = {
   term:   { core: null, limit: 75 },
   back:   { core: null, limit: 4500 },
   fee:    { core: null, limit: 799 },
-  markup: { core: null, limit: 2.00 },
-  negEq:  { core: null, limit: 5000 },
-  maxReserve: 1500
+  buydown:{ core: null, limit: 2.00 },   /* points of rate a lender lets you buy down */
+  negEq:  { core: null, limit: 5000 }
 };
+
+/* Dealer compensation: a Power Flat program pays a flat percentage of the
+   amount financed instead of rate participation, so the customer gets the
+   buy rate and the dealer's income no longer moves with it. */
+var COMP = { flatPct: 5.0, max: 2000, label: 'Power Flat 5%' };
 
 /* POLICY above is Capital One's sheet; every lender publishes its own box
    and the guardrails, the pills and the plot all follow the selected one. */
@@ -718,22 +759,27 @@ function P(){
     term:   { core: null, limit: L.maxTerm },
     back:   { core: null, limit: L.back },
     fee:    { core: null, limit: L.fee },
-    markup: { core: null, limit: POLICY.markup.limit },
-    negEq:  { core: null, limit: POLICY.negEq.limit },
-    maxReserve: POLICY.maxReserve
+    buydown:{ core: null, limit: POLICY.buydown.limit },
+    negEq:  { core: null, limit: POLICY.negEq.limit }
   };
 }
 
-var BASE = { price: 27985, fee: 699, backEnd: 2690, down: 2500, term: 72, markup: 1.25,
-             tradeAllow: 0, tradePayoff: 0 };
+var BASE = { price: 27985, fee: 699, backEnd: 2690, down: 2500, term: 72, buydown: 0,
+             tradeAllow: 0, tradePayoff: 0, tradeACV: 0 };
 
 /* No trade on the base deal — the sliders let the desk model one, including
    the upside-down case that pushes advance through the ceiling. */
 function withTrade(o){
   if (o.tradeAllow  === undefined) o.tradeAllow  = 0;
   if (o.tradePayoff === undefined) o.tradePayoff = 0;
+  if (o.tradeACV    === undefined) o.tradeACV    = 0;
+  if (o.buydown     === undefined) o.buydown     = 0;
   return o;
 }
+
+/* descriptive trade detail — shown on the desk, no effect on the math */
+var TRADE = { on:false, year:'2019', make:'Honda', model:'Accord', trim:'Sport',
+              miles:'71,400', vin:'', cond:'Average' };
 
 var LENDERS = [
   { id:'cap1', core:110, spread:0.00, name:'Capital One Auto Finance', tier:'Tier 2', buy:7.29, term:72, maxTerm:75, adv:128, back:4500, fee:799,
@@ -754,23 +800,23 @@ var LENDERS = [
 var SMART = [
   { n:1, name:'Core Advance',
     cap:'Buys the deal into the Tier 1 book advance band. The rate sheet drops 80 bps the moment advance clears 110%.',
-    inputs:{ price:27985, fee:699, backEnd:2690, down:4800, term:72, markup:1.25 },
+    inputs:{ price:27985, fee:699, backEnd:2690, down:4800, term:72, buydown:0 },
     counters:['Cash down $2,500 → $4,800','Buy rate 7.29% → 6.49%','Advance lands at 109.6% of book'] },
 
   { n:2, name:'Back-End Room',
     cap:'Capital One will advance $4,500 in products on this collateral. Adding the VSC upgrade and tire & wheel is the single biggest gross lever on the board.',
-    inputs:{ price:27985, fee:699, backEnd:4400, down:3600, term:72, markup:1.25 },
+    inputs:{ price:27985, fee:699, backEnd:4400, down:3600, term:72, buydown:0 },
     counters:['Products $2,690 → $4,400','Cash down $2,500 → $3,600 to hold advance','Advance 120.6% — $2,150 under the ceiling'] },
 
   { n:3, name:'Zero-Down Counter',
     cap:'Customer keeps every dollar of cash. The lender counters on sale price and dealer fee to pull the advance back inside the box.',
-    inputs:{ price:27400, fee:499, backEnd:2690, down:0, term:75, markup:1.00 },
-    counters:['Sale price counter −$585','Dealer fee $699 → $499','Term 75 mo, zero down, rate +1.05 pts'] },
+    inputs:{ price:27400, fee:499, backEnd:2690, down:0, term:75, buydown:0 },
+    counters:['Sale price counter −$585','Dealer fee $699 → $499','Term 75 mo, zero down, rate +1.55 pts'] },
 
   { n:4, name:'60-Month Compress',
     cap:'The short-term rate sheet more than pays for the term give-up. Same gross, faster liquidation, and payment-to-income still inside core.',
-    inputs:{ price:27985, fee:699, backEnd:2690, down:2500, term:60, markup:1.50 },
-    counters:['Term 72 → 60 mo','Buy rate 7.29% → 6.79%','Reserve markup 1.25 → 1.50 pts'] }
+    inputs:{ price:27985, fee:699, backEnd:2690, down:2500, term:60, buydown:0 },
+    counters:['Term 72 → 60 mo','Buy rate 7.29% → 6.79%','Comp unchanged at 5% flat'] }
 ];
 
 /* =================================================================
@@ -803,12 +849,25 @@ function compute(i){
   var ltv     = af / VEHICLE.book * 100;
   var downPct = i.price > 0 ? i.down / i.price * 100 : 0;
   var buy     = Math.round((buyRate(i.term, ltv, downPct) + (i.spread || 0)) * 100) / 100;
-  var sell    = buy + i.markup;
+  var bd      = i.buydown || 0;
+
+  /* what the lender pays the dealer on this contract */
+  var comp    = Math.min(af * COMP.flatPct / 100, COMP.max);
+
+  /* buying the rate down is paid out of that comp and cannot exceed it */
+  var want    = af * (bd / 100) * (i.term / 24);
+  var bdCost  = Math.min(want, comp);
+  var bdReal  = af > 0 && i.term > 0 ? bdCost / (af * (i.term / 24)) * 100 : 0;
+  var sell    = Math.max(0, buy - bdReal);
   var pmt     = amortize(af, sell, i.term);
+
+  /* an allowance above actual cash value is front gross given away */
+  var acv     = i.tradeACV || 0;
+  var tradeP  = allow > 0 ? acv - allow : 0;
 
   var front   = i.price - VEHICLE.cost;
   var back    = i.backEnd * FIXED.backGrossRate;
-  var reserve = Math.min(af * (i.markup / 100) * (i.term / 24), POLICY.maxReserve);
+  var netComp = comp - bdCost;
 
   return {
     i: i, tax: tax, af: af, ltv: ltv, downPct: downPct,
@@ -818,8 +877,11 @@ function compute(i){
     buy: buy, sell: sell, pmt: pmt,
     pti: pmt / CUSTOMER.income * 100,
     dti: (CUSTOMER.otherDebt + pmt) / CUSTOMER.income * 100,
-    front: front, back: back, reserve: reserve,
-    gross: front + back + reserve
+    front: front, back: back,
+    comp: comp, bdCost: bdCost, bdReal: bdReal, netComp: netComp,
+    acv: acv, tradeP: tradeP,
+    maxBuydown: af > 0 && i.term > 0 ? comp / (af * (i.term / 24)) * 100 : 0,
+    gross: front + back + netComp + tradeP
   };
 }
 
@@ -838,7 +900,7 @@ function railSet(d){
     { k:'Term',              v:d.i.term,   f:mo,   min:36,  max:84,   p:b.term,   cap:b.term.limit + ' months',  short:'Term' },
     { k:'Back-end advance',  v:d.i.backEnd,f:money,min:0,   max:5500, p:b.back,   cap:money(b.back.limit),       short:'Back-end advance' },
     { k:'Dealer fee',        v:d.i.fee,    f:money,min:0,   max:1100, p:b.fee,    cap:money(b.fee.limit),        short:'Dealer fee' },
-    { k:'Rate markup',       v:d.i.markup, f:pts,  min:0,   max:2.5,  p:b.markup, cap:'2.00 points',             short:'Rate markup' },
+    { k:'Rate buy-down',     v:d.i.buydown,f:pts,  min:0,   max:2.5,  p:b.buydown,cap:'2.00 points',             short:'Rate buy-down' },
     { k:'Negative equity',   v:d.negEq,    f:money,min:0,   max:6000, p:b.negEq,  cap:'$5,000 rolled',           short:'Negative equity' }
   ];
 }
@@ -886,7 +948,8 @@ var FIELDS = {
   down:        { min:0, max:25000, step:50,   int:true, slider:'r-down',   fmt:money },
   tradeAllow:  { min:0, max:40000, step:100,  int:true, slider:'r-allow',  fmt:money },
   tradePayoff: { min:0, max:40000, step:100,  int:true, slider:'r-payoff', fmt:money },
-  markup:      { min:0, max:4,     step:0.05, dec:2,    slider:'r-mkp',    fmt:pts   },
+  buydown:     { min:0, max:4,     step:0.05, dec:2,    slider:'r-bd',     fmt:pts   },
+  tradeACV:    { min:0, max:40000, step:100,  int:true,                    fmt:money },
   term:        { min:12, max:96,   step:1,    int:true,                    fmt:mo    }
 };
 
@@ -1180,14 +1243,16 @@ function rowSpec(d){
     { k:'Amount financed',    v:d.af,           f:money, fav: 0, tot:true },
     { g:'Terms' },
     { k:'Buy rate',           v:d.buy,          f:pct2,  fav:-1 },
-    { k:'Reserve markup',     v:d.i.markup,     f:pts,   fav: 1, key:'markup' },
+    { k:'Rate buy-down',      v:d.i.buydown,    f:pts,   fav:-1, key:'buydown' },
     { k:'Sell rate (APR)',    v:d.sell,         f:pct2,  fav:-1 },
     { k:'Term',               v:d.i.term,       f:mo,    fav: 0, key:'term' },
     { k:'Payment',            v:d.pmt,          f:money, fav:-1, tot:true },
     { g:'Gross' },
     { k:'Front gross',        v:d.front,        f:money, fav: 1 },
     { k:'Back-end gross',     v:d.back,         f:money, fav: 1 },
-    { k:'Rate reserve',       v:d.reserve,      f:money, fav: 1 },
+    { k:'Trade profit',       v:d.tradeP,       f:money, fav: 1 },
+    { k:'Lender comp @ 5%',   v:d.comp,         f:money, fav: 1 },
+    { k:'Buy-down cost',      v:d.bdCost,       f:money, fav:-1, paren:true },
     { k:'Total gross',        v:d.gross,        f:money, fav: 1, tot:true }
   ];
 }
@@ -1256,7 +1321,7 @@ function lenderCounter(L, i){
   o.term    = Math.min(o.term, L.maxTerm);
   o.fee     = Math.min(o.fee, L.fee);
   o.backEnd = Math.min(o.backEnd, L.back);
-  o.markup  = Math.min(o.markup, POLICY.markup.limit);
+  o.buydown = Math.min(o.buydown || 0, POLICY.buydown.limit);
 
   var over = compute(o).ltv - L.adv;
   if (over > 0){                                   /* ask for the cash that brings it inside */
@@ -1393,6 +1458,47 @@ function renderLenders(){
   });
 }
 
+var CONDITIONS = ['Rough', 'Average', 'Clean', 'Extra clean'];
+
+function tField(k, label, wide){
+  return '<label class="tf' + (wide ? ' wide' : '') + '"><span>' + label + '</span>' +
+    '<input class="tin" type="text" data-t="' + k + '" value="' +
+    String(TRADE[k]).replace(/"/g, '&quot;') + '" aria-label="Trade ' + label + '"></label>';
+}
+
+function tradeBlock(d){
+  if (!TRADE.on)
+    return wsRow('Trade', '<span class="neg">None on file</span>') +
+      '<div class="trow"><button class="btn" id="addTrade" type="button">Add trade-in</button></div>';
+
+  return '<div class="tgrid">' +
+      tField('year', 'Year') + tField('make', 'Make') +
+      tField('model', 'Model') + tField('trim', 'Trim') +
+      tField('miles', 'Miles') +
+      '<label class="tf"><span>Condition</span><select class="tin" id="tcond" aria-label="Trade condition">' +
+        CONDITIONS.map(function(c){
+          return '<option' + (c === TRADE.cond ? ' selected' : '') + '>' + c + '</option>';
+        }).join('') + '</select></label>' +
+      tField('vin', 'VIN', true) +
+    '</div>' +
+    tMoney('tradeACV', 'ACV') +
+    tMoney('tradeAllow', 'Allowance') +
+    tMoney('tradePayoff', 'Payoff') +
+    wsRow('Equity', '<span class="' + (d.equity > 0 ? 'up' : d.equity < 0 ? 'down' : '') + '">' +
+      signed(d.equity, money) + '</span>') +
+    wsRow('Over-allowance', d.tradeP < 0
+      ? '<span class="down">' + signed(d.tradeP, money) + '</span>'
+      : '<span class="neg">' + money(0) + '</span>') +
+    wsRow('Tax credit on trade', money(d.taxCredit)) +
+    '<div class="trow"><button class="btn" id="dropTrade" type="button">Remove trade-in</button></div>';
+}
+
+function tMoney(key, label){
+  return '<div class="row"><span class="k">' + label + '</span>' +
+    '<input class="cell" type="text" inputmode="decimal" data-k="' + key + '"' +
+    ' value="' + money(desk[key]) + '" aria-label="Trade ' + label + '"></div>';
+}
+
 function renderVehicle(){
   var d = compute(desk);
   var eqCls = d.equity > 0 ? 'up' : d.equity < 0 ? 'down' : '';
@@ -1406,15 +1512,7 @@ function renderVehicle(){
       wsRow('Clean book', money(VEHICLE.book)) +
       wsRow('Advance ceiling', money(VEHICLE.book * P().ltv.limit / 100)) +
     '</div>' +
-    '<div class="grp"><span class="lbl">Trade-in</span>' +
-      (d.allow || d.payoff
-        ? wsRow('Allowance', money(d.allow)) +
-          wsRow('Payoff', '<span class="neg">(' + money(d.payoff) + ')</span>') +
-          wsRow('Equity', '<span class="' + eqCls + '">' + signed(d.equity, money) + '</span>') +
-          wsRow('Tax credit on trade', money(d.taxCredit))
-        : wsRow('Trade', '<span class="neg">None on file</span>') +
-          wsRow('Model one', '<span class="neg">Negotiate panel</span>')) +
-    '</div>' +
+    '<div class="grp"><span class="lbl">Trade-in</span>' + tradeBlock(d) + '</div>' +
     '<div class="grp"><span class="lbl">Applicant</span>' +
       wsRow('FICO', '712') +
       wsRow('Gross monthly', money(CUSTOMER.income)) +
@@ -1422,6 +1520,27 @@ function renderVehicle(){
       wsRow('Time on job', '4 yr 2 mo') +
       wsRow('Housing', 'Owns, mortgaged') +
     '</div>';
+
+  var add = $('addTrade'), drop = $('dropTrade');
+  if (add) add.addEventListener('click', function(){
+    TRADE.on = true;
+    desk.tradeACV = 10500; desk.tradeAllow = 12000; desk.tradePayoff = 13900;
+    onDeskChange();
+  });
+  if (drop) drop.addEventListener('click', function(){
+    TRADE.on = false;
+    desk.tradeACV = 0; desk.tradeAllow = 0; desk.tradePayoff = 0;
+    onDeskChange();
+  });
+
+  Array.prototype.forEach.call($('vspecs').querySelectorAll('input.cell'), function(el){
+    wireField(el, el.dataset.k);
+  });
+  Array.prototype.forEach.call($('vspecs').querySelectorAll('[data-t]'), function(el){
+    el.addEventListener('change', function(){ TRADE[el.dataset.t] = el.value; });
+  });
+  var cond = $('tcond');
+  if (cond) cond.addEventListener('change', function(){ TRADE.cond = cond.value; });
 }
 
 function renderRails(){
@@ -1468,8 +1587,10 @@ function renderSummary(){
 
   $('s-gross').textContent = money(d.gross);
   var gd = deltaHTML(d.gross - baseDeal.gross, money);
-  $('s-gross-sub').innerHTML = 'Front ' + money(d.front) + ' · Back ' + money(d.back) +
-    ' · Reserve ' + money(d.reserve) + (gd ? ' &nbsp;·&nbsp; ' + gd + ' vs. written' : '');
+  $('s-gross-sub').innerHTML =
+    'Front ' + money(d.front) + ' · Back ' + money(d.back) + ' · Comp ' + money(d.netComp) +
+    (d.tradeP ? ' · Trade ' + signed(d.tradeP, money) : '') +
+    (gd ? ' &nbsp;·&nbsp; ' + gd + ' vs. written' : '');
 
   var vd = $('s-verdict');
   vd.className = 'verdict s-' + v.s;
@@ -1517,11 +1638,25 @@ function syncControls(){
   put('v-back',   money(desk.backEnd),      deltaHTML(desk.backEnd     - ref.backEnd,     money));
   put('v-allow',  money(desk.tradeAllow),   deltaHTML(desk.tradeAllow  - ref.tradeAllow,  money));
   put('v-payoff', money(desk.tradePayoff),  deltaHTML(desk.tradePayoff - ref.tradePayoff, money));
-  put('v-mkp',    pts(desk.markup),         deltaHTML(desk.markup      - ref.markup,      pts));
+  put('v-bd',     pts(desk.buydown),        deltaHTML(desk.buydown     - ref.buydown,     pts));
 
   $('eq-k').textContent   = eq < 0 ? 'Negative equity rolled in' : 'Trade equity';
   $('v-equity').className = 'v ' + (eq > 0 ? 'up' : eq < 0 ? 'down' : 'flat');
   $('v-equity').textContent = eq === 0 ? 'No trade' : signed(eq, money);
+
+  var dd = compute(desk);
+  var plain = compute(Object.assign({}, desk, { buydown: 0 }));
+  var saved = plain.pmt - dd.pmt;
+  $('compbox').innerHTML =
+    '<span class="cw"><span class="ck">Lender comp</span><b>' + money(dd.comp) + '</b></span>' +
+    '<span class="cw"><span class="ck">Spent on rate</span><b class="' + (dd.bdCost > 0 ? 'down' : '') + '">' +
+      (dd.bdCost > 0 ? '−' + money(dd.bdCost) : '—') + '</b></span>' +
+    '<span class="cw"><span class="ck">Kept</span><b class="up">' + money(dd.netComp) + '</b></span>' +
+    '<span class="cw"><span class="ck">Customer saves</span><b class="' + (saved > 0.5 ? 'up' : '') + '">' +
+      (saved > 0.5 ? money(saved) + '/mo' : '—') + '</b></span>' +
+    '<span class="cn">' + COMP.label + ' of amount financed, capped at ' + money(COMP.max) +
+      '. Buy-down is limited to ' + pts(Math.min(dd.maxBuydown, P().buydown.limit)) + ' here — ' +
+      (dd.maxBuydown < P().buydown.limit ? 'all the comp this deal earns' : 'the lender ceiling') + '.</span>';
 
   var maxTerm = P().term.limit;
   put('v-term', mo(desk.term),
@@ -1533,7 +1668,18 @@ function syncControls(){
   });
 }
 
+/* The buy-down is paid out of comp, so its ceiling moves with the deal:
+   5% of the amount financed buys 120/term points. Hold the input there so a
+   field never shows points the contract cannot actually deliver. */
+function normalizeDesk(){
+  var lim = compute(Object.assign({}, desk, { buydown: 0 })).maxBuydown;
+  lim = Math.floor(Math.min(lim, FIELDS.buydown.max) * 100) / 100;
+  if (desk.buydown > lim) desk.buydown = Math.max(0, lim);
+}
+
 function onDeskChange(){
+  normalizeDesk();
+
   /* renderWorksheet replaces its inputs, so remember which one had the caret */
   var act = document.activeElement;
   var keep = act && act.classList && act.classList.contains('cell') ? act.dataset.k : null;
@@ -1887,7 +2033,7 @@ bindSlider('r-price', 'price',   Number);
 bindSlider('r-down',  'down',    Number);
 bindSlider('r-fee',   'fee',     Number);
 bindSlider('r-back',  'backEnd', Number);
-bindSlider('r-mkp',   'markup',  parseFloat);
+bindSlider('r-bd',    'buydown', parseFloat);
 bindSlider('r-allow', 'tradeAllow',  Number);
 bindSlider('r-payoff','tradePayoff', Number);
 
