@@ -1301,9 +1301,12 @@ function clampY(v){ return Math.min(YD[1], Math.max(YD[0], v)); }
 
 function point(g, d, color, r, label, meta, emphasis){
   var x = px(clampX(d.ltv)), y = py(clampY(d.pti));
+  var pick = typeof meta.pick === 'function';
   var hit = svgEl('circle', { cx:x, cy:y, r:16, fill:'transparent', 'pointer-events':'all',
-    tabindex:'0', role:'img', 'aria-label':meta.name + ': advance ' + pct1(d.ltv) +
-    ', payment to income ' + pct1(d.pti) + ', payment ' + money(d.pmt) });
+    tabindex:'0', role: pick ? 'button' : 'img', cursor: pick ? 'pointer' : 'default',
+    'aria-label':meta.name + ': advance ' + pct1(d.ltv) +
+    ', payment to income ' + pct1(d.pti) + ', payment ' + money(d.pmt) +
+    (pick ? '. Load this structure.' : '') });
 
   if (emphasis)
     g.appendChild(svgEl('circle', { cx:x, cy:y, r:r + 6, fill:'none', stroke:color,
@@ -1318,10 +1321,25 @@ function point(g, d, color, r, label, meta, emphasis){
       { 'font-size':10.5, fill:CHART.label, 'font-weight':600, 'letter-spacing':'.6',
         'text-anchor':'middle' }));
 
-  hit.addEventListener('pointerenter', function(){ showTip(hit, d, color, meta); });
-  hit.addEventListener('pointerleave', hideTip);
+  hit.addEventListener('pointerenter', function(){
+    showTip(hit, d, color, meta);
+    /* redraw replaces this node, so the fresh one fires enter again —
+       only act on a real change or that loops */
+    if (meta.k !== undefined && hoverIndex !== meta.k){ hoverIndex = meta.k; drawMarks(); }
+  });
+  hit.addEventListener('pointerleave', function(){
+    hideTip();
+    if (meta.k !== undefined && hoverIndex === meta.k){ hoverIndex = null; drawMarks(); }
+  });
   hit.addEventListener('focus', function(){ showTip(hit, d, color, meta); });
   hit.addEventListener('blur', hideTip);
+
+  if (pick){
+    hit.addEventListener('click', function(){ hideTip(); meta.pick(); });
+    hit.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); hideTip(); meta.pick(); }
+    });
+  }
   g.appendChild(hit);
 }
 
@@ -1340,7 +1358,8 @@ function drawMarks(){
     SMART.forEach(function(o, k){
       var d = compute(optionInputs(k));
       point(marks, d, CHART.opt, 6.5, String(SMART[k].n),
-        { name:'Smart option ' + SMART[k].n + ' — ' + SMART[k].name, pos:'above' },
+        { name:'Smart option ' + SMART[k].n + ' — ' + SMART[k].name, pos:'above',
+          k:k, pick:function(){ selectOption(k); } },
         optionIndex === k || hoverIndex === k);
     });
   }
@@ -1365,7 +1384,10 @@ function drawMarks(){
 
 function showTip(node, d, color, meta){
   var tip  = $('tip');
-  var wrap = node.ownerSVGElement.parentNode.getBoundingClientRect();
+  /* a redraw can detach the node this fired on before we get here */
+  var svg  = node.ownerSVGElement;
+  if (!svg || !svg.parentNode) return;
+  var wrap = svg.parentNode.getBoundingClientRect();
   var b    = node.getBoundingClientRect();
   tip.innerHTML =
     '<div class="tt"><span class="sw" style="background:' + color + '"></span>' + meta.name + '</div>' +
@@ -1592,6 +1614,13 @@ function shownLenders(){
     : LENDERS.filter(function(L){ return L.id === lenderId; });
 }
 
+function selectOption(k){
+  optionIndex = k;
+  renderLenders();
+  renderLenderStruct();
+  drawMarks();
+}
+
 function renderLenders(){
   var list = shownLenders(), solo = list.length === 1;
   $('cb-hint').textContent = solo
@@ -1630,12 +1659,7 @@ function renderLenders(){
   Array.prototype.forEach.call(document.querySelectorAll('[data-opt]'), function(b){
     var raw = b.dataset.opt;
     var k = raw === 'base' ? null : Number(raw);
-    b.addEventListener('click', function(){
-      optionIndex = k;
-      renderLenders();
-      renderLenderStruct();
-      drawMarks();
-    });
+    b.addEventListener('click', function(){ selectOption(k); });
     if (k !== null){
       b.addEventListener('pointerenter', function(){ hoverIndex = k; drawMarks(); });
       b.addEventListener('pointerleave', function(){ hoverIndex = null; drawMarks(); });
