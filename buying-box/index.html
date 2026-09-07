@@ -663,7 +663,7 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
           <input type="range" id="r-payoff" min="0" max="40000" step="100" aria-label="Amount owed on the trade-in">
         </div>
         <div class="equity">
-          <span class="fk" id="eq-k">Trade equity</span>
+          <span class="fk" id="eq-k">Net trade</span>
           <span class="v" id="v-equity">&mdash;</span>
         </div>
 
@@ -1286,7 +1286,7 @@ function rowSpec(d){
     { k:'Sales tax 6.5%',     v:d.tax,          f:money, fav: 0 },
     { k:'Title, reg &amp; plate', v:FIXED.titleReg, f:money, fav: 0 },
     { k:'Cash down',          v:d.i.down,       f:money, fav:-1, paren:true, key:'down' },
-    { k:'Trade equity',       v:d.equity,       f:money, fav: 1 },
+    { k:'Net trade',          v:d.equity,       f:money, fav: 1 },
     { k:'Amount financed',    v:d.af,           f:money, fav: 0, tot:true },
     { g:'Terms' },
     { k:'Buy rate',           v:d.buy,          f:pct2,  fav:-1 },
@@ -1297,7 +1297,7 @@ function rowSpec(d){
     { g:'Gross' },
     { k:'Front gross',        v:d.front,        f:money, fav: 1 },
     { k:'Back-end gross',     v:d.back,         f:money, fav: 1 },
-    { k:'Trade profit',       v:d.tradeP,       f:money, fav: 1 },
+    { k:'Trade gross',        v:d.tradeP,       f:money, fav: 1 },
     { k:'Lender comp @ 5%',   v:d.comp,         f:money, fav: 1 },
     { k:'Buy-down cost',      v:d.bdCost,       f:money, fav:-1, paren:true },
     { k:'Total gross',        v:d.gross,        f:money, fav: 1, tot:true }
@@ -1312,7 +1312,7 @@ function cellText(r){
 
 function cellValue(r){
   if (r.paren && r.v > 0) return '<span class="neg">(' + r.f(r.v) + ')</span>';
-  if (r.k === 'Trade equity' && r.v < 0) return '<span class="down">' + signed(r.v, money) + '</span>';
+  if (r.k === 'Net trade' && r.v < 0) return '<span class="down">' + signed(r.v, money) + '</span>';
   return r.f(r.v);
 }
 
@@ -1549,7 +1549,7 @@ function tradeBlock(d){
     tMoney('tradeACV', 'ACV') +
     tMoney('tradeAllow', 'Allowance') +
     tMoney('tradePayoff', 'Payoff') +
-    wsRow('Equity', '<span class="' + (d.equity > 0 ? 'up' : d.equity < 0 ? 'down' : '') + '">' +
+    wsRow('Net trade', '<span class="' + (d.equity > 0 ? 'up' : d.equity < 0 ? 'down' : '') + '">' +
       signed(d.equity, money) + '</span>') +
     wsRow('Over-allowance', d.tradeP < 0
       ? '<span class="down">' + signed(d.tradeP, money) + '</span>'
@@ -1709,7 +1709,7 @@ function syncControls(){
   put('v-payoff', money(desk.tradePayoff),  deltaHTML(desk.tradePayoff - ref.tradePayoff, money));
   put('v-bd',     pts(desk.buydown),        deltaHTML(desk.buydown     - ref.buydown,     pts));
 
-  $('eq-k').textContent   = eq < 0 ? 'Negative equity rolled in' : 'Trade equity';
+  $('eq-k').textContent   = eq < 0 ? 'Negative equity rolled in' : 'Net trade';
   $('v-equity').className = 'v ' + (eq > 0 ? 'up' : eq < 0 ? 'down' : 'flat');
   $('v-equity').textContent = eq === 0 ? 'No trade' : signed(eq, money);
 
