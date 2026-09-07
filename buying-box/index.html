@@ -6,7 +6,7 @@
 <title>Buying Box Desk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
 <style>
 /* ------------------------------------------------------------------
    Single-theme by intent: an F&I desking terminal. Every color is
@@ -38,10 +38,10 @@
   --desk:         #199e70;  /* your live adjustment   */
 
   /* Optimist first, so it renders wherever it is installed; Hanken Grotesk is
-     the loading fallback. Figures stay monospaced — the money columns depend
-     on it, and tabular support in a fallback face cannot be assumed. */
+     the loading fallback. Figures use the same face — every column of numbers
+     is right-aligned, and tabular-nums is still asked for where it helps. */
   --f-ui:  'Optimist', 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --f-num: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --f-num: 'Optimist', 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --r: 4px;
 }
@@ -226,28 +226,28 @@ body{
 .photo .cam:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
 
 /* ---------- trade-in, kept tight inside the vehicle tile ---------- */
-.tgrid{ display:grid; grid-template-columns: 1fr 1fr; gap:5px; margin: 2px 0 8px; }
+.tgrid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:4px 5px; margin: 2px 0 6px; }
 .tf{ display:flex; flex-direction:column; gap:2px; min-width:0; }
 .tf.wide{ grid-column: 1 / -1; }
 .tf > span{
-  font-size: 8.5px; font-weight:600; letter-spacing:.11em;
+  font-size: 8px; font-weight:600; letter-spacing:.1em;
   text-transform:uppercase; color: var(--ink-3);
 }
 .tin{
-  width:100%; box-sizing:border-box; height:22px; padding:0 6px; margin:0;
+  width:100%; box-sizing:border-box; height:20px; padding:0 6px; margin:0;
   font-family: var(--f-num); font-size: 11px; color: var(--ink);
   background: var(--surface-2); border:1px solid var(--line); border-radius:2px;
 }
 select.tin{ padding:0 3px; }
 .tin:hover{ border-color: var(--line-strong); }
 .tin:focus{ border-color: var(--desk); outline:none; }
-.trow{ display:flex; justify-content:flex-end; padding-top:8px; }
+.trow{ display:flex; justify-content:flex-end; padding-top:6px; }
 
 /* ---------- dealer compensation readout ---------- */
 .comp{
-  display:grid; grid-template-columns: 1fr; gap:4px 10px;
+  display:grid; grid-template-columns: 1fr; gap:3px 10px;
   background: var(--surface-2); border:1px solid var(--line);
-  border-radius:2px; padding: 8px 10px; margin-top:8px;
+  border-radius:2px; padding: 7px 10px; margin-top:5px;
 }
 .comp .cw{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; min-width:0; }
 .comp .ck{ font-size: 10px; color: var(--ink-3); }
@@ -266,6 +266,7 @@ select.tin{ padding:0 3px; }
   display:flex; align-items:baseline; justify-content:space-between; gap:12px;
   padding: 6px 0; border-bottom: 1px solid var(--surface-2);
 }
+#vspecs .row{ padding: 3px 0; }
 .ws .row:last-child{ border-bottom:0; }
 .ws .row .k{ color: var(--ink-2); font-size: 12px; }
 .ws .row .v,
@@ -350,7 +351,7 @@ select.tin{ padding:0 3px; }
   width:15px; height:15px; border-radius:2px;
   background: var(--opt); color:#001526; font-family: var(--f-num); font-size:9.5px; font-weight:600;
 }
-.obase .idx{ background: var(--ink-3); }
+.idx.base{ background: var(--ink-3); }
 .ot2{ display:flex; align-items:baseline; gap:7px; font-family: var(--f-num); font-variant-numeric: tabular-nums; }
 .ot2 b{ font-size: 17px; font-weight:600; letter-spacing:-.02em; }
 .ot2 span{ font-size: 10.5px; color: var(--ink-3); }
@@ -408,7 +409,7 @@ select.tin{ padding:0 3px; }
 
 .chartwrap{
   position:relative; padding: 4px 8px 8px;
-  flex: 1 1 auto; min-height: 322px;
+  flex: 1 1 auto; min-height: 226px;
 }
 .chartwrap svg{
   display:block; position:absolute; inset: 4px 8px 8px;
@@ -430,8 +431,8 @@ select.tin{ padding:0 3px; }
 .tip td:last-child{ font-family: var(--f-num); font-variant-numeric: tabular-nums; text-align:right; color: var(--ink); }
 
 /* ---------- controls ---------- */
-.ctl{ padding: 12px 14px 14px; display:flex; flex-direction:column; gap:13px; justify-content: space-between; }
-.ctl .f{ display:flex; flex-direction:column; gap:6px; }
+.ctl{ padding: 11px 14px 14px; display:flex; flex-direction:column; gap:8px; }
+.ctl .f{ display:flex; flex-direction:column; gap:3px; }
 .ctl .fh{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
 .ctl .fk{ font-size: 9.5px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color: var(--ink-2); }
 .ctl .fv{ display:flex; align-items:center; gap:7px; }
@@ -445,15 +446,15 @@ select.tin{ padding:0 3px; }
 .ctl input.num:hover{ border-color: var(--line-strong); }
 .ctl input.num:focus{ border-color: var(--desk); outline:none; }
 .ctl input.num.term{ width:70px; }
-.ctl .sect{ border-top:1px solid var(--line); padding-top: 12px; margin-top: 1px; }
+.ctl .sect{ border-top:1px solid var(--line); padding-top: 9px; margin-top: 3px; }
 
 .equity{
   display:flex; align-items:baseline; justify-content:space-between; gap:10px;
-  background: var(--surface-2); border:1px solid var(--line); border-radius:2px; padding: 7px 10px;
+  background: var(--surface-2); border:1px solid var(--line); border-radius:2px; padding: 5px 10px;
 }
 .equity .v{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 14px; font-weight:600; }
 
-input[type=range]{ -webkit-appearance:none; appearance:none; width:100%; height: 16px; background: transparent; cursor: pointer; margin:0; }
+input[type=range]{ -webkit-appearance:none; appearance:none; width:100%; height: 13px; background: transparent; cursor: pointer; margin:0; }
 input[type=range]::-webkit-slider-runnable-track{ height:3px; border-radius:2px; background: var(--line-strong); }
 input[type=range]::-moz-range-track{ height:3px; border-radius:2px; background: var(--line-strong); }
 input[type=range]::-webkit-slider-thumb{
@@ -479,10 +480,13 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
 
 /* ---------- guardrails ---------- */
 .rails{
-  padding: 12px 14px 14px; display:grid;
-  grid-template-columns: 1fr 1fr; gap: 11px 18px; align-content:start;
+  padding: 13px 14px 14px; display:grid;
+  grid-template-columns: 1fr 1fr; gap: 4px 18px; align-content: space-between;
 }
 .rails .g{ display:flex; flex-direction:column; gap:5px; min-width:0; }
+.rails .gr{ font-size: 10px; color: var(--ink-3); margin-top:1px; }
+.rails .gr b{ color: var(--ink-2); font-weight:500; }
+.rails .gr .over{ color: var(--crit); }
 .rails .gh{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
 .rails .gk{ font-size: 11px; color: var(--ink-2); white-space:nowrap; }
 .rails .gv{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 11.5px; white-space:nowrap; }
@@ -792,7 +796,7 @@ var TRADE = { on:false, year:'2019', make:'Honda', model:'Accord', trim:'Sport',
 
 var LENDERS = [
   { id:'cap1', core:110, spread:0.00, name:'Capital One Auto Finance', tier:'Tier 2', buy:7.29, term:72, maxTerm:75, adv:128, back:4500, fee:799,
-    optionCount:4,
+    optionCount:4,     /* the base callback plus three alternates */
     stips:['Proof of residence — utility bill dated within 60 days','Verbal employment verification at funding'] },
   { id:'ally', core:108, spread:0.30, name:'Ally Financial', tier:'Tier 2', buy:7.59, term:72, maxTerm:75, adv:125, back:3000, fee:699,
     optionCount:0,
@@ -820,12 +824,7 @@ var SMART = [
   { n:3, name:'Zero-Down Counter',
     cap:'Customer keeps every dollar of cash. The lender counters on sale price and dealer fee to pull the advance back inside the box.',
     inputs:{ price:27400, fee:499, backEnd:2690, down:0, term:75, buydown:0 },
-    counters:['Sale price counter −$585','Dealer fee $699 → $499','Term 75 mo, zero down, rate +1.55 pts'] },
-
-  { n:4, name:'60-Month Compress',
-    cap:'The short-term rate sheet more than pays for the term give-up. Same gross, faster liquidation, and payment-to-income still inside core.',
-    inputs:{ price:27985, fee:699, backEnd:2690, down:2500, term:60, buydown:0 },
-    counters:['Term 72 → 60 mo','Buy rate 7.29% → 6.79%','Comp unchanged at 5% flat'] }
+    counters:['Sale price counter −$585','Dealer fee $699 → $499','Term 75 mo, zero down, rate +1.55 pts'] }
 ];
 
 /* =================================================================
@@ -912,6 +911,15 @@ function railSet(d){
     { k:'Rate buy-down',     v:d.i.buydown,f:pts,  min:0,   max:2.5,  p:b.buydown,cap:'2.00 points',             short:'Rate buy-down' },
     { k:'Negative equity',   v:d.negEq,    f:money,min:0,   max:6000, p:b.negEq,  cap:'$5,000 rolled',           short:'Negative equity' }
   ];
+}
+
+/* how much of the rail is left before the ceiling — the number a desk needs
+   when it is deciding whether there is room to move */
+function headroom(r){
+  var left = r.p.limit - r.v;
+  return left >= 0
+    ? '<b>' + r.f(left) + '</b> of room'
+    : '<span class="over"><b>' + r.f(-left) + '</b> over</span>';
 }
 
 function railState(r){
@@ -1068,7 +1076,7 @@ function measure(){
   $('chart').setAttribute('viewBox', '0 0 ' + W + ' ' + H);
 }
 function xStep(){ return W < 520 ? 20 : 10; }
-function yStep(){ return H < 300 ? 4  : 3;  }
+function yStep(){ return H < 240 ? 5  : 4;  }
 
 function px(v){ return PAD.l + (v - XD[0]) / (XD[1] - XD[0]) * (W - PAD.l - PAD.r); }
 function py(v){ return H - PAD.b - (v - YD[0]) / (YD[1] - YD[0]) * (H - PAD.t - PAD.b); }
@@ -1080,7 +1088,7 @@ function svgEl(name, attrs){
 }
 function svgText(x, y, str, attrs){
   var t = svgEl('text', Object.assign({ x:x, y:y, fill:CHART.tick, 'font-size':11,
-    'font-family':"'IBM Plex Mono', monospace" }, attrs || {}));
+    'font-family':"'Optimist','Hanken Grotesk',system-ui,sans-serif" }, attrs || {}));
   t.textContent = str;
   return t;
 }
@@ -1131,7 +1139,7 @@ function buildChart(){
   for (i = YD[0]; i <= YD[1]; i += yStep())
     svg.appendChild(svgText(L - 7, py(i) + 3.5, i + '%', { 'text-anchor':'end', 'font-size':10 }));
 
-  if (H >= 280 && W >= 460)
+  if (H >= 200 && W >= 460)
     svg.appendChild(svgText((L + R) / 2, B + 30, 'ADVANCE — AMOUNT FINANCED AS % OF CLEAN BOOK',
       { 'text-anchor':'middle', 'font-size':10, 'letter-spacing':'1.4', fill:CHART.tick }));
   if (W >= 460)
@@ -1432,21 +1440,16 @@ function renderLenderStruct(){
 /* The base callback and the four alternates are peers; the base reads as a
    quarter-height bar above the grid because it is the deal already shown in
    full on the dealer worksheet, not a new structure to weigh up. */
-function baseBar(){
-  var d = compute(optionInputs(null)), pl = pillFor(d);
-  return '<button class="obase" type="button" data-opt="base" aria-pressed="' + (optionIndex === null) + '">' +
-    '<span class="idx">B</span><span class="on">Base callback</span>' +
-    '<span class="pill ' + pl.cls + '">' + pl.text + '</span>' +
-    '<span class="fig"><b>' + money(d.pmt) + '</b> &middot; ' + pct2(d.sell) + ' &middot; ' +
-      d.i.term + ' mo &middot; ' + money(d.gross) + ' gross</span>' +
-    '</button>';
-}
-
+/* Four structures, four equal tiles — the base callback is the first of them,
+   not a header above them. */
 function optionTile(k){
-  var o = SMART[k], d = compute(optionInputs(k)), pl = pillFor(d);
-  return '<button class="otile" type="button" data-opt="' + k + '" aria-pressed="' + (optionIndex === k) + '">' +
-    '<span class="ot1"><span class="idx">' + o.n + '</span>' +
-      '<span class="on">' + o.name + '</span>' +
+  var isBase = k === null;
+  var d = compute(optionInputs(k)), pl = pillFor(d);
+  return '<button class="otile" type="button" data-opt="' + (isBase ? 'base' : k) +
+      '" aria-pressed="' + (optionIndex === k) + '">' +
+    '<span class="ot1"><span class="idx' + (isBase ? ' base' : '') + '">' +
+      (isBase ? 'B' : SMART[k].n) + '</span>' +
+      '<span class="on">' + (isBase ? 'Base callback' : SMART[k].name) + '</span>' +
       '<span class="pill ' + pl.cls + '">' + pl.text + '</span></span>' +
     '<span class="ot2"><b>' + money(d.pmt) + '</b><span>' + pct2(d.sell) + ' &middot; ' + d.i.term + ' mo</span></span>' +
     '<span class="ot3">' + pct1(d.ltv) + ' adv &middot; ' + money(d.gross) + ' gross &middot; ' +
@@ -1458,8 +1461,8 @@ function lenderBody(L){
   return '<div class="lmeta"><em>' + L.tier + '</em> &middot; ' + pct2(L.buy) + ' buy &middot; ' +
       L.maxTerm + ' mo max &middot; ' + L.adv + '% advance &middot; ' +
       money(L.back) + ' back-end &middot; ' + money(L.fee) + ' fee</div>' +
-    baseBar() +
-    '<div class="ogrid">' + SMART.map(function(o, k){ return optionTile(k); }).join('') + '</div>' +
+    '<div class="ogrid">' + optionTile(null) +
+      SMART.map(function(o, k){ return optionTile(k); }).join('') + '</div>' +
     '<div class="stips">Stips: ' +
       L.stips.map(function(x){ return x.replace(/ — .*$/, ''); }).join(' &middot; ') + '</div>';
 }
@@ -1551,7 +1554,6 @@ function tradeBlock(d){
     wsRow('Over-allowance', d.tradeP < 0
       ? '<span class="down">' + signed(d.tradeP, money) + '</span>'
       : '<span class="neg">' + money(0) + '</span>') +
-    wsRow('Tax credit on trade', money(d.taxCredit)) +
     '<div class="trow"><button class="btn" id="dropTrade" type="button">Remove trade-in</button></div>';
 }
 
@@ -1625,7 +1627,10 @@ function renderRails(){
         '<span class="fill f-' + st + '" style="width:' + w + '%"></span>' +
         (core !== null ? '<span class="capL" style="left:' + core + '%"></span>' : '') +
         '<span class="cap" style="left:' + capL + '%"></span>' +
-      '</div></div>';
+      '</div>' +
+      '<div class="gr">' + headroom(r) +
+        (core !== null ? ' &middot; Tier 1 at ' + r.f(r.p.core) : '') + '</div>' +
+      '</div>';
   }).join(''));
 
   var v = verdict(d);
