@@ -13,29 +13,43 @@
    painted explicitly so the page holds on either host ground.
    ------------------------------------------------------------------ */
 :root{
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* Grounded on Capital One dark blue. The chart surface (#002B49) was run
-     through the palette validator: the three series clear every gate on it. */
-  --plane:        #001526;
-  --surface:      #002B49;
-  --surface-2:    #002138;
-  --raised:       #003A61;
-  --line:         #0c3a5d;
-  --line-strong:  #16557e;
+  /* Light ground, cool-biased toward the Capital One blue rather than a
+     neutral grey. The three series are the palette's light steps, validated
+     all-pairs against the white panel. */
+  --plane:        #eef3f8;
+  --surface:      #ffffff;
+  --surface-2:    #f5f8fb;
+  --raised:       #e8eef5;
+  --line:         #d8e2ec;
+  --line-strong:  #b3c4d5;
 
-  --ink:          #ffffff;
-  --ink-2:        #b8c6d2;
-  --ink-3:        #7e93a3;
+  --ink:          #0a1f33;
+  --ink-2:        #3d5568;
+  --ink-3:        #63798f;
 
-  --good:         #0ca30c;
-  --warn:         #fab219;
-  --crit:         #d03b3b;
+  /* fills keep the fixed status hues; text steps darker to stay legible */
+  --good:   #0ca30c;  --warn:   #fab219;  --crit:   #d03b3b;
+  --good-t: #0a7a0a;  --warn-t: #8a6100;  --crit-t: #b7302f;
 
-  /* entity colors — used identically in the chart and in the UI */
-  --now:          #d95926;  /* the deal as it stands */
-  --opt:          #3987e5;  /* lender smart options   */
-  --desk:         #199e70;  /* your live adjustment   */
+  --now:  #eb6834;
+  --opt:  #2a78d6;
+  --desk: #1baf7a;
+
+  --on-accent:  #ffffff;
+  --hover:      rgba(10,31,51,.04);
+  --field-line: rgba(10,31,51,.18);
+  --tip-bg:     #ffffff;
+  --hatch-a:    #eef3f8;
+  --hatch-b:    #e5ecf4;
+
+  --chart-out:       rgba(208,59,59,.06);
+  --chart-ok:        rgba(12,163,12,.045);
+  --chart-core:      rgba(12,163,12,.10);
+  --chart-core-line: rgba(12,163,12,.5);
+  --chart-max-line:  rgba(176,120,0,.85);
+  --chart-max-text:  #b07800;
 
   /* Optimist first, so it renders wherever it is installed; Hanken Grotesk is
      the loading fallback. Figures use the same face — every column of numbers
@@ -45,6 +59,87 @@
 
   --r: 4px;
 }
+
+/* the OS setting, unless the viewer has explicitly chosen light */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+  color-scheme: dark;
+
+    /* Capital One dark blue. The chart surface (#002B49) was run through the
+       palette validator: the three series clear every gate on it. */
+    --plane:        #001526;
+    --surface:      #002B49;
+    --surface-2:    #002138;
+    --raised:       #003A61;
+    --line:         #0c3a5d;
+    --line-strong:  #16557e;
+
+    --ink:          #ffffff;
+    --ink-2:        #b8c6d2;
+    --ink-3:        #7e93a3;
+
+    --good:   #0ca30c;  --warn:   #fab219;  --crit:   #d03b3b;
+    --good-t: #0ca30c;  --warn-t: #fab219;  --crit-t: #d03b3b;
+
+    --now:  #d95926;
+    --opt:  #3987e5;
+    --desk: #199e70;
+
+    --on-accent:  #001526;
+    --hover:      rgba(255,255,255,.03);
+    --field-line: rgba(255,255,255,.14);
+    --tip-bg:     #000e1a;
+    --hatch-a:    #002138;
+    --hatch-b:    #00263f;
+
+    --chart-out:       rgba(208,59,59,.085);
+    --chart-ok:        rgba(12,163,12,.05);
+    --chart-core:      rgba(12,163,12,.11);
+    --chart-core-line: rgba(12,163,12,.55);
+    --chart-max-line:  rgba(250,178,25,.8);
+    --chart-max-text:  #fab219;
+  }
+}
+
+/* the in-page toggle, which wins in both directions */
+:root[data-theme="dark"]{
+  color-scheme: dark;
+
+    /* Capital One dark blue. The chart surface (#002B49) was run through the
+       palette validator: the three series clear every gate on it. */
+    --plane:        #001526;
+    --surface:      #002B49;
+    --surface-2:    #002138;
+    --raised:       #003A61;
+    --line:         #0c3a5d;
+    --line-strong:  #16557e;
+
+    --ink:          #ffffff;
+    --ink-2:        #b8c6d2;
+    --ink-3:        #7e93a3;
+
+    --good:   #0ca30c;  --warn:   #fab219;  --crit:   #d03b3b;
+    --good-t: #0ca30c;  --warn-t: #fab219;  --crit-t: #d03b3b;
+
+    --now:  #d95926;
+    --opt:  #3987e5;
+    --desk: #199e70;
+
+    --on-accent:  #001526;
+    --hover:      rgba(255,255,255,.03);
+    --field-line: rgba(255,255,255,.14);
+    --tip-bg:     #000e1a;
+    --hatch-a:    #002138;
+    --hatch-b:    #00263f;
+
+    --chart-out:       rgba(208,59,59,.085);
+    --chart-ok:        rgba(12,163,12,.05);
+    --chart-core:      rgba(12,163,12,.11);
+    --chart-core-line: rgba(12,163,12,.55);
+    --chart-max-line:  rgba(250,178,25,.8);
+    --chart-max-text:  #fab219;
+}
+
 
 *{ box-sizing: border-box; }
 [hidden]{ display: none !important; }
@@ -75,6 +170,18 @@ body{
 }
 .mast .ident{ min-width:0; }
 .mast-right{ display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+
+.themebtn{
+  display:inline-flex; align-items:center; gap:6px; cursor:pointer;
+  font-family: var(--f-ui); font-size: 10.5px; font-weight:600;
+  letter-spacing:.06em; text-transform:uppercase;
+  color: var(--ink-3); background: transparent;
+  border:1px solid var(--line); border-radius: 2px; padding: 4px 9px;
+}
+.themebtn:hover{ color: var(--ink); border-color: var(--line-strong); }
+.themebtn:focus-visible{ outline:2px solid var(--opt); outline-offset:2px; }
+.themebtn .ic{ display:inline-flex; }
+.themebtn svg{ display:block; }
 
 .kpi{ display:flex; flex-wrap:wrap; }
 .kpi > div{ padding: 2px 0 2px 20px; margin-left:20px; border-left:1px solid var(--line); min-width:168px; }
@@ -111,7 +218,7 @@ body{
 }
 .seg button:hover{ border-color: var(--line-strong); color: var(--ink); }
 .seg button:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
-.seg button[aria-pressed="true"]{ background: var(--ink); border-color: var(--ink); color: #001526; font-weight:600; }
+.seg button[aria-pressed="true"]{ background: var(--ink); border-color: var(--ink); color: var(--surface); font-weight:600; }
 
 .btn{
   cursor:pointer; font-family: var(--f-ui); font-size: 11px; font-weight:600;
@@ -194,14 +301,14 @@ body{
   font-size: 10.5px; color: var(--ink-2); border-left:1px solid var(--line); border-right:1px solid var(--line);
 }
 
-.up{ color: var(--good); } .down{ color: var(--crit); } .flat{ color: var(--ink-3); }
+.up{ color: var(--good-t); } .down{ color: var(--crit-t); } .flat{ color: var(--ink-3); }
 
 .verdict{ display:flex; align-items:center; gap:8px; margin-top:6px; }
 .verdict .dot{ width:9px; height:9px; border-radius:50%; flex:none; }
 .verdict .t{ font-size:17px; font-weight:700; letter-spacing:-.01em; }
-.s-in   .dot{ background: var(--good); } .s-in   .t{ color: var(--good); }
-.s-edge .dot{ background: var(--warn); } .s-edge .t{ color: var(--warn); }
-.s-out  .dot{ background: var(--crit); } .s-out  .t{ color: var(--crit); }
+.s-in   .dot{ background: var(--good); } .s-in   .t{ color: var(--good-t); }
+.s-edge .dot{ background: var(--warn); } .s-edge .t{ color: var(--warn-t); }
+.s-out  .dot{ background: var(--crit); } .s-out  .t{ color: var(--crit-t); }
 
 /* ---------- vehicle tile ---------- */
 .photo{
@@ -213,13 +320,13 @@ body{
   position:absolute; inset:0; display:flex; flex-direction:column;
   align-items:center; justify-content:center; gap:8px; text-align:center; padding: 14px;
   background:
-    repeating-linear-gradient(135deg, #002138 0 9px, #00263F 9px 18px);
+    repeating-linear-gradient(135deg, var(--hatch-a) 0 9px, var(--hatch-b) 9px 18px);
 }
 .photo .ph b{ font-size: 12px; color: var(--ink-2); font-weight:600; }
 .photo .ph span{ font-size: 10.5px; color: var(--ink-3); max-width: 30ch; line-height:1.45; }
 .photo .cam{
   position:absolute; right:8px; bottom:8px;
-  background: rgba(0,14,26,.85); border:1px solid var(--line-strong); color: var(--ink-2);
+  background: var(--surface); border:1px solid var(--line-strong); color: var(--ink-2);
   border-radius:2px; padding: 4px 8px; font-size: 10px; font-weight:600; cursor:pointer;
 }
 .photo .cam:hover{ color: var(--ink); border-color: var(--ink-3); }
@@ -278,7 +385,7 @@ select.tin{ padding:0 3px; }
 }
 .ws input.cell{
   width:104px; background:transparent; margin:0;
-  border-bottom-color: rgba(255,255,255,.14);   /* the only rest-state affordance */
+  border-bottom-color: var(--field-line);   /* the only rest-state affordance */
 }
 .ws input.cell:hover{ border-color: var(--line-strong); background: var(--surface-2); }
 .ws input.cell:focus{
@@ -304,11 +411,11 @@ select.tin{ padding:0 3px; }
 .lhead .ok{ display:inline-flex; align-items:center; gap:6px; white-space:nowrap; margin-left:auto; }
 
 .tick{ width:8px; height:8px; border-radius:50%; background: var(--good); flex:none; box-shadow: 0 0 0 3px rgba(12,163,12,.16); }
-.appr{ font-size: 9px; white-space:nowrap; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color: var(--good); }
+.appr{ font-size: 9px; white-space:nowrap; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color: var(--good-t); }
 .plus{
   display:inline-flex; align-items:center;
   font-family: var(--f-num); font-size: 10.5px; font-weight: 600;
-  color: #001526; background: var(--warn); border-radius: 2px; padding: 1px 6px 2px;
+  color: #2a1f00; background: var(--warn); border-radius: 2px; padding: 1px 6px 2px;
 }
 .lmeta{
   font-family: var(--f-num); font-size: 10px; color: var(--ink-3);
@@ -349,7 +456,7 @@ select.tin{ padding:0 3px; }
 .idx{
   display:inline-flex; align-items:center; justify-content:center; flex:none;
   width:15px; height:15px; border-radius:2px;
-  background: var(--opt); color:#001526; font-family: var(--f-num); font-size:9.5px; font-weight:600;
+  background: var(--opt); color: var(--on-accent); font-family: var(--f-num); font-size:9.5px; font-weight:600;
 }
 .idx.base{ background: var(--ink-3); }
 .ot2{ display:flex; align-items:baseline; gap:7px; font-family: var(--f-num); font-variant-numeric: tabular-nums; }
@@ -363,9 +470,9 @@ select.tin{ padding:0 3px; }
   border-radius: 2px; padding: 2px 5px; border:1px solid; white-space:nowrap;
 }
 .pill::before{ content:""; width:4px; height:4px; border-radius:50%; background: currentColor; }
-.p-in  { color: var(--good); border-color: rgba(12,163,12,.4);  background: rgba(12,163,12,.09); }
-.p-edge{ color: var(--warn); border-color: rgba(250,178,25,.4); background: rgba(250,178,25,.09); }
-.p-out { color: var(--crit); border-color: rgba(208,59,59,.45); background: rgba(208,59,59,.10); }
+.p-in  { color: var(--good-t); border-color: rgba(12,163,12,.4);  background: rgba(12,163,12,.09); }
+.p-edge{ color: var(--warn-t); border-color: rgba(250,178,25,.45); background: rgba(250,178,25,.12); }
+.p-out { color: var(--crit-t); border-color: rgba(208,59,59,.45); background: rgba(208,59,59,.10); }
 
 .stips{
   font-family: var(--f-num); font-size: 9.5px; color: var(--ink-3); line-height:1.55;
@@ -418,7 +525,7 @@ select.tin{ padding:0 3px; }
 
 .tip{
   position:absolute; pointer-events:none; opacity:0; transform: translate(-50%, -114%);
-  background: #000E1A; border:1px solid var(--line-strong); border-radius: var(--r);
+  background: var(--tip-bg); border:1px solid var(--line-strong); border-radius: var(--r);
   padding: 8px 10px 9px; min-width: 168px; z-index: 5;
   box-shadow: 0 8px 22px rgba(0,0,0,.6); transition: opacity .1s ease;
 }
@@ -475,7 +582,7 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
 }
 .segs button:hover{ border-color: var(--line-strong); color: var(--ink); }
 .segs button:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
-.segs button[aria-pressed="true"]{ background: var(--desk); border-color: var(--desk); color:#07120d; font-weight:600; }
+.segs button[aria-pressed="true"]{ background: var(--desk); border-color: var(--desk); color:#05221a; font-weight:600; }
 .segs button.over[aria-pressed="true"]{ background: var(--crit); border-color: var(--crit); color:#150404; }
 
 /* ---------- guardrails ---------- */
@@ -486,7 +593,7 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
 .rails .g{ display:flex; flex-direction:column; gap:5px; min-width:0; }
 .rails .gr{ font-size: 10px; color: var(--ink-3); margin-top:1px; }
 .rails .gr b{ color: var(--ink-2); font-weight:500; }
-.rails .gr .over{ color: var(--crit); }
+.rails .gr .over{ color: var(--crit-t); }
 .rails .gh{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
 .rails .gk{ font-size: 11px; color: var(--ink-2); white-space:nowrap; }
 .rails .gv{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 11.5px; white-space:nowrap; }
@@ -536,6 +643,9 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
     </div>
 
     <div class="mast-right">
+      <button class="themebtn" id="themeBtn" type="button" aria-pressed="false">
+        <span class="ic" id="themeIcon"></span><span id="themeLabel">Dark</span>
+      </button>
       <div class="kpi" aria-label="Working summary">
         <div>
           <div class="lbl">Monthly payment</div>
@@ -692,11 +802,11 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
       <div class="phead">
         <span class="left"><span class="lbl">Buying box</span></span>
         <span class="right"><span class="legend">
-          <span class="it"><span class="sw" style="background:#d95926"></span>Written</span>
-          <span class="it"><span class="sw" style="background:#3987e5"></span>Options</span>
-          <span class="it"><span class="sw" style="background:#199e70"></span>Desk</span>
-          <span class="it"><span class="zone" style="background:rgba(12,163,12,.26);border:1px solid rgba(12,163,12,.55)"></span>Core</span>
-          <span class="it"><span class="zone" style="background:rgba(12,163,12,.07);border:1px dashed rgba(250,178,25,.7)"></span>Max</span>
+          <span class="it"><span class="sw" style="background:var(--now)"></span>Written</span>
+          <span class="it"><span class="sw" style="background:var(--opt)"></span>Options</span>
+          <span class="it"><span class="sw" style="background:var(--desk)"></span>Desk</span>
+          <span class="it"><span class="zone" style="background:var(--chart-core);border:1px solid var(--chart-core-line)"></span>Core</span>
+          <span class="it"><span class="zone" style="background:var(--chart-ok);border:1px dashed var(--chart-max-line)"></span>Max</span>
         </span></span>
       </div>
       <div class="chartwrap">
@@ -1051,14 +1161,23 @@ var desk        = Object.assign({}, BASE);
    6. Chart
    ================================================================= */
 
-/* chart chrome, kept beside the CSS tokens it mirrors */
-var CHART = {
-  surface: '#002B49',   /* knocks the out-of-policy wash out of the approval box */
-  grid:    '#0c3a5d',
-  axis:    '#16557e',
-  tick:    '#7e93a3',
-  label:   '#b8c6d2'
-};
+/* Chart chrome comes from the active theme's tokens rather than literals,
+   so the plot follows the light/dark toggle with everything else. */
+var CHART = {};
+function readChartColors(){
+  var cs = getComputedStyle(document.documentElement);
+  function v(n){ return cs.getPropertyValue(n).trim(); }
+  CHART = {
+    surface: v('--surface'),   /* knocks the out-of-policy wash out of the approval box */
+    grid:    v('--line'),      axis:     v('--line-strong'),
+    tick:    v('--ink-3'),     label:    v('--ink-2'),
+    out:     v('--chart-out'), ok:       v('--chart-ok'),
+    core:    v('--chart-core'),coreLine: v('--chart-core-line'),
+    maxLine: v('--chart-max-line'), maxText: v('--chart-max-text'),
+    now:     v('--now'),  opt:  v('--opt'),  desk: v('--desk'),
+    good:    v('--good-t'), crit: v('--crit-t')
+  };
+}
 
 var NS = 'http://www.w3.org/2000/svg';
 var W = 780, H = 470, PAD = { l:62, r:30, t:28, b:58 };
@@ -1097,22 +1216,23 @@ var marks;
 
 function buildChart(){
   var svg = $('chart'), i, x, y, b = P(), LEN = lender();
+  readChartColors();
   measure();
   while (svg.firstChild) svg.removeChild(svg.firstChild);
   var L = px(XD[0]), R = px(XD[1]), T = py(YD[1]), B = py(YD[0]);
 
   /* out-of-policy plane */
-  svg.appendChild(svgEl('rect', { x:L, y:T, width:R-L, height:B-T, fill:'rgba(208,59,59,.085)' }));
+  svg.appendChild(svgEl('rect', { x:L, y:T, width:R-L, height:B-T, fill:CHART.out }));
 
   /* inside the approval box */
   svg.appendChild(svgEl('rect', { x:L, y:py(b.pti.limit), width:px(b.ltv.limit)-L,
     height:B-py(b.pti.limit), fill:CHART.surface }));
   svg.appendChild(svgEl('rect', { x:L, y:py(b.pti.limit), width:px(b.ltv.limit)-L,
-    height:B-py(b.pti.limit), fill:'rgba(12,163,12,.05)' }));
+    height:B-py(b.pti.limit), fill:CHART.ok }));
 
   /* Tier 1 core */
   svg.appendChild(svgEl('rect', { x:L, y:py(b.pti.core), width:px(b.ltv.core)-L,
-    height:B-py(b.pti.core), fill:'rgba(12,163,12,.11)', stroke:'rgba(12,163,12,.55)', 'stroke-width':1 }));
+    height:B-py(b.pti.core), fill:CHART.core, stroke:CHART.coreLine, 'stroke-width':1 }));
 
   /* gridlines */
   for (i = XD[0] + xStep(); i < XD[1]; i += xStep()){
@@ -1128,7 +1248,7 @@ function buildChart(){
   svg.appendChild(svgEl('path', {
     d:'M' + px(b.ltv.limit) + ' ' + T + ' L' + px(b.ltv.limit) + ' ' + py(b.pti.limit) +
       ' L' + L + ' ' + py(b.pti.limit),
-    fill:'none', stroke:'rgba(250,178,25,.8)', 'stroke-width':1.5, 'stroke-dasharray':'5 4' }));
+    fill:'none', stroke:CHART.maxLine, 'stroke-width':1.5, 'stroke-dasharray':'5 4' }));
 
   /* axes */
   svg.appendChild(svgEl('line', { x1:L, y1:B, x2:R, y2:B, stroke:CHART.axis, 'stroke-width':1 }));
@@ -1149,12 +1269,12 @@ function buildChart(){
 
   /* zone labels */
   svg.appendChild(svgText(L + 9, B - 9, 'TIER 1 CORE',
-    { 'font-size':10, 'letter-spacing':'1.2', fill:'#0ca30c', 'font-weight':600 }));
+    { 'font-size':10, 'letter-spacing':'1.2', fill:CHART.good, 'font-weight':600 }));
   svg.appendChild(svgText(px(b.ltv.limit) - 9, py(b.pti.limit) - 9,
     W < 560 ? 'POLICY MAX' : 'POLICY MAX  ' + b.ltv.limit + '% / ' + b.pti.limit + '%',
-    { 'text-anchor':'end', 'font-size':10, 'letter-spacing':'1.2', fill:'#fab219', 'font-weight':600 }));
+    { 'text-anchor':'end', 'font-size':10, 'letter-spacing':'1.2', fill:CHART.maxText, 'font-weight':600 }));
   svg.appendChild(svgText(R - 4, T + 13, W < 560 ? 'OUT OF POLICY' : 'DECLINE / OUT OF POLICY',
-    { 'text-anchor':'end', 'font-size':10, 'letter-spacing':'1.2', fill:'#d03b3b', 'font-weight':600 }));
+    { 'text-anchor':'end', 'font-size':10, 'letter-spacing':'1.2', fill:CHART.crit, 'font-weight':600 }));
 
   var hint = $('bb-hint');   /* the header carries the legend now; hint is optional */
   if (hint) hint.textContent = LEN.name.split(' ').slice(0, 2).join(' ') + ' policy grid, 712 tier';
@@ -1211,15 +1331,15 @@ function drawMarks(){
 
   /* crosshair for the live desk position */
   x = px(clampX(live.ltv)); y = py(clampY(live.pti));
-  marks.appendChild(svgEl('line', { x1:L, y1:y, x2:x, y2:y, stroke:'#199e70',
+  marks.appendChild(svgEl('line', { x1:L, y1:y, x2:x, y2:y, stroke:CHART.desk,
     'stroke-width':1, 'stroke-dasharray':'3 3', opacity:.6 }));
-  marks.appendChild(svgEl('line', { x1:x, y1:B, x2:x, y2:y, stroke:'#199e70',
+  marks.appendChild(svgEl('line', { x1:x, y1:B, x2:x, y2:y, stroke:CHART.desk,
     'stroke-width':1, 'stroke-dasharray':'3 3', opacity:.6 }));
 
   if (lenderId === 'cap1'){
     SMART.forEach(function(o, k){
       var d = compute(optionInputs(k));
-      point(marks, d, '#3987e5', 6.5, String(SMART[k].n),
+      point(marks, d, CHART.opt, 6.5, String(SMART[k].n),
         { name:'Smart option ' + SMART[k].n + ' — ' + SMART[k].name, pos:'above' },
         optionIndex === k || hoverIndex === k);
     });
@@ -1231,14 +1351,14 @@ function drawMarks(){
 
   /* at this size a combined label runs into the nearest option, and the
      orange ring already says the desk is sitting on the written deal */
-  point(marks, baseDeal, '#d95926', 6.5, same ? null : 'WRITTEN',
+  point(marks, baseDeal, CHART.now, 6.5, same ? null : 'WRITTEN',
     { name:'Deal as written', dy:16 }, false);
   if (same)
     marks.appendChild(svgEl('circle', { cx:x, cy:y, r:14, fill:'none',
-      stroke:'#d95926', 'stroke-width':1.5 }));
+      stroke:CHART.now, 'stroke-width':1.5 }));
 
   /* second line down, so it never lands on the written deal's label */
-  point(marks, live, '#199e70', 7.5,
+  point(marks, live, CHART.desk, 7.5,
     off ? 'DESK ▸ OFF SCALE' : 'DESK',
     { name:'Your adjustment', dy: same ? 16 : 30 }, true);
 }
@@ -2128,6 +2248,62 @@ function probeAssets(){
 }
 
 /* =================================================================
+   10b. Light / dark
+   ================================================================= */
+
+var TKEY = 'buyingbox.theme';
+var SUN = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" ' +
+  'stroke-width="1.5" stroke-linecap="round" aria-hidden="true">' +
+  '<circle cx="8" cy="8" r="3.1"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15' +
+  'M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M12.95 3.05l-1.13 1.13M4.18 11.82l-1.13 1.13"/></svg>';
+var MOON = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" ' +
+  'stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M13.5 9.6A5.9 5.9 0 0 1 6.4 2.5a5.9 5.9 0 1 0 7.1 7.1z"/></svg>';
+
+/* The host stamps data-theme for the viewer's own setting, so with no stored
+   choice we inherit it and only take over once the toggle is used. */
+function isDark(){
+  var a = document.documentElement.getAttribute('data-theme');
+  if (a) return a === 'dark';
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+function paintToggle(){
+  var dark = isDark();
+  $('themeIcon').innerHTML = dark ? SUN : MOON;
+  $('themeLabel').textContent = dark ? 'Light' : 'Dark';
+  $('themeBtn').setAttribute('aria-pressed', String(dark));
+  $('themeBtn').setAttribute('aria-label', 'Switch to ' + (dark ? 'light' : 'dark') + ' mode');
+}
+
+function setTheme(t){
+  if (t) document.documentElement.setAttribute('data-theme', t);
+  else document.documentElement.removeAttribute('data-theme');
+  paintToggle();
+  buildChart();                      /* the plot re-reads its tokens */
+}
+
+try{
+  var stored = window.localStorage.getItem(TKEY);
+  if (stored === 'dark' || stored === 'light') document.documentElement.setAttribute('data-theme', stored);
+} catch(e){}
+
+$('themeBtn').addEventListener('click', function(){
+  var next = isDark() ? 'light' : 'dark';
+  setTheme(next);
+  try{ window.localStorage.setItem(TKEY, next); } catch(e){}
+});
+
+if (window.matchMedia){
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  var onScheme = function(){
+    if (!document.documentElement.getAttribute('data-theme')) setTheme(null);
+  };
+  if (mq.addEventListener) mq.addEventListener('change', onScheme);
+  else if (mq.addListener) mq.addListener(onScheme);
+}
+
+/* =================================================================
    11. Boot
    ================================================================= */
 
@@ -2182,6 +2358,7 @@ if (EDIT_LAYOUT) $('resetLayout').addEventListener('click', function(){
 });
 
 renderAll();
+paintToggle();
 probeAssets();
 
 })();
