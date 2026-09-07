@@ -76,13 +76,9 @@ body{
 .mast .ident{ min-width:0; }
 .mast-right{ display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
 
-.kpi{
-  display:flex; flex-wrap:wrap;
-  border:1px solid var(--line); border-radius: var(--r);
-  background: var(--surface); overflow:hidden;
-}
-.kpi > div{ padding: 9px 16px 10px; border-left:1px solid var(--line); min-width:174px; }
-.kpi > div:first-child{ border-left:0; }
+.kpi{ display:flex; flex-wrap:wrap; }
+.kpi > div{ padding: 2px 0 2px 20px; margin-left:20px; border-left:1px solid var(--line); min-width:168px; }
+.kpi > div:first-child{ border-left:0; margin-left:0; padding-left:0; }
 .kpi .v{
   font-family: var(--f-num); font-variant-numeric: tabular-nums;
   font-size: 22px; font-weight:500; letter-spacing:-.02em; line-height:1.15; margin-top:5px;
@@ -93,14 +89,6 @@ body{
 .mast h1{ font-size: 21px; font-weight: 700; letter-spacing: -.015em; margin: 3px 0 0; text-wrap: balance; }
 .mast .vin{ font-family: var(--f-num); font-size: 11px; color: var(--ink-3); margin-top: 5px; }
 .mast .vin span{ color: var(--line-strong); padding: 0 5px; }
-
-.sim{
-  display:inline-flex; align-items:center; gap:6px;
-  border:1px solid rgba(250,178,25,.45); color: var(--warn);
-  background: rgba(250,178,25,.08); border-radius: 2px; padding: 3px 8px;
-  font-size: 9.5px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase;
-}
-.sim::before{ content:""; width:5px; height:5px; border-radius:50%; background: var(--warn); }
 
 /* ---------- canvas toolbar ---------- */
 .toolbar{
@@ -304,74 +292,84 @@ select.tin{ padding:0 3px; }
 .ws .grp > .lbl{ margin-bottom: 5px; display:block; }
 .neg{ color: var(--ink-3); }
 
-/* ---------- lender callbacks: accordion ---------- */
-.lender{ border-bottom: 1px solid var(--line); border-left: 2px solid transparent; }
-.lender:last-child{ border-bottom:0; }
-.lender.open{ border-left-color: var(--opt); background: var(--surface-2); }
-
+/* ---------- callbacks: one lender line, then four structure tiles ---------- */
+.lender{ padding: 0 12px 12px; }
 .lhead{
   display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-  width:100%; text-align:left; cursor:pointer; font: inherit; color: inherit;
-  background: transparent; border:0; padding: 10px 12px 10px 11px;
+  width:100%; text-align:left; font: inherit; color: inherit;
+  background: transparent; border:0; padding: 10px 0 9px; cursor: default;
 }
-.lhead:hover{ background: rgba(255,255,255,.03); }
-.lhead:focus-visible{ outline:2px solid var(--opt); outline-offset:-2px; }
-.lhead .nm{ font-size: 12.5px; font-weight:600; letter-spacing:-.008em; flex:1; min-width:0; }
-.lhead .ok{ display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
-.lhead .chev{ color: var(--ink-3); font-size: 10px; width:10px; text-align:center; flex:none; }
+.lhead .nm{ font-size: 13px; font-weight:700; letter-spacing:-.012em; }
+.lhead .ok{ display:inline-flex; align-items:center; gap:6px; white-space:nowrap; margin-left:auto; }
 
-.tick{ width:9px; height:9px; border-radius:50%; background: var(--good); flex:none; box-shadow: 0 0 0 3px rgba(12,163,12,.16); }
+.tick{ width:8px; height:8px; border-radius:50%; background: var(--good); flex:none; box-shadow: 0 0 0 3px rgba(12,163,12,.16); }
 .appr{ font-size: 9px; white-space:nowrap; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color: var(--good); }
-
 .plus{
   display:inline-flex; align-items:center;
-  font-family: var(--f-num); font-size: 11px; font-weight: 600;
-  color: #001526; background: var(--warn);
-  border-radius: 2px; padding: 1px 6px 2px; letter-spacing: -.01em;
+  font-family: var(--f-num); font-size: 10.5px; font-weight: 600;
+  color: #001526; background: var(--warn); border-radius: 2px; padding: 1px 6px 2px;
 }
-
-.lbody{ padding: 0 12px 12px 11px; }
 .lmeta{
-  font-family: var(--f-num); font-size: 10.5px; color: var(--ink-3);
-  line-height: 1.65; padding-bottom: 9px;
+  font-family: var(--f-num); font-size: 10px; color: var(--ink-3);
+  line-height: 1.6; padding-bottom: 9px; border-bottom:1px solid var(--line); margin-bottom: 9px;
 }
 .lmeta em{ font-style:normal; color: var(--ink-2); }
-.lbody > .lbl{ display:block; padding: 4px 0 7px; }
 
-/* compact option chooser */
-.ocard{
-  display:block; width:100%; text-align:left; cursor:pointer; font: inherit; color: inherit;
-  background: var(--surface); border:1px solid var(--line); border-radius: var(--r);
-  padding: 8px 10px 9px; margin-bottom: 6px;
+/* the base callback sits above the grid at a quarter of a tile's height */
+.obase{
+  display:flex; align-items:center; gap:9px; width:100%; text-align:left;
+  font: inherit; color: inherit; cursor:pointer; margin-bottom:8px;
+  background: var(--surface-2); border:1px solid var(--line); border-radius: var(--r);
+  padding: 7px 10px; transition: border-color .12s ease, background .12s ease;
+}
+.obase:hover{ border-color: var(--line-strong); background: var(--raised); }
+.obase:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
+.obase[aria-pressed="true"]{ border-color: var(--opt); background: var(--raised); box-shadow: inset 2px 0 0 var(--opt); }
+.obase .on{ font-size: 11.5px; font-weight:700; letter-spacing:-.01em; }
+.obase .fig{
+  margin-left:auto; font-family: var(--f-num); font-variant-numeric: tabular-nums;
+  font-size: 10.5px; color: var(--ink-3); white-space:nowrap;
+}
+.obase .fig b{ color: var(--ink); font-size: 12.5px; font-weight:600; }
+
+.ogrid{ display:grid; grid-template-columns: 1fr 1fr; gap:8px; }
+.otile{
+  display:flex; flex-direction:column; gap:5px; text-align:left; cursor:pointer;
+  font: inherit; color: inherit; padding: 9px 10px 10px;
+  background: var(--surface-2); border:1px solid var(--line); border-radius: var(--r);
   transition: border-color .12s ease, background .12s ease;
 }
-.ocard:hover{ border-color: var(--line-strong); background: var(--raised); }
-.ocard:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
-.ocard[aria-pressed="true"]{ border-color: var(--opt); background: var(--raised); box-shadow: inset 2px 0 0 var(--opt); }
-.oc1{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
-.oc1 .on{ font-size: 12px; font-weight:700; letter-spacing:-.01em; flex:1; min-width:0; }
-.ocard .idx{
+.otile:hover{ border-color: var(--line-strong); background: var(--raised); }
+.otile:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
+.otile[aria-pressed="true"]{ border-color: var(--opt); background: var(--raised); box-shadow: inset 2px 0 0 var(--opt); }
+.ot1{ display:flex; align-items:center; gap:6px; min-width:0; }
+.ot1 .on{ font-size: 11.5px; font-weight:700; letter-spacing:-.012em; flex:1; min-width:0;
+          overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.idx{
   display:inline-flex; align-items:center; justify-content:center; flex:none;
-  width:16px; height:16px; border-radius:2px;
-  background: var(--opt); color:#001526; font-family: var(--f-num); font-size:10px; font-weight:600;
+  width:15px; height:15px; border-radius:2px;
+  background: var(--opt); color:#001526; font-family: var(--f-num); font-size:9.5px; font-weight:600;
 }
-.ocard[data-opt="base"] .idx{ background: var(--ink-3); }
-.oc2, .oc3{ display:block; font-family: var(--f-num); font-size: 10.5px; color: var(--ink-3); margin-top: 3px; }
-.oc2{ color: var(--ink-2); }
+.obase .idx{ background: var(--ink-3); }
+.ot2{ display:flex; align-items:baseline; gap:7px; font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+.ot2 b{ font-size: 17px; font-weight:600; letter-spacing:-.02em; }
+.ot2 span{ font-size: 10.5px; color: var(--ink-3); }
+.ot3{ font-family: var(--f-num); font-size: 10px; color: var(--ink-3); }
 
 .pill{
-  display:inline-flex; align-items:center; gap:5px;
-  font-size: 9px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
-  border-radius: 2px; padding: 2px 6px; border:1px solid; white-space:nowrap;
+  display:inline-flex; align-items:center; gap:4px;
+  font-size: 8.5px; font-weight:600; letter-spacing:.07em; text-transform:uppercase;
+  border-radius: 2px; padding: 2px 5px; border:1px solid; white-space:nowrap;
 }
-.pill::before{ content:""; width:5px; height:5px; border-radius:50%; background: currentColor; }
+.pill::before{ content:""; width:4px; height:4px; border-radius:50%; background: currentColor; }
 .p-in  { color: var(--good); border-color: rgba(12,163,12,.4);  background: rgba(12,163,12,.09); }
 .p-edge{ color: var(--warn); border-color: rgba(250,178,25,.4); background: rgba(250,178,25,.09); }
 .p-out { color: var(--crit); border-color: rgba(208,59,59,.45); background: rgba(208,59,59,.10); }
 
-.stips{ padding: 9px 0 0; border-top: 1px solid var(--line); margin-top: 4px; }
-.stips ul{ margin: 6px 0 0; padding-left: 15px; color: var(--ink-2); font-size: 11px; }
-.stips li{ margin-bottom: 3px; }
+.stips{
+  font-family: var(--f-num); font-size: 9.5px; color: var(--ink-3); line-height:1.55;
+  padding-top: 9px; margin-top: 9px; border-top:1px solid var(--line);
+}
 
 /* ---------- lender structure: the mirror of the dealer worksheet ---------- */
 .lsid{
@@ -403,14 +401,14 @@ select.tin{ padding:0 3px; }
 }
 
 /* ---------- buying box ---------- */
-.legend{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding: 10px 14px 2px; }
-.legend .it{ display:flex; align-items:center; gap:6px; font-size: 11px; color: var(--ink-2); }
-.legend .sw{ width:9px; height:9px; border-radius:50%; flex:none; box-shadow: 0 0 0 2px var(--surface); }
-.legend .zone{ width:14px; height:9px; border-radius:1px; flex:none; }
+.legend{ display:flex; align-items:center; gap:11px; flex-wrap:wrap; }
+.legend .it{ display:flex; align-items:center; gap:5px; font-size: 10px; color: var(--ink-3); white-space:nowrap; }
+.legend .sw{ width:8px; height:8px; border-radius:50%; flex:none; }
+.legend .zone{ width:12px; height:8px; border-radius:1px; flex:none; }
 
 .chartwrap{
   position:relative; padding: 4px 8px 8px;
-  flex: 1 1 auto; min-height: clamp(260px, 26vh, 430px);
+  flex: 1 1 auto; min-height: 322px;
 }
 .chartwrap svg{
   display:block; position:absolute; inset: 4px 8px 8px;
@@ -480,12 +478,15 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
 .segs button.over[aria-pressed="true"]{ background: var(--crit); border-color: var(--crit); color:#150404; }
 
 /* ---------- guardrails ---------- */
-.rails{ padding: 12px 14px 14px; display:flex; flex-direction:column; gap:11px; }
-.rails .g{ display:flex; flex-direction:column; gap:5px; }
+.rails{
+  padding: 12px 14px 14px; display:grid;
+  grid-template-columns: 1fr 1fr; gap: 11px 18px; align-content:start;
+}
+.rails .g{ display:flex; flex-direction:column; gap:5px; min-width:0; }
 .rails .gh{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
-.rails .gk{ font-size: 11.5px; color: var(--ink-2); }
-.rails .gv{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 12px; }
-.rails .gv small{ color: var(--ink-3); font-size: 10.5px; margin-left: 5px; }
+.rails .gk{ font-size: 11px; color: var(--ink-2); white-space:nowrap; }
+.rails .gv{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 11.5px; white-space:nowrap; }
+.rails .gv small{ color: var(--ink-3); font-size: 9.5px; margin-left: 4px; }
 
 .track{ position:relative; height: 7px; border-radius: 2px; background: var(--surface-2); border:1px solid var(--line); }
 .track .core{ position:absolute; inset: 0 auto 0 0; background: rgba(12,163,12,.14); border-radius: 1px 0 0 1px; }
@@ -503,7 +504,7 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
 .railfoot .msg b{ color: var(--ink); }
 
 .foot{
-  margin: 0; padding-top: 14px; border-top:1px solid var(--line);
+  margin: 20px 0 0; padding-top: 14px; border-top:1px solid var(--line);
   color: var(--ink-3); font-size: 11px; line-height:1.6; max-width: 78ch; align-self: start;
 }
 
@@ -531,7 +532,6 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
     </div>
 
     <div class="mast-right">
-      <span class="sim">Simulated data</span>
       <div class="kpi" aria-label="Working summary">
         <div>
           <div class="lbl">Monthly payment</div>
@@ -686,15 +686,14 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
     <!-- 7. buying box -->
     <section class="panel tile" data-tile="buyingbox" data-span="4" aria-label="Buying box">
       <div class="phead">
-        <span class="left"><span class="lbl">Buying box &mdash; advance vs. payment burden</span></span>
-        <span class="right"><span class="hint" id="bb-hint">Capital One policy grid, 712 tier</span></span>
-      </div>
-      <div class="legend">
-        <span class="it"><span class="sw" style="background:#d95926"></span>Deal as written</span>
-        <span class="it"><span class="sw" style="background:#3987e5"></span>Smart options 1&ndash;4</span>
-        <span class="it"><span class="sw" style="background:#199e70"></span>Your adjustment</span>
-        <span class="it"><span class="zone" style="background:rgba(12,163,12,.26);border:1px solid rgba(12,163,12,.55)"></span>Tier&nbsp;1 core</span>
-        <span class="it"><span class="zone" style="background:rgba(12,163,12,.07);border:1px dashed rgba(250,178,25,.7)"></span>Policy max</span>
+        <span class="left"><span class="lbl">Buying box</span></span>
+        <span class="right"><span class="legend">
+          <span class="it"><span class="sw" style="background:#d95926"></span>Written</span>
+          <span class="it"><span class="sw" style="background:#3987e5"></span>Options</span>
+          <span class="it"><span class="sw" style="background:#199e70"></span>Desk</span>
+          <span class="it"><span class="zone" style="background:rgba(12,163,12,.26);border:1px solid rgba(12,163,12,.55)"></span>Core</span>
+          <span class="it"><span class="zone" style="background:rgba(12,163,12,.07);border:1px dashed rgba(250,178,25,.7)"></span>Max</span>
+        </span></span>
       </div>
       <div class="chartwrap">
         <svg id="chart" viewBox="0 0 780 470" role="img"
@@ -716,13 +715,6 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
       </div>
     </section>
 
-    <p class="foot" id="foot">
-    Prototype. Rates, book values, policy grids, the trade and the applicant are invented for demonstration &mdash;
-    no lender system is contacted. Advance is measured against clean book, not sale price. Trade is modelled as
-    allowance less payoff, with the allowance credited against the taxable amount; reserve is a simplified
-    present-value approximation capped at the lender&rsquo;s maximum participation. A photo you add stays in this
-    browser and is never uploaded.
-  </p>
 
   </div>
 
@@ -1071,12 +1063,12 @@ function measure(){
   var r = wrap.getBoundingClientRect();
   W = Math.max(250, Math.round(r.width  - 16));
   H = Math.max(210, Math.round(r.height - 12));
-  PAD = { l: W < 460 ? 46 : 60, r: W < 460 ? 16 : 28,
-          t: 24,                b: H < 320 ? 42 : 54 };
+  PAD = { l: W < 460 ? 40 : 46, r: W < 460 ? 14 : 20,
+          t: 16,                b: H < 300 ? 30 : 38 };
   $('chart').setAttribute('viewBox', '0 0 ' + W + ' ' + H);
 }
 function xStep(){ return W < 520 ? 20 : 10; }
-function yStep(){ return H < 340 ? 4  : 2;  }
+function yStep(){ return H < 300 ? 4  : 3;  }
 
 function px(v){ return PAD.l + (v - XD[0]) / (XD[1] - XD[0]) * (W - PAD.l - PAD.r); }
 function py(v){ return H - PAD.b - (v - YD[0]) / (YD[1] - YD[0]) * (H - PAD.t - PAD.b); }
@@ -1135,17 +1127,17 @@ function buildChart(){
   svg.appendChild(svgEl('line', { x1:L, y1:T, x2:L, y2:B, stroke:CHART.axis, 'stroke-width':1 }));
 
   for (i = XD[0]; i <= XD[1]; i += xStep())
-    svg.appendChild(svgText(px(i), B + 17, i + '%', { 'text-anchor':'middle' }));
+    svg.appendChild(svgText(px(i), B + 15, i + '%', { 'text-anchor':'middle', 'font-size':10 }));
   for (i = YD[0]; i <= YD[1]; i += yStep())
-    svg.appendChild(svgText(L - 9, py(i) + 4, i + '%', { 'text-anchor':'end' }));
+    svg.appendChild(svgText(L - 7, py(i) + 3.5, i + '%', { 'text-anchor':'end', 'font-size':10 }));
 
-  if (H >= 320 && W >= 460)
-    svg.appendChild(svgText((L + R) / 2, B + 40, 'AMOUNT FINANCED AS % OF CLEAN BOOK  —  ADVANCE',
+  if (H >= 280 && W >= 460)
+    svg.appendChild(svgText((L + R) / 2, B + 30, 'ADVANCE — AMOUNT FINANCED AS % OF CLEAN BOOK',
       { 'text-anchor':'middle', 'font-size':10, 'letter-spacing':'1.4', fill:CHART.tick }));
   if (W >= 460)
-    svg.appendChild(svgText(0, 0, 'PAYMENT AS % OF GROSS MONTHLY INCOME',
+    svg.appendChild(svgText(0, 0, 'PAYMENT TO INCOME',
       { 'text-anchor':'middle', 'font-size':10, 'letter-spacing':'1.4', fill:CHART.tick,
-        transform:'translate(14,' + (T + B) / 2 + ') rotate(-90)' }));
+        transform:'translate(11,' + (T + B) / 2 + ') rotate(-90)' }));
 
   /* zone labels */
   svg.appendChild(svgText(L + 9, B - 9, 'TIER 1 CORE',
@@ -1156,7 +1148,8 @@ function buildChart(){
   svg.appendChild(svgText(R - 4, T + 13, W < 560 ? 'OUT OF POLICY' : 'DECLINE / OUT OF POLICY',
     { 'text-anchor':'end', 'font-size':10, 'letter-spacing':'1.2', fill:'#d03b3b', 'font-weight':600 }));
 
-  $('bb-hint').textContent = LEN.name.split(' ').slice(0, 2).join(' ') + ' policy grid, 712 tier';
+  var hint = $('bb-hint');   /* the header carries the legend now; hint is optional */
+  if (hint) hint.textContent = LEN.name.split(' ').slice(0, 2).join(' ') + ' policy grid, 712 tier';
 
   marks = svgEl('g', {});
   svg.appendChild(marks);
@@ -1228,7 +1221,9 @@ function drawMarks(){
   var same = Math.abs(live.ltv - baseDeal.ltv) < 0.05 && Math.abs(live.pti - baseDeal.pti) < 0.02;
   var off = live.ltv > XD[1] || live.ltv < XD[0] || live.pti > YD[1] || live.pti < YD[0];
 
-  point(marks, baseDeal, '#d95926', 6.5, same ? 'AS WRITTEN · DESK' : 'AS WRITTEN',
+  /* at this size a combined label runs into the nearest option, and the
+     orange ring already says the desk is sitting on the written deal */
+  point(marks, baseDeal, '#d95926', 6.5, same ? null : 'WRITTEN',
     { name:'Deal as written', dy:16 }, false);
   if (same)
     marks.appendChild(svgEl('circle', { cx:x, cy:y, r:14, fill:'none',
@@ -1236,8 +1231,8 @@ function drawMarks(){
 
   /* second line down, so it never lands on the written deal's label */
   point(marks, live, '#199e70', 7.5,
-    same ? null : off ? 'DESK ▸ OFF SCALE' : 'DESK',
-    { name:'Your adjustment', dy:30 }, true);
+    off ? 'DESK ▸ OFF SCALE' : 'DESK',
+    { name:'Your adjustment', dy: same ? 16 : 30 }, true);
 }
 
 function showTip(node, d, color, meta){
@@ -1434,36 +1429,39 @@ function renderLenderStruct(){
    7c. Callbacks accordion
    ================================================================= */
 
-function optionCard(L, k){
-  var isBase = k === null;
-  var d  = compute(optionInputs(isBase ? null : k));
-  var pl = pillFor(d);
-  var on = optionIndex === k;
-  return '<button class="ocard" type="button" data-opt="' + (isBase ? 'base' : k) + '" aria-pressed="' + on + '">' +
-    '<span class="oc1"><span class="idx">' + (isBase ? 'B' : SMART[k].n) + '</span>' +
-      '<span class="on">' + (isBase ? 'Base approval' : SMART[k].name) + '</span>' +
+/* The base callback and the four alternates are peers; the base reads as a
+   quarter-height bar above the grid because it is the deal already shown in
+   full on the dealer worksheet, not a new structure to weigh up. */
+function baseBar(){
+  var d = compute(optionInputs(null)), pl = pillFor(d);
+  return '<button class="obase" type="button" data-opt="base" aria-pressed="' + (optionIndex === null) + '">' +
+    '<span class="idx">B</span><span class="on">Base callback</span>' +
+    '<span class="pill ' + pl.cls + '">' + pl.text + '</span>' +
+    '<span class="fig"><b>' + money(d.pmt) + '</b> &middot; ' + pct2(d.sell) + ' &middot; ' +
+      d.i.term + ' mo &middot; ' + money(d.gross) + ' gross</span>' +
+    '</button>';
+}
+
+function optionTile(k){
+  var o = SMART[k], d = compute(optionInputs(k)), pl = pillFor(d);
+  return '<button class="otile" type="button" data-opt="' + k + '" aria-pressed="' + (optionIndex === k) + '">' +
+    '<span class="ot1"><span class="idx">' + o.n + '</span>' +
+      '<span class="on">' + o.name + '</span>' +
       '<span class="pill ' + pl.cls + '">' + pl.text + '</span></span>' +
-    '<span class="oc2">' + money(d.pmt) + ' &middot; ' + pct2(d.sell) + ' &middot; ' + d.i.term + ' mo</span>' +
-    '<span class="oc3">' + pct1(d.ltv) + ' advance &middot; ' + money(d.gross) + ' gross &middot; ' +
+    '<span class="ot2"><b>' + money(d.pmt) + '</b><span>' + pct2(d.sell) + ' &middot; ' + d.i.term + ' mo</span></span>' +
+    '<span class="ot3">' + pct1(d.ltv) + ' adv &middot; ' + money(d.gross) + ' gross &middot; ' +
       money(d.i.down) + ' down</span>' +
     '</button>';
 }
 
 function lenderBody(L){
-  var html =
-    '<div class="lmeta"><em>' + L.tier + '</em> &middot; ' + pct2(L.buy) + ' buy &middot; ' + L.term + ' mo quoted, ' + L.maxTerm + ' max<br>' +
-    L.adv + '% advance &middot; ' + money(L.back) + ' back-end cap &middot; ' + money(L.fee) + ' fee cap</div>';
-
-  if (L.optionCount){
-    html += '<span class="lbl">' + L.optionCount + ' smart options &middot; click to compare</span>' +
-            optionCard(L, null) +
-            SMART.map(function(o, k){ return optionCard(L, k); }).join('');
-  } else {
-    html += '<span class="lbl">No alternate structures</span>' + optionCard(L, null);
-  }
-
-  return html + '<div class="stips"><span class="lbl">Stipulations</span><ul>' +
-    L.stips.map(function(x){ return '<li>' + x + '</li>'; }).join('') + '</ul></div>';
+  return '<div class="lmeta"><em>' + L.tier + '</em> &middot; ' + pct2(L.buy) + ' buy &middot; ' +
+      L.maxTerm + ' mo max &middot; ' + L.adv + '% advance &middot; ' +
+      money(L.back) + ' back-end &middot; ' + money(L.fee) + ' fee</div>' +
+    baseBar() +
+    '<div class="ogrid">' + SMART.map(function(o, k){ return optionTile(k); }).join('') + '</div>' +
+    '<div class="stips">Stips: ' +
+      L.stips.map(function(x){ return x.replace(/ — .*$/, ''); }).join(' &middot; ') + '</div>';
 }
 
 function shownLenders(){
@@ -1506,7 +1504,7 @@ function renderLenders(){
     });
   });
 
-  Array.prototype.forEach.call(document.querySelectorAll('.ocard'), function(b){
+  Array.prototype.forEach.call(document.querySelectorAll('[data-opt]'), function(b){
     var raw = b.dataset.opt;
     var k = raw === 'base' ? null : Number(raw);
     b.addEventListener('click', function(){
@@ -1799,7 +1797,7 @@ var SHOW_ALL_LENDERS = false;
 var TILES = ['vehicle','negotiate','structure','lenderstruct','callbacks','buyingbox','guardrails'];
 var DEFAULT_SPANS = { vehicle:1, negotiate:1, structure:1, lenderstruct:1,
                       callbacks:2, buyingbox:2, guardrails:2 };
-var DEFAULT_ROWS  = { vehicle:2, negotiate:2, structure:2, lenderstruct:2,
+var DEFAULT_ROWS  = { vehicle:3, negotiate:3, structure:3, lenderstruct:3,
                       callbacks:1, buyingbox:1, guardrails:1 };
 /* At full width the right-hand three are pinned to columns 5-6 so they stack
    in one column; auto-placement would otherwise drop the guardrails into the
@@ -1884,10 +1882,7 @@ function applyLayout(){
 
   var foot = $('foot');
   if (foot){
-    foot.style.order = 99;          /* after every tile, or it claims row 1 */
-    /* park it in the cell the guardrails leave empty, rather than a new row */
-    foot.style.gridColumn = cols === 6 ? '1 / span 4' : '1 / -1';
-    foot.style.gridRow    = cols === 6 ? '3' : 'auto';
+    foot.style.order = 99;
   }
 
   if (EDIT_LAYOUT){
