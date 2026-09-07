@@ -71,8 +71,25 @@ body{
 /* ---------- masthead ---------- */
 .mast{
   display:flex; align-items:flex-end; justify-content:space-between;
-  gap:24px; flex-wrap:wrap; padding: 20px 0 13px;
+  gap:20px; flex-wrap:wrap; padding: 16px 0 14px;
 }
+.mast .ident{ min-width:0; }
+.mast-right{ display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+
+.kpi{
+  display:flex; flex-wrap:wrap;
+  border:1px solid var(--line); border-radius: var(--r);
+  background: var(--surface); overflow:hidden;
+}
+.kpi > div{ padding: 9px 16px 10px; border-left:1px solid var(--line); min-width:174px; }
+.kpi > div:first-child{ border-left:0; }
+.kpi .v{
+  font-family: var(--f-num); font-variant-numeric: tabular-nums;
+  font-size: 22px; font-weight:500; letter-spacing:-.02em; line-height:1.15; margin-top:5px;
+}
+.kpi .sub{ font-family: var(--f-num); font-size: 10px; color: var(--ink-3); margin-top:3px; line-height:1.45; }
+.kpi .verdict{ margin-top:6px; }
+.kpi .verdict .t{ font-size:16px; }
 .mast h1{ font-size: 21px; font-weight: 700; letter-spacing: -.015em; margin: 3px 0 0; text-wrap: balance; }
 .mast .vin{ font-family: var(--f-num); font-size: 11px; color: var(--ink-3); margin-top: 5px; }
 .mast .vin span{ color: var(--line-strong); padding: 0 5px; }
@@ -148,7 +165,6 @@ body{
 /* every panel body absorbs the slack when a row is taller than its content */
 .pbody, .rails, .ctl{ flex: 1 1 auto; }
 #lenders{ flex: 0 0 auto; }
-.rail{ flex: 1 1 auto; }
 
 .phead{
   display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;
@@ -190,17 +206,6 @@ body{
   font-size: 10.5px; color: var(--ink-2); border-left:1px solid var(--line); border-right:1px solid var(--line);
 }
 
-/* ---------- summary rail ---------- */
-.rail{
-  display:grid; grid-template-columns: repeat(auto-fit, minmax(196px, 1fr));
-  gap:1px; background: var(--line);
-}
-.rail > div{ background: var(--surface); padding: 12px 15px 13px; }
-.rail .v{
-  font-family: var(--f-num); font-variant-numeric: tabular-nums;
-  font-size: 25px; font-weight: 500; letter-spacing: -.02em; line-height: 1.1; margin-top: 6px;
-}
-.rail .sub{ font-size: 11px; color: var(--ink-3); margin-top: 4px; font-family: var(--f-num); }
 .up{ color: var(--good); } .down{ color: var(--crit); } .flat{ color: var(--ink-3); }
 
 .verdict{ display:flex; align-items:center; gap:8px; margin-top:6px; }
@@ -266,6 +271,9 @@ select.tin{ padding:0 3px; }
 
 /* ---------- worksheet rows ---------- */
 .ws{ display:flex; flex-direction:column; justify-content: flex-start; }
+/* #ws and #lsrows must stay top-packed so their rows line up; the vehicle
+   worksheet has no partner, so it can spread to fill its column */
+#vspecs{ justify-content: space-between; }
 .ws .row{
   display:flex; align-items:baseline; justify-content:space-between; gap:12px;
   padding: 6px 0; border-bottom: 1px solid var(--surface-2);
@@ -402,7 +410,7 @@ select.tin{ padding:0 3px; }
 
 .chartwrap{
   position:relative; padding: 4px 8px 8px;
-  flex: 1 1 auto; min-height: clamp(300px, 34vh, 560px);
+  flex: 1 1 auto; min-height: clamp(260px, 26vh, 430px);
 }
 .chartwrap svg{
   display:block; position:absolute; inset: 4px 8px 8px;
@@ -424,7 +432,7 @@ select.tin{ padding:0 3px; }
 .tip td:last-child{ font-family: var(--f-num); font-variant-numeric: tabular-nums; text-align:right; color: var(--ink); }
 
 /* ---------- controls ---------- */
-.ctl{ padding: 12px 14px 14px; display:flex; flex-direction:column; gap:13px; }
+.ctl{ padding: 12px 14px 14px; display:flex; flex-direction:column; gap:13px; justify-content: space-between; }
 .ctl .f{ display:flex; flex-direction:column; gap:6px; }
 .ctl .fh{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
 .ctl .fk{ font-size: 9.5px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color: var(--ink-2); }
@@ -494,11 +502,14 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
 .railfoot .msg{ font-size: 11.5px; color: var(--ink-2); }
 .railfoot .msg b{ color: var(--ink); }
 
-.foot{ margin-top: 22px; padding-top: 14px; border-top:1px solid var(--line); color: var(--ink-3); font-size: 11px; line-height:1.6; max-width: 88ch; }
+.foot{
+  margin: 0; padding-top: 14px; border-top:1px solid var(--line);
+  color: var(--ink-3); font-size: 11px; line-height:1.6; max-width: 78ch; align-self: start;
+}
 
-@media (max-width: 700px){
-  .rail{ grid-template-columns: 1fr; }
-  .cards{ grid-template-columns: 1fr; }
+@media (max-width: 900px){
+  .kpi > div{ min-width: 138px; padding: 8px 12px 9px; }
+  .kpi .v{ font-size: 18px; }
 }
 @media (prefers-reduced-motion: reduce){
   *{ transition: none !important; animation: none !important; }
@@ -510,7 +521,7 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
 <div class="shell">
 
   <header class="mast">
-    <div>
+    <div class="ident">
       <div class="lbl">Desking &middot; Callback Structure 3 of 3 &middot; Received 09:41</div>
       <h1>2025 Toyota Camry SE</h1>
       <div class="vin">
@@ -518,26 +529,10 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
         <span>/</span> MSRP $29,410 <span>/</span> Clean book $26,400
       </div>
     </div>
-    <span class="sim">Simulated data</span>
-  </header>
 
-  <div class="toolbar">
-    <span class="lbl">Canvas</span>
-    <div class="seg" id="colseg" role="group" aria-label="Canvas column count"></div>
-    <span class="tip-txt">
-      Drag any panel by its header to rearrange &middot; <kbd>W</kbd> sets the columns it spans,
-      <kbd>H</kbd> the rows &middot; with a grip focused, <kbd>←</kbd><kbd>→</kbd> move it and
-      <kbd>shift</kbd>+arrows resize
-    </span>
-    <button class="btn" id="resetLayout" type="button">Reset layout</button>
-  </div>
-
-  <div class="canvas" id="canvas">
-
-    <!-- 1. working summary -->
-    <section class="panel tile" data-tile="summary" data-span="1" aria-label="Working summary">
-      <div class="phead"><span class="left"><span class="lbl">Working summary</span></span><span class="right"></span></div>
-      <div class="rail">
+    <div class="mast-right">
+      <span class="sim">Simulated data</span>
+      <div class="kpi" aria-label="Working summary">
         <div>
           <div class="lbl">Monthly payment</div>
           <div class="v" id="s-pmt">$0</div>
@@ -559,7 +554,21 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
           <div class="sub" id="s-verdict-sub">&mdash;</div>
         </div>
       </div>
-    </section>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <span class="lbl">Canvas</span>
+    <div class="seg" id="colseg" role="group" aria-label="Canvas column count"></div>
+    <span class="tip-txt">
+      Drag any panel by its header to rearrange &middot; <kbd>W</kbd> sets the columns it spans,
+      <kbd>H</kbd> the rows &middot; with a grip focused, <kbd>←</kbd><kbd>→</kbd> move it and
+      <kbd>shift</kbd>+arrows resize
+    </span>
+    <button class="btn" id="resetLayout" type="button">Reset layout</button>
+  </div>
+
+  <div class="canvas" id="canvas">
 
     <!-- 2. vehicle, trade and applicant -->
     <section class="panel tile" data-tile="vehicle" data-span="1" aria-label="Vehicle, trade and applicant">
@@ -611,7 +620,7 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
     <section class="panel tile" data-tile="callbacks" data-span="1" aria-label="Lender callbacks">
       <div class="phead">
         <span class="left"><span class="lbl">Lender callbacks</span></span>
-        <span class="right"><span class="hint">4 of 4 returned</span></span>
+        <span class="right"><span class="hint" id="cb-hint">&mdash;</span></span>
       </div>
       <div id="lenders"></div>
     </section>
@@ -707,15 +716,17 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
       </div>
     </section>
 
-  </div>
-
-  <p class="foot">
+    <p class="foot" id="foot">
     Prototype. Rates, book values, policy grids, the trade and the applicant are invented for demonstration &mdash;
     no lender system is contacted. Advance is measured against clean book, not sale price. Trade is modelled as
     allowance less payoff, with the allowance credited against the taxable amount; reserve is a simplified
     present-value approximation capped at the lender&rsquo;s maximum participation. A photo you add stays in this
     browser and is never uploaded.
   </p>
+
+  </div>
+
+
 </div>
 
 <script>
@@ -966,10 +977,14 @@ function parseNum(v){
 
 /* clamp, round to the field's precision, and push it into the desk */
 function setField(key, raw, el){
-  var f = FIELDS[key], n = parseNum(raw);
+  var f = FIELDS[key], n = parseNum(raw), before = desk[key];
   if (n !== null){
     n = Math.min(f.max, Math.max(f.min, n));
     desk[key] = f.int ? Math.round(n) : Math.round(n * 100) / 100;
+  }
+  if (desk[key] === before){          /* nothing moved — reformat and stop */
+    if (el) el.value = f.fmt(desk[key]);
+    return;
   }
   onDeskChange();
   /* show what was actually taken — a clamped or unreadable entry must not
@@ -1006,6 +1021,19 @@ function deltaHTML(n, f){
   return '<span class="' + (n > 0 ? 'up' : 'down') + '">' + signed(n, f) + '</span>';
 }
 function $(id){ return document.getElementById(id); }
+
+/* Rewriting a container's innerHTML destroys whatever is inside it — including
+   a button the user is part-way through clicking. Committing a field on blur
+   re-renders, so a click that follows typing was landing on a node that no
+   longer existed by mouseup, and was silently swallowed. Only write when the
+   markup actually differs, and only rebind when we wrote. */
+var htmlCache = {};
+function setHTML(el, html){
+  if (htmlCache[el.id] === html) return false;
+  htmlCache[el.id] = html;
+  el.innerHTML = html;
+  return true;
+}
 
 /* =================================================================
    5. State
@@ -1310,11 +1338,10 @@ function renderWorksheet(){
     html += '<div class="row' + (r.tot ? ' tot' : '') + '">' +
             '<span class="k">' + r.k + '</span>' + cell + '</div>';
   });
-  $('ws').innerHTML = html + (open ? '</div>' : '');
-
-  Array.prototype.forEach.call($('ws').querySelectorAll('input.cell'), function(el){
-    wireField(el, el.dataset.k);
-  });
+  if (setHTML($('ws'), html + (open ? '</div>' : '')))
+    Array.prototype.forEach.call($('ws').querySelectorAll('input.cell'), function(el){
+      wireField(el, el.dataset.k);
+    });
 
   $('struct-src').textContent =
     JSON.stringify(desk) === JSON.stringify(BASE) ? 'As submitted' : 'Edited on desk';
@@ -1376,12 +1403,12 @@ function renderLenderStruct(){
   var dd = compute(desk);
   var opt = (L.id === 'cap1' && optionIndex !== null) ? SMART[optionIndex] : null;
 
-  $('lsid').innerHTML =
+  setHTML($('lsid'),
     '<div class="lsid">' +
       '<span class="who"><b>' + L.name + '</b>' +
       '<span>' + (opt ? 'Smart option ' + opt.n + ' &middot; ' + opt.name
                       : 'Base approval &middot; counters the desk') + '</span></span>' +
-    '</div>';
+    '</div>');
 
   var base = rowSpec(dd), html = '', open = false;
   rowSpec(ld).forEach(function(r, k){
@@ -1396,7 +1423,7 @@ function renderLenderStruct(){
             '<span class="v">' + cellValue(r) + '</span>' +
             deltaCell(r, base[k].v) + '</div>';
   });
-  $('lsrows').innerHTML = html + (open ? '</div>' : '');
+  setHTML($('lsrows'), html + (open ? '</div>' : ''));
 
   var pl = pillFor(ld);
   $('lspill').className = 'pill ' + pl.cls;
@@ -1439,20 +1466,32 @@ function lenderBody(L){
     L.stips.map(function(x){ return '<li>' + x + '</li>'; }).join('') + '</ul></div>';
 }
 
+function shownLenders(){
+  return SHOW_ALL_LENDERS ? LENDERS
+    : LENDERS.filter(function(L){ return L.id === lenderId; });
+}
+
 function renderLenders(){
-  $('lenders').innerHTML = LENDERS.map(function(L){
-    var open = L.id === lenderId;
+  var list = shownLenders(), solo = list.length === 1;
+  $('cb-hint').textContent = solo
+    ? lender().optionCount + ' structures'
+    : LENDERS.length + ' of ' + LENDERS.length + ' returned';
+
+  var lhtml = list.map(function(L){
+    var open = solo || L.id === lenderId;
     return '<div class="lender' + (open ? ' open' : '') + '" data-lender="' + L.id + '">' +
       '<button class="lhead" type="button" data-head="' + L.id + '" aria-expanded="' + open + '">' +
         '<span class="nm">' + L.name + '</span>' +
         (L.optionCount ? '<span class="plus">+' + L.optionCount + '</span>' : '') +
         '<span class="ok"><span class="tick"></span>' +
           (open ? '<span class="appr">Approved</span>' : '') + '</span>' +
-        '<span class="chev">' + (open ? '▾' : '▸') + '</span>' +
+        (solo ? '' : '<span class="chev">' + (open ? '▾' : '▸') + '</span>') +
       '</button>' +
       (open ? '<div class="lbody">' + lenderBody(L) + '</div>' : '') +
     '</div>';
   }).join('');
+
+  if (!setHTML($('lenders'), lhtml)) return;
 
   Array.prototype.forEach.call(document.querySelectorAll('.lhead'), function(b){
     b.addEventListener('click', function(){
@@ -1528,7 +1567,7 @@ function renderVehicle(){
   var d = compute(desk);
   var eqCls = d.equity > 0 ? 'up' : d.equity < 0 ? 'down' : '';
 
-  $('vspecs').innerHTML =
+  var vhtml =
     '<div class="grp"><span class="lbl">Collateral</span>' +
       wsRow('Stock', 'T25-4417') +
       wsRow('VIN', '…AK9SU418826') +
@@ -1545,6 +1584,8 @@ function renderVehicle(){
       wsRow('Time on job', '4 yr 2 mo') +
       wsRow('Housing', 'Owns, mortgaged') +
     '</div>';
+
+  if (!setHTML($('vspecs'), vhtml)) return;
 
   var add = $('addTrade'), drop = $('dropTrade');
   if (add) add.addEventListener('click', function(){
@@ -1570,7 +1611,7 @@ function renderVehicle(){
 
 function renderRails(){
   var d = compute(desk);
-  $('rails').innerHTML = railSet(d).map(function(r){
+  setHTML($('rails'), railSet(d).map(function(r){
     var span  = r.max - r.min;
     var w     = Math.max(0, Math.min(100, (r.v - r.min) / span * 100));
     var capL  = (r.p.limit - r.min) / span * 100;
@@ -1587,7 +1628,7 @@ function renderRails(){
         (core !== null ? '<span class="capL" style="left:' + core + '%"></span>' : '') +
         '<span class="cap" style="left:' + capL + '%"></span>' +
       '</div></div>';
-  }).join('');
+  }).join(''));
 
   var v = verdict(d);
   $('railmsg').innerHTML = v.msg;
@@ -1725,7 +1766,7 @@ function onDeskChange(){
 
   if (keep){
     var back = $('ws').querySelector('input.cell[data-k="' + keep + '"]');
-    if (back){ back.focus(); back.select(); }
+    if (back && document.activeElement !== back){ back.focus(); back.select(); }
   }
 }
 
@@ -1747,15 +1788,28 @@ function renderAll(){
    resize and column engine below is untouched. */
 var EDIT_LAYOUT = false;
 
-var TILES = ['vehicle','summary','negotiate','structure','lenderstruct','callbacks','buyingbox','guardrails'];
-var DEFAULT_SPANS = { vehicle:1, summary:1, negotiate:1, structure:1,
-                      lenderstruct:1, callbacks:1, buyingbox:4, guardrails:2 };
-var DEFAULT_ROWS  = { vehicle:1, summary:1, negotiate:1, structure:1,
-                      lenderstruct:1, callbacks:1, buyingbox:1, guardrails:1 };
-var TITLES = { vehicle:'Vehicle & applicant', summary:'Working summary', negotiate:'Negotiate',
+/* Only Capital One's structures are shown. The other three callbacks, their
+   ceilings and their per-lender buying boxes are still modelled — flip this
+   to true to put them back in the accordion. */
+var SHOW_ALL_LENDERS = false;
+
+/* Four one-column worksheets run full height; the right two columns stack
+   the callbacks, the plot and the guardrails. Auto-placement lands them
+   there from the spans alone — no explicit row or column assignment. */
+var TILES = ['vehicle','negotiate','structure','lenderstruct','callbacks','buyingbox','guardrails'];
+var DEFAULT_SPANS = { vehicle:1, negotiate:1, structure:1, lenderstruct:1,
+                      callbacks:2, buyingbox:2, guardrails:2 };
+var DEFAULT_ROWS  = { vehicle:2, negotiate:2, structure:2, lenderstruct:2,
+                      callbacks:1, buyingbox:1, guardrails:1 };
+/* At full width the right-hand three are pinned to columns 5-6 so they stack
+   in one column; auto-placement would otherwise drop the guardrails into the
+   first free slot on the left. */
+var DEFAULT_COLS  = { vehicle:1, negotiate:2, structure:3, lenderstruct:4,
+                      callbacks:5, buyingbox:5, guardrails:5 };
+var TITLES = { vehicle:'Vehicle & applicant', negotiate:'Negotiate',
                structure:'Dealer structure', lenderstruct:'Lender structure',
                callbacks:'Lender callbacks', buyingbox:'Buying box', guardrails:'Policy guardrails' };
-var LKEY   = 'buyingbox.layout.v4';
+var LKEY   = 'buyingbox.layout.v5';
 var canvas = $('canvas');
 var layout = { colMode:'auto', order:TILES.slice(),
                spans:Object.assign({}, DEFAULT_SPANS), rows:Object.assign({}, DEFAULT_ROWS) };
@@ -1777,6 +1831,7 @@ function loadLayout(){
       layout.spans[t] = (n >= 1 && n <= 6) ? n : DEFAULT_SPANS[t];
       var r = v.rows && v.rows[t];
       layout.rows[t] = (r >= 1 && r <= 4) ? r : DEFAULT_ROWS[t];
+      if (!DEFAULT_SPANS[t]) delete layout.spans[t];
     });
   } catch(e){ /* private mode, blocked storage — defaults are fine */ }
 }
@@ -1802,9 +1857,11 @@ function applyLayout(){
     var el = tileEl(id);
     if (!el) return;
     var span = Math.min(layout.spans[id], cols);
-    var rows = layout.rows[id];
+    var rows = cols >= 4 ? layout.rows[id] : 1;
     el.style.order = i;
-    el.style.gridColumn = 'span ' + span;
+    el.style.gridColumn = cols === 6
+      ? DEFAULT_COLS[id] + ' / span ' + span
+      : 'span ' + span;
     el.style.gridRow    = 'span ' + rows;
 
     var wc = EDIT_LAYOUT ? el.querySelector('.spanctl.w') : null;
@@ -1824,6 +1881,14 @@ function applyLayout(){
       'Move ' + TITLES[id] + '. Position ' + (i + 1) + ' of ' + layout.order.length +
       ', ' + span + ' of ' + cols + ' columns wide, ' + rows + ' rows tall');
   });
+
+  var foot = $('foot');
+  if (foot){
+    foot.style.order = 99;          /* after every tile, or it claims row 1 */
+    /* park it in the cell the guardrails leave empty, rather than a new row */
+    foot.style.gridColumn = cols === 6 ? '1 / span 4' : '1 / -1';
+    foot.style.gridRow    = cols === 6 ? '3' : 'auto';
+  }
 
   if (EDIT_LAYOUT){
     Array.prototype.forEach.call(document.querySelectorAll('#colseg button'), function(b){
