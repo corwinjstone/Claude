@@ -227,17 +227,32 @@ body{
 .photo .cam:focus-visible{ outline:2px solid var(--opt); outline-offset:1px; }
 
 /* ---------- worksheet rows ---------- */
-.ws{ display:flex; flex-direction:column; justify-content: space-between; }
+.ws{ display:flex; flex-direction:column; justify-content: flex-start; }
 .ws .row{
   display:flex; align-items:baseline; justify-content:space-between; gap:12px;
   padding: 6px 0; border-bottom: 1px solid var(--surface-2);
 }
 .ws .row:last-child{ border-bottom:0; }
 .ws .row .k{ color: var(--ink-2); font-size: 12px; }
-.ws .row .v{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 12.5px; }
+.ws .row .v,
+.ws input.cell{
+  display:inline-block; box-sizing:border-box; height:20px; line-height:18px;
+  padding:0 5px; border:1px solid transparent; border-radius:2px;
+  font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 12.5px;
+  text-align:right; color: var(--ink);
+}
+.ws input.cell{
+  width:104px; background:transparent; margin:0;
+  border-bottom-color: rgba(255,255,255,.14);   /* the only rest-state affordance */
+}
+.ws input.cell:hover{ border-color: var(--line-strong); background: var(--surface-2); }
+.ws input.cell:focus{
+  border-color: var(--desk); background: var(--surface-2); outline:none;
+}
+.ws .row.tot .v,
+.ws .row.tot input.cell{ height:24px; line-height:22px; font-size:15px; font-weight:600; }
 .ws .row.tot{ border-top:1px solid var(--line-strong); border-bottom:0; margin-top:5px; padding-top:9px; }
 .ws .row.tot .k{ color: var(--ink); font-weight:600; }
-.ws .row.tot .v{ font-size: 15px; font-weight:600; }
 .ws .grp{ margin-top: 13px; padding-top: 10px; border-top: 1px solid var(--line); }
 .ws .grp:first-child{ margin-top:0; padding-top:0; border-top:0; }
 .ws .grp > .lbl{ margin-bottom: 5px; display:block; }
@@ -375,8 +390,17 @@ body{
 .ctl .f{ display:flex; flex-direction:column; gap:6px; }
 .ctl .fh{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
 .ctl .fk{ font-size: 9.5px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color: var(--ink-2); }
-.ctl .fv{ font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 13px; color: var(--ink); }
-.ctl .fv .d{ font-size: 10.5px; margin-left: 6px; }
+.ctl .fv{ display:flex; align-items:center; gap:7px; }
+.ctl .fv .d{ font-family: var(--f-num); font-size: 10.5px; }
+.ctl input.num{
+  width:96px; box-sizing:border-box; height:24px; padding:0 7px; margin:0; text-align:right;
+  font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 13px;
+  color: var(--ink); background: var(--surface-2);
+  border:1px solid var(--line); border-radius:2px;
+}
+.ctl input.num:hover{ border-color: var(--line-strong); }
+.ctl input.num:focus{ border-color: var(--desk); outline:none; }
+.ctl input.num.term{ width:70px; }
 .ctl .sect{ border-top:1px solid var(--line); padding-top: 12px; margin-top: 1px; }
 
 .equity{
@@ -563,29 +587,29 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
 
       <div class="ctl">
         <div class="f">
-          <div class="fh"><span class="fk">Sale price</span><span class="fv" id="v-price">&mdash;</span></div>
-          <input type="range" id="r-price" min="26500" max="29500" step="25" aria-label="Sale price">
+          <div class="fh"><span class="fk">Sale price</span><span class="fv" id="v-price"><input class="num" type="text" inputmode="decimal" data-k="price" aria-label="Sale price"><span class="d"></span></span></div>
+          <input type="range" id="r-price" min="0" max="80000" step="25" aria-label="Sale price">
         </div>
         <div class="f">
-          <div class="fh"><span class="fk">Cash down</span><span class="fv" id="v-down">&mdash;</span></div>
-          <input type="range" id="r-down" min="0" max="7000" step="50" aria-label="Cash down payment">
+          <div class="fh"><span class="fk">Cash down</span><span class="fv" id="v-down"><input class="num" type="text" inputmode="decimal" data-k="down" aria-label="Cash down"><span class="d"></span></span></div>
+          <input type="range" id="r-down" min="0" max="25000" step="50" aria-label="Cash down payment">
         </div>
         <div class="f">
-          <div class="fh"><span class="fk">Dealer fee</span><span class="fv" id="v-fee">&mdash;</span></div>
-          <input type="range" id="r-fee" min="0" max="1000" step="25" aria-label="Dealer documentary fee">
+          <div class="fh"><span class="fk">Dealer fee</span><span class="fv" id="v-fee"><input class="num" type="text" inputmode="decimal" data-k="fee" aria-label="Dealer fee"><span class="d"></span></span></div>
+          <input type="range" id="r-fee" min="0" max="2500" step="25" aria-label="Dealer documentary fee">
         </div>
         <div class="f">
-          <div class="fh"><span class="fk">Back-end products</span><span class="fv" id="v-back">&mdash;</span></div>
-          <input type="range" id="r-back" min="0" max="5000" step="50" aria-label="Back-end product total">
+          <div class="fh"><span class="fk">Back-end products</span><span class="fv" id="v-back"><input class="num" type="text" inputmode="decimal" data-k="backEnd" aria-label="Back-end products"><span class="d"></span></span></div>
+          <input type="range" id="r-back" min="0" max="9000" step="50" aria-label="Back-end product total">
         </div>
 
         <div class="f sect">
-          <div class="fh"><span class="fk">Trade allowance</span><span class="fv" id="v-allow">&mdash;</span></div>
-          <input type="range" id="r-allow" min="0" max="18000" step="100" aria-label="Trade-in allowance shown to the customer">
+          <div class="fh"><span class="fk">Trade allowance</span><span class="fv" id="v-allow"><input class="num" type="text" inputmode="decimal" data-k="tradeAllow" aria-label="Trade allowance"><span class="d"></span></span></div>
+          <input type="range" id="r-allow" min="0" max="40000" step="100" aria-label="Trade-in allowance shown to the customer">
         </div>
         <div class="f">
-          <div class="fh"><span class="fk">Trade payoff</span><span class="fv" id="v-payoff">&mdash;</span></div>
-          <input type="range" id="r-payoff" min="0" max="18000" step="100" aria-label="Amount owed on the trade-in">
+          <div class="fh"><span class="fk">Trade payoff</span><span class="fv" id="v-payoff"><input class="num" type="text" inputmode="decimal" data-k="tradePayoff" aria-label="Trade payoff"><span class="d"></span></span></div>
+          <input type="range" id="r-payoff" min="0" max="40000" step="100" aria-label="Amount owed on the trade-in">
         </div>
         <div class="equity">
           <span class="fk" id="eq-k">Trade equity</span>
@@ -593,11 +617,15 @@ input[type=range]:focus-visible{ outline:2px solid var(--opt); outline-offset:3p
         </div>
 
         <div class="f sect">
-          <div class="fh"><span class="fk">Rate markup over buy</span><span class="fv" id="v-mkp">&mdash;</span></div>
-          <input type="range" id="r-mkp" min="0" max="2.5" step="0.05" aria-label="Rate markup in points over buy rate">
+          <div class="fh"><span class="fk">Rate markup over buy</span><span class="fv" id="v-mkp"><input class="num" type="text" inputmode="decimal" data-k="markup" aria-label="Rate markup over buy"><span class="d"></span></span></div>
+          <input type="range" id="r-mkp" min="0" max="4" step="0.05" aria-label="Rate markup in points over buy rate">
         </div>
         <div class="f">
-          <div class="fh"><span class="fk">Term</span><span class="fv" id="v-term">&mdash;</span></div>
+          <div class="fh"><span class="fk">Term</span>
+            <span class="fv" id="v-term">
+              <input class="num term" type="text" inputmode="numeric" data-k="term" aria-label="Term in months">
+              <span class="d"></span>
+            </span></div>
           <div class="segs" id="terms" role="group" aria-label="Term in months"></div>
         </div>
       </div>
@@ -844,6 +872,54 @@ function verdict(d){
       ? 'Tier 1 core needs advance at or under ' + b.ltv.core + '% — this is ' + pct1(d.ltv) + '.'
       : 'Tier 1 core needs payment-to-income at or under ' + b.pti.core + '%.';
   return { s:'in', label:'In policy', msg:s };
+}
+
+/* =================================================================
+   3b. Editable fields — the model inputs a dealer can set by hand.
+   Everything else on the worksheet is derived and stays read-only.
+   ================================================================= */
+
+var FIELDS = {
+  price:       { min:0, max:80000, step:25,   int:true, slider:'r-price',  fmt:money },
+  fee:         { min:0, max:2500,  step:25,   int:true, slider:'r-fee',    fmt:money },
+  backEnd:     { min:0, max:9000,  step:50,   int:true, slider:'r-back',   fmt:money },
+  down:        { min:0, max:25000, step:50,   int:true, slider:'r-down',   fmt:money },
+  tradeAllow:  { min:0, max:40000, step:100,  int:true, slider:'r-allow',  fmt:money },
+  tradePayoff: { min:0, max:40000, step:100,  int:true, slider:'r-payoff', fmt:money },
+  markup:      { min:0, max:4,     step:0.05, dec:2,    slider:'r-mkp',    fmt:pts   },
+  term:        { min:12, max:96,   step:1,    int:true,                    fmt:mo    }
+};
+
+function parseNum(v){
+  var n = parseFloat(String(v).replace(/[^0-9.\-]/g, ''));
+  return isFinite(n) ? n : null;
+}
+
+/* clamp, round to the field's precision, and push it into the desk */
+function setField(key, raw, el){
+  var f = FIELDS[key], n = parseNum(raw);
+  if (n !== null){
+    n = Math.min(f.max, Math.max(f.min, n));
+    desk[key] = f.int ? Math.round(n) : Math.round(n * 100) / 100;
+  }
+  onDeskChange();
+  /* show what was actually taken — a clamped or unreadable entry must not
+     leave the typed text sitting in a field the model never accepted */
+  if (el) el.value = f.fmt(desk[key]);
+}
+
+/* commit on Enter or blur — never mid-keystroke, or "27985" would pass
+   through 2, 27, 279 and clamp on the way */
+function wireField(el, key){
+  el.addEventListener('keydown', function(e){
+    var f = FIELDS[key], step = f.step * (e.shiftKey ? 10 : 1);
+    if (e.key === 'Enter'){ e.preventDefault(); setField(key, el.value, el); }
+    else if (e.key === 'Escape'){ e.preventDefault(); el.value = FIELDS[key].fmt(desk[key]); el.blur(); }
+    else if (e.key === 'ArrowUp'  ){ e.preventDefault(); setField(key, desk[key] + step, el); }
+    else if (e.key === 'ArrowDown'){ e.preventDefault(); setField(key, desk[key] - step, el); }
+  });
+  el.addEventListener('change', function(){ setField(key, el.value, el); });
+  el.addEventListener('focus',  function(){ el.select(); });
 }
 
 /* =================================================================
@@ -1094,19 +1170,19 @@ function wsRow(k, v, cls){
 function rowSpec(d){
   return [
     { g:'Purchase' },
-    { k:'Sale price',         v:d.i.price,      f:money, fav: 1 },
-    { k:'Dealer fee',         v:d.i.fee,        f:money, fav: 1 },
-    { k:'Back-end products',  v:d.i.backEnd,    f:money, fav: 1 },
+    { k:'Sale price',         v:d.i.price,      f:money, fav: 1, key:'price' },
+    { k:'Dealer fee',         v:d.i.fee,        f:money, fav: 1, key:'fee' },
+    { k:'Back-end products',  v:d.i.backEnd,    f:money, fav: 1, key:'backEnd' },
     { k:'Sales tax 6.5%',     v:d.tax,          f:money, fav: 0 },
     { k:'Title, reg &amp; plate', v:FIXED.titleReg, f:money, fav: 0 },
-    { k:'Cash down',          v:d.i.down,       f:money, fav:-1, paren:true },
+    { k:'Cash down',          v:d.i.down,       f:money, fav:-1, paren:true, key:'down' },
     { k:'Trade equity',       v:d.equity,       f:money, fav: 1 },
     { k:'Amount financed',    v:d.af,           f:money, fav: 0, tot:true },
     { g:'Terms' },
     { k:'Buy rate',           v:d.buy,          f:pct2,  fav:-1 },
-    { k:'Reserve markup',     v:d.i.markup,     f:pts,   fav: 1 },
+    { k:'Reserve markup',     v:d.i.markup,     f:pts,   fav: 1, key:'markup' },
     { k:'Sell rate (APR)',    v:d.sell,         f:pct2,  fav:-1 },
-    { k:'Term',               v:d.i.term,       f:mo,    fav: 0 },
+    { k:'Term',               v:d.i.term,       f:mo,    fav: 0, key:'term' },
     { k:'Payment',            v:d.pmt,          f:money, fav:-1, tot:true },
     { g:'Gross' },
     { k:'Front gross',        v:d.front,        f:money, fav: 1 },
@@ -1114,6 +1190,12 @@ function rowSpec(d){
     { k:'Rate reserve',       v:d.reserve,      f:money, fav: 1 },
     { k:'Total gross',        v:d.gross,        f:money, fav: 1, tot:true }
   ];
+}
+
+/* plain-text twin of cellValue, for the editable cells */
+function cellText(r){
+  if (r.paren && r.v > 0) return '(' + r.f(r.v) + ')';
+  return r.f(r.v);
 }
 
 function cellValue(r){
@@ -1139,9 +1221,19 @@ function renderWorksheet(){
       open = true;
       return;
     }
-    html += wsRow(r.k, cellValue(r), r.tot ? 'tot' : '');
+    var cell = r.key
+      ? '<input class="cell" type="text" inputmode="decimal" data-k="' + r.key + '"' +
+        ' value="' + String(cellText(r)).replace(/"/g, '&quot;') + '"' +
+        ' aria-label="' + r.k.replace(/&amp;/g, 'and') + '">'
+      : '<span class="v">' + cellValue(r) + '</span>';
+    html += '<div class="row' + (r.tot ? ' tot' : '') + '">' +
+            '<span class="k">' + r.k + '</span>' + cell + '</div>';
   });
   $('ws').innerHTML = html + (open ? '</div>' : '');
+
+  Array.prototype.forEach.call($('ws').querySelectorAll('input.cell'), function(el){
+    wireField(el, el.dataset.k);
+  });
 
   $('struct-src').textContent =
     JSON.stringify(desk) === JSON.stringify(BASE) ? 'As submitted' : 'Edited on desk';
@@ -1403,32 +1495,37 @@ function buildTerms(){
   });
 }
 
-function syncControls(){
-  $('r-price').value = desk.price;
-  $('r-down').value  = desk.down;
-  $('r-fee').value   = desk.fee;
-  $('r-back').value  = desk.backEnd;
-  $('r-mkp').value   = desk.markup;
-  $('r-allow').value  = desk.tradeAllow;
-  $('r-payoff').value = desk.tradePayoff;
+/* write a value into a field unless the user is typing in it */
+function put(id, value, deltaHtml){
+  var box = $(id), input = box.querySelector('input');
+  if (input && document.activeElement !== input) input.value = value;
+  box.querySelector('.d').innerHTML = deltaHtml || '';
+}
 
+function syncControls(){
   var ref = optionIndex === null ? BASE : SMART[optionIndex].inputs;
   var eq  = desk.tradeAllow - desk.tradePayoff;
 
-  $('v-allow').innerHTML  = money(desk.tradeAllow)  + '<span class="d">' + deltaHTML(desk.tradeAllow  - ref.tradeAllow,  money) + '</span>';
-  $('v-payoff').innerHTML = money(desk.tradePayoff) + '<span class="d">' + deltaHTML(desk.tradePayoff - ref.tradePayoff, money) + '</span>';
+  Object.keys(FIELDS).forEach(function(k){
+    var f = FIELDS[k];
+    if (f.slider) $(f.slider).value = desk[k];
+  });
+
+  put('v-price',  money(desk.price),        deltaHTML(desk.price       - ref.price,       money));
+  put('v-down',   money(desk.down),         deltaHTML(desk.down        - ref.down,        money));
+  put('v-fee',    money(desk.fee),          deltaHTML(desk.fee         - ref.fee,         money));
+  put('v-back',   money(desk.backEnd),      deltaHTML(desk.backEnd     - ref.backEnd,     money));
+  put('v-allow',  money(desk.tradeAllow),   deltaHTML(desk.tradeAllow  - ref.tradeAllow,  money));
+  put('v-payoff', money(desk.tradePayoff),  deltaHTML(desk.tradePayoff - ref.tradePayoff, money));
+  put('v-mkp',    pts(desk.markup),         deltaHTML(desk.markup      - ref.markup,      pts));
+
   $('eq-k').textContent   = eq < 0 ? 'Negative equity rolled in' : 'Trade equity';
   $('v-equity').className = 'v ' + (eq > 0 ? 'up' : eq < 0 ? 'down' : 'flat');
   $('v-equity').textContent = eq === 0 ? 'No trade' : signed(eq, money);
 
-  $('v-price').innerHTML = money(desk.price) + '<span class="d">' + deltaHTML(desk.price - ref.price, money) + '</span>';
-  $('v-down').innerHTML  = money(desk.down)  + '<span class="d">' + deltaHTML(desk.down  - ref.down,  money) + '</span>';
-  $('v-fee').innerHTML   = money(desk.fee)   + '<span class="d">' + deltaHTML(desk.fee   - ref.fee,   money) + '</span>';
-  $('v-back').innerHTML  = money(desk.backEnd) + '<span class="d">' + deltaHTML(desk.backEnd - ref.backEnd, money) + '</span>';
-  $('v-mkp').innerHTML   = pts(desk.markup) + '<span class="d">' + deltaHTML(desk.markup - ref.markup, pts) + '</span>';
   var maxTerm = P().term.limit;
-  $('v-term').innerHTML  = mo(desk.term) +
-    (desk.term > maxTerm ? '<span class="d down">over ' + maxTerm + ' mo cap</span>' : '');
+  put('v-term', mo(desk.term),
+      desk.term > maxTerm ? '<span class="down">over ' + maxTerm + ' mo cap</span>' : '');
 
   Array.prototype.forEach.call(document.querySelectorAll('#terms button'), function(t){
     t.setAttribute('aria-pressed', String(Number(t.dataset.term) === desk.term));
@@ -1437,6 +1534,10 @@ function syncControls(){
 }
 
 function onDeskChange(){
+  /* renderWorksheet replaces its inputs, so remember which one had the caret */
+  var act = document.activeElement;
+  var keep = act && act.classList && act.classList.contains('cell') ? act.dataset.k : null;
+
   syncControls();
   renderVehicle();
   renderWorksheet();
@@ -1446,6 +1547,11 @@ function onDeskChange(){
   renderLenders();
   renderLenderStruct();
   drawMarks();
+
+  if (keep){
+    var back = $('ws').querySelector('input.cell[data-k="' + keep + '"]');
+    if (back){ back.focus(); back.select(); }
+  }
 }
 
 function bindSlider(id, key, cast){
@@ -1784,6 +1890,10 @@ bindSlider('r-back',  'backEnd', Number);
 bindSlider('r-mkp',   'markup',  parseFloat);
 bindSlider('r-allow', 'tradeAllow',  Number);
 bindSlider('r-payoff','tradePayoff', Number);
+
+Array.prototype.forEach.call(document.querySelectorAll('.ctl input.num'), function(el){
+  wireField(el, el.dataset.k);
+});
 
 $('reset').addEventListener('click', function(){
   desk = Object.assign({}, BASE);
