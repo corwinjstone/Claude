@@ -2,7 +2,7 @@
 
 A static, no-build site for live product design, UX and AI workshops.
 
-- `index.html`: a full-width hero of floating cards (click any card to expand it), then the workshop listing with topic filters
+- `index.html`: a full-width plum hero of floating cards and a reaching hand (click any card to expand it), then the workshop listing with topic filters
 - `workshop.html?id=…`: workshop details, pricing, instructor intro and signup
 - `data.js`: **edit this file** to change workshops, session dates (US Central), seats, pricing, instructor bios and the in-person event card
 - `styles.css`: the design tokens (plum and leaf green, 40px card radius, Avenir Next)
@@ -14,4 +14,4 @@ Open `index.html` in a browser, or serve the folder with any static host.
 - **Intro video:** set `introVideoUrl` on the instructor (a YouTube or Vimeo *embed* URL).
 - **Bio and contact:** replace the placeholder bio and `contactEmail`.
 - **Event card:** the Dallas event copy in `EVENTS` is a placeholder; add a ticket link as `url` to show a "Get tickets" button.
-- **Hero photo:** swap `assets/hero-city.jpg` (and the smaller `hero-city-sm.jpg` used on phones) to change the background.
+- **Hero hand:** `assets/hand.webp` is the reaching hand on the home page; its size and position are set by `.l-hand` in `styles.css`.

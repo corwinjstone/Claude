@@ -118,7 +118,6 @@
       ? `<span><em>${esc(w.eyebrow[0])}</em> ${esc(w.titleLines[0])}</span> <span><em>${esc(w.eyebrow[1])}</em> ${esc(w.titleLines[1])}</span>`
       : esc(w.title);
     return `<header class="page-head">
-      <div class="stage-bg" aria-hidden="true"><img src="assets/hero-city.jpg" srcset="assets/hero-city-sm.jpg 960w, assets/hero-city.jpg 1918w" sizes="100vw" alt=""></div>
       <div class="page-head-grid">
         <nav class="rail" aria-label="Main">${brandLink()}${navLinks("rail-links")}</nav>
         <div class="head-card">
@@ -185,11 +184,11 @@
     const hit = (panel, label) => `<button class="card-hit" type="button" data-panel="${esc(panel)}" aria-haspopup="dialog"><span class="sr">${esc(label)}</span></button>`;
 
     return `<header class="stage" id="top">
-      <div class="stage-bg" aria-hidden="true"><img src="assets/hero-city.jpg" srcset="assets/hero-city-sm.jpg 960w, assets/hero-city.jpg 1918w" sizes="100vw" alt=""></div>
+      <div class="layer l-hand" style="--depth:34" aria-hidden="true"><img class="hand" src="assets/hand.webp" alt="" width="900" height="900"></div>
       <div class="stage-grid">
         <nav class="rail" aria-label="Main">${brandLink()}${navLinks("rail-links")}</nav>
 
-        ${layer(8, "l-feature", `<article class="fcard feature">
+        ${layer(8, "l-feature", `<article class="fcard outlined feature">
           ${hit("feature", `Quick look: ${featured.title}`)}
           <img class="leaves-img" src="${esc(featured.heroImage)}" alt="">
           <div class="feature-copy">
@@ -203,7 +202,7 @@
           </div>
         </article>`)}
 
-        ${basics ? layer(14, "l-wide", `<article class="fcard soft wide">
+        ${basics ? layer(14, "l-wide", `<article class="fcard outlined wide">
           ${hit("w:" + basics.id, `Quick look: ${basics.title}`)}
           <span class="mini">Workshop</span>
           <h2 class="card-title">${esc(basics.title)}</h2>
@@ -217,7 +216,7 @@
           <span class="peek" aria-hidden="true">+</span>
         </article>`) : ""}
 
-        ${inst ? layer(16, "l-hello", `<article class="fcard soft hello">
+        ${inst ? layer(16, "l-hello", `<article class="fcard bare hello">
           ${hit("instructor", `Meet ${inst.name}`)}
           <div><span class="mini">Say hi to</span><h2 class="card-title">${esc(inst.name.split(" ")[0])}</h2></div>
           <img class="avatar" src="${esc(inst.photo)}" alt="" width="92" height="92">
@@ -289,7 +288,7 @@
   }
 
   function initStage(featured) {
-    const stageEl = $(".stage"), bg = $(".stage-bg"), layers = [...document.querySelectorAll(".layer")];
+    const stageEl = $(".stage"), layers = [...document.querySelectorAll(".layer")];
     const sheet = $(".sheet"), body = $(".sheet-body", sheet), scrim = $(".scrim");
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -300,7 +299,6 @@
       mx += (tx - mx) * 0.08; my += (ty - my) * 0.08;
       const sy = Math.min(window.scrollY, stageEl.offsetHeight);
       const lift = innerWidth > 860 ? 0.012 : 0; // stacked mobile cards keep their order while scrolling
-      bg.style.transform = `translate3d(${(-mx * 14).toFixed(2)}px, ${(-my * 10 + sy * 0.3).toFixed(2)}px, 0) scale(1.08)`;
       layers.forEach((l) => {
         const d = +l.style.getPropertyValue("--depth");
         l.style.transform = `translate3d(${(mx * d).toFixed(2)}px, ${(my * d - sy * d * lift).toFixed(2)}px, 0)`;
