@@ -1,0 +1,30 @@
+name: Deploy Workshops site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'workshops/**'
+      - '.github/workflows/deploy-workshops.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stamp asset links so browsers fetch the new version
+        run: sed -i "s/?v=dev/?v=${GITHUB_SHA::7}/g" workshops/*.html
+
+      - name: Deploy workshops static files to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./workshops
+          exclude_assets: 'README.md'
+          destination_dir: workshops
+          keep_files: true
+          commit_message: 'Deploy Colored by Design workshops site to GitHub Pages'
