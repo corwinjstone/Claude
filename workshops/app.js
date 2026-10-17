@@ -94,9 +94,6 @@
   function navLinks(extraClass = "") {
     return `<div class="nav-links ${extraClass}"><a href="index.html#workshops">Workshops</a><a class="hide-sm" href="index.html#how">How it works</a><a href="mailto:${esc(SITE.contactEmail)}">Contact</a></div>`;
   }
-  function nav() {
-    return `<nav class="nav" aria-label="Main">${brandLink()}${navLinks()}</nav>`;
-  }
   function footer() {
     return `<footer class="footer"><div class="wrap"><span>© ${new Date().getFullYear()} ${esc(SITE.name)} · Live workshops on Zoom</span><a href="mailto:${esc(SITE.contactEmail)}">${esc(SITE.contactEmail)}</a></div></footer>`;
   }
@@ -108,29 +105,30 @@
     return `<h1 class="lockup"><span class="big">${esc(w.title)}</span></h1>`;
   }
 
-  function instructorChip(inst) {
-    return `<div class="instructor-chip"><img class="avatar" src="${esc(inst.photo)}" alt="${esc(inst.name)}" width="72" height="72"><div><strong>${esc(inst.name)}</strong><span>${esc(inst.title)}</span></div></div>`;
-  }
   function brands(inst) {
     return `<div class="brands"><span class="brands-label">Built at</span>${inst.brands.map((b) => `<span>${esc(b)}</span>`).join("")}</div>`;
   }
 
-  function hero(w, { cta, intro } = {}) {
-    const inst = INSTRUCTORS[w.instructor];
+  // Compact 250px page header: same photo, logo rail and plum card as the home stage.
+  function hero(w, { cta } = {}) {
     const art = w.heroImage
       ? `<img class="leaves-img" src="${esc(w.heroImage)}" alt="">`
-      : heroArt(w.metaphor, seedOf(w.id));
-    return `<header class="hero">
-      <div class="hero-card">
-        <div class="hero-copy">
-          ${lockup(w)}
-          <p class="lead-green">${esc(w.subtitle)}</p>
-          ${intro ? `<p class="hero-intro">${esc(intro)}</p>` : ""}
-          ${inst ? instructorChip(inst) : ""}
-          ${cta || ""}
-          ${inst ? brands(inst) : ""}
+      : `<div class="head-art">${heroArt(w.metaphor, seedOf(w.id))}</div>`;
+    const title = w.titleLines && w.eyebrow
+      ? `<span><em>${esc(w.eyebrow[0])}</em> ${esc(w.titleLines[0])}</span> <span><em>${esc(w.eyebrow[1])}</em> ${esc(w.titleLines[1])}</span>`
+      : esc(w.title);
+    return `<header class="page-head">
+      <div class="stage-bg" aria-hidden="true"><img src="assets/hero-city.jpg" srcset="assets/hero-city-sm.jpg 960w, assets/hero-city.jpg 1918w" sizes="100vw" alt=""></div>
+      <div class="page-head-grid">
+        <nav class="rail" aria-label="Main">${brandLink()}${navLinks("rail-links")}</nav>
+        <div class="head-card">
+          ${art}
+          <div class="head-copy">
+            <h1 class="head-title">${title}</h1>
+            <p class="lead-green">${esc(w.subtitle)}</p>
+          </div>
+          ${cta ? `<div class="head-cta">${cta}</div>` : ""}
         </div>
-        <div class="hero-art">${art}</div>
       </div>
     </header>`;
   }
@@ -418,7 +416,7 @@
     document.title = `${w.title} · ${SITE.name}`;
 
     if (w.status !== "open") {
-      document.body.innerHTML = `${nav()}${hero(w)}<main class="section"><div class="wrap" style="max-width:560px"><div class="booking soon-panel"><h2>Coming soon</h2><p style="color:var(--muted)">This workshop isn't on the calendar yet. Want a heads-up when it is?</p><a class="btn" href="mailto:${esc(SITE.contactEmail)}?subject=${encodeURIComponent("Notify me: " + w.title)}">Notify me</a><a href="index.html#workshops">← All workshops</a></div></div></main>${footer()}`;
+      document.body.innerHTML = `${hero(w)}<main class="section"><div class="wrap" style="max-width:560px"><div class="booking soon-panel"><h2>Coming soon</h2><p style="color:var(--muted)">This workshop isn't on the calendar yet. Want a heads-up when it is?</p><a class="btn" href="mailto:${esc(SITE.contactEmail)}?subject=${encodeURIComponent("Notify me: " + w.title)}">Notify me</a><a href="index.html#workshops">← All workshops</a></div></div></main>${footer()}`;
       return;
     }
 
@@ -427,7 +425,7 @@
       ? `<iframe src="${esc(inst.introVideoUrl)}" title="Intro from ${esc(inst.name)}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`
       : `<div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z" fill="#2a0a1d"/></svg></div><span>A short hello from ${esc(inst.name.split(" ")[0])} — video coming soon</span></div>`;
 
-    document.body.innerHTML = `${nav()}
+    document.body.innerHTML = `
       ${hero(w, { cta: `<div class="hero-actions"><a class="btn" href="#book">Choose a date · ${money(w.price, w.currency)}</a><a class="btn ghost" href="#instructor">Meet your instructor</a></div>` })}
       <main class="section"><div class="wrap detail-grid">
         <div class="prose">
