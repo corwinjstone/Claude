@@ -199,7 +199,7 @@
               <div><span class="mini">Price</span><span class="feature-price">${money(featured.price, featured.currency)}</span></div>
               ${next ? `<div class="feature-when"><span>${esc(fmtDate(new Date(next.start)))}</span><span>${esc(fmtTime(new Date(next.start)))} ${esc(fmtTz(new Date(next.start)))} · ${featured.durationMinutes} Min</span></div>` : ""}
             </div>
-            <a class="btn btn-xl" href="${workshopUrl(featured)}#book">Reserve a Seat</a>
+            <a class="btn btn-xl" href="${workshopUrl(featured)}">Reserve a Seat</a>
           </div>
         </article>`)}
 
@@ -246,7 +246,7 @@
         const d = new Date(s.start), full = s.seatsLeft <= 0;
         return full
           ? `<li class="date-row full"><span>${esc(fmtDate(d))}</span><span>${esc(fmtTime(d))}</span><span>Full</span></li>`
-          : `<li><a class="date-row" href="${workshopUrl(w)}&session=${encodeURIComponent(s.id)}#book"><span>${esc(fmtDate(d))}</span><span>${esc(fmtTime(d))}</span><span>${s.seatsLeft <= 6 ? `${s.seatsLeft} left` : "Pick"} →</span></a></li>`;
+          : `<li><a class="date-row" href="${workshopUrl(w)}&session=${encodeURIComponent(s.id)}"><span>${esc(fmtDate(d))}</span><span>${esc(fmtTime(d))}</span><span>${s.seatsLeft <= 6 ? `${s.seatsLeft} left` : "Pick"} →</span></a></li>`;
       }).join("");
       return { tone: "plum", html: `
         <p class="mini">${esc(w.category)} workshop</p>
@@ -257,7 +257,7 @@
         <div class="tool-row">${w.tools.map((t) => `<span><strong>${esc(t.name)}</strong> ${esc(t.role)}</span>`).join("")}</div>
         <h3 class="sheet-sub">Upcoming dates <span class="mini">in your time zone</span></h3>
         <ul class="date-list">${dates}</ul>
-        <div class="sheet-actions"><a class="btn" href="${workshopUrl(w)}#book">Reserve a Seat</a><a class="btn ghost" href="${workshopUrl(w)}">Full details</a></div>` };
+        <div class="sheet-actions"><a class="btn" href="${workshopUrl(w)}">Reserve a Seat</a><a class="btn ghost" href="${workshopUrl(w)}">Full details</a></div>` };
     }
     if (key === "instructor") {
       const inst = INSTRUCTORS[featured.instructor];
@@ -266,7 +266,7 @@
         <div class="video">${inst.introVideoUrl ? `<iframe src="${esc(inst.introVideoUrl)}" title="Intro from ${esc(inst.name)}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>` : `<div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z" fill="#2a0a1d"/></svg></div><span>A short hello from ${esc(inst.name.split(" ")[0])} — video coming soon</span></div>`}</div>
         <p class="sheet-text">${esc(inst.bio)}</p>
         ${brands(inst)}
-        <div class="sheet-actions"><a class="btn" href="${workshopUrl(featured)}#instructor">Take a class with ${esc(inst.name.split(" ")[0])}</a></div>` };
+        <div class="sheet-actions"><a class="btn" href="${workshopUrl(featured)}">Take a class with ${esc(inst.name.split(" ")[0])}</a></div>` };
     }
     if (key.startsWith("event:")) {
       const e = (window.EVENTS || []).find((x) => x.id === key.slice(6));
@@ -462,7 +462,6 @@
       ${footer()}`;
 
     renderBooking(w, $("#book"));
-    if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
   }
 
   function renderBooking(w, el) {
@@ -557,6 +556,13 @@
   }
 
   // ---------- Boot ----------
+  // Arriving from another page always starts at the top, even with an old #anchor in the link.
+  if (document.body.dataset.page === "detail") {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+  }
   if (document.body.dataset.page === "detail") renderDetail();
   else renderListing();
+  if (document.body.dataset.page === "detail") scrollTo(0, 0);
+  else if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
 })();
