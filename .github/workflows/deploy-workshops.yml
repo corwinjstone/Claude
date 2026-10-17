@@ -2,7 +2,7 @@ name: Deploy Workshops site to GitHub Pages
 
 on:
   push:
-    branches: [main, claude/elegant-clarke-tw17gb]
+    branches: [main]
     paths:
       - 'workshops/**'
       - '.github/workflows/deploy-workshops.yml'
