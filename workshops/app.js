@@ -83,36 +83,19 @@
     </svg>`;
   }
 
-  function skyline() {
-    const r = rng(42);
-    const layer = (minH, maxH, fill, winOpacity, baseY) => {
-      let x = -20, svg = "";
-      while (x < 1460) {
-        const w = 50 + r() * 110, h = minH + r() * (maxH - minH), top = baseY - h;
-        svg += `<rect x="${x.toFixed(0)}" y="${top.toFixed(0)}" width="${w.toFixed(0)}" height="${h.toFixed(0)}" fill="${fill}"/>`;
-        for (let wy = top + 14; wy < baseY - 16; wy += 18) for (let wx = x + 8; wx < x + w - 10; wx += 14) {
-          if (r() < 0.32) svg += `<rect x="${wx.toFixed(0)}" y="${wy.toFixed(0)}" width="6" height="9" fill="#ffd9a0" opacity="${(winOpacity * (0.4 + r() * 0.6)).toFixed(2)}"/>`;
-        }
-        x += w + 4 + r() * 18;
-      }
-      return svg;
-    };
-    return `<svg class="hero-skyline" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-      <defs><linearGradient id="street" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5c27a" stop-opacity="0.35"/><stop offset="1" stop-color="#140f18" stop-opacity="0"/></linearGradient></defs>
-      ${layer(140, 360, "#5b4a66", 0.35, 600)}
-      ${layer(80, 260, "#2c2233", 0.8, 600)}
-      <rect x="0" y="520" width="1440" height="80" fill="url(#street)"/>
-    </svg>`;
-  }
-
   const check = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="var(--leaf)"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#2a0a1d" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
   // ---------- Shared chrome ----------
+  function brandLink() {
+    const [first, ...rest] = SITE.name.split(" ");
+    const lines = rest.length > 1 ? [`${first} ${rest[0]}`, rest.slice(1).join(" ")] : [SITE.name];
+    return `<a class="brand" href="index.html"><img class="brand-mark" src="${esc(SITE.logo)}" alt="" width="54" height="54"><span>${lines.map(esc).join("<br>")}</span></a>`;
+  }
+  function navLinks(extraClass = "") {
+    return `<div class="nav-links ${extraClass}"><a href="index.html#workshops">Workshops</a><a class="hide-sm" href="index.html#how">How it works</a><a href="mailto:${esc(SITE.contactEmail)}">Contact</a></div>`;
+  }
   function nav() {
-    return `<nav class="nav" aria-label="Main">
-      <a class="brand" href="index.html"><svg class="brand-mark" viewBox="-60 -60 120 120" aria-hidden="true"><path d="${LEAF}" fill="#9cbf58" transform="rotate(30)"/></svg>${esc(SITE.name)}</a>
-      <div class="nav-links"><a href="index.html#workshops">Workshops</a><a class="hide-sm" href="index.html#how">How it works</a><a href="mailto:${esc(SITE.contactEmail)}">Contact</a></div>
-    </nav>`;
+    return `<nav class="nav" aria-label="Main">${brandLink()}${navLinks()}</nav>`;
   }
   function footer() {
     return `<footer class="footer"><div class="wrap"><span>© ${new Date().getFullYear()} ${esc(SITE.name)} · Live workshops on Zoom</span><a href="mailto:${esc(SITE.contactEmail)}">${esc(SITE.contactEmail)}</a></div></footer>`;
@@ -134,7 +117,10 @@
 
   function hero(w, { cta, intro } = {}) {
     const inst = INSTRUCTORS[w.instructor];
-    return `<header class="hero">${skyline()}
+    const art = w.heroImage
+      ? `<img class="leaves-img" src="${esc(w.heroImage)}" alt="">`
+      : heroArt(w.metaphor, seedOf(w.id));
+    return `<header class="hero">
       <div class="hero-card">
         <div class="hero-copy">
           ${lockup(w)}
@@ -144,7 +130,7 @@
           ${cta || ""}
           ${inst ? brands(inst) : ""}
         </div>
-        <div class="hero-art">${heroArt(w.metaphor, seedOf(w.id))}</div>
+        <div class="hero-art">${art}</div>
       </div>
     </header>`;
   }
@@ -154,14 +140,9 @@
   // ---------- Listing page ----------
   function renderListing() {
     const featured = WORKSHOPS.find((w) => w.status === "open") || WORKSHOPS[0];
-    const next = upcoming(featured)[0];
     const cats = ["All", ...new Set(WORKSHOPS.map((w) => w.category))];
 
-    document.body.innerHTML = `${nav()}
-      ${hero(featured, {
-        intro: featured.metaphorNote,
-        cta: `<div class="hero-actions"><a class="btn" href="${workshopUrl(featured)}">Reserve a seat · ${money(featured.price, featured.currency)}</a>${next ? `<span style="opacity:.8">Next: ${esc(fmtDate(new Date(next.start)))}</span>` : ""}</div>`
-      })}
+    document.body.innerHTML = `${stage(featured)}
       <main>
         <section class="section" id="workshops"><div class="wrap">
           <div class="section-head">
@@ -191,6 +172,226 @@
       draw(b.dataset.cat);
     }));
     draw("All");
+    initStage(featured);
+  }
+
+  // ---------- Home stage: floating cards over the city ----------
+  // Each card sits in three layers: .layer (pointer/scroll parallax), .floater (idle bob), .fcard (hover + expand source).
+  function stage(featured) {
+    const inst = INSTRUCTORS[featured.instructor];
+    const next = upcoming(featured)[0];
+    const basics = WORKSHOPS.find((w) => w.id === "product-design-basics");
+    const claude = WORKSHOPS.find((w) => w.id === "all-in-on-claude-code");
+    const event = (window.EVENTS || [])[0];
+    const layer = (depth, cls, inner) => `<div class="layer ${cls}" style="--depth:${depth}"><div class="floater">${inner}</div></div>`;
+    const hit = (panel, label) => `<button class="card-hit" type="button" data-panel="${esc(panel)}" aria-haspopup="dialog"><span class="sr">${esc(label)}</span></button>`;
+
+    return `<header class="stage" id="top">
+      <div class="stage-bg" aria-hidden="true"><img src="assets/hero-city.jpg" srcset="assets/hero-city-sm.jpg 960w, assets/hero-city.jpg 1918w" sizes="100vw" alt=""></div>
+      <div class="stage-grid">
+        <nav class="rail" aria-label="Main">${brandLink()}${navLinks("rail-links")}</nav>
+
+        ${layer(8, "l-feature", `<article class="fcard feature">
+          ${hit("feature", `Quick look: ${featured.title}`)}
+          <img class="leaves-img" src="${esc(featured.heroImage)}" alt="">
+          <div class="feature-copy">
+            ${lockup(featured)}
+            <p class="lead-green">${esc(featured.subtitle)}</p>
+            <div class="feature-facts">
+              <div><span class="mini">Price</span><span class="feature-price">${money(featured.price, featured.currency)}</span></div>
+              ${next ? `<div class="feature-when"><span>${esc(fmtDate(new Date(next.start)))}</span><span>${esc(fmtTime(new Date(next.start)))} ${esc(fmtTz(new Date(next.start)))} · ${featured.durationMinutes} Min</span></div>` : ""}
+            </div>
+            <a class="btn btn-xl" href="${workshopUrl(featured)}#book">Reserve a Seat</a>
+          </div>
+        </article>`)}
+
+        ${basics ? layer(14, "l-wide", `<article class="fcard soft wide">
+          ${hit("w:" + basics.id, `Quick look: ${basics.title}`)}
+          <span class="mini">Workshop</span>
+          <h2 class="card-title">${esc(basics.title)}</h2>
+          <p class="card-when">${esc(basics.teaser)}</p>
+          <span class="peek" aria-hidden="true">+</span>
+        </article>`) : ""}
+
+        ${event ? layer(20, "l-media", `<article class="fcard media">
+          ${hit("event:" + event.id, `${event.title}, ${event.city}`)}
+          <img src="${esc(event.image)}" alt="${esc(event.title)} — ${esc(event.city)}, ${esc(event.dates)}">
+          <span class="peek" aria-hidden="true">+</span>
+        </article>`) : ""}
+
+        ${inst ? layer(16, "l-hello", `<article class="fcard soft hello">
+          ${hit("instructor", `Meet ${inst.name}`)}
+          <div><span class="mini">Say hi to</span><h2 class="card-title">${esc(inst.name.split(" ")[0])}</h2></div>
+          <img class="avatar" src="${esc(inst.photo)}" alt="" width="92" height="92">
+        </article>`) : ""}
+
+        ${claude ? layer(26, "l-ghost", `<article class="ghost-block">
+          <span class="mini">${esc(claude.teaser)}</span>
+          <h2 class="ghost-title">${esc(claude.title)}</h2>
+          <button class="text-link" type="button" data-panel="w:${esc(claude.id)}" aria-haspopup="dialog">Learn more</button>
+        </article>`) : ""}
+      </div>
+      <a class="scroll-cue" href="#workshops"><span>All workshops</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
+    </header>
+    <div class="scrim" hidden></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden>
+      <button class="sheet-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <div class="sheet-body"></div>
+    </div>`;
+  }
+
+  function panelContent(key, featured) {
+    const chipList = (items) => `<ul class="facts on-dark">${items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>`;
+    if (key === "feature") {
+      const w = featured;
+      const dates = upcoming(w).slice(0, 4).map((s) => {
+        const d = new Date(s.start), full = s.seatsLeft <= 0;
+        return full
+          ? `<li class="date-row full"><span>${esc(fmtDate(d))}</span><span>${esc(fmtTime(d))}</span><span>Full</span></li>`
+          : `<li><a class="date-row" href="${workshopUrl(w)}&session=${encodeURIComponent(s.id)}#book"><span>${esc(fmtDate(d))}</span><span>${esc(fmtTime(d))}</span><span>${s.seatsLeft <= 6 ? `${s.seatsLeft} left` : "Pick"} →</span></a></li>`;
+      }).join("");
+      return { tone: "plum", html: `
+        <p class="mini">${esc(w.category)} workshop</p>
+        <h2 id="sheet-title" class="sheet-title">${esc(w.title)}</h2>
+        <p class="lead-green">${esc(w.subtitle)}</p>
+        ${chipList([money(w.price, w.currency), `${w.durationMinutes} min`, w.format, w.level])}
+        <p class="sheet-text">${esc(w.audience)}</p>
+        <div class="tool-row">${w.tools.map((t) => `<span><strong>${esc(t.name)}</strong> ${esc(t.role)}</span>`).join("")}</div>
+        <h3 class="sheet-sub">Upcoming dates <span class="mini">in your time zone</span></h3>
+        <ul class="date-list">${dates}</ul>
+        <div class="sheet-actions"><a class="btn" href="${workshopUrl(w)}#book">Reserve a Seat</a><a class="btn ghost" href="${workshopUrl(w)}">Full details</a></div>` };
+    }
+    if (key === "instructor") {
+      const inst = INSTRUCTORS[featured.instructor];
+      return { tone: "soft", html: `
+        <div class="instructor-chip"><img class="avatar lg" src="${esc(inst.photo)}" alt="" width="112" height="112"><div><p class="mini">Say hi to</p><h2 id="sheet-title" class="sheet-title">${esc(inst.name)}</h2><span>${esc(inst.title)}</span></div></div>
+        <div class="video">${inst.introVideoUrl ? `<iframe src="${esc(inst.introVideoUrl)}" title="Intro from ${esc(inst.name)}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>` : `<div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z" fill="#2a0a1d"/></svg></div><span>A short hello from ${esc(inst.name.split(" ")[0])} — video coming soon</span></div>`}</div>
+        <p class="sheet-text">${esc(inst.bio)}</p>
+        ${brands(inst)}
+        <div class="sheet-actions"><a class="btn" href="${workshopUrl(featured)}#instructor">Take a class with ${esc(inst.name.split(" ")[0])}</a></div>` };
+    }
+    if (key.startsWith("event:")) {
+      const e = (window.EVENTS || []).find((x) => x.id === key.slice(6));
+      return { tone: "soft", html: `
+        <img class="sheet-img" src="${esc(e.image)}" alt="">
+        <p class="mini">In person · ${esc(e.city)}</p>
+        <h2 id="sheet-title" class="sheet-title">${esc(e.title)}</h2>
+        ${chipList([e.dates, e.venue])}
+        <p class="sheet-text">${esc(e.about)}</p>
+        <div class="sheet-actions">${e.url ? `<a class="btn" href="${esc(e.url)}" target="_blank" rel="noopener">Get tickets</a>` : `<a class="btn" href="mailto:${esc(SITE.contactEmail)}?subject=${encodeURIComponent("Notify me: " + e.title + " " + e.city)}">Notify me</a>`}</div>` };
+    }
+    const w = WORKSHOPS.find((x) => x.id === key.slice(2));
+    return { tone: "soft", html: `
+      <p class="mini">${esc(w.category)} workshop${w.teaser ? ` · ${esc(w.teaser)}` : ""}</p>
+      <h2 id="sheet-title" class="sheet-title">${esc(w.title)}</h2>
+      <p class="lead-green">${esc(w.subtitle)}</p>
+      ${chipList([`${w.durationMinutes} min`, w.format, "Registration opens soon"])}
+      ${w.about ? `<p class="sheet-text">${esc(w.about)}</p>` : ""}
+      <div class="sheet-actions"><a class="btn" href="mailto:${esc(SITE.contactEmail)}?subject=${encodeURIComponent("Notify me: " + w.title)}">Notify me</a><a class="btn ghost" href="#workshops" data-close>See all workshops</a></div>` };
+  }
+
+  function initStage(featured) {
+    const stageEl = $(".stage"), bg = $(".stage-bg"), layers = [...document.querySelectorAll(".layer")];
+    const sheet = $(".sheet"), body = $(".sheet-body", sheet), scrim = $(".scrim");
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    // Parallax: pointer drifts the layers by depth, scroll slides the photo slower than the page.
+    let tx = 0, ty = 0, mx = 0, my = 0, raf = 0;
+    const paint = () => {
+      mx += (tx - mx) * 0.08; my += (ty - my) * 0.08;
+      const sy = Math.min(window.scrollY, stageEl.offsetHeight);
+      const lift = innerWidth > 860 ? 0.012 : 0; // stacked mobile cards keep their order while scrolling
+      bg.style.transform = `translate3d(${(-mx * 14).toFixed(2)}px, ${(-my * 10 + sy * 0.3).toFixed(2)}px, 0) scale(1.08)`;
+      layers.forEach((l) => {
+        const d = +l.style.getPropertyValue("--depth");
+        l.style.transform = `translate3d(${(mx * d).toFixed(2)}px, ${(my * d - sy * d * lift).toFixed(2)}px, 0)`;
+      });
+      raf = Math.abs(tx - mx) + Math.abs(ty - my) > 0.001 ? requestAnimationFrame(paint) : 0;
+    };
+    const kick = () => { if (!raf) raf = requestAnimationFrame(paint); };
+    if (!reduce) {
+      if (finePointer) {
+        stageEl.addEventListener("pointermove", (e) => {
+          const r = stageEl.getBoundingClientRect();
+          tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+          ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+          kick();
+        });
+        stageEl.addEventListener("pointerleave", () => { tx = ty = 0; kick(); });
+      }
+      addEventListener("scroll", () => { if (!raf) paint(); }, { passive: true });
+      paint();
+    }
+
+    // Expand: the clicked card morphs into a centered sheet, and morphs back on close.
+    let source = null, opener = null;
+    const radius = (el) => getComputedStyle(el).borderTopLeftRadius;
+    const targetRect = () => {
+      const pad = innerWidth < 640 ? 12 : 24;
+      const w = Math.min(720, innerWidth - pad * 2);
+      Object.assign(sheet.style, { left: "0px", top: "0px", width: w + "px", height: "auto" });
+      const h = Math.min(sheet.scrollHeight, innerHeight - pad * 2);
+      return { left: (innerWidth - w) / 2, top: innerWidth < 640 ? innerHeight - h - pad : (innerHeight - h) / 2, width: w, height: h };
+    };
+    const rectStyle = (r, rad) => ({ left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", borderRadius: rad });
+
+    function open(key, trigger) {
+      const card = trigger.closest(".fcard, .ghost-block");
+      const { tone, html } = panelContent(key, featured);
+      body.innerHTML = html;
+      sheet.className = `sheet tone-${tone}`;
+      sheet.hidden = false; scrim.hidden = false;
+      sheet.style.visibility = "hidden";
+      const to = targetRect();
+      const from = card.getBoundingClientRect();
+      sheet.style.visibility = "";
+      Object.assign(sheet.style, rectStyle(to, "32px"));
+      source = card; opener = trigger;
+      document.body.classList.add("sheet-open");
+      if (!reduce) {
+        card.classList.add("is-source");
+        sheet.animate([rectStyle(from, radius(card)), rectStyle(to, "32px")], { duration: 520, easing: "cubic-bezier(.2,.8,.2,1)" });
+        body.animate([{ opacity: 0, transform: "translateY(12px)" }, { opacity: 1, transform: "none" }], { duration: 360, delay: 160, easing: "ease-out", fill: "backwards" });
+        scrim.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: "ease-out" });
+      }
+      $(".sheet-close", sheet).focus({ preventScroll: true });
+    }
+
+    function close() {
+      if (sheet.hidden) return;
+      const done = () => {
+        sheet.hidden = true; scrim.hidden = true;
+        source?.classList.remove("is-source");
+        opener?.focus({ preventScroll: true });
+        source = opener = null;
+      };
+      document.body.classList.remove("sheet-open");
+      if (reduce || !source) return done();
+      const to = source.getBoundingClientRect();
+      body.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, fill: "forwards" });
+      scrim.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 380, fill: "forwards" });
+      const a = sheet.animate([rectStyle(sheet.getBoundingClientRect(), "32px"), rectStyle(to, radius(source))], { duration: 440, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" });
+      a.onfinish = () => { done(); a.cancel(); body.getAnimations().forEach((x) => x.cancel()); scrim.getAnimations().forEach((x) => x.cancel()); };
+    }
+
+    document.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-panel]");
+      if (t) { e.preventDefault(); return open(t.dataset.panel, t); }
+      if (e.target.closest(".sheet-close") || e.target === scrim) return close();
+      if (e.target.closest("[data-close]")) close();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (sheet.hidden) return;
+      if (e.key === "Escape") return close();
+      if (e.key === "Tab") {
+        const f = [...sheet.querySelectorAll("a[href], button, iframe")];
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    addEventListener("resize", () => { if (!sheet.hidden) Object.assign(sheet.style, rectStyle(targetRect(), "32px")); });
   }
 
   function card(w) {
@@ -295,6 +496,9 @@
 
     const form = $("#signup", el);
     if (!form) return;
+    const wanted = new URLSearchParams(location.search).get("session");
+    const pre = wanted && [...form.querySelectorAll('input[name="session"]')].find((i) => i.value === wanted && !i.disabled);
+    if (pre) pre.checked = true;
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const data = new FormData(form);

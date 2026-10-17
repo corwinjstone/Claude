@@ -2,7 +2,8 @@
 // Only workshops with status "open" can be booked; everything else shows as "Coming soon".
 
 window.SITE = {
-  name: "Studio Sessions",
+  name: "Colored by Design",
+  logo: "assets/logo.png",
   tagline: "Workshops in product design, UX and AI — taught by people who ship.",
   contactEmail: "hello@example.com",
   // Paste a Stripe Payment Link (or any checkout URL) here to collect payment.
@@ -23,6 +24,20 @@ window.INSTRUCTORS = {
   }
 };
 
+// In-person events shown on the home page hero. Placeholder copy — replace with the real details.
+window.EVENTS = [
+  {
+    id: "misfit-dallas",
+    title: "The Making of a Misfit",
+    city: "Dallas",
+    venue: "Virgin Hotels Dallas",
+    dates: "Fri, Nov 6 – Sat, Nov 7",
+    image: "assets/misfit-dallas.jpg",
+    about: "Two days in Dallas on building things that don't fit the mold. Details and tickets are coming soon.",
+    url: ""
+  }
+];
+
 window.WORKSHOPS = [
   {
     id: "idea-to-innovation",
@@ -33,6 +48,7 @@ window.WORKSHOPS = [
     title: "From Idea to Innovation",
     subtitle: "Learn how anybody can turn an idea into an app.",
     metaphor: "leaves",
+    heroImage: "assets/idea-leaves.jpg",
     metaphorNote: "Ideas drift past us like falling leaves. This class is about catching one, turning it green, and giving it your focus.",
     price: 59,
     currency: "USD",
@@ -62,21 +78,44 @@ window.WORKSHOPS = [
       { minutes: 10, label: "Share your link, Q&A, what to do tomorrow" }
     ],
     includes: ["90-minute live session", "Recording for 30 days", "Prompt & checklist workbook", "Small group — 20 seats max"],
-    // Upcoming sessions. Times are stored with their UTC offset (US Eastern) and shown in each visitor's local time.
+    // Upcoming sessions. Times are stored with their UTC offset (US Central) and shown in each visitor's local time.
     // Past sessions are hidden automatically.
     sessions: [
-      { id: "2026-10-24", start: "2026-10-24T11:00:00-04:00", seatsLeft: 6 },
-      { id: "2026-10-27", start: "2026-10-27T19:00:00-04:00", seatsLeft: 12 },
-      { id: "2026-11-07", start: "2026-11-07T11:00:00-05:00", seatsLeft: 14 },
-      { id: "2026-11-10", start: "2026-11-10T19:00:00-05:00", seatsLeft: 0 },
-      { id: "2026-11-21", start: "2026-11-21T11:00:00-05:00", seatsLeft: 18 },
-      { id: "2026-11-24", start: "2026-11-24T19:00:00-05:00", seatsLeft: 20 },
-      { id: "2026-12-05", start: "2026-12-05T11:00:00-05:00", seatsLeft: 20 },
-      { id: "2026-12-08", start: "2026-12-08T19:00:00-05:00", seatsLeft: 20 }
+      { id: "2026-10-24", start: "2026-10-24T11:00:00-05:00", seatsLeft: 6 },
+      { id: "2026-10-27", start: "2026-10-27T19:00:00-05:00", seatsLeft: 12 },
+      { id: "2026-11-07", start: "2026-11-07T11:00:00-06:00", seatsLeft: 14 },
+      { id: "2026-11-10", start: "2026-11-10T19:00:00-06:00", seatsLeft: 0 },
+      { id: "2026-11-21", start: "2026-11-21T11:00:00-06:00", seatsLeft: 18 },
+      { id: "2026-11-24", start: "2026-11-24T19:00:00-06:00", seatsLeft: 20 },
+      { id: "2026-12-05", start: "2026-12-05T11:00:00-06:00", seatsLeft: 20 },
+      { id: "2026-12-08", start: "2026-12-08T19:00:00-06:00", seatsLeft: 20 }
     ]
   },
 
   // ---- Placeholders (not yet bookable) ----
+  // teaser: shown on the hero cards before registration opens.
+  {
+    id: "product-design-basics",
+    status: "soon",
+    category: "Product Design",
+    title: "Product Design Basics",
+    subtitle: "How good products get decided, sketched and shipped.",
+    teaser: "Saturday, October 24",
+    about: "A practical first look at how product designers turn a problem into screens people understand: framing the problem, sketching options, and testing them with real people.",
+    metaphor: "frames",
+    price: 59, durationMinutes: 90, format: "Live on Zoom"
+  },
+  {
+    id: "all-in-on-claude-code",
+    status: "soon",
+    category: "AI",
+    title: "All in on Claude Code",
+    subtitle: "Build real software by describing what you want.",
+    teaser: "November classes",
+    about: "A hands-on series on building with Claude Code: from a blank folder to a working, deployed project, with you steering and Claude doing the typing.",
+    metaphor: "sparks",
+    price: 79, durationMinutes: 90, format: "Live on Zoom"
+  },
   {
     id: "design-systems-that-scale",
     status: "soon",
