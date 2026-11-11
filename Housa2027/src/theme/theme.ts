@@ -4,9 +4,16 @@ import tokens from './m3-tokens.json';
 
 export type M3Scheme = typeof tokens.light;
 
+// Fee-chart series colors (validated for CVD separation on each surface; see dataviz palette check).
+export interface ChartColors { agent: string; buyerAgent: string; platform: string }
+const chart: Record<'light' | 'dark', ChartColors> = {
+  light: { agent: '#0d56ce', buyerAgent: '#eb6834', platform: '#1baf7a' },
+  dark: { agent: '#5b8def', buyerAgent: '#d95926', platform: '#199e70' },
+};
+
 declare module '@mui/material/styles' {
-  interface Palette { m3: M3Scheme }
-  interface PaletteOptions { m3?: M3Scheme }
+  interface Palette { m3: M3Scheme; chart: ChartColors }
+  interface PaletteOptions { m3?: M3Scheme; chart?: ChartColors }
   interface TypographyVariants { display: React.CSSProperties; moneyHero: React.CSSProperties }
   interface TypographyVariantsOptions { display?: React.CSSProperties; moneyHero?: React.CSSProperties }
 }
@@ -17,6 +24,7 @@ declare module '@mui/material/Typography' {
 const palette = (s: M3Scheme, mode: 'light' | 'dark'): PaletteOptions => ({
   mode,
   m3: s,
+  chart: chart[mode],
   primary: { main: s.primary, contrastText: s.onPrimary, light: s.primaryContainer, dark: s.onPrimaryContainer },
   secondary: { main: s.secondary, contrastText: s.onSecondary, light: s.secondaryContainer, dark: s.onSecondaryContainer },
   error: { main: s.error, contrastText: s.onError, light: s.errorContainer, dark: s.onErrorContainer },

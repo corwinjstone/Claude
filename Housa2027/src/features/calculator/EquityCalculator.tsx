@@ -2,23 +2,23 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  Accordion, AccordionDetails, AccordionSummary, Alert, Box, Button, Card, CardContent, Chip, Container, Grid, InputAdornment,
-  Skeleton, Slider, Stack, Table, TableBody, TableCell, TableRow, TextField, ToggleButton, ToggleButtonGroup, Typography,
+  Alert, Box, Button, Card, CardContent, Chip, Container, InputAdornment,
+  Skeleton, Slider, Stack, TextField, ToggleButton, ToggleButtonGroup, Typography,
 } from '@mui/material';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 import EditOutlined from '@mui/icons-material/EditOutlined';
 import LockOutlined from '@mui/icons-material/LockOutlined';
 import NotificationsActiveOutlined from '@mui/icons-material/NotificationsActiveOutlined';
 import { AddressSearch } from '@/components/AddressSearch';
 import { HelpTip } from '@/components/HelpTip';
-import { netSheet, PLATFORM_FEE, type NetSheet } from '@/lib/fees';
+import { PLATFORM_FEE } from '@/lib/fees';
 import { about, money, pct } from '@/lib/money';
 import type { AddressSuggestion, Fee, HomeEstimate } from '@/lib/types';
 import { SaveHomeDialog } from './SaveHomeDialog';
+import { buildScenarios, pctText, type ScenarioKey } from './scenarios';
+import { FeeBars } from './FeeBars';
+import { CompareTable } from './CompareTable';
 import { estimate as lookupEstimate } from '@/lib/addressService';
 
-const OTHER_CLOSING_PCT = 1;
-type ScenarioKey = 'traditional' | 'housa' | 'custom';
 
 export interface Sample { id: string; label: string; secondary: string }
 
@@ -33,7 +33,7 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
   const [customKind, setCustomKind] = useState<Fee['kind']>('percent');
   const [customPct, setCustomPct] = useState(1.25);
   const [customFlat, setCustomFlat] = useState(6000);
-  const [detail, setDetail] = useState<ScenarioKey>('housa');
+  const [headline, setHeadline] = useState<ScenarioKey>('housa');
   const [saveOpen, setSaveOpen] = useState(false);
 
   async function choose(s: AddressSuggestion) {
@@ -59,17 +59,14 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
     } catch { /* storage blocked */ }
   }, [estimate, price, payoff, buyerPct]);
 
-  const sheets = useMemo(() => {
+  const sc = useMemo(() => {
     if (!estimate) return null;
-    const base = { salePrice: price, payoff, otherClosingPct: OTHER_CLOSING_PCT };
-    const buyerAgent: Fee = { kind: 'percent', value: buyerPct };
     const customFee: Fee = customKind === 'percent' ? { kind: 'percent', value: customPct } : { kind: 'flat', value: customFlat };
-    return {
-      traditional: netSheet({ ...base, listingFee: { kind: 'percent', value: 3 }, buyerAgent: { kind: 'percent', value: 3 }, platformFee: 0 }),
-      housa: netSheet({ ...base, listingFee: { kind: 'percent', value: typical.value }, buyerAgent, platformFee: PLATFORM_FEE }),
-      custom: netSheet({ ...base, listingFee: customFee, buyerAgent, platformFee: PLATFORM_FEE }),
-    } satisfies Record<ScenarioKey, NetSheet>;
+    return buildScenarios({ price, payoff, buyerPct, typicalPct: typical.value, customFee });
   }, [estimate, price, payoff, buyerPct, customKind, customPct, customFlat, typical.value]);
+
+  // Adjusting your own fee puts it in the headline.
+  const editCustom = <T,>(set: (v: T) => void) => (v: T) => { set(v); setHeadline('custom'); };
 
   // ---------- Step 1: address ----------
   if (!estimate) {
@@ -104,20 +101,15 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
   }
 
   // ---------- Step 2: results ----------
-  const s = sheets!;
+  const all = sc!;
+  const list = [all.traditional, all.housa, all.custom];
+  const h = all[headline];
+  const t = all.traditional;
   const sliderMin = Math.round((estimate.low * 0.85) / 5000) * 5000;
   const sliderMax = Math.round((estimate.high * 1.15) / 5000) * 5000;
   const payoffMax = Math.max(sliderMax, payoff);
-  const extra = s.housa.youKeep - s.traditional.youKeep;
-
-  const scenarios: { key: ScenarioKey; title: string; sub: string; help: 'traditional' | 'typicalHousa' | 'listingFee' }[] = [
-    { key: 'traditional', title: 'Traditional 6%', sub: "3% to your agent, 3% to the buyer's agent", help: 'traditional' },
-    { key: 'housa', title: 'Typical Housa bid', sub: `${pct(typical.value)} to your agent + ${money(PLATFORM_FEE)} Housa fee`, help: 'typicalHousa' },
-    {
-      key: 'custom', title: 'Your own fee',
-      sub: `${customKind === 'percent' ? pct(customPct) : money(customFlat)} to your agent + ${money(PLATFORM_FEE)} Housa fee`, help: 'listingFee',
-    },
-  ];
+  const feeLine = (x: typeof h) => (x.platform ? `${pctText(x.agentPctTotal)} + ${money(x.platform)} Housa fee` : pctText(x.agentPctTotal));
+  const headlineName = headline === 'traditional' ? 'the traditional 6%' : headline === 'housa' ? 'a typical Housa bid' : 'your fee';
 
   return (
     <Container maxWidth="lg" sx={{ pt: { xs: 2, md: 4 } }}>
@@ -144,97 +136,70 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
           gridTemplateRows: { md: 'auto 1fr' },
         }}
       >
-        {/* Big answer first */}
+        {/* Headline: one big number, then the three numbers that explain it */}
         <Box sx={{ gridArea: 'hero' }}>
           <Card sx={{ bgcolor: 'm3.primaryContainer', color: 'm3.onPrimaryContainer', border: 0 }}>
             <CardContent sx={{ p: { xs: 3, sm: 4 } }}>
-              <Typography variant="body1" component="p" aria-live="polite">
-                If you sold for about <strong>{about(price)}</strong> with a typical Housa bid, you could keep about
+              <Typography variant="body1" component="p">
+                Sell for <strong>{money(price)}</strong> with {headlineName}. You keep about
               </Typography>
-              <Typography variant="moneyHero" component="p" sx={{ my: 1, fontSize: { xs: '2.75rem', sm: '3.5625rem' } }} aria-live="polite">
-                {about(s.housa.youKeep)}
+              <Typography variant="moneyHero" component="p" aria-live="polite" sx={{ my: 1, fontSize: { xs: '2.75rem', sm: '3.5625rem' } }}>
+                {about(h.youKeep)}
               </Typography>
-              <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
-                <Typography variant="body1" component="p">
-                  That is <strong>{money(extra)} more</strong> than the traditional 6%.
-                </Typography>
-                <HelpTip k="youKeep" />
-              </Stack>
+              <Box
+                sx={{
+                  mt: 2, pt: 2, display: 'grid', gap: 2, borderTop: 1, borderColor: 'm3.outlineVariant',
+                  gridTemplateColumns: headline === 'traditional' ? '1fr' : { xs: '1fr 1fr', sm: '1fr 1fr 1fr' },
+                }}
+              >
+                <Box>
+                  <Typography variant="body2" component="p">You pay in fees</Typography>
+                  <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{money(h.feesTotal)}</Typography>
+                  <Typography variant="body2">{feeLine(h)}</Typography>
+                </Box>
+                {headline !== 'traditional' && (
+                  <>
+                    <Box>
+                      <Typography variant="body2" component="p">Instead of, at 6%</Typography>
+                      <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>
+                        <Box component="s" aria-label={`instead of ${money(t.feesTotal)}`} sx={{ textDecorationThickness: 2 }}>{money(t.feesTotal)}</Box>
+                      </Typography>
+                      <Typography variant="body2">3% + 3%</Typography>
+                    </Box>
+                    <Box sx={{ gridColumn: { xs: '1 / -1', sm: 'auto' } }}>
+                      <Typography variant="body2" component="p">More in your pocket</Typography>
+                      <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>
+                        {h.vsTraditional >= 0 ? '+' : '−'}{money(Math.abs(h.vsTraditional))}
+                      </Typography>
+                      <Typography variant="body2">vs. the traditional 6%</Typography>
+                    </Box>
+                  </>
+                )}
+              </Box>
             </CardContent>
           </Card>
         </Box>
 
-        <Box sx={{ gridArea: 'compare' }}>
-          {/* Three scenarios */}
-          <Typography variant="h5" component="h2" sx={{ mb: 2 }}>Compare three fee levels</Typography>
-          <Grid container spacing={2} role="list">
-            {scenarios.map((sc) => {
-              const sheet = s[sc.key];
-              const diff = sheet.youKeep - s.traditional.youKeep;
-              const selected = detail === sc.key;
-              return (
-                <Grid size={{ xs: 12, sm: 4 }} key={sc.key} role="listitem">
-                  <Card
-                    sx={{
-                      height: '100%', borderWidth: selected ? 2 : 1,
-                      borderColor: selected ? 'primary.main' : 'divider',
-                      bgcolor: sc.key === 'housa' ? 'm3.surfaceContainer' : undefined,
-                    }}
-                  >
-                    <CardContent>
-                      <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <Typography variant="subtitle1" component="h3">{sc.title}</Typography>
-                        <HelpTip k={sc.help} />
-                      </Stack>
-                      <Typography variant="body2" color="text.secondary" sx={{ minHeight: 40 }}>{sc.sub}</Typography>
-                      <Typography variant="caption" color="text.secondary" component="p" sx={{ mt: 2 }}>You keep</Typography>
-                      <Typography variant="h3" component="p" sx={{ fontVariantNumeric: 'tabular-nums' }}>{money(sheet.youKeep)}</Typography>
-                      <Typography variant="body2" sx={{ color: diff > 0 ? 'success.main' : 'text.secondary', fontWeight: 500, minHeight: 20 }}>
-                        {sc.key === 'traditional' ? 'The old standard' : diff >= 0 ? `+${money(diff)} vs. 6%` : `${money(diff)} vs. 6%`}
-                      </Typography>
-                      <Button size="small" sx={{ mt: 1, ml: -1 }} onClick={() => setDetail(sc.key)} aria-pressed={selected}>
-                        {selected ? 'Showing the math' : 'Show the math'}
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              );
-            })}
-          </Grid>
+        <Box sx={{ gridArea: 'compare', display: 'grid', gap: 3 }}>
+          <Card>
+            <CardContent sx={{ p: { xs: 2.5, sm: 3 } }}>
+              <Typography variant="h5" component="h2">Total fees, side by side</Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, mb: 2.5 }}>
+                What you pay your agent, the buyer’s agent and Housa if you sell for {money(price)}. A shorter bar means more money for you.
+              </Typography>
+              <FeeBars scenarios={list} selected={headline} />
+            </CardContent>
+          </Card>
 
-          {/* The math */}
-          <Accordion
-            disableGutters
-            defaultExpanded
-            sx={{ mt: 2, borderRadius: 3, '&::before': { display: 'none' }, border: 1, borderColor: 'divider', bgcolor: 'm3.surfaceContainerLow' }}
-            elevation={0}
-          >
-            <AccordionSummary expandIcon={<ExpandMore />} sx={{ minHeight: 56 }}>
-              <Typography variant="subtitle1" component="h2">The math: {scenarios.find((x) => x.key === detail)!.title}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Table size="small" aria-label={`Costs for ${scenarios.find((x) => x.key === detail)!.title}`}>
-                <TableBody>
-                  <TableRow>
-                    <TableCell component="th" scope="row">Sale price</TableCell>
-                    <TableCell align="right">{money(price)}</TableCell>
-                  </TableRow>
-                  {s[detail].lines.map((l) => (
-                    <TableRow key={l.key}>
-                      <TableCell component="th" scope="row">
-                        {l.label} {l.help && <HelpTip k={l.help as never} />}
-                      </TableCell>
-                      <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>− {money(l.amount)}</TableCell>
-                    </TableRow>
-                  ))}
-                  <TableRow>
-                    <TableCell component="th" scope="row" sx={{ fontWeight: 700, borderBottom: 0 }}>You keep</TableCell>
-                    <TableCell align="right" sx={{ fontWeight: 700, borderBottom: 0 }}>{money(s[detail].youKeep)}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </AccordionDetails>
-          </Accordion>
+          <Card>
+            <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
+              <Typography variant="h5" component="h2">The math, line by line</Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, mb: 2 }}>
+                Tap an option to show it in the headline.
+              </Typography>
+              <CompareTable scenarios={list} price={price} selected={headline} onSelect={setHeadline} />
+            </CardContent>
+          </Card>
         </Box>
 
         {/* Controls */}
@@ -302,14 +267,14 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
 
                 <Box>
                   <Stack direction="row" alignItems="center" spacing={0.5}>
-                    <Typography variant="subtitle1" component="h2" id="custom-label">Try your own agent fee</Typography>
+                    <Typography variant="subtitle1" component="h2" id="custom-label">Your fee: your agent</Typography>
                     <HelpTip k="listingFee" />
                   </Stack>
                   <ToggleButtonGroup
                     exclusive
                     size="small"
                     value={customKind}
-                    onChange={(_, v) => v && setCustomKind(v)}
+                    onChange={(_, v) => v && editCustom(setCustomKind)(v)}
                     aria-label="Fee type"
                     sx={{ mt: 1, mb: 1 }}
                   >
@@ -319,12 +284,12 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
                   {customKind === 'percent' ? (
                     <>
                       <Typography variant="body1" id="custom-pct">{pct(customPct)} = {money((price * customPct) / 100)}</Typography>
-                      <Slider aria-labelledby="custom-pct" getAriaValueText={(v) => `${v}%`} value={customPct} min={0.5} max={3} step={0.05} onChange={(_, v) => setCustomPct(v as number)} />
+                      <Slider aria-labelledby="custom-pct" getAriaValueText={(v) => `${v}%`} value={customPct} min={0.5} max={3} step={0.05} onChange={(_, v) => editCustom(setCustomPct)(v as number)} />
                     </>
                   ) : (
                     <>
                       <Typography variant="body1" id="custom-flat">{money(customFlat)} flat</Typography>
-                      <Slider aria-labelledby="custom-flat" getAriaValueText={(v) => money(v)} value={customFlat} min={1000} max={20000} step={250} onChange={(_, v) => setCustomFlat(v as number)} />
+                      <Slider aria-labelledby="custom-flat" getAriaValueText={(v) => money(v)} value={customFlat} min={1000} max={20000} step={250} onChange={(_, v) => editCustom(setCustomFlat)(v as number)} />
                     </>
                   )}
                 </Box>
@@ -346,6 +311,17 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
                     onChange={(_, v) => setBuyerPct(v as number)}
                   />
                 </Box>
+
+                <Box role="status" sx={{ bgcolor: 'm3.secondaryContainer', color: 'm3.onSecondaryContainer', borderRadius: 2, p: 2 }}>
+                  <Typography variant="subtitle2" component="p">Your total fees</Typography>
+                  <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>
+                    {pctText(all.custom.agentPctTotal)} = {money(all.custom.agentDollarsTotal)}
+                  </Typography>
+                  <Typography variant="body2">
+                    {customKind === 'percent' ? pctText(customPct) : money(customFlat)} to your agent + {pctText(buyerPct)} to the buyer’s agent, plus the {money(PLATFORM_FEE)} Housa fee.
+                    {' '}At 6% you would pay {money(t.agentDollarsTotal)}.
+                  </Typography>
+                </Box>
               </CardContent>
             </Card>
 
@@ -365,7 +341,7 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
         </Box>
       </Box>
 
-      <SaveHomeDialog open={saveOpen} onClose={() => setSaveOpen(false)} estimate={estimate} youKeep={s.housa.youKeep} onStartRequest={() => router.push('/sell?from=calculator')} />
+      <SaveHomeDialog open={saveOpen} onClose={() => setSaveOpen(false)} estimate={estimate} youKeep={h.youKeep} onStartRequest={() => router.push('/sell?from=calculator')} />
     </Container>
   );
 }
