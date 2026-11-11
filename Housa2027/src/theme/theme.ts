@@ -5,10 +5,10 @@ import tokens from './m3-tokens.json';
 export type M3Scheme = typeof tokens.light;
 
 // Fee-chart series colors (validated for CVD separation on each surface; see dataviz palette check).
-export interface ChartColors { agent: string; buyerAgent: string; platform: string }
+export interface ChartColors { cash: string; agent: string; buyerAgent: string; platform: string; closing: string }
 const chart: Record<'light' | 'dark', ChartColors> = {
-  light: { agent: '#0d56ce', buyerAgent: '#eb6834', platform: '#1baf7a' },
-  dark: { agent: '#5b8def', buyerAgent: '#d95926', platform: '#199e70' },
+  light: { cash: '#008300', agent: '#2a78d6', buyerAgent: '#eb6834', platform: '#6250d6', closing: '#8f9099' },
+  dark: { cash: '#1d9a4f', agent: '#3987e5', buyerAgent: '#d95926', platform: '#9085e9', closing: '#5d5e66' },
 };
 
 declare module '@mui/material/styles' {

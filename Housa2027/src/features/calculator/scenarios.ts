@@ -20,6 +20,8 @@ export interface Scenario {
   feesTotal: number;
   otherClosing: number;
   payoff: number;
+  /** Sale price minus mortgage payoff: the money that is yours before any selling costs. */
+  equity: number;
   youKeep: number;
   vsTraditional: number;
 }
@@ -42,6 +44,7 @@ export function buildScenarios(o: {
       feesTotal: agent + buyerAgent + platform,
       otherClosing: (o.price * OTHER_CLOSING_PCT) / 100,
       payoff: o.payoff,
+      equity: o.price - o.payoff,
       youKeep: sheet.youKeep,
       vsTraditional: 0,
     } satisfies Scenario;

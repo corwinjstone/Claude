@@ -21,18 +21,18 @@ export function CompareTable({ scenarios, price, selected, onSelect }: {
   scenarios: Scenario[]; price: number; selected: ScenarioKey; onSelect: (k: ScenarioKey) => void;
 }) {
   const rows: Row[] = [
-    { key: 'agent', label: 'Your agent', help: 'listingFee', value: (s) => `− ${money(s.agent)}`, sub: (s) => (s.agentFee.kind === 'percent' ? pctText(s.agentFee.value) : 'flat fee') },
+    { key: 'price', label: 'Sale price', value: () => money(price) },
+    { key: 'payoff', label: 'Mortgage payoff', help: 'payoff', value: (s) => `− ${money(s.payoff)}` },
+    { key: 'equity', label: 'Your equity', help: 'equity', value: (s) => money(s.equity), strong: true, divider: true },
+    { key: 'agent', label: 'Your agent', help: 'listingFee', value: (s) => `− ${money(s.agent)}`, sub: (s) => (s.agentFee.kind === 'percent' ? pctText(s.agentFee.value) : 'flat fee'), divider: true },
     { key: 'buyer', label: "Buyer's agent", help: 'buyerAgent', value: (s) => `− ${money(s.buyerAgent)}`, sub: (s) => pctText(s.buyerAgentPct) },
     { key: 'platform', label: 'Housa fee', help: 'platformFee', value: (s) => (s.platform ? `− ${money(s.platform)}` : '$0'), sub: (s) => (s.platform ? 'flat' : null) },
-    { key: 'fees', label: 'Total fees', value: (s) => `− ${money(s.feesTotal)}`, sub: (s) => (s.platform ? `${pctText(s.agentPctTotal)} + $995` : pctText(s.agentPctTotal)), strong: true, divider: true },
-    { key: 'price', label: 'Sale price', value: () => money(price), divider: true },
-    { key: 'payoff', label: 'Mortgage payoff', help: 'payoff', value: (s) => `− ${money(s.payoff)}` },
     { key: 'other', label: 'Title & closing (about 1%)', help: 'closingCosts', value: (s) => `− ${money(s.otherClosing)}` },
-    { key: 'keep', label: 'You keep', help: 'youKeep', value: (s) => money(s.youKeep), strong: true, divider: true },
+    { key: 'cash', label: 'Cash at close', help: 'cashAtClose', value: (s) => <Box component="span" sx={{ color: 'success.main' }}>{money(s.youKeep)}</Box>, strong: true, divider: true },
     {
-      key: 'more', label: 'More than 6%',
+      key: 'more', label: 'More cash than 6%',
       value: (s) => (s.key === 'traditional' ? '—' : <Box component="span" sx={{ color: s.vsTraditional >= 0 ? 'success.main' : 'error.main' }}>{s.vsTraditional >= 0 ? '+' : '−'}{money(Math.abs(s.vsTraditional))}</Box>),
-      strong: true,
+      sub: (s) => `fees: ${money(s.feesTotal)}`,
     },
   ];
   const cols = { xs: 'repeat(3, minmax(0, 1fr))', md: 'minmax(150px, 1.2fr) repeat(3, minmax(0, 1fr))' };
@@ -92,7 +92,7 @@ export function CompareTable({ scenarios, price, selected, onSelect }: {
               <Typography
                 variant={r.strong ? 'h6' : 'body1'}
                 component="span"
-                sx={{ display: 'block', fontVariantNumeric: 'tabular-nums', fontWeight: r.strong ? 700 : 400, fontSize: r.key === 'keep' ? { xs: '1.0625rem', sm: '1.375rem' } : undefined, whiteSpace: 'nowrap' }}
+                sx={{ display: 'block', fontVariantNumeric: 'tabular-nums', fontWeight: r.strong ? 700 : 400, fontSize: r.key === 'cash' ? { xs: '1.0625rem', sm: '1.375rem' } : undefined, whiteSpace: 'nowrap' }}
               >
                 {r.value(s)}
               </Typography>

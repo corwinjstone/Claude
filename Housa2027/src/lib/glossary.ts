@@ -24,6 +24,14 @@ export const glossary = {
     term: 'Title, escrow and other closing costs',
     text: 'Fees for the title company, the title policy and tax adjustments. We use about 1% of the price as a rough guess.',
   },
+  equity: {
+    term: 'Your equity',
+    text: 'The part of your home you own: the sale price minus what you still owe on your mortgage. Selling costs come out of this.',
+  },
+  cashAtClose: {
+    term: 'Cash at close',
+    text: 'The money you walk away with on closing day: your equity minus agent fees, the Housa fee, and title and closing costs.',
+  },
   youKeep: {
     term: 'You keep',
     text: 'The cash left for you after the sale: the price minus your loan payoff, agent fees and closing costs.',

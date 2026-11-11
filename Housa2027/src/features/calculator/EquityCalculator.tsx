@@ -15,7 +15,7 @@ import { about, money, pct } from '@/lib/money';
 import type { AddressSuggestion, Fee, HomeEstimate } from '@/lib/types';
 import { SaveHomeDialog } from './SaveHomeDialog';
 import { buildScenarios, pctText, type ScenarioKey } from './scenarios';
-import { FeeBars } from './FeeBars';
+import { EquityBars } from './EquityBars';
 import { CompareTable } from './CompareTable';
 import { estimate as lookupEstimate } from '@/lib/addressService';
 
@@ -108,7 +108,6 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
   const sliderMin = Math.round((estimate.low * 0.85) / 5000) * 5000;
   const sliderMax = Math.round((estimate.high * 1.15) / 5000) * 5000;
   const payoffMax = Math.max(sliderMax, payoff);
-  const feeLine = (x: typeof h) => (x.platform ? `${pctText(x.agentPctTotal)} + ${money(x.platform)} Housa fee` : pctText(x.agentPctTotal));
   const headlineName = headline === 'traditional' ? 'the traditional 6%' : headline === 'housa' ? 'a typical Housa bid' : 'your fee';
 
   return (
@@ -132,65 +131,69 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
         sx={{
           display: 'grid', gap: 3, alignItems: 'start',
           gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'minmax(0, 7fr) minmax(0, 5fr)' },
-          gridTemplateAreas: { xs: '"hero" "controls" "compare"', md: '"hero controls" "compare controls"' },
-          gridTemplateRows: { md: 'auto 1fr' },
+          gridTemplateAreas: { xs: '"hero" "chart" "controls" "table"', md: '"hero controls" "chart controls" "table controls"' },
+          gridTemplateRows: { md: 'auto auto 1fr' },
         }}
       >
-        {/* Headline: one big number, then the three numbers that explain it */}
+        {/* Headline: cash at close first, then where the rest of your equity went */}
         <Box sx={{ gridArea: 'hero' }}>
-          <Card sx={{ bgcolor: 'm3.primaryContainer', color: 'm3.onPrimaryContainer', border: 0 }}>
+          <Card sx={{ bgcolor: 'm3.successContainer', color: 'm3.onSuccessContainer', border: 0 }}>
             <CardContent sx={{ p: { xs: 3, sm: 4 } }}>
-              <Typography variant="body1" component="p">
-                Sell for <strong>{money(price)}</strong> with {headlineName}. You keep about
-              </Typography>
-              <Typography variant="moneyHero" component="p" aria-live="polite" sx={{ my: 1, fontSize: { xs: '2.75rem', sm: '3.5625rem' } }}>
+              <Stack direction="row" alignItems="center" spacing={0.5}>
+                <Typography variant="body1" component="p">
+                  Sell for <strong>{money(price)}</strong> with {headlineName}. Your <strong>cash at close</strong>:
+                </Typography>
+                <HelpTip k="cashAtClose" />
+              </Stack>
+              <Typography variant="moneyHero" component="p" aria-live="polite" sx={{ my: 1, fontSize: { xs: '3rem', sm: '4rem' }, lineHeight: 1.1 }}>
                 {about(h.youKeep)}
               </Typography>
               <Box
                 sx={{
                   mt: 2, pt: 2, display: 'grid', gap: 2, borderTop: 1, borderColor: 'm3.outlineVariant',
-                  gridTemplateColumns: headline === 'traditional' ? '1fr' : { xs: '1fr 1fr', sm: '1fr 1fr 1fr' },
+                  gridTemplateColumns: headline === 'traditional' ? '1fr 1fr' : { xs: '1fr 1fr', sm: '1fr 1fr 1fr' },
                 }}
               >
                 <Box>
-                  <Typography variant="body2" component="p">You pay in fees</Typography>
+                  <Typography variant="body2" component="p">Your equity</Typography>
+                  <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{money(h.equity)}</Typography>
+                  <Typography variant="body2">price − mortgage</Typography>
+                </Box>
+                <Box>
+                  <Typography variant="body2" component="p">Fees eat</Typography>
                   <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{money(h.feesTotal)}</Typography>
-                  <Typography variant="body2">{feeLine(h)}</Typography>
+                  <Typography variant="body2">{h.platform ? `${pctText(h.agentPctTotal)} + ${money(h.platform)}` : pctText(h.agentPctTotal)}</Typography>
+                  {headline !== 'traditional' && (
+                    <Typography variant="body2">vs. <Box component="s" sx={{ textDecorationThickness: 2 }}>{money(t.feesTotal)}</Box> at 6%</Typography>
+                  )}
                 </Box>
                 {headline !== 'traditional' && (
-                  <>
-                    <Box>
-                      <Typography variant="body2" component="p">Instead of, at 6%</Typography>
-                      <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>
-                        <Box component="s" aria-label={`instead of ${money(t.feesTotal)}`} sx={{ textDecorationThickness: 2 }}>{money(t.feesTotal)}</Box>
-                      </Typography>
-                      <Typography variant="body2">3% + 3%</Typography>
-                    </Box>
-                    <Box sx={{ gridColumn: { xs: '1 / -1', sm: 'auto' } }}>
-                      <Typography variant="body2" component="p">More in your pocket</Typography>
-                      <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>
-                        {h.vsTraditional >= 0 ? '+' : '−'}{money(Math.abs(h.vsTraditional))}
-                      </Typography>
-                      <Typography variant="body2">vs. the traditional 6%</Typography>
-                    </Box>
-                  </>
+                  <Box sx={{ gridColumn: { xs: '1 / -1', sm: 'auto' } }}>
+                    <Typography variant="body2" component="p">More cash than 6%</Typography>
+                    <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>
+                      {h.vsTraditional >= 0 ? '+' : '−'}{money(Math.abs(h.vsTraditional))}
+                    </Typography>
+                    <Typography variant="body2">in your pocket</Typography>
+                  </Box>
                 )}
               </Box>
             </CardContent>
           </Card>
         </Box>
 
-        <Box sx={{ gridArea: 'compare', display: 'grid', gap: 3 }}>
+        <Box sx={{ gridArea: 'chart' }}>
           <Card>
             <CardContent sx={{ p: { xs: 2.5, sm: 3 } }}>
-              <Typography variant="h5" component="h2">Total fees, side by side</Typography>
+              <Typography variant="h5" component="h2">Where your equity goes</Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, mb: 2.5 }}>
-                What you pay your agent, the buyer’s agent and Housa if you sell for {money(price)}. A shorter bar means more money for you.
+                Each bar is your {money(all.traditional.equity)} of equity. <Box component="strong" sx={{ color: 'text.primary' }}>Green is your cash at close.</Box> Everything after it is fees eating into it.
               </Typography>
-              <FeeBars scenarios={list} selected={headline} />
+              <EquityBars scenarios={list} selected={headline} />
             </CardContent>
           </Card>
+        </Box>
 
+        <Box sx={{ gridArea: 'table' }}>
           <Card>
             <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
               <Typography variant="h5" component="h2">The math, line by line</Typography>
