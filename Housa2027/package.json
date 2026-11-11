@@ -9,7 +9,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "seed": "node scripts/generate-data.mjs",
-    "theme": "node scripts/generate-theme.mjs"
+    "theme": "node scripts/generate-theme.mjs",
+    "build:pages": "GITHUB_PAGES=1 next build"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",

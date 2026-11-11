@@ -1,0 +1,49 @@
+name: Deploy Housa 2027 prototype to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Housa2027/**'
+      - '.github/workflows/deploy-housa2027.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-housa2027
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Housa2027
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: Housa2027/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        run: npm run build:pages
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}/housa2027
+
+      - name: Deploy to gh-pages/housa2027
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./Housa2027/out
+          destination_dir: housa2027
+          keep_files: true
+          commit_message: 'Deploy Housa 2027 prototype to GitHub Pages'
