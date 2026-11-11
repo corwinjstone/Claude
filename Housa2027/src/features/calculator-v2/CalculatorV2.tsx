@@ -15,7 +15,7 @@ import type { AddressSuggestion, HomeEstimate } from '@/lib/types';
 import type { Sample } from '@/features/calculator/EquityCalculator';
 import { SaveHomeDialog } from '@/features/calculator/SaveHomeDialog';
 import { buildScenarios, pctText, type Scenario } from '@/features/calculator/scenarios';
-import { KeptBars } from './KeptBars';
+import { EquityKept } from './EquityKept';
 
 const r5k = (n: number) => Math.round(n / 5000) * 5000;
 
@@ -243,11 +243,14 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
             {/* The picture */}
             <Card sx={{ gridArea: 'chart' }}>
               <CardContent sx={{ p: { xs: 2.5, sm: 3 } }}>
-                <Typography variant="h5" component="h2">Fees or cash: where {money(trad.feesTotal)} goes</Typography>
+                <Typography variant="h5" component="h2">How much of your equity you keep</Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, mb: 2.5, maxWidth: 720 }}>
-                  A traditional 6% sale would cost you {money(trad.feesTotal)} in fees. <Box component="strong" sx={{ color: 'text.primary' }}>Green is the part you keep instead.</Box>
+                  You have {money(you.equity)} of equity in this sale. <Box component="strong" sx={{ color: 'text.primary' }}>Green is the cash you walk away with.</Box> The striped end is what fees take.
                 </Typography>
-                <KeptBars rows={[{ label: 'Traditional 6%', s: trad }, { label: 'Typical Housa bid', s: sc.housa }, { label: 'Your terms', s: you, highlight: true }]} />
+                <EquityKept
+                  equity={you.equity}
+                  rows={[{ label: 'Your terms', s: you, highlight: true }, { label: 'Typical Housa bid', s: sc.housa }, { label: 'Traditional 6%', s: trad, warn: true }]}
+                />
               </CardContent>
             </Card>
 
