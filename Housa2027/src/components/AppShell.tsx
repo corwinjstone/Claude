@@ -11,6 +11,7 @@ import LightMode from '@mui/icons-material/LightModeOutlined';
 
 export const NAV = [
   { href: '/', label: 'Home value' },
+  { href: '/v2', label: 'Home value B' },
   { href: '/sell', label: 'Sell my home' },
   { href: '/seller/bids', label: 'My bids' },
   { href: '/agent', label: 'Agent console' },

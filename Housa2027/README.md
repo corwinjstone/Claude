@@ -47,6 +47,7 @@ The key is read only on the server (`src/lib/places.ts`) and is never sent to th
 | # | Screen | Route | Status |
 |---|--------|-------|--------|
 | 1 | Home Equity Calculator (public, no login) | `/` | ✅ Built |
+| 1B | Home Equity Calculator, design B (for comparison) | `/v2` | ✅ Built |
 | 2 | Seller request, address hidden | `/sell` | Placeholder |
 | 3 | Agent console: feed, attribution gate, bid form | `/agent` | Placeholder |
 | 4 | Seller bid comparison | `/seller/bids` | Placeholder |
