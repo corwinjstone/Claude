@@ -13,11 +13,25 @@ type Row = { label: string; s: Scenario; highlight?: boolean; warn?: boolean };
  * Compact rows on a 0–100% scale of your equity: label, bar, amount.
  * Solid green is the cash you keep, the striped end is fees, the gray end is title and closing.
  */
-export function EquityKept({ equity, rows }: { equity: number; rows: Row[] }) {
+export function EquityKept({ equity, rows, zoom = true }: { equity: number; rows: Row[]; zoom?: boolean }) {
   if (equity <= 0) return <Typography color="text.secondary">You owe more than this price, so there is no equity to show. Try a higher price or a lower mortgage balance.</Typography>;
-  const share = (n: number) => `${Math.max(0, Math.min(100, (n / equity) * 100))}%`;
-  const rowGrid = { display: 'grid', alignItems: 'center', columnGap: 2, rowGap: 0.5, gridTemplateColumns: { xs: '1fr auto', md: '168px minmax(0, 1fr) 150px' } } as const;
-  const track = { display: 'flex', height: { xs: 28, md: 32 }, p: '3px', borderRadius: 999, bgcolor: 'm3.surfaceContainerHighest', overflow: 'hidden', gridColumn: { xs: '1 / -1', md: 'auto' }, order: { xs: 3, md: 0 } } as const;
+  // Zoomed: the scale starts a little below the smallest cash amount instead of $0, so gaps between options grow.
+  const minCash = Math.max(0, Math.min(...rows.map((r) => r.s.youKeep)));
+  const step = 5000;
+  const lo = zoom ? Math.max(0, Math.floor((minCash - (equity - minCash) * 0.3) / step) * step) : 0;
+  const span = equity - lo;
+  const pos = (v: number) => Math.max(0, Math.min(100, ((v - lo) / span) * 100));
+  const showsBreak = zoom && lo > 0;
+  const tickStep = (() => { const raw = span / 4; const mag = 10 ** Math.floor(Math.log10(raw)); return [1, 2, 2.5, 5, 10].map((m) => m * mag).find((x) => span / x <= 5)!; })();
+  const ticks: number[] = [];
+  if (zoom) for (let t = Math.ceil(lo / tickStep) * tickStep; t < equity - tickStep * 0.4; t += tickStep) ticks.push(t);
+  const breakMark = (
+    <Box aria-hidden component="svg" viewBox="0 0 12 40" preserveAspectRatio="none" sx={{ position: 'absolute', left: 2, top: 0, bottom: 0, width: 12, height: '100%', zIndex: 1, color: 'm3.surfaceContainerHighest' }}>
+      <polyline points="6,0 2,8 10,16 2,24 10,32 6,40" fill="none" stroke="currentColor" strokeWidth="3" vectorEffect="non-scaling-stroke" />
+    </Box>
+  );
+  const rowGrid = { display: 'grid', alignItems: 'center', columnGap: 2, rowGap: 0.75, gridTemplateColumns: { xs: '1fr auto', md: '168px minmax(0, 1fr) 150px' } } as const;
+  const track = { position: 'relative', display: 'flex', height: { xs: 32, md: 40 }, p: '3px', borderRadius: 999, bgcolor: 'm3.surfaceContainerHighest', overflow: 'hidden', gridColumn: { xs: '1 / -1', md: 'auto' }, order: { xs: 3, md: 0 } } as const;
   const amount = (n: number) => (
     <Typography component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', textAlign: 'right', lineHeight: 1.2 }}>
       {money(n)} <Box component="span" sx={{ fontWeight: 400, fontSize: '0.8125rem', color: 'text.secondary' }}>({Math.round((n / equity) * 100)}%)</Box>
@@ -26,19 +40,29 @@ export function EquityKept({ equity, rows }: { equity: number; rows: Row[] }) {
 
   return (
     <Box>
-      <Box aria-hidden sx={{ display: { xs: 'none', md: 'grid' }, gridTemplateColumns: '168px minmax(0, 1fr) 150px', columnGap: 2, color: 'text.secondary', mb: 0.5 }}>
+      <Box aria-hidden sx={{ display: { xs: 'none', md: 'grid' }, gridTemplateColumns: '168px minmax(0, 1fr) 150px', columnGap: 2, color: 'text.secondary', mb: 1 }}>
         <span />
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', px: '3px' }}>
-          {['0%', '25%', '50%', '75%'].map((t) => <Typography key={t} variant="caption" sx={{ fontWeight: 600 }}>{t}</Typography>)}
-          <Typography variant="caption" sx={{ fontWeight: 700, color: 'text.primary' }}>{moneyCompact(equity)} (100%)</Typography>
+        <Box sx={{ position: 'relative', height: 18, mx: '3px' }}>
+          {zoom ? (
+            <>
+              <Typography variant="caption" sx={{ position: 'absolute', left: 0, fontWeight: 600 }}>{moneyCompact(lo)}</Typography>
+              {ticks.filter((t) => t > lo).map((t) => (
+                <Typography key={t} variant="caption" sx={{ position: 'absolute', left: `${pos(t)}%`, transform: 'translateX(-50%)', fontWeight: 600 }}>{moneyCompact(t)}</Typography>
+              ))}
+            </>
+          ) : (
+            ['0%', '25%', '50%', '75%'].map((t, i) => <Typography key={t} variant="caption" sx={{ position: 'absolute', left: `${i * 25}%`, transform: i ? 'translateX(-50%)' : undefined, fontWeight: 600 }}>{t}</Typography>)
+          )}
+          <Typography variant="caption" sx={{ position: 'absolute', right: 0, fontWeight: 700, color: 'text.primary' }}>{moneyCompact(equity)}{zoom ? '' : ' (100%)'}</Typography>
         </Box>
         <span />
       </Box>
 
-      <Stack spacing={{ xs: 1.5, md: 1 }}>
+      <Stack spacing={{ xs: 2.5, md: 2 }}>
         <Box sx={rowGrid}>
-          <Typography variant="subtitle2" component="h3" sx={{ lineHeight: 1.25 }}>Your equity<Box component="span" sx={{ display: 'block', fontWeight: 400, color: 'text.secondary', fontSize: '0.75rem' }}>price − mortgage</Box></Typography>
+          <Typography variant="subtitle2" component="h3" sx={{ lineHeight: 1.4 }}>Your equity<Box component="span" sx={{ display: 'block', fontWeight: 400, color: 'text.secondary', fontSize: '0.75rem' }}>price − mortgage</Box></Typography>
           <Box sx={{ ...track, gridColumn: { xs: '1 / -1', md: 'auto' }, order: { xs: 3, md: 0 } }}>
+            {showsBreak && breakMark}
             <Box sx={{ flex: 1, borderRadius: 999, bgcolor: 'm3.successContainer', color: 'm3.onSuccessContainer', display: 'flex', alignItems: 'center', px: 2 }}>
               <Typography component="span" sx={{ color: 'inherit', fontWeight: 700, letterSpacing: '0.04em', fontSize: '0.8125rem' }}>FULL EQUITY</Typography>
             </Box>
@@ -50,13 +74,14 @@ export function EquityKept({ equity, rows }: { equity: number; rows: Row[] }) {
           const cash = Math.max(0, s.youKeep);
           return (
             <Box key={s.key} sx={rowGrid}>
-              <Typography variant="subtitle2" component="h3" sx={{ lineHeight: 1.25, fontWeight: highlight ? 700 : 500 }}>
+              <Typography variant="subtitle2" component="h3" sx={{ lineHeight: 1.4, fontWeight: highlight ? 700 : 500 }}>
                 {label}
                 <Box component="span" sx={{ display: 'block', fontWeight: 600, fontSize: '0.75rem', color: warn ? 'error.main' : 'text.secondary' }}>−{money(s.feesTotal)} fees</Box>
               </Typography>
               <Box sx={track} role="group" aria-label={`${label}: cash at close ${money(s.youKeep)}, fees ${money(s.feesTotal)}, title and closing ${money(s.otherClosing)}`}>
+                {showsBreak && breakMark}
                 <Tooltip describeChild title={`Cash at close: ${money(s.youKeep)}`}>
-                  <Box role="img" tabIndex={0} aria-label={`Cash at close: ${money(s.youKeep)}`} sx={{ width: share(cash), borderRadius: '999px 4px 4px 999px', bgcolor: 'chart.cash', display: 'flex', alignItems: 'center', px: 1.5, minWidth: 0, ...onCash }}>
+                  <Box role="img" tabIndex={0} aria-label={`Cash at close: ${money(s.youKeep)}`} sx={{ width: `${pos(cash)}%`, borderRadius: '999px 4px 4px 999px', bgcolor: 'chart.cash', display: 'flex', alignItems: 'center', px: 1.5, minWidth: 0, ...onCash }}>
                     <Typography component="span" sx={{ color: 'inherit', fontWeight: 700, letterSpacing: '0.04em', fontSize: '0.75rem', whiteSpace: 'nowrap' }}>CASH AT CLOSE</Typography>
                   </Box>
                 </Tooltip>
@@ -64,12 +89,12 @@ export function EquityKept({ equity, rows }: { equity: number; rows: Row[] }) {
                   <Box
                     role="img" tabIndex={0} aria-label={`Fees: ${money(s.feesTotal)}`}
                     sx={(t) => ({
-                      width: share(s.feesTotal), ml: '2px', borderRadius: '4px', minWidth: 4, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      width: `${(s.feesTotal / span) * 100}%`, ml: '2px', borderRadius: '4px', minWidth: 4, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center',
                       backgroundImage: hatch(warn ? `color-mix(in srgb, ${t.vars!.palette.error.main} 45%, transparent)` : `color-mix(in srgb, ${t.vars!.palette.text.secondary} 40%, transparent)`),
                       bgcolor: warn ? 'm3.errorContainer' : 'transparent',
                     })}
                   >
-                    {s.feesTotal / equity > 0.09 && (
+                    {s.feesTotal / span > 0.09 && (
                       <Typography component="span" sx={{ display: { xs: 'none', md: 'inline' }, fontWeight: 700, fontSize: '0.75rem', px: 0.5, borderRadius: 0.5, whiteSpace: 'nowrap', bgcolor: warn ? 'm3.errorContainer' : 'm3.surfaceContainerHighest', color: warn ? 'm3.onErrorContainer' : 'text.primary' }}>
                         −{moneyCompact(s.feesTotal)}
                       </Typography>
@@ -86,7 +111,7 @@ export function EquityKept({ equity, rows }: { equity: number; rows: Row[] }) {
         })}
       </Stack>
 
-      <Stack direction="row" component="ul" aria-label="Legend" sx={{ listStyle: 'none', p: 0, m: 0, mt: 1.5, columnGap: 2.5, rowGap: 0.5, flexWrap: 'wrap' }}>
+      <Stack direction="row" component="ul" aria-label="Legend" sx={{ listStyle: 'none', p: 0, m: 0, mt: 2.5, columnGap: 2.5, rowGap: 1, flexWrap: 'wrap' }}>
         {[
           { label: 'Cash at close', sx: { bgcolor: 'chart.cash' } },
           { label: 'Agent and Housa fees', sx: { backgroundImage: hatch('currentColor'), color: 'text.secondary' } },
