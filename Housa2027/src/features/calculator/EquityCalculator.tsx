@@ -15,6 +15,7 @@ import { netSheet, PLATFORM_FEE, type NetSheet } from '@/lib/fees';
 import { about, money, pct } from '@/lib/money';
 import type { AddressSuggestion, Fee, HomeEstimate } from '@/lib/types';
 import { SaveHomeDialog } from './SaveHomeDialog';
+import { estimate as lookupEstimate } from '@/lib/addressService';
 
 const OTHER_CLOSING_PCT = 1;
 type ScenarioKey = 'traditional' | 'housa' | 'custom';
@@ -39,11 +40,7 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
     setLoading(true);
     setError(null);
     try {
-      const qs = new URLSearchParams({ id: s.id, label: [s.label, s.secondary].filter(Boolean).join(', ') });
-      if (s.zip) qs.set('zip', s.zip);
-      const res = await fetch(`/api/estimate?${qs}`);
-      if (!res.ok) throw new Error();
-      const e = (await res.json()) as HomeEstimate;
+      const e = await lookupEstimate(s);
       setEstimate(e);
       setPrice(e.mid);
       setPayoff(e.payoffGuess);

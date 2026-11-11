@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Autocomplete, Box, CircularProgress, TextField, Typography } from '@mui/material';
 import PlaceOutlined from '@mui/icons-material/PlaceOutlined';
 import type { AddressSuggestion } from '@/lib/types';
+import { suggest } from '@/lib/addressService';
 
 const providerNote = { google: 'Suggestions by Google', osm: 'Suggestions © OpenStreetMap contributors', housa: 'Sample Housa addresses' };
 
@@ -20,8 +21,7 @@ export function AddressSearch({ onSelect, autoFocus }: { onSelect: (s: AddressSu
     timer.current = setTimeout(async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/places?q=${encodeURIComponent(input)}`, { signal: ctrl.signal });
-        const j = (await res.json()) as { suggestions: AddressSuggestion[]; provider: keyof typeof providerNote };
+        const j = await suggest(input, ctrl.signal);
         setOptions(j.suggestions);
         setProvider(j.provider);
       } catch { /* aborted */ } finally { setLoading(false); }

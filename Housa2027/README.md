@@ -18,6 +18,20 @@ Open http://localhost:3000.
 
 For a production build: `npm run build && npm start`.
 
+## Run it in the browser (GitHub Pages)
+
+Live at **https://corwinjstone.github.io/Claude/housa2027/** once this folder is on `main`.
+
+`.github/workflows/deploy-housa2027.yml` builds a static version (`npm run build:pages`) on every push to `main` that touches `Housa2027/`, and publishes it to the `housa2027/` folder of the `gh-pages` branch. You can also run it by hand from the Actions tab.
+
+The static version has no server, so it differs in one way: address suggestions come from OpenStreetMap plus the sample addresses, never Google. A Google key in a static site would be public. Everything else runs the same in the browser, using the same code.
+
+To try the static build locally:
+
+```bash
+npm run build:pages   # writes ./out with base path /Claude/housa2027
+```
+
 ### Optional: Google address suggestions
 
 Address suggestions work without any key. With no key, the app uses OpenStreetMap (Photon) plus the 40 sample DFW addresses. To use Google Places Autocomplete instead:
@@ -63,6 +77,7 @@ The key is read only on the server (`src/lib/places.ts`) and is never sent to th
 |---|---|
 | `npm run dev` | Start the dev server |
 | `npm run build` / `npm start` | Production build and serve |
+| `npm run build:pages` | Static build for GitHub Pages (`./out`) |
 | `npm run typecheck` | TypeScript check |
 | `npm run seed` | Regenerate `/data/*.json` (deterministic) |
 | `npm run theme` | Regenerate M3 color tokens from the seed color |

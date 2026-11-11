@@ -1,7 +1,10 @@
 // Home value estimate for the calculator. Dummy data only: a real build would call a value vendor (ATTOM, Cotality).
-import 'server-only';
-import { db } from './data';
-import type { HomeEstimate } from './types';
+// Runs on the server (API route) or in the browser (static GitHub Pages build).
+import zipsJson from '@data/zips.json';
+import propertiesJson from '@data/properties.json';
+import type { HomeEstimate, Property, Zip } from './types';
+
+const db = { zips: zipsJson as Zip[], properties: propertiesJson as Property[] };
 
 const r5k = (n: number) => Math.round(n / 5000) * 5000;
 const TYPICAL_SQFT = 2100;
