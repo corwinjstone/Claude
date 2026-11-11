@@ -25,9 +25,19 @@ const valueBox = {
   fontSize: '1rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', lineHeight: 1.2,
 } as const;
 
+/** Percent / flat fee switch that sits under a slider's heading. */
+function FeeToggle({ value, onChange, label }: { value: 'percent' | 'flat'; onChange: (v: 'percent' | 'flat') => void; label: string }) {
+  return (
+    <ToggleButtonGroup exclusive size="small" value={value} onChange={(_, v) => v && onChange(v)} aria-label={label} sx={{ mt: 1 }}>
+      <ToggleButton value="percent" sx={{ px: 2, minHeight: 40, borderRadius: '999px 0 0 999px' }}>Percent</ToggleButton>
+      <ToggleButton value="flat" sx={{ px: 2, minHeight: 40, borderRadius: '0 999px 999px 0' }}>Flat fee</ToggleButton>
+    </ToggleButtonGroup>
+  );
+}
+
 /** A labeled slider: name and value on one line, the slider right under it. */
 function Dial(p: {
-  id: string; label: string; help?: GlossaryKey; box: React.ReactNode; value: number; min: number; max: number; step: number; onChange: (v: number) => void; text: (v: number) => string;
+  id: string; label: string; help?: GlossaryKey; box: React.ReactNode; toggle?: React.ReactNode; value: number; min: number; max: number; step: number; onChange: (v: number) => void; text: (v: number) => string;
 }) {
   return (
     <Box>
@@ -38,6 +48,7 @@ function Dial(p: {
         </Stack>
         <Box sx={{ ml: 'auto' }}>{p.box}</Box>
       </Stack>
+      {p.toggle}
       <Slider aria-labelledby={p.id} getAriaValueText={p.text} value={p.value} min={p.min} max={p.max} step={p.step} onChange={(_, v) => p.onChange(v as number)} sx={{ display: 'block', mt: 1, mb: 0, py: '14px' }} />
     </Box>
   );
@@ -50,8 +61,12 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
   const [error, setError] = useState<string | null>(null);
   const [price, setPrice] = useState(0);
   const [payoff, setPayoff] = useState(0);
+  const [agentKind, setAgentKind] = useState<'percent' | 'flat'>('percent');
   const [agentPct, setAgentPct] = useState(1.25);
+  const [agentFlat, setAgentFlat] = useState(6000);
+  const [buyerKind, setBuyerKind] = useState<'percent' | 'flat'>('percent');
   const [buyerPct, setBuyerPct] = useState(3);
+  const [buyerFlat, setBuyerFlat] = useState(15000);
   const [saveOpen, setSaveOpen] = useState(false);
   const [zoom, setZoom] = useState(true);
 
@@ -76,8 +91,14 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
   }, [estimate, price, payoff, buyerPct]);
 
   const sc = useMemo(
-    () => (estimate ? buildScenarios({ price, payoff, buyerPct, typicalPct: typical.value, customFee: { kind: 'percent', value: agentPct } }) : null),
-    [estimate, price, payoff, buyerPct, agentPct, typical.value],
+    () =>
+      estimate
+        ? buildScenarios({
+            price, payoff, buyerPct, buyerFlat: buyerKind === 'flat' ? buyerFlat : undefined, typicalPct: typical.value,
+            customFee: agentKind === 'percent' ? { kind: 'percent', value: agentPct } : { kind: 'flat', value: agentFlat },
+          })
+        : null,
+    [estimate, price, payoff, agentKind, agentPct, agentFlat, buyerKind, buyerPct, buyerFlat, typical.value],
   );
 
   return (
@@ -116,6 +137,18 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
 
       {estimate && sc && (() => {
         const you = sc.custom, trad = sc.traditional, mid = sc.housa;
+        // Switching type keeps the same dollar amount, so the numbers don't jump.
+        const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+        const switchAgentKind = (k: 'percent' | 'flat') => {
+          if (k === 'flat') setAgentFlat(clamp(Math.round(you.agent / 250) * 250, 1000, 20000));
+          else setAgentPct(clamp(Math.round((you.agent / price) * 100 / 0.05) * 0.05, 0.5, 3));
+          setAgentKind(k);
+        };
+        const switchBuyerKind = (k: 'percent' | 'flat') => {
+          if (k === 'flat') setBuyerFlat(clamp(Math.round(you.buyerAgent / 500) * 500, 0, 30000));
+          else setBuyerPct(clamp(Math.round((you.buyerAgent / price) * 100 / 0.25) * 0.25, 0, 3));
+          setBuyerKind(k);
+        };
         const min = r5k(estimate.low * 0.85), max = r5k(estimate.high * 1.15);
         const payoffMax = Math.max(max, payoff);
         const cols = [{ s: trad, name: 'Traditional 6%' }, { s: mid, name: 'Typical Housa' }, { s: you, name: 'Your terms' }];
@@ -169,8 +202,18 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
                       />
                     }
                   />
-                  <Dial id="v2-agent" label={`Your agent · ${pctText(agentPct)}`} help="listingFee" value={agentPct} min={0.5} max={3} step={0.05} onChange={setAgentPct} text={(v) => `${v}%`} box={<Box sx={valueBox}>{money(you.agent)}</Box>} />
-                  <Dial id="v2-buyer" label={`Buyer’s agent · ${pctText(buyerPct)}`} help="buyerAgent" value={buyerPct} min={0} max={3} step={0.25} onChange={setBuyerPct} text={(v) => `${v}%`} box={<Box sx={valueBox}>{money(you.buyerAgent)}</Box>} />
+                  <Dial
+                    id="v2-agent" label={`Your agent · ${pctText((you.agent / price) * 100)}`} help="listingFee" box={<Box sx={valueBox}>{money(you.agent)}</Box>}
+                    toggle={<FeeToggle label="Your agent's fee type" value={agentKind} onChange={switchAgentKind} />}
+                    value={agentKind === 'percent' ? agentPct : agentFlat} min={agentKind === 'percent' ? 0.5 : 1000} max={agentKind === 'percent' ? 3 : 20000} step={agentKind === 'percent' ? 0.05 : 250}
+                    onChange={agentKind === 'percent' ? setAgentPct : setAgentFlat} text={agentKind === 'percent' ? (v) => `${v}%` : money}
+                  />
+                  <Dial
+                    id="v2-buyer" label={`Buyer’s agent · ${pctText((you.buyerAgent / price) * 100)}`} help="buyerAgent" box={<Box sx={valueBox}>{money(you.buyerAgent)}</Box>}
+                    toggle={<FeeToggle label="Buyer's agent offer type" value={buyerKind} onChange={switchBuyerKind} />}
+                    value={buyerKind === 'percent' ? buyerPct : buyerFlat} min={0} max={buyerKind === 'percent' ? 3 : 30000} step={buyerKind === 'percent' ? 0.25 : 500}
+                    onChange={buyerKind === 'percent' ? setBuyerPct : setBuyerFlat} text={buyerKind === 'percent' ? (v) => `${v}%` : money}
+                  />
                 </Box>
                 <Box role="status" sx={{ mt: 3, borderRadius: 2, px: 2.5, py: 1.75, bgcolor: 'm3.secondaryContainer', color: 'm3.onSecondaryContainer', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 2, flexWrap: 'wrap' }}>
                   <Typography variant="body2">Total to agents: <strong>{pctText(you.agentPctTotal)}</strong> (traditional: 6%)</Typography>

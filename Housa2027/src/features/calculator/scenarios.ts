@@ -27,7 +27,7 @@ export interface Scenario {
 }
 
 export function buildScenarios(o: {
-  price: number; payoff: number; buyerPct: number; typicalPct: number; customFee: Fee;
+  price: number; payoff: number; buyerPct: number; /** A flat dollar offer to the buyer's agent. Wins over buyerPct when set. */ buyerFlat?: number; typicalPct: number; customFee: Fee;
 }): Record<ScenarioKey, Scenario> {
   const make = (key: ScenarioKey, name: string, shortName: string, agentFee: Fee, buyerAgentPct: number, platform: number) => {
     const sheet = netSheet({
@@ -50,8 +50,10 @@ export function buildScenarios(o: {
     } satisfies Scenario;
   };
   const traditional = make('traditional', 'Traditional 6%', 'Traditional', { kind: 'percent', value: 3 }, 3, 0);
-  const housa = make('housa', 'Typical Housa bid', 'Typical Housa', { kind: 'percent', value: o.typicalPct }, o.buyerPct, PLATFORM_FEE);
-  const custom = make('custom', 'Your fee', 'Your fee', o.customFee, o.buyerPct, PLATFORM_FEE);
+  // A flat buyer's-agent offer is stored as its equivalent percent of the price, so every total and label stays consistent.
+  const buyerPct = o.buyerFlat != null ? (o.buyerFlat / o.price) * 100 : o.buyerPct;
+  const housa = make('housa', 'Typical Housa bid', 'Typical Housa', { kind: 'percent', value: o.typicalPct }, buyerPct, PLATFORM_FEE);
+  const custom = make('custom', 'Your fee', 'Your fee', o.customFee, buyerPct, PLATFORM_FEE);
   for (const s of [housa, custom]) s.vsTraditional = s.youKeep - traditional.youKeep;
   return { traditional, housa, custom };
 }
