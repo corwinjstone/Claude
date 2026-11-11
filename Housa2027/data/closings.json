@@ -1,0 +1,74 @@
+[
+  {
+    "id": "cls-001",
+    "requestId": "req-011",
+    "bidId": "bid-030",
+    "titleBranchId": "ttl-001",
+    "escrowOfficer": {
+      "name": "Leah Williams",
+      "email": "leah@prairielandtitle.example.com"
+    },
+    "gfNumber": "GF-2684233",
+    "contractUploaded": true,
+    "packetSentAt": "2026-10-22T08:00:00.000Z",
+    "salePrice": null,
+    "closingDate": "2026-12-12",
+    "platformFee": 995,
+    "feeStatus": "pending",
+    "feePaidAt": null
+  },
+  {
+    "id": "cls-002",
+    "requestId": "req-012",
+    "bidId": "bid-033",
+    "titleBranchId": "ttl-004",
+    "escrowOfficer": {
+      "name": "Carlos Clark",
+      "email": "carlos@prairielandtitle.example.com"
+    },
+    "gfNumber": null,
+    "contractUploaded": true,
+    "packetSentAt": "2026-11-06T14:00:00.000Z",
+    "salePrice": null,
+    "closingDate": "2026-12-12",
+    "platformFee": 995,
+    "feeStatus": "pending",
+    "feePaidAt": null
+  },
+  {
+    "id": "cls-003",
+    "requestId": "req-013",
+    "bidId": "bid-039",
+    "titleBranchId": "ttl-007",
+    "escrowOfficer": {
+      "name": "Hannah Nguyen",
+      "email": "hannah@trinityabstracttitle.example.com"
+    },
+    "gfNumber": "GF-2601523",
+    "contractUploaded": true,
+    "packetSentAt": "2026-10-19T18:00:00.000Z",
+    "salePrice": 864000,
+    "closingDate": "2026-10-31",
+    "platformFee": 995,
+    "feeStatus": "overdue",
+    "feePaidAt": null
+  },
+  {
+    "id": "cls-004",
+    "requestId": "req-014",
+    "bidId": "bid-046",
+    "titleBranchId": "ttl-010",
+    "escrowOfficer": {
+      "name": "Yesenia Flores",
+      "email": "yesenia@trinityabstracttitle.example.com"
+    },
+    "gfNumber": "GF-2661487",
+    "contractUploaded": true,
+    "packetSentAt": "2026-11-04T07:00:00.000Z",
+    "salePrice": 429000,
+    "closingDate": "2026-11-01",
+    "platformFee": 995,
+    "feeStatus": "paid",
+    "feePaidAt": "2026-11-10T19:00:00.000Z"
+  }
+]

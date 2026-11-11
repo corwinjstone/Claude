@@ -1,0 +1,38 @@
+[
+  {
+    "id": "brk-01",
+    "name": "Lone Star Realty Partners",
+    "office": "Uptown Dallas",
+    "broker": "Patricia Holloway"
+  },
+  {
+    "id": "brk-02",
+    "name": "Trinity Cloud Realty",
+    "office": "Remote / DFW",
+    "broker": "Marcus Bell"
+  },
+  {
+    "id": "brk-03",
+    "name": "Bluebonnet Home Group",
+    "office": "Plano",
+    "broker": "Elena Cho"
+  },
+  {
+    "id": "brk-04",
+    "name": "Cowtown Property Co.",
+    "office": "Fort Worth",
+    "broker": "Wade Pruitt"
+  },
+  {
+    "id": "brk-05",
+    "name": "North Texas Keystone Realty",
+    "office": "Frisco",
+    "broker": "Dana Whitfield"
+  },
+  {
+    "id": "brk-06",
+    "name": "Metroplex Modern Brokerage",
+    "office": "Irving",
+    "broker": "Samir Haddad"
+  }
+]

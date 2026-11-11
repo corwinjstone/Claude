@@ -1,0 +1,758 @@
+[
+  {
+    "id": "log-0023",
+    "at": "2026-11-11T07:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-003",
+    "agentId": "agt-027",
+    "bidId": null,
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0067",
+    "at": "2026-11-11T04:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-006",
+    "agentId": "agt-007",
+    "bidId": "bid-003",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0001",
+    "at": "2026-11-10T19:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-014",
+    "requestId": "req-006",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0076",
+    "at": "2026-11-10T19:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-010",
+    "requestId": "req-009",
+    "stage": 1,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0004",
+    "at": "2026-11-10T04:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-007",
+    "agentId": "agt-009",
+    "bidId": "bid-007",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0029",
+    "at": "2026-11-09T22:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-008",
+    "agentId": "agt-020",
+    "bidId": "bid-016",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0012",
+    "at": "2026-11-09T19:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-014",
+    "agentId": "agt-005",
+    "bidId": "bid-046",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0038",
+    "at": "2026-11-09T17:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-003",
+    "agentId": "agt-012",
+    "bidId": null,
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0010",
+    "at": "2026-11-09T05:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-011",
+    "requestId": "req-009",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0032",
+    "at": "2026-11-09T02:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-010",
+    "requestId": "req-010",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0006",
+    "at": "2026-11-08T22:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-007",
+    "agentId": "agt-009",
+    "bidId": "bid-007",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0061",
+    "at": "2026-11-08T18:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-021",
+    "requestId": "req-006",
+    "stage": 2,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0040",
+    "at": "2026-11-08T17:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-005",
+    "agentId": "agt-005",
+    "bidId": null,
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0009",
+    "at": "2026-11-08T08:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-014",
+    "agentId": "agt-012",
+    "bidId": "bid-050",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0021",
+    "at": "2026-11-08T06:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-001",
+    "agentId": "agt-028",
+    "bidId": null,
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0049",
+    "at": "2026-11-07T13:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-011",
+    "agentId": "agt-006",
+    "bidId": "bid-030",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0043",
+    "at": "2026-11-06T11:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-001",
+    "agentId": "agt-001",
+    "bidId": null,
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0052",
+    "at": "2026-11-06T00:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-014",
+    "requestId": "req-004",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0051",
+    "at": "2026-11-05T12:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-014",
+    "requestId": "req-004",
+    "stage": 2,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0008",
+    "at": "2026-11-05T09:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-026",
+    "requestId": "req-010",
+    "stage": 1,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0019",
+    "at": "2026-11-04T05:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-013",
+    "agentId": "agt-024",
+    "bidId": "bid-044",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0050",
+    "at": "2026-11-04T04:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-014",
+    "requestId": "req-009",
+    "stage": 2,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0035",
+    "at": "2026-11-03T19:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-013",
+    "agentId": "agt-004",
+    "bidId": "bid-040",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0017",
+    "at": "2026-11-03T14:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-006",
+    "agentId": "agt-014",
+    "bidId": "bid-004",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0062",
+    "at": "2026-11-03T11:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-009",
+    "agentId": "agt-006",
+    "bidId": "bid-022",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0078",
+    "at": "2026-11-03T07:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-012",
+    "requestId": "req-010",
+    "stage": 2,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0079",
+    "at": "2026-11-02T05:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-023",
+    "requestId": "req-001",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0034",
+    "at": "2026-11-01T15:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-005",
+    "requestId": "req-006",
+    "stage": 2,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0074",
+    "at": "2026-11-01T00:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-010",
+    "agentId": "agt-016",
+    "bidId": "bid-025",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0025",
+    "at": "2026-10-31T08:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-014",
+    "agentId": "agt-012",
+    "bidId": "bid-050",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0054",
+    "at": "2026-10-30T21:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-026",
+    "requestId": "req-001",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0026",
+    "at": "2026-10-30T18:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-002",
+    "agentId": "agt-020",
+    "bidId": null,
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0018",
+    "at": "2026-10-30T15:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-025",
+    "requestId": "req-011",
+    "stage": 2,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0013",
+    "at": "2026-10-29T10:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-005",
+    "agentId": "agt-009",
+    "bidId": null,
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0066",
+    "at": "2026-10-29T00:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-004",
+    "requestId": "req-012",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0042",
+    "at": "2026-10-28T15:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-011",
+    "agentId": "agt-022",
+    "bidId": "bid-031",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0033",
+    "at": "2026-10-28T13:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-003",
+    "requestId": "req-005",
+    "stage": 2,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0059",
+    "at": "2026-10-28T11:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-001",
+    "agentId": "agt-019",
+    "bidId": null,
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0058",
+    "at": "2026-10-28T10:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-016",
+    "requestId": "req-004",
+    "stage": 2,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0080",
+    "at": "2026-10-28T10:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-013",
+    "requestId": "req-014",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0048",
+    "at": "2026-10-28T03:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-011",
+    "agentId": "agt-022",
+    "bidId": "bid-031",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0069",
+    "at": "2026-10-27T22:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-002",
+    "requestId": "req-002",
+    "stage": 2,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0027",
+    "at": "2026-10-27T12:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-010",
+    "requestId": "req-012",
+    "stage": 1,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0014",
+    "at": "2026-10-27T00:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-026",
+    "requestId": "req-011",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0039",
+    "at": "2026-10-26T14:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-009",
+    "agentId": "agt-008",
+    "bidId": "bid-017",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0070",
+    "at": "2026-10-26T09:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-008",
+    "agentId": "agt-005",
+    "bidId": "bid-011",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0044",
+    "at": "2026-10-25T11:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-013",
+    "agentId": "agt-008",
+    "bidId": "bid-041",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0064",
+    "at": "2026-10-25T03:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-026",
+    "requestId": "req-014",
+    "stage": 2,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0024",
+    "at": "2026-10-24T15:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-013",
+    "agentId": "agt-012",
+    "bidId": "bid-042",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0030",
+    "at": "2026-10-24T04:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-009",
+    "agentId": "agt-028",
+    "bidId": "bid-021",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0011",
+    "at": "2026-10-23T23:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-003",
+    "agentId": "agt-005",
+    "bidId": null,
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0028",
+    "at": "2026-10-23T23:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-027",
+    "requestId": "req-010",
+    "stage": 2,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0056",
+    "at": "2026-10-23T20:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-005",
+    "requestId": "req-009",
+    "stage": 1,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0047",
+    "at": "2026-10-23T15:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-003",
+    "agentId": "agt-028",
+    "bidId": null,
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0041",
+    "at": "2026-10-22T17:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-020",
+    "requestId": "req-009",
+    "stage": 2,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0053",
+    "at": "2026-10-21T09:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-008",
+    "requestId": "req-001",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0015",
+    "at": "2026-10-21T04:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-011",
+    "requestId": "req-004",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0057",
+    "at": "2026-10-20T05:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-021",
+    "requestId": "req-007",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0071",
+    "at": "2026-10-19T20:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-015",
+    "requestId": "req-012",
+    "stage": 2,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0022",
+    "at": "2026-10-19T15:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-015",
+    "requestId": "req-006",
+    "stage": 2,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0072",
+    "at": "2026-10-19T10:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-007",
+    "agentId": "agt-009",
+    "bidId": "bid-007",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0007",
+    "at": "2026-10-19T05:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-006",
+    "requestId": "req-003",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0046",
+    "at": "2026-10-19T00:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-009",
+    "requestId": "req-012",
+    "stage": 2,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0037",
+    "at": "2026-10-18T23:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-028",
+    "requestId": "req-001",
+    "stage": 2,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0003",
+    "at": "2026-10-18T22:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-011",
+    "requestId": "req-007",
+    "stage": 2,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0075",
+    "at": "2026-10-18T19:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-016",
+    "requestId": "req-012",
+    "stage": 1,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0031",
+    "at": "2026-10-18T17:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-012",
+    "requestId": "req-001",
+    "stage": 1,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0036",
+    "at": "2026-10-17T21:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-001",
+    "requestId": "req-012",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0063",
+    "at": "2026-10-17T21:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-009",
+    "agentId": "agt-008",
+    "bidId": "bid-017",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0077",
+    "at": "2026-10-17T17:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-004",
+    "agentId": "agt-009",
+    "bidId": null,
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0073",
+    "at": "2026-10-17T09:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-003",
+    "requestId": "req-014",
+    "stage": 1,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0020",
+    "at": "2026-10-17T06:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-019",
+    "requestId": "req-005",
+    "stage": 2,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0045",
+    "at": "2026-10-16T22:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-026",
+    "requestId": "req-008",
+    "stage": 1,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0016",
+    "at": "2026-10-16T11:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-006",
+    "agentId": "agt-016",
+    "bidId": "bid-002",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0060",
+    "at": "2026-10-16T11:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-012",
+    "requestId": "req-003",
+    "stage": 2,
+    "attributionSigned": false
+  },
+  {
+    "id": "log-0002",
+    "at": "2026-10-14T22:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-014",
+    "agentId": "agt-010",
+    "bidId": "bid-051",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0068",
+    "at": "2026-10-14T21:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-024",
+    "requestId": "req-013",
+    "stage": 1,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0065",
+    "at": "2026-10-14T13:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-015",
+    "requestId": "req-010",
+    "stage": 1,
+    "attributionSigned": true
+  },
+  {
+    "id": "log-0005",
+    "at": "2026-10-13T15:00:00.000Z",
+    "direction": "seller-viewed-agent",
+    "requestId": "req-009",
+    "agentId": "agt-008",
+    "bidId": "bid-017",
+    "stage": null,
+    "attributionSigned": null
+  },
+  {
+    "id": "log-0055",
+    "at": "2026-10-13T14:00:00.000Z",
+    "direction": "agent-viewed-request",
+    "agentId": "agt-003",
+    "requestId": "req-014",
+    "stage": 1,
+    "attributionSigned": false
+  }
+]

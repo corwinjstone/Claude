@@ -1,0 +1,452 @@
+[
+  {
+    "id": "ttl-001",
+    "company": "Prairie Land Title",
+    "branch": "Uptown",
+    "displayName": "Prairie Land Title – Uptown",
+    "intakeEmail": "uptown.intake@prairielandtitle.example.com",
+    "phone": "(972) 555-7093",
+    "escrowOfficers": [
+      {
+        "name": "Leah Williams",
+        "email": "leah@prairielandtitle.example.com"
+      },
+      {
+        "name": "Grace Tran",
+        "email": "grace@prairielandtitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-002",
+    "company": "Prairie Land Title",
+    "branch": "Plano Legacy",
+    "displayName": "Prairie Land Title – Plano Legacy",
+    "intakeEmail": "planolegacy.intake@prairielandtitle.example.com",
+    "phone": "(972) 555-4830",
+    "escrowOfficers": [
+      {
+        "name": "Chloe Martinez",
+        "email": "chloe@prairielandtitle.example.com"
+      },
+      {
+        "name": "Andre Thompson",
+        "email": "andre@prairielandtitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-003",
+    "company": "Prairie Land Title",
+    "branch": "Fort Worth Sundance",
+    "displayName": "Prairie Land Title – Fort Worth Sundance",
+    "intakeEmail": "fortworthsundance.intake@prairielandtitle.example.com",
+    "phone": "(972) 555-5769",
+    "escrowOfficers": [
+      {
+        "name": "James Hernandez",
+        "email": "james@prairielandtitle.example.com"
+      },
+      {
+        "name": "Maria Singh",
+        "email": "maria@prairielandtitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-004",
+    "company": "Prairie Land Title",
+    "branch": "Arlington",
+    "displayName": "Prairie Land Title – Arlington",
+    "intakeEmail": "arlington.intake@prairielandtitle.example.com",
+    "phone": "(972) 555-9512",
+    "escrowOfficers": [
+      {
+        "name": "Carlos Clark",
+        "email": "carlos@prairielandtitle.example.com"
+      },
+      {
+        "name": "Samuel Ali",
+        "email": "samuel@prairielandtitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-005",
+    "company": "Prairie Land Title",
+    "branch": "Las Colinas",
+    "displayName": "Prairie Land Title – Las Colinas",
+    "intakeEmail": "lascolinas.intake@prairielandtitle.example.com",
+    "phone": "(972) 555-2619",
+    "escrowOfficers": [
+      {
+        "name": "Andre Garcia",
+        "email": "andre@prairielandtitle.example.com"
+      },
+      {
+        "name": "Emily Cooper",
+        "email": "emily@prairielandtitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-006",
+    "company": "Trinity Abstract & Title",
+    "branch": "Preston Center",
+    "displayName": "Trinity Abstract & Title – Preston Center",
+    "intakeEmail": "prestoncenter.intake@trinityabstracttitle.example.com",
+    "phone": "(972) 555-8922",
+    "escrowOfficers": [
+      {
+        "name": "Daniel Cooper",
+        "email": "daniel@trinityabstracttitle.example.com"
+      },
+      {
+        "name": "Maria Johnson",
+        "email": "maria@trinityabstracttitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-007",
+    "company": "Trinity Abstract & Title",
+    "branch": "Frisco",
+    "displayName": "Trinity Abstract & Title – Frisco",
+    "intakeEmail": "frisco.intake@trinityabstracttitle.example.com",
+    "phone": "(972) 555-6910",
+    "escrowOfficers": [
+      {
+        "name": "Hannah Nguyen",
+        "email": "hannah@trinityabstracttitle.example.com"
+      },
+      {
+        "name": "Daniel Okafor",
+        "email": "daniel@trinityabstracttitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-008",
+    "company": "Trinity Abstract & Title",
+    "branch": "Southlake",
+    "displayName": "Trinity Abstract & Title – Southlake",
+    "intakeEmail": "southlake.intake@trinityabstracttitle.example.com",
+    "phone": "(972) 555-8765",
+    "escrowOfficers": [
+      {
+        "name": "Raj Jackson",
+        "email": "raj@trinityabstracttitle.example.com"
+      },
+      {
+        "name": "Omar Davis",
+        "email": "omar@trinityabstracttitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-009",
+    "company": "Trinity Abstract & Title",
+    "branch": "McKinney",
+    "displayName": "Trinity Abstract & Title – McKinney",
+    "intakeEmail": "mckinney.intake@trinityabstracttitle.example.com",
+    "phone": "(972) 555-4021",
+    "escrowOfficers": [
+      {
+        "name": "Mei Martinez",
+        "email": "mei@trinityabstracttitle.example.com"
+      },
+      {
+        "name": "Wei Lewis",
+        "email": "wei@trinityabstracttitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-010",
+    "company": "Trinity Abstract & Title",
+    "branch": "Lakewood",
+    "displayName": "Trinity Abstract & Title – Lakewood",
+    "intakeEmail": "lakewood.intake@trinityabstracttitle.example.com",
+    "phone": "(972) 555-8896",
+    "escrowOfficers": [
+      {
+        "name": "Yesenia Flores",
+        "email": "yesenia@trinityabstracttitle.example.com"
+      },
+      {
+        "name": "Ana Kim",
+        "email": "ana@trinityabstracttitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-011",
+    "company": "Lone Star Escrow & Title",
+    "branch": "Uptown",
+    "displayName": "Lone Star Escrow & Title – Uptown",
+    "intakeEmail": "uptown.intake@lonestarescrowtitle.example.com",
+    "phone": "(972) 555-6569",
+    "escrowOfficers": [
+      {
+        "name": "Nguyen Reyes",
+        "email": "nguyen@lonestarescrowtitle.example.com"
+      },
+      {
+        "name": "Wei Flores",
+        "email": "wei@lonestarescrowtitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-012",
+    "company": "Lone Star Escrow & Title",
+    "branch": "Plano Legacy",
+    "displayName": "Lone Star Escrow & Title – Plano Legacy",
+    "intakeEmail": "planolegacy.intake@lonestarescrowtitle.example.com",
+    "phone": "(972) 555-6784",
+    "escrowOfficers": [
+      {
+        "name": "Maria Walker",
+        "email": "maria@lonestarescrowtitle.example.com"
+      },
+      {
+        "name": "Wei Martinez",
+        "email": "wei@lonestarescrowtitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-013",
+    "company": "Lone Star Escrow & Title",
+    "branch": "Fort Worth Sundance",
+    "displayName": "Lone Star Escrow & Title – Fort Worth Sundance",
+    "intakeEmail": "fortworthsundance.intake@lonestarescrowtitle.example.com",
+    "phone": "(972) 555-3447",
+    "escrowOfficers": [
+      {
+        "name": "Sofia Flores",
+        "email": "sofia@lonestarescrowtitle.example.com"
+      },
+      {
+        "name": "Fatima Flores",
+        "email": "fatima@lonestarescrowtitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-014",
+    "company": "Lone Star Escrow & Title",
+    "branch": "Arlington",
+    "displayName": "Lone Star Escrow & Title – Arlington",
+    "intakeEmail": "arlington.intake@lonestarescrowtitle.example.com",
+    "phone": "(972) 555-3280",
+    "escrowOfficers": [
+      {
+        "name": "Fatima Rivera",
+        "email": "fatima@lonestarescrowtitle.example.com"
+      },
+      {
+        "name": "Andre Davis",
+        "email": "andre@lonestarescrowtitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-015",
+    "company": "Lone Star Escrow & Title",
+    "branch": "Las Colinas",
+    "displayName": "Lone Star Escrow & Title – Las Colinas",
+    "intakeEmail": "lascolinas.intake@lonestarescrowtitle.example.com",
+    "phone": "(972) 555-2619",
+    "escrowOfficers": [
+      {
+        "name": "Chloe Nguyen",
+        "email": "chloe@lonestarescrowtitle.example.com"
+      },
+      {
+        "name": "Tom Singh",
+        "email": "tom@lonestarescrowtitle.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-016",
+    "company": "Red River Title Co.",
+    "branch": "Preston Center",
+    "displayName": "Red River Title Co. – Preston Center",
+    "intakeEmail": "prestoncenter.intake@redrivertitleco.example.com",
+    "phone": "(972) 555-1638",
+    "escrowOfficers": [
+      {
+        "name": "Rachel Chen",
+        "email": "rachel@redrivertitleco.example.com"
+      },
+      {
+        "name": "James Clark",
+        "email": "james@redrivertitleco.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-017",
+    "company": "Red River Title Co.",
+    "branch": "Frisco",
+    "displayName": "Red River Title Co. – Frisco",
+    "intakeEmail": "frisco.intake@redrivertitleco.example.com",
+    "phone": "(972) 555-8794",
+    "escrowOfficers": [
+      {
+        "name": "Wei Jackson",
+        "email": "wei@redrivertitleco.example.com"
+      },
+      {
+        "name": "Hannah Anderson",
+        "email": "hannah@redrivertitleco.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-018",
+    "company": "Red River Title Co.",
+    "branch": "Southlake",
+    "displayName": "Red River Title Co. – Southlake",
+    "intakeEmail": "southlake.intake@redrivertitleco.example.com",
+    "phone": "(972) 555-4211",
+    "escrowOfficers": [
+      {
+        "name": "Maria Davis",
+        "email": "maria@redrivertitleco.example.com"
+      },
+      {
+        "name": "Tom Okafor",
+        "email": "tom@redrivertitleco.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-019",
+    "company": "Red River Title Co.",
+    "branch": "McKinney",
+    "displayName": "Red River Title Co. – McKinney",
+    "intakeEmail": "mckinney.intake@redrivertitleco.example.com",
+    "phone": "(972) 555-7604",
+    "escrowOfficers": [
+      {
+        "name": "Priya Ramirez",
+        "email": "priya@redrivertitleco.example.com"
+      },
+      {
+        "name": "Keisha Chen",
+        "email": "keisha@redrivertitleco.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-020",
+    "company": "Red River Title Co.",
+    "branch": "Lakewood",
+    "displayName": "Red River Title Co. – Lakewood",
+    "intakeEmail": "lakewood.intake@redrivertitleco.example.com",
+    "phone": "(972) 555-2930",
+    "escrowOfficers": [
+      {
+        "name": "Maria Jackson",
+        "email": "maria@redrivertitleco.example.com"
+      },
+      {
+        "name": "Jamal Wilson",
+        "email": "jamal@redrivertitleco.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-021",
+    "company": "Metroplex Title Group",
+    "branch": "Uptown",
+    "displayName": "Metroplex Title Group – Uptown",
+    "intakeEmail": "uptown.intake@metroplextitlegroup.example.com",
+    "phone": "(972) 555-5311",
+    "escrowOfficers": [
+      {
+        "name": "Ana Hernandez",
+        "email": "ana@metroplextitlegroup.example.com"
+      },
+      {
+        "name": "Emily Thompson",
+        "email": "emily@metroplextitlegroup.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-022",
+    "company": "Metroplex Title Group",
+    "branch": "Plano Legacy",
+    "displayName": "Metroplex Title Group – Plano Legacy",
+    "intakeEmail": "planolegacy.intake@metroplextitlegroup.example.com",
+    "phone": "(972) 555-3714",
+    "escrowOfficers": [
+      {
+        "name": "Carlos Cooper",
+        "email": "carlos@metroplextitlegroup.example.com"
+      },
+      {
+        "name": "Luis Thompson",
+        "email": "luis@metroplextitlegroup.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-023",
+    "company": "Metroplex Title Group",
+    "branch": "Fort Worth Sundance",
+    "displayName": "Metroplex Title Group – Fort Worth Sundance",
+    "intakeEmail": "fortworthsundance.intake@metroplextitlegroup.example.com",
+    "phone": "(972) 555-6138",
+    "escrowOfficers": [
+      {
+        "name": "Priya Singh",
+        "email": "priya@metroplextitlegroup.example.com"
+      },
+      {
+        "name": "Yesenia Wilson",
+        "email": "yesenia@metroplextitlegroup.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-024",
+    "company": "Metroplex Title Group",
+    "branch": "Arlington",
+    "displayName": "Metroplex Title Group – Arlington",
+    "intakeEmail": "arlington.intake@metroplextitlegroup.example.com",
+    "phone": "(972) 555-7557",
+    "escrowOfficers": [
+      {
+        "name": "Emily Wilson",
+        "email": "emily@metroplextitlegroup.example.com"
+      },
+      {
+        "name": "Daniel Jackson",
+        "email": "daniel@metroplextitlegroup.example.com"
+      }
+    ]
+  },
+  {
+    "id": "ttl-025",
+    "company": "Metroplex Title Group",
+    "branch": "Las Colinas",
+    "displayName": "Metroplex Title Group – Las Colinas",
+    "intakeEmail": "lascolinas.intake@metroplextitlegroup.example.com",
+    "phone": "(972) 555-5489",
+    "escrowOfficers": [
+      {
+        "name": "Tom Garcia",
+        "email": "tom@metroplextitlegroup.example.com"
+      },
+      {
+        "name": "Aisha Brown",
+        "email": "aisha@metroplextitlegroup.example.com"
+      }
+    ]
+  }
+]

@@ -1,0 +1,1073 @@
+[
+  {
+    "id": "bid-001",
+    "requestId": "req-006",
+    "agentId": "agt-004",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 2.31
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 500000,
+    "priceRange": {
+      "low": 485000,
+      "high": 515000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-10T13:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-002",
+    "requestId": "req-006",
+    "agentId": "agt-016",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 5750
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 475000,
+    "priceRange": {
+      "low": 460000,
+      "high": 490000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": false,
+    "submittedAt": "2026-11-10T02:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-003",
+    "requestId": "req-006",
+    "agentId": "agt-007",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 2.3
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 470000,
+    "priceRange": {
+      "low": 455000,
+      "high": 485000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-09T11:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-004",
+    "requestId": "req-006",
+    "agentId": "agt-014",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 5750
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 460000,
+    "priceRange": {
+      "low": 445000,
+      "high": 475000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-09T07:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-005",
+    "requestId": "req-006",
+    "agentId": "agt-001",
+    "package": "list-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 5700
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 465000,
+    "priceRange": {
+      "low": 450000,
+      "high": 480000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-09T07:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-006",
+    "requestId": "req-006",
+    "agentId": "agt-022",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 5750
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 500000,
+    "priceRange": {
+      "low": 485000,
+      "high": 515000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-10T18:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-007",
+    "requestId": "req-007",
+    "agentId": "agt-009",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 10000
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 835000,
+    "priceRange": {
+      "low": 810000,
+      "high": 860000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-09T22:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-008",
+    "requestId": "req-007",
+    "agentId": "agt-003",
+    "package": "list-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 4800
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 855000,
+    "priceRange": {
+      "low": 830000,
+      "high": 880000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-11T02:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-009",
+    "requestId": "req-007",
+    "agentId": "agt-018",
+    "package": "price-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 2000
+    },
+    "coversPlatformFee": true,
+    "suggestedListPrice": 810000,
+    "priceRange": {
+      "low": 785000,
+      "high": 835000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-10T20:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-010",
+    "requestId": "req-008",
+    "agentId": "agt-008",
+    "package": "price-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 2800
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 650000,
+    "priceRange": {
+      "low": 630000,
+      "high": 670000
+    },
+    "plan": "Pro photos and a 3D tour in week 1. Live on the MLS by day 4. Open house the first weekend. Weekly written report every Monday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-11T01:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-011",
+    "requestId": "req-008",
+    "agentId": "agt-005",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 7750
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 675000,
+    "priceRange": {
+      "low": 655000,
+      "high": 695000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": false,
+    "submittedAt": "2026-11-12T01:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-012",
+    "requestId": "req-008",
+    "agentId": "agt-011",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 7750
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 665000,
+    "priceRange": {
+      "low": 645000,
+      "high": 685000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-11T22:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-013",
+    "requestId": "req-008",
+    "agentId": "agt-010",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.63
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 665000,
+    "priceRange": {
+      "low": 645000,
+      "high": 685000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-11T10:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-014",
+    "requestId": "req-008",
+    "agentId": "agt-024",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.72
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 675000,
+    "priceRange": {
+      "low": 655000,
+      "high": 695000
+    },
+    "plan": "Pro photos and a 3D tour in week 1. Live on the MLS by day 4. Open house the first weekend. Weekly written report every Monday.",
+    "brokerApproved": false,
+    "submittedAt": "2026-11-12T02:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-015",
+    "requestId": "req-008",
+    "agentId": "agt-030",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.28
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 680000,
+    "priceRange": {
+      "low": 660000,
+      "high": 700000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-11T05:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-016",
+    "requestId": "req-008",
+    "agentId": "agt-020",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 7750
+    },
+    "coversPlatformFee": true,
+    "suggestedListPrice": 635000,
+    "priceRange": {
+      "low": 615000,
+      "high": 655000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-11T08:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-017",
+    "requestId": "req-009",
+    "agentId": "agt-008",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 8000
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 665000,
+    "priceRange": {
+      "low": 645000,
+      "high": 685000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-11T03:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-018",
+    "requestId": "req-009",
+    "agentId": "agt-022",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.45
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 655000,
+    "priceRange": {
+      "low": 635000,
+      "high": 675000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-10T14:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-019",
+    "requestId": "req-009",
+    "agentId": "agt-012",
+    "package": "price-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 2400
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 655000,
+    "priceRange": {
+      "low": 635000,
+      "high": 675000
+    },
+    "plan": "Pro photos and a 3D tour in week 1. Live on the MLS by day 4. Open house the first weekend. Weekly written report every Monday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-11T05:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-020",
+    "requestId": "req-009",
+    "agentId": "agt-019",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.34
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 675000,
+    "priceRange": {
+      "low": 655000,
+      "high": 695000
+    },
+    "plan": "Pro photos and a 3D tour in week 1. Live on the MLS by day 4. Open house the first weekend. Weekly written report every Monday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-10T19:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-021",
+    "requestId": "req-009",
+    "agentId": "agt-028",
+    "package": "list-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 4200
+    },
+    "coversPlatformFee": true,
+    "suggestedListPrice": 675000,
+    "priceRange": {
+      "low": 655000,
+      "high": 695000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-11T11:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-022",
+    "requestId": "req-009",
+    "agentId": "agt-006",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.82
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 655000,
+    "priceRange": {
+      "low": 635000,
+      "high": 675000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-11-10T09:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-023",
+    "requestId": "req-010",
+    "agentId": "agt-015",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.65
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 615000,
+    "priceRange": {
+      "low": 595000,
+      "high": 635000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-10-02T04:00:00.000Z",
+    "status": "accepted",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-024",
+    "requestId": "req-010",
+    "agentId": "agt-026",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 7250
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 595000,
+    "priceRange": {
+      "low": 575000,
+      "high": 615000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": true,
+    "submittedAt": "2026-10-02T02:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-025",
+    "requestId": "req-010",
+    "agentId": "agt-016",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.39
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 630000,
+    "priceRange": {
+      "low": 610000,
+      "high": 650000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-10-02T02:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-026",
+    "requestId": "req-010",
+    "agentId": "agt-003",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 2.16
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 620000,
+    "priceRange": {
+      "low": 600000,
+      "high": 640000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-10-03T02:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-027",
+    "requestId": "req-010",
+    "agentId": "agt-030",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.28
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 600000,
+    "priceRange": {
+      "low": 580000,
+      "high": 620000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-10-02T05:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-028",
+    "requestId": "req-010",
+    "agentId": "agt-027",
+    "package": "list-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 4500
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 595000,
+    "priceRange": {
+      "low": 575000,
+      "high": 615000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": false,
+    "submittedAt": "2026-10-03T15:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-029",
+    "requestId": "req-010",
+    "agentId": "agt-025",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.48
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 610000,
+    "priceRange": {
+      "low": 590000,
+      "high": 630000
+    },
+    "plan": "Pro photos and a 3D tour in week 1. Live on the MLS by day 4. Open house the first weekend. Weekly written report every Monday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-10-02T14:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-030",
+    "requestId": "req-011",
+    "agentId": "agt-006",
+    "package": "price-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 3100
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 495000,
+    "priceRange": {
+      "low": 480000,
+      "high": 510000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-10-04T01:00:00.000Z",
+    "status": "accepted",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-031",
+    "requestId": "req-011",
+    "agentId": "agt-022",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 5750
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 490000,
+    "priceRange": {
+      "low": 475000,
+      "high": 505000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-10-04T17:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-032",
+    "requestId": "req-011",
+    "agentId": "agt-008",
+    "package": "price-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 2800
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 485000,
+    "priceRange": {
+      "low": 470000,
+      "high": 500000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": true,
+    "submittedAt": "2026-10-04T19:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-033",
+    "requestId": "req-012",
+    "agentId": "agt-002",
+    "package": "list-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 4900
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 420000,
+    "priceRange": {
+      "low": 405000,
+      "high": 435000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": false,
+    "submittedAt": "2026-08-30T07:00:00.000Z",
+    "status": "accepted",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-034",
+    "requestId": "req-012",
+    "agentId": "agt-008",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.88
+    },
+    "coversPlatformFee": true,
+    "suggestedListPrice": 415000,
+    "priceRange": {
+      "low": 405000,
+      "high": 425000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-08-30T04:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-035",
+    "requestId": "req-012",
+    "agentId": "agt-007",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 2.3
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 415000,
+    "priceRange": {
+      "low": 405000,
+      "high": 425000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-08-30T16:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-036",
+    "requestId": "req-012",
+    "agentId": "agt-026",
+    "package": "list-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 3900
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 395000,
+    "priceRange": {
+      "low": 385000,
+      "high": 405000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-08-31T00:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-037",
+    "requestId": "req-012",
+    "agentId": "agt-023",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.67
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 430000,
+    "priceRange": {
+      "low": 415000,
+      "high": 445000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-08-30T23:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-038",
+    "requestId": "req-012",
+    "agentId": "agt-024",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 5000
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 405000,
+    "priceRange": {
+      "low": 395000,
+      "high": 415000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-08-29T23:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-039",
+    "requestId": "req-013",
+    "agentId": "agt-025",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.48
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 890000,
+    "priceRange": {
+      "low": 865000,
+      "high": 915000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-08-31T20:00:00.000Z",
+    "status": "accepted",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-040",
+    "requestId": "req-013",
+    "agentId": "agt-004",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 2.31
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 830000,
+    "priceRange": {
+      "low": 805000,
+      "high": 855000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-08-31T23:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-041",
+    "requestId": "req-013",
+    "agentId": "agt-008",
+    "package": "list-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 4700
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 830000,
+    "priceRange": {
+      "low": 805000,
+      "high": 855000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": true,
+    "submittedAt": "2026-09-01T21:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-042",
+    "requestId": "req-013",
+    "agentId": "agt-012",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.66
+    },
+    "coversPlatformFee": true,
+    "suggestedListPrice": 845000,
+    "priceRange": {
+      "low": 820000,
+      "high": 870000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": true,
+    "submittedAt": "2026-09-01T02:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-043",
+    "requestId": "req-013",
+    "agentId": "agt-020",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 10250
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 895000,
+    "priceRange": {
+      "low": 870000,
+      "high": 920000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-09-01T04:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-044",
+    "requestId": "req-013",
+    "agentId": "agt-024",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.72
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 880000,
+    "priceRange": {
+      "low": 855000,
+      "high": 905000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": true,
+    "submittedAt": "2026-09-01T08:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-045",
+    "requestId": "req-013",
+    "agentId": "agt-010",
+    "package": "price-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 2200
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 895000,
+    "priceRange": {
+      "low": 870000,
+      "high": 920000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": false,
+    "submittedAt": "2026-09-01T13:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-046",
+    "requestId": "req-014",
+    "agentId": "agt-005",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 5000
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 445000,
+    "priceRange": {
+      "low": 430000,
+      "high": 460000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-08-26T13:00:00.000Z",
+    "status": "accepted",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-047",
+    "requestId": "req-014",
+    "agentId": "agt-030",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.28
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 445000,
+    "priceRange": {
+      "low": 430000,
+      "high": 460000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": true,
+    "submittedAt": "2026-08-25T18:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-048",
+    "requestId": "req-014",
+    "agentId": "agt-008",
+    "package": "full-service",
+    "fee": {
+      "kind": "flat",
+      "value": 5000
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 415000,
+    "priceRange": {
+      "low": 405000,
+      "high": 425000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": false,
+    "submittedAt": "2026-08-25T19:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-049",
+    "requestId": "req-014",
+    "agentId": "agt-016",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.39
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 410000,
+    "priceRange": {
+      "low": 400000,
+      "high": 420000
+    },
+    "plan": "Price it right from day one using 6 recent nearby sales. Pre-listing inspection so buyers have fewer surprises. I reply within 2 hours.",
+    "brokerApproved": false,
+    "submittedAt": "2026-08-27T02:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-050",
+    "requestId": "req-014",
+    "agentId": "agt-012",
+    "package": "full-service",
+    "fee": {
+      "kind": "percent",
+      "value": 1.66
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 430000,
+    "priceRange": {
+      "low": 415000,
+      "high": 445000
+    },
+    "plan": "Light staging advice, twilight photos, and targeted social ads to buyers in your zip. Weekly reports by email and text.",
+    "brokerApproved": true,
+    "submittedAt": "2026-08-26T16:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  },
+  {
+    "id": "bid-051",
+    "requestId": "req-014",
+    "agentId": "agt-010",
+    "package": "list-negotiate",
+    "fee": {
+      "kind": "flat",
+      "value": 4400
+    },
+    "coversPlatformFee": false,
+    "suggestedListPrice": 440000,
+    "priceRange": {
+      "low": 425000,
+      "high": 455000
+    },
+    "plan": "I handle every showing and screen buyers for financing before they tour. You get a written update every Friday.",
+    "brokerApproved": true,
+    "submittedAt": "2026-08-26T00:00:00.000Z",
+    "status": "active",
+    "counterRound": 0
+  }
+]
