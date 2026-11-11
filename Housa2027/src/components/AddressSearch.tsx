@@ -7,7 +7,7 @@ import { suggest } from '@/lib/addressService';
 
 const providerNote = { google: 'Suggestions by Google', osm: 'Suggestions © OpenStreetMap contributors', housa: 'Sample Housa addresses' };
 
-export function AddressSearch({ onSelect, autoFocus }: { onSelect: (s: AddressSuggestion) => void; autoFocus?: boolean }) {
+export function AddressSearch({ onSelect, autoFocus, compact }: { onSelect: (s: AddressSuggestion) => void; autoFocus?: boolean; compact?: boolean }) {
   const [input, setInput] = useState('');
   const [options, setOptions] = useState<AddressSuggestion[]>([]);
   const [provider, setProvider] = useState<keyof typeof providerNote>('housa');
@@ -52,7 +52,8 @@ export function AddressSearch({ onSelect, autoFocus }: { onSelect: (s: AddressSu
           autoFocus={autoFocus}
           label="Your home address"
           placeholder="Start typing, like 309 Post Oak"
-          helperText="We never show your address to agents unless you pick one."
+          helperText={compact ? undefined : "We never show your address to agents unless you pick one."}
+          size={compact ? "small" : "medium"}
           slotProps={{
             input: {
               ...params.InputProps,

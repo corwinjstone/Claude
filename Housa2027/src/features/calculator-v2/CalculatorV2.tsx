@@ -2,86 +2,44 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Alert, Box, Button, Card, CardContent, Chip, Container, InputAdornment, Skeleton, Slider, Stack, TextField, Typography } from '@mui/material';
+import {
+  Alert, Box, Button, Card, CardContent, Chip, Container, InputAdornment, Skeleton, Slider, Stack, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography,
+} from '@mui/material';
 import LockOutlined from '@mui/icons-material/LockOutlined';
 import NotificationsActiveOutlined from '@mui/icons-material/NotificationsActiveOutlined';
 import { AddressSearch } from '@/components/AddressSearch';
 import { HelpTip } from '@/components/HelpTip';
 import { estimate as lookupEstimate } from '@/lib/addressService';
-import { PLATFORM_FEE } from '@/lib/fees';
 import type { GlossaryKey } from '@/lib/glossary';
 import { money } from '@/lib/money';
 import type { AddressSuggestion, HomeEstimate } from '@/lib/types';
 import type { Sample } from '@/features/calculator/EquityCalculator';
 import { SaveHomeDialog } from '@/features/calculator/SaveHomeDialog';
-import { buildScenarios, pctText, type Scenario } from '@/features/calculator/scenarios';
+import { buildScenarios, pctText } from '@/features/calculator/scenarios';
 import { EquityKept } from './EquityKept';
 
 const r5k = (n: number) => Math.round(n / 5000) * 5000;
 
-/** A labeled slider with its value in a box on the right and min/max captions under the track. */
+const valueBox = {
+  minWidth: 104, textAlign: 'right', px: 1.5, py: 0.25, borderRadius: 1.5, bgcolor: 'm3.surfaceContainerHighest',
+  fontSize: '1rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', lineHeight: 1.6,
+} as const;
+
+/** A labeled slider: name and value on one line, the slider right under it. */
 function Dial(p: {
-  id: string; label: string; help?: GlossaryKey; box: React.ReactNode; value: number; min: number; max: number; step: number;
-  onChange: (v: number) => void; text: (v: number) => string; captions: [string, string, string?];
+  id: string; label: string; help?: GlossaryKey; box: React.ReactNode; value: number; min: number; max: number; step: number; onChange: (v: number) => void; text: (v: number) => string;
 }) {
   return (
     <Box>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2}>
-        <Stack direction="row" alignItems="center" spacing={0.5}>
-          <Typography variant="subtitle1" component="h3" id={p.id}>{p.label}</Typography>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
+        <Stack direction="row" alignItems="center" spacing={0.25} sx={{ flexShrink: 0 }}>
+          <Typography variant="subtitle2" component="h3" id={p.id} sx={{ whiteSpace: 'nowrap' }}>{p.label}</Typography>
           {p.help && <HelpTip k={p.help} />}
         </Stack>
         {p.box}
       </Stack>
-      <Slider aria-labelledby={p.id} getAriaValueText={p.text} value={p.value} min={p.min} max={p.max} step={p.step} onChange={(_, v) => p.onChange(v as number)} sx={{ mt: 0.5, mb: -1 }} />
-      <Stack direction="row" justifyContent="space-between" sx={{ color: 'text.secondary' }}>
-        <Typography variant="caption">{p.captions[0]}</Typography>
-        {p.captions[2] && <Typography variant="caption" sx={{ fontWeight: 700, color: 'text.primary' }}>{p.captions[2]}</Typography>}
-        <Typography variant="caption">{p.captions[1]}</Typography>
-      </Stack>
+      <Slider aria-labelledby={p.id} getAriaValueText={p.text} value={p.value} min={p.min} max={p.max} step={p.step} onChange={(_, v) => p.onChange(v as number)} sx={{ display: 'block', mt: 0.25, mb: -0.5, py: '12px' }} />
     </Box>
-  );
-}
-
-const valueBox = {
-  minWidth: 132, textAlign: 'right', px: 2, py: 1, borderRadius: 2, bgcolor: 'm3.surfaceContainerHighest',
-  fontSize: '1.25rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', lineHeight: 1.4,
-} as const;
-
-function TermsCard({ title, tag, s, price, muted, highlight }: { title: string; tag: string; s: Scenario; price: number; muted?: boolean; highlight?: boolean }) {
-  const ink = muted ? 'text.secondary' : 'text.primary';
-  const rows: [string, string][] = [
-    ['Home price', money(price)],
-    ['Your agent', `${money(s.agent)} · ${pctText(s.agentPctTotal - s.buyerAgentPct)}`],
-    ["Buyer's agent", `${money(s.buyerAgent)} · ${pctText(s.buyerAgentPct)}`],
-    ['Housa fee', s.platform ? money(s.platform) : '$0'],
-    ['Mortgage balance', money(s.payoff)],
-    ['Title & closing', money(s.otherClosing)],
-  ];
-  return (
-    <Card sx={{ height: '100%', borderWidth: highlight ? 2 : 1, borderColor: highlight ? 'success.main' : 'divider', bgcolor: highlight ? 'm3.surfaceContainerHigh' : undefined }}>
-      <CardContent sx={{ p: { xs: 2.5, sm: 3 }, textAlign: 'center' }}>
-        <Typography variant="overline" component="p" color="text.secondary">{tag}</Typography>
-        <Typography variant="h6" component="h3" sx={{ color: ink }}>{title}</Typography>
-        <Typography component="p" sx={{ mt: 2, fontSize: { xs: '2.25rem', md: '2.5rem' }, lineHeight: 1.1, fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: muted ? 'text.secondary' : 'success.main' }}>
-          {money(s.youKeep)}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">Cash at close</Typography>
-        <Box sx={{ mt: 2, py: 1.5, borderRadius: 2, bgcolor: 'm3.surfaceContainerHighest' }}>
-          <Typography variant="caption" component="p" color="text.secondary">Total fees</Typography>
-          <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: ink }}>{money(s.feesTotal)}</Typography>
-          <Typography variant="body2" color="text.secondary">{s.platform ? `${pctText(s.agentPctTotal)} + ${money(s.platform)}` : pctText(s.agentPctTotal)}</Typography>
-        </Box>
-        <Box component="dl" sx={{ m: 0, mt: 2, display: 'grid', gridTemplateColumns: 'auto auto', rowGap: 1, columnGap: 2, textAlign: 'left' }}>
-          {rows.map(([k, v]) => (
-            <Box key={k} sx={{ display: 'contents' }}>
-              <Typography component="dt" variant="body2" color="text.secondary">{k}</Typography>
-              <Typography component="dd" variant="body2" sx={{ m: 0, textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: ink, whiteSpace: 'nowrap' }}>{v}</Typography>
-            </Box>
-          ))}
-        </Box>
-      </CardContent>
-    </Card>
   );
 }
 
@@ -122,29 +80,25 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
   );
 
   return (
-    <Container maxWidth="lg" sx={{ pt: { xs: 3, md: 5 } }}>
-      <Typography variant="overline" color="primary" component="p">Free · No sign-up · Dallas–Fort Worth · Design B</Typography>
-      <Typography variant="h1" sx={{ mt: 0.5, fontSize: { xs: '1.75rem', md: '2.25rem' }, lineHeight: 1.2 }}>
+    <Container maxWidth="lg" sx={{ pt: { xs: 2, md: 3 } }}>
+      <Typography variant="h1" sx={{ fontSize: { xs: '1.375rem', md: '1.75rem' }, lineHeight: 1.2 }}>
         How much cash would you walk away with?
       </Typography>
 
-      {/* Address stays on top, so you can change it any time */}
-      <Card sx={{ mt: 3, p: { xs: 2, sm: 3 }, bgcolor: 'm3.surfaceContainer' }}>
-        <AddressSearch onSelect={choose} />
-        {loading && <Skeleton variant="rounded" height={48} sx={{ mt: 2 }} aria-label="Looking up your home" />}
-        {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+      <Card sx={{ mt: 1.5, p: { xs: 1.5, sm: 2 }, bgcolor: 'm3.surfaceContainer' }}>
+        <AddressSearch onSelect={choose} compact />
+        {loading && <Skeleton variant="rounded" height={32} sx={{ mt: 1 }} aria-label="Looking up your home" />}
+        {error && <Alert severity="error" sx={{ mt: 1 }}>{error}</Alert>}
         {!estimate ? (
-          <>
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 2, mb: 1 }} id="v2-samples">Just looking? Try a sample home:</Typography>
-            <Stack direction="row" useFlexGap flexWrap="wrap" gap={1} role="group" aria-labelledby="v2-samples">
-              {samples.map((s) => <Chip key={s.id} label={s.label} variant="outlined" onClick={() => choose({ ...s, source: 'housa' })} sx={{ minHeight: 40 }} />)}
-            </Stack>
-          </>
+          <Stack direction="row" useFlexGap flexWrap="wrap" alignItems="center" gap={1} sx={{ mt: 1.5 }} role="group" aria-label="Sample homes">
+            <Typography variant="body2" color="text.secondary">Try a sample:</Typography>
+            {samples.map((s) => <Chip key={s.id} label={s.label} variant="outlined" onClick={() => choose({ ...s, source: 'housa' })} sx={{ minHeight: 40 }} />)}
+          </Stack>
         ) : (
-          <Typography variant="body1" sx={{ mt: 2 }}>
+          <Typography variant="body2" sx={{ mt: 1 }}>
             <strong>{estimate.label}</strong>
             <Box component="span" sx={{ color: 'text.secondary' }}>
-              {estimate.details?.beds ? ` · ${estimate.details.beds} bd / ${estimate.details.baths} ba · ${estimate.details.sqft.toLocaleString()} sq ft` : ''}
+              {estimate.details?.beds ? ` · ${estimate.details.beds} bd/${estimate.details.baths} ba · ${estimate.details.sqft.toLocaleString()} sq ft` : ''}
               {` · worth about ${money(estimate.low)} – ${money(estimate.high)}`}
             </Box>
             <HelpTip k="homeValue" />
@@ -153,120 +107,125 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
       </Card>
 
       {!estimate && (
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 3, color: 'text.secondary' }}>
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 2, color: 'text.secondary' }}>
           <LockOutlined fontSize="small" aria-hidden />
-          <Typography variant="body2">Your address stays private. Agents only see it if you accept their bid.</Typography>
+          <Typography variant="body2">Free, no sign-up. Your address stays private. Agents only see it if you accept their bid.</Typography>
         </Stack>
       )}
 
       {estimate && sc && (() => {
-        const you = sc.custom, trad = sc.traditional;
+        const you = sc.custom, trad = sc.traditional, mid = sc.housa;
         const min = r5k(estimate.low * 0.85), max = r5k(estimate.high * 1.15);
         const payoffMax = Math.max(max, payoff);
+        const cols = [{ s: trad, name: 'Traditional 6%' }, { s: mid, name: 'Typical Housa' }, { s: you, name: 'Your terms' }];
+        const cell = { py: 0.75, px: { xs: 0.5, sm: 2 }, textAlign: 'right', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } as const;
         return (
           <Box
             sx={{
-              mt: 3, display: 'grid', gap: 3,
-              gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'minmax(0, 1fr) minmax(0, 1fr)' },
-              gridTemplateAreas: { xs: '"hero" "inputs" "chart" "cards"', md: '"inputs hero" "chart chart" "cards cards"' },
+              mt: 2, display: 'grid', gap: 2,
+              gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'minmax(0, 7fr) minmax(0, 5fr)' },
+              gridTemplateAreas: { xs: '"hero" "inputs" "chart" "terms"', md: '"inputs hero" "chart chart" "terms terms"' },
             }}
           >
             {/* The answer */}
-            <Card sx={{ gridArea: 'hero', bgcolor: 'm3.successContainer', color: 'm3.onSuccessContainer', border: 0, display: 'flex' }}>
-              <CardContent sx={{ p: { xs: 3, sm: 4 }, display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%', textAlign: 'center' }}>
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={0.5}>
-                  <Typography variant="subtitle1" component="h2">Estimated cash at close</Typography>
+            <Card sx={{ gridArea: 'hero', bgcolor: 'm3.successContainer', color: 'm3.onSuccessContainer', border: 0 }}>
+              <CardContent sx={{ p: { xs: 2, sm: 2.5 }, display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%', textAlign: 'center', '&:last-child': { pb: { xs: 2, sm: 2.5 } } }}>
+                <Stack direction="row" alignItems="center" justifyContent="center" spacing={0.25}>
+                  <Typography variant="subtitle2" component="h2">Estimated cash at close</Typography>
                   <HelpTip k="cashAtClose" />
                 </Stack>
-                <Typography component="p" aria-live="polite" sx={{ my: 1, fontSize: { xs: '3.25rem', sm: '4.5rem' }, lineHeight: 1.05, fontWeight: 700, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>
+                <Typography component="p" aria-live="polite" sx={{ fontSize: { xs: '2.75rem', sm: '3.5rem' }, lineHeight: 1.05, fontWeight: 700, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>
                   {money(you.youKeep)}
                 </Typography>
-                <Typography variant="h6" component="p">
+                <Typography variant="body1" component="p" sx={{ fontWeight: 600 }}>
                   {you.vsTraditional >= 0 ? `${money(you.vsTraditional)} more` : `${money(-you.vsTraditional)} less`} than a traditional 6% sale
                 </Typography>
-                <Box sx={{ mt: 3, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, borderTop: 1, borderColor: 'm3.outlineVariant', pt: 2 }}>
-                  <Box>
-                    <Typography variant="body2" component="p">Your total fees</Typography>
-                    <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{money(you.feesTotal)}</Typography>
-                    <Typography variant="body2">{pctText(you.agentPctTotal)} + {money(PLATFORM_FEE)}</Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="body2" component="p">Traditional fees</Typography>
-                    <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}><s>{money(trad.feesTotal)}</s></Typography>
-                    <Typography variant="body2">6%</Typography>
-                  </Box>
-                </Box>
-                <Stack spacing={1.5} sx={{ mt: 3 }}>
-                  <Button variant="contained" size="large" onClick={() => router.push('/sell?from=calculator')}>Get offers from local agents</Button>
-                  <Button variant="text" color="inherit" startIcon={<NotificationsActiveOutlined />} onClick={() => setSaveOpen(true)}>Email me a monthly update</Button>
+                <Typography variant="body2" component="p" sx={{ mt: 0.5 }}>
+                  Your fees {money(you.feesTotal)} ({pctText(you.agentPctTotal)} + $995) instead of <s>{money(trad.feesTotal)}</s>
+                </Typography>
+                <Stack direction="row" spacing={1} justifyContent="center" alignItems="center" sx={{ mt: 1.5 }}>
+                  <Button variant="contained" onClick={() => router.push('/sell?from=calculator')}>Get offers from local agents</Button>
+                  <Button variant="text" color="inherit" aria-label="Email me a monthly update" onClick={() => setSaveOpen(true)} sx={{ minWidth: 48, px: 1.5 }}>
+                    <NotificationsActiveOutlined />
+                  </Button>
                 </Stack>
               </CardContent>
             </Card>
 
-            {/* The dials */}
+            {/* The dials, two across on wide screens */}
             <Card sx={{ gridArea: 'inputs' }}>
-              <CardContent sx={{ display: 'grid', gap: 3, p: { xs: 2.5, sm: 3 } }}>
-                <Typography variant="h5" component="h2">Your numbers</Typography>
-                <Dial
-                  id="v2-price" label="Home sale price" value={price} min={min} max={max} step={5000} onChange={setPrice} text={money}
-                  box={<Box sx={valueBox}>{money(price)}</Box>} captions={[money(min), money(max)]}
-                />
-                <Dial
-                  id="v2-payoff" label="Mortgage balance" help="payoff" value={Math.min(payoff, payoffMax)} min={0} max={payoffMax} step={5000} onChange={setPayoff} text={money}
-                  captions={['$0', money(payoffMax)]}
-                  box={
-                    <TextField
-                      size="small" fullWidth={false} value={payoff.toLocaleString('en-US')}
-                      onChange={(e) => setPayoff(Math.min(Number(e.target.value.replace(/[^0-9]/g, '')) || 0, 10_000_000))}
-                      sx={{ width: 150, '& .MuiOutlinedInput-root': { minHeight: 44, fontWeight: 700, fontSize: '1.125rem' }, '& input': { textAlign: 'right' } }}
-                      slotProps={{ input: { startAdornment: <InputAdornment position="start">$</InputAdornment> }, htmlInput: { inputMode: 'numeric', 'aria-label': 'Mortgage balance in dollars' } }}
-                    />
-                  }
-                />
-                <Dial
-                  id="v2-agent" label="Fee to your agent" help="listingFee" value={agentPct} min={0.5} max={3} step={0.05} onChange={setAgentPct} text={(v) => `${v}%`}
-                  box={<Box sx={valueBox}>{money(you.agent)}</Box>} captions={['0.5%', '3%', pctText(agentPct)]}
-                />
-                <Dial
-                  id="v2-buyer" label="Offer to the buyer’s agent" help="buyerAgent" value={buyerPct} min={0} max={3} step={0.25} onChange={setBuyerPct} text={(v) => `${v}%`}
-                  box={<Box sx={valueBox}>{money(you.buyerAgent)}</Box>} captions={['0%', '3%', pctText(buyerPct)]}
-                />
-                <Box role="status" sx={{ borderRadius: 2, p: 2, bgcolor: 'm3.secondaryContainer', color: 'm3.onSecondaryContainer', display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', columnGap: 2 }}>
-                  <Typography variant="body1">You offer a total of <strong>{pctText(you.agentPctTotal)}</strong> to agents</Typography>
-                  <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{money(you.agentDollarsTotal)}</Typography>
-                  <Typography variant="body2">A traditional sale is 6%</Typography>
-                  <Typography variant="body1" sx={{ textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}><s>{money(trad.agentDollarsTotal)}</s></Typography>
+              <CardContent sx={{ p: { xs: 2, sm: 2.5 }, '&:last-child': { pb: { xs: 2, sm: 2.5 } } }}>
+                <Box sx={{ display: 'grid', columnGap: 4, rowGap: 1, gridTemplateColumns: { xs: 'minmax(0, 1fr)', sm: 'repeat(2, minmax(0, 1fr))' } }}>
+                  <Dial id="v2-price" label="Home sale price" value={price} min={min} max={max} step={5000} onChange={setPrice} text={money} box={<Box sx={valueBox}>{money(price)}</Box>} />
+                  <Dial
+                    id="v2-payoff" label="Mortgage balance" help="payoff" value={Math.min(payoff, payoffMax)} min={0} max={payoffMax} step={5000} onChange={setPayoff} text={money}
+                    box={
+                      <TextField
+                        size="small" value={payoff.toLocaleString('en-US')} fullWidth={false}
+                        onChange={(e) => setPayoff(Math.min(Number(e.target.value.replace(/[^0-9]/g, '')) || 0, 10_000_000))}
+                        sx={{ width: 120, '& .MuiOutlinedInput-root': { minHeight: 32, fontWeight: 700 }, '& input': { textAlign: 'right', py: 0.25 } }}
+                        slotProps={{ input: { startAdornment: <InputAdornment position="start" sx={{ mr: 0.25 }}>$</InputAdornment> }, htmlInput: { inputMode: 'numeric', 'aria-label': 'Mortgage balance in dollars' } }}
+                      />
+                    }
+                  />
+                  <Dial id="v2-agent" label={`Your agent · ${pctText(agentPct)}`} help="listingFee" value={agentPct} min={0.5} max={3} step={0.05} onChange={setAgentPct} text={(v) => `${v}%`} box={<Box sx={valueBox}>{money(you.agent)}</Box>} />
+                  <Dial id="v2-buyer" label={`Buyer’s agent · ${pctText(buyerPct)}`} help="buyerAgent" value={buyerPct} min={0} max={3} step={0.25} onChange={setBuyerPct} text={(v) => `${v}%`} box={<Box sx={valueBox}>{money(you.buyerAgent)}</Box>} />
+                </Box>
+                <Box role="status" sx={{ mt: 1, borderRadius: 2, px: 2, py: 1, bgcolor: 'm3.secondaryContainer', color: 'm3.onSecondaryContainer', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 2, flexWrap: 'wrap' }}>
+                  <Typography variant="body2">Total to agents: <strong>{pctText(you.agentPctTotal)}</strong> (traditional: 6%)</Typography>
+                  <Typography variant="subtitle1" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>
+                    {money(you.agentDollarsTotal)} <Box component="s" sx={{ fontWeight: 400, fontSize: '0.875rem', ml: 0.5 }}>{money(trad.agentDollarsTotal)}</Box>
+                  </Typography>
                 </Box>
               </CardContent>
             </Card>
 
             {/* The picture */}
             <Card sx={{ gridArea: 'chart' }}>
-              <CardContent sx={{ p: { xs: 2.5, sm: 3 } }}>
-                <Typography variant="h5" component="h2">How much of your equity you keep</Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, mb: 2.5, maxWidth: 720 }}>
-                  You have {money(you.equity)} of equity in this sale. <Box component="strong" sx={{ color: 'text.primary' }}>Green is the cash you walk away with.</Box> The striped end is what fees take.
-                </Typography>
-                <EquityKept
-                  equity={you.equity}
-                  rows={[{ label: 'Your terms', s: you, highlight: true }, { label: 'Typical Housa bid', s: sc.housa }, { label: 'Traditional 6%', s: trad, warn: true }]}
-                />
+              <CardContent sx={{ p: { xs: 2, sm: 2.5 }, '&:last-child': { pb: { xs: 2, sm: 2.5 } } }}>
+                <Typography variant="h6" component="h2">How much of your {money(you.equity)} equity you keep</Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>Green is your cash at close. The striped end is what fees take.</Typography>
+                <EquityKept equity={you.equity} rows={[{ label: 'Your terms', s: you, highlight: true }, { label: 'Typical Housa bid', s: mid }, { label: 'Traditional 6%', s: trad, warn: true }]} />
               </CardContent>
             </Card>
 
             {/* The terms, side by side */}
-            <Box sx={{ gridArea: 'cards' }}>
-              <Typography variant="h5" component="h2" sx={{ mb: 2 }}>Three ways to sell, side by side</Typography>
-              <Box sx={{ display: 'grid', gap: 2, gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'repeat(3, minmax(0, 1fr))' } }}>
-                <TermsCard tag="The old standard" title="Traditional 6%" s={trad} price={price} muted />
-                <TermsCard tag={`Middle of ${typical.sampleSize} sample bids`} title="Typical Housa bid" s={sc.housa} price={price} />
-                <TermsCard tag="Set with the sliders" title="Your terms" s={you} price={price} highlight />
-              </Box>
-              <Typography variant="caption" color="text.secondary" component="p" sx={{ mt: 2 }}>
-                These are estimates, not an appraisal or an offer. Housa does not set agent fees; agents set their own when they bid. Title and closing costs are a rough 1% of the price.{' '}
-                <Link href="/">See the first design</Link>
-              </Typography>
-            </Box>
+            <Card sx={{ gridArea: 'terms' }}>
+              <CardContent sx={{ p: { xs: 1.5, sm: 2.5 }, '&:last-child': { pb: { xs: 1.5, sm: 2 } } }}>
+                <Typography variant="h6" component="h2" sx={{ mb: 0.5 }}>Three ways to sell, side by side</Typography>
+                <Table size="small" aria-label="Three ways to sell, side by side" sx={{ tableLayout: 'fixed', width: '100%', '& td, & th': { borderColor: 'divider' } }}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell sx={{ py: 0.5, px: 0, width: { xs: '25%', sm: '28%' } }}><Box component="span" sx={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0 0 0 0)' }}>Item</Box></TableCell>
+                      {cols.map((c) => <TableCell key={c.name} sx={{ ...cell, whiteSpace: { xs: 'normal', sm: 'nowrap' }, fontSize: { xs: '0.8125rem', sm: '0.875rem' }, py: 0.5, fontWeight: 700, verticalAlign: 'bottom', lineHeight: 1.2, color: c.s.key === 'custom' ? 'success.main' : 'text.primary' }}>{c.name}</TableCell>)}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {[
+                      { k: 'Cash at close', strong: true, v: (s: typeof you) => money(s.youKeep) },
+                      { k: 'Total fees', sub: (s: typeof you) => (s.platform ? `${pctText(s.agentPctTotal)} + $995` : pctText(s.agentPctTotal)), v: (s: typeof you) => money(s.feesTotal) },
+                      { k: 'Your agent', v: (s: typeof you) => `${money(s.agent)}` },
+                      { k: "Buyer's agent", v: (s: typeof you) => `${money(s.buyerAgent)}` },
+                      { k: 'Housa fee', v: (s: typeof you) => (s.platform ? money(s.platform) : '$0') },
+                    ].map((r) => (
+                      <TableRow key={r.k}>
+                        <TableCell component="th" scope="row" sx={{ py: 0.75, px: 0, fontWeight: r.strong ? 700 : 400, fontSize: r.strong ? { xs: '0.875rem', sm: '1rem' } : { xs: '0.8125rem', sm: '0.875rem' }, whiteSpace: { xs: 'normal', sm: 'nowrap' }, lineHeight: 1.2 }}>{r.k}</TableCell>
+                        {cols.map((c) => (
+                          <TableCell key={c.name} sx={{ ...cell, fontWeight: r.strong ? 700 : 400, fontSize: { xs: r.strong ? '0.875rem' : '0.75rem', sm: r.strong ? '1.125rem' : '0.875rem' }, color: r.strong && c.s.key !== 'traditional' ? 'success.main' : r.strong ? 'text.secondary' : 'text.primary' }}>
+                            {r.v(c.s)}
+                            {'sub' in r && r.sub && <Typography component="span" variant="caption" color="text.secondary" sx={{ display: 'block', lineHeight: 1.2, whiteSpace: 'normal' }}>{r.sub(c.s)}</Typography>}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <Typography variant="caption" color="text.secondary" component="p" sx={{ mt: 1 }}>
+                  Same in all three: mortgage {money(payoff)} and about {money(you.otherClosing)} for title and closing. Estimates only. Housa does not set agent fees.{' '}
+                  <Link href="/">See the first design</Link>
+                </Typography>
+              </CardContent>
+            </Card>
 
             <SaveHomeDialog open={saveOpen} onClose={() => setSaveOpen(false)} estimate={estimate} youKeep={you.youKeep} onStartRequest={() => router.push('/sell?from=calculator')} />
           </Box>
