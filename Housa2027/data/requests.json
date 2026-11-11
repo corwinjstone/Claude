@@ -1,0 +1,422 @@
+[
+  {
+    "id": "req-001",
+    "propertyId": "prop-001",
+    "sellerName": "Ana Lewis",
+    "status": "open",
+    "postedAt": "2026-11-11T04:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "asap",
+    "condition": "needs-minor-updates",
+    "conditionNotes": "Fresh paint and new carpet upstairs.",
+    "feePreference": {
+      "kind": "percent",
+      "maxPercent": 1.5
+    },
+    "packageWanted": "full-service",
+    "servicesWanted": [
+      "pricing",
+      "photos",
+      "mls-listing",
+      "showings",
+      "offers-negotiation",
+      "paperwork-to-close",
+      "staging-advice"
+    ],
+    "buyerAgentOffer": {
+      "kind": "flat",
+      "value": 0
+    },
+    "sellerGoalPrice": 875000,
+    "risingWindowEndsAt": "2026-11-11T16:00:00.000Z",
+    "acceptedBidId": null
+  },
+  {
+    "id": "req-002",
+    "propertyId": "prop-002",
+    "sellerName": "Tyler Brown",
+    "status": "open",
+    "postedAt": "2026-11-10T20:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "asap",
+    "condition": "needs-minor-updates",
+    "conditionNotes": "Pool needs resurfacing.",
+    "feePreference": {
+      "kind": "percent",
+      "maxPercent": 1.5
+    },
+    "packageWanted": "price-negotiate",
+    "servicesWanted": [
+      "photos",
+      "mls-listing",
+      "offers-negotiation",
+      "paperwork-to-close"
+    ],
+    "buyerAgentOffer": {
+      "kind": "percent",
+      "value": 2.5
+    },
+    "sellerGoalPrice": 588000,
+    "risingWindowEndsAt": "2026-11-11T08:00:00.000Z",
+    "acceptedBidId": null
+  },
+  {
+    "id": "req-003",
+    "propertyId": "prop-003",
+    "sellerName": "Hannah Williams",
+    "status": "open",
+    "postedAt": "2026-11-11T06:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "asap",
+    "condition": "needs-major-work",
+    "conditionNotes": "Pool needs resurfacing.",
+    "feePreference": {
+      "kind": "flat",
+      "maxFlat": 8000
+    },
+    "packageWanted": "price-negotiate",
+    "servicesWanted": [
+      "photos",
+      "mls-listing",
+      "offers-negotiation"
+    ],
+    "buyerAgentOffer": {
+      "kind": "percent",
+      "value": 2.5
+    },
+    "sellerGoalPrice": 561000,
+    "risingWindowEndsAt": "2026-11-11T18:00:00.000Z",
+    "acceptedBidId": null
+  },
+  {
+    "id": "req-004",
+    "propertyId": "prop-004",
+    "sellerName": "Wei Reyes",
+    "status": "open",
+    "postedAt": "2026-11-10T22:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "6-12-months",
+    "condition": "needs-minor-updates",
+    "conditionNotes": "Fresh paint and new carpet upstairs.",
+    "feePreference": {
+      "kind": "percent",
+      "maxPercent": 1.5
+    },
+    "packageWanted": "list-negotiate",
+    "servicesWanted": [
+      "pricing",
+      "photos",
+      "mls-listing",
+      "showings",
+      "offers-negotiation",
+      "staging-advice"
+    ],
+    "buyerAgentOffer": {
+      "kind": "percent",
+      "value": 2
+    },
+    "sellerGoalPrice": 704000,
+    "risingWindowEndsAt": "2026-11-11T10:00:00.000Z",
+    "acceptedBidId": null
+  },
+  {
+    "id": "req-005",
+    "propertyId": "prop-005",
+    "sellerName": "Nguyen Nguyen",
+    "status": "open",
+    "postedAt": "2026-11-11T09:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "3-6-months",
+    "condition": "needs-major-work",
+    "conditionNotes": "Pool needs resurfacing.",
+    "feePreference": {
+      "kind": "percent",
+      "maxPercent": 1.5
+    },
+    "packageWanted": "full-service",
+    "servicesWanted": [
+      "pricing",
+      "photos",
+      "mls-listing",
+      "showings",
+      "offers-negotiation",
+      "paperwork-to-close",
+      "staging-advice"
+    ],
+    "buyerAgentOffer": {
+      "kind": "percent",
+      "value": 2.5
+    },
+    "sellerGoalPrice": 998000,
+    "risingWindowEndsAt": "2026-11-11T21:00:00.000Z",
+    "acceptedBidId": null
+  },
+  {
+    "id": "req-006",
+    "propertyId": "prop-006",
+    "sellerName": "Marcus Okafor",
+    "status": "bidding",
+    "postedAt": "2026-11-09T04:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "6-12-months",
+    "condition": "needs-major-work",
+    "conditionNotes": "Foundation repaired with transferable warranty.",
+    "feePreference": {
+      "kind": "open"
+    },
+    "packageWanted": "price-negotiate",
+    "servicesWanted": [
+      "photos",
+      "mls-listing",
+      "offers-negotiation"
+    ],
+    "buyerAgentOffer": {
+      "kind": "percent",
+      "value": 2
+    },
+    "sellerGoalPrice": 477000,
+    "risingWindowEndsAt": "2026-11-09T16:00:00.000Z",
+    "acceptedBidId": null
+  },
+  {
+    "id": "req-007",
+    "propertyId": "prop-007",
+    "sellerName": "James Chen",
+    "status": "bidding",
+    "postedAt": "2026-11-09T19:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "1-3-months",
+    "condition": "move-in-ready",
+    "conditionNotes": "Fresh paint and new carpet upstairs.",
+    "feePreference": {
+      "kind": "flat",
+      "maxFlat": 8000
+    },
+    "packageWanted": "list-negotiate",
+    "servicesWanted": [
+      "photos",
+      "mls-listing",
+      "showings",
+      "offers-negotiation",
+      "paperwork-to-close",
+      "staging-advice"
+    ],
+    "buyerAgentOffer": {
+      "kind": "percent",
+      "value": 2.5
+    },
+    "sellerGoalPrice": 823000,
+    "risingWindowEndsAt": "2026-11-10T07:00:00.000Z",
+    "acceptedBidId": null
+  },
+  {
+    "id": "req-008",
+    "propertyId": "prop-008",
+    "sellerName": "James Patel",
+    "status": "bidding",
+    "postedAt": "2026-11-10T14:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "asap",
+    "condition": "needs-minor-updates",
+    "conditionNotes": "Pool needs resurfacing.",
+    "feePreference": {
+      "kind": "open"
+    },
+    "packageWanted": "list-negotiate",
+    "servicesWanted": [
+      "mls-listing",
+      "showings",
+      "offers-negotiation",
+      "paperwork-to-close",
+      "staging-advice"
+    ],
+    "buyerAgentOffer": {
+      "kind": "percent",
+      "value": 2.5
+    },
+    "sellerGoalPrice": 654000,
+    "risingWindowEndsAt": "2026-11-11T02:00:00.000Z",
+    "acceptedBidId": null
+  },
+  {
+    "id": "req-009",
+    "propertyId": "prop-009",
+    "sellerName": "Isabel Clark",
+    "status": "bidding",
+    "postedAt": "2026-11-09T22:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "6-12-months",
+    "condition": "needs-minor-updates",
+    "conditionNotes": "Pool needs resurfacing.",
+    "feePreference": {
+      "kind": "percent",
+      "maxPercent": 1.5
+    },
+    "packageWanted": "price-negotiate",
+    "servicesWanted": [
+      "mls-listing",
+      "offers-negotiation",
+      "paperwork-to-close",
+      "staging-advice"
+    ],
+    "buyerAgentOffer": {
+      "kind": "percent",
+      "value": 2.5
+    },
+    "sellerGoalPrice": 670000,
+    "risingWindowEndsAt": "2026-11-10T10:00:00.000Z",
+    "acceptedBidId": null
+  },
+  {
+    "id": "req-010",
+    "propertyId": "prop-010",
+    "sellerName": "Emily Walker",
+    "status": "accepted",
+    "postedAt": "2026-10-02T00:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "1-3-months",
+    "condition": "needs-major-work",
+    "conditionNotes": "Kitchen updated 2019; original baths.",
+    "feePreference": {
+      "kind": "percent",
+      "maxPercent": 1.5
+    },
+    "packageWanted": "price-negotiate",
+    "servicesWanted": [
+      "pricing",
+      "photos",
+      "showings",
+      "paperwork-to-close",
+      "staging-advice"
+    ],
+    "buyerAgentOffer": {
+      "kind": "flat",
+      "value": 0
+    },
+    "sellerGoalPrice": 605000,
+    "risingWindowEndsAt": "2026-10-02T12:00:00.000Z",
+    "acceptedBidId": "bid-023"
+  },
+  {
+    "id": "req-011",
+    "propertyId": "prop-011",
+    "sellerName": "Leah Flores",
+    "status": "under-contract",
+    "postedAt": "2026-10-03T13:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "asap",
+    "condition": "move-in-ready",
+    "conditionNotes": "Fresh paint and new carpet upstairs.",
+    "feePreference": {
+      "kind": "flat",
+      "maxFlat": 8000
+    },
+    "packageWanted": "full-service",
+    "servicesWanted": [
+      "pricing",
+      "photos",
+      "mls-listing",
+      "showings",
+      "offers-negotiation",
+      "paperwork-to-close",
+      "staging-advice"
+    ],
+    "buyerAgentOffer": {
+      "kind": "percent",
+      "value": 2.5
+    },
+    "sellerGoalPrice": 481000,
+    "risingWindowEndsAt": "2026-10-04T01:00:00.000Z",
+    "acceptedBidId": "bid-030"
+  },
+  {
+    "id": "req-012",
+    "propertyId": "prop-012",
+    "sellerName": "Maria Anderson",
+    "status": "under-contract",
+    "postedAt": "2026-08-29T09:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "3-6-months",
+    "condition": "needs-minor-updates",
+    "conditionNotes": "Fresh paint and new carpet upstairs.",
+    "feePreference": {
+      "kind": "percent",
+      "maxPercent": 1.5
+    },
+    "packageWanted": "price-negotiate",
+    "servicesWanted": [
+      "photos",
+      "showings",
+      "paperwork-to-close"
+    ],
+    "buyerAgentOffer": {
+      "kind": "percent",
+      "value": 2.5
+    },
+    "sellerGoalPrice": 408000,
+    "risingWindowEndsAt": "2026-08-29T21:00:00.000Z",
+    "acceptedBidId": "bid-033"
+  },
+  {
+    "id": "req-013",
+    "propertyId": "prop-013",
+    "sellerName": "Kevin Chen",
+    "status": "closed",
+    "postedAt": "2026-08-31T10:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "6-12-months",
+    "condition": "needs-major-work",
+    "conditionNotes": "Pool needs resurfacing.",
+    "feePreference": {
+      "kind": "percent",
+      "maxPercent": 1.5
+    },
+    "packageWanted": "full-service",
+    "servicesWanted": [
+      "pricing",
+      "photos",
+      "mls-listing",
+      "showings",
+      "offers-negotiation",
+      "paperwork-to-close",
+      "staging-advice"
+    ],
+    "buyerAgentOffer": {
+      "kind": "percent",
+      "value": 2
+    },
+    "sellerGoalPrice": 855000,
+    "risingWindowEndsAt": "2026-08-31T22:00:00.000Z",
+    "acceptedBidId": "bid-039"
+  },
+  {
+    "id": "req-014",
+    "propertyId": "prop-014",
+    "sellerName": "Isabel Reyes",
+    "status": "closed",
+    "postedAt": "2026-08-25T15:00:00.000Z",
+    "ownershipVerified": true,
+    "timeline": "asap",
+    "condition": "needs-major-work",
+    "conditionNotes": "Kitchen updated 2019; original baths.",
+    "feePreference": {
+      "kind": "flat",
+      "maxFlat": 8000
+    },
+    "packageWanted": "list-negotiate",
+    "servicesWanted": [
+      "pricing",
+      "photos",
+      "showings",
+      "offers-negotiation",
+      "staging-advice"
+    ],
+    "buyerAgentOffer": {
+      "kind": "percent",
+      "value": 2.5
+    },
+    "sellerGoalPrice": 425000,
+    "risingWindowEndsAt": "2026-08-26T03:00:00.000Z",
+    "acceptedBidId": "bid-046"
+  }
+]

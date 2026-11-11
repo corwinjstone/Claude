@@ -1,0 +1,162 @@
+[
+  {
+    "zip": "75204",
+    "city": "Dallas",
+    "neighborhood": "Uptown",
+    "ppsf": 395,
+    "lat": 32.8031,
+    "lng": -96.7958
+  },
+  {
+    "zip": "75206",
+    "city": "Dallas",
+    "neighborhood": "Lower Greenville",
+    "ppsf": 360,
+    "lat": 32.8307,
+    "lng": -96.7701
+  },
+  {
+    "zip": "75214",
+    "city": "Dallas",
+    "neighborhood": "Lakewood",
+    "ppsf": 385,
+    "lat": 32.8237,
+    "lng": -96.7486
+  },
+  {
+    "zip": "75218",
+    "city": "Dallas",
+    "neighborhood": "White Rock",
+    "ppsf": 300,
+    "lat": 32.8443,
+    "lng": -96.6994
+  },
+  {
+    "zip": "75230",
+    "city": "Dallas",
+    "neighborhood": "Preston Hollow North",
+    "ppsf": 340,
+    "lat": 32.8999,
+    "lng": -96.7897
+  },
+  {
+    "zip": "75208",
+    "city": "Dallas",
+    "neighborhood": "Bishop Arts",
+    "ppsf": 310,
+    "lat": 32.7495,
+    "lng": -96.8389
+  },
+  {
+    "zip": "75024",
+    "city": "Plano",
+    "neighborhood": "Legacy",
+    "ppsf": 255,
+    "lat": 33.0775,
+    "lng": -96.8086
+  },
+  {
+    "zip": "75093",
+    "city": "Plano",
+    "neighborhood": "Willow Bend",
+    "ppsf": 245,
+    "lat": 33.035,
+    "lng": -96.805
+  },
+  {
+    "zip": "75034",
+    "city": "Frisco",
+    "neighborhood": "Starwood",
+    "ppsf": 260,
+    "lat": 33.1508,
+    "lng": -96.829
+  },
+  {
+    "zip": "75070",
+    "city": "McKinney",
+    "neighborhood": "Stonebridge Ranch",
+    "ppsf": 225,
+    "lat": 33.172,
+    "lng": -96.6815
+  },
+  {
+    "zip": "75013",
+    "city": "Allen",
+    "neighborhood": "Twin Creeks",
+    "ppsf": 220,
+    "lat": 33.1146,
+    "lng": -96.665
+  },
+  {
+    "zip": "75019",
+    "city": "Coppell",
+    "neighborhood": "Old Coppell",
+    "ppsf": 255,
+    "lat": 32.9668,
+    "lng": -96.98
+  },
+  {
+    "zip": "76092",
+    "city": "Southlake",
+    "neighborhood": "Timarron",
+    "ppsf": 330,
+    "lat": 32.9576,
+    "lng": -97.1497
+  },
+  {
+    "zip": "76107",
+    "city": "Fort Worth",
+    "neighborhood": "Arlington Heights",
+    "ppsf": 280,
+    "lat": 32.7393,
+    "lng": -97.383
+  },
+  {
+    "zip": "76109",
+    "city": "Fort Worth",
+    "neighborhood": "Tanglewood",
+    "ppsf": 290,
+    "lat": 32.7037,
+    "lng": -97.387
+  },
+  {
+    "zip": "76116",
+    "city": "Fort Worth",
+    "neighborhood": "Ridglea",
+    "ppsf": 215,
+    "lat": 32.726,
+    "lng": -97.4416
+  },
+  {
+    "zip": "76012",
+    "city": "Arlington",
+    "neighborhood": "Central Arlington",
+    "ppsf": 185,
+    "lat": 32.7536,
+    "lng": -97.134
+  },
+  {
+    "zip": "75062",
+    "city": "Irving",
+    "neighborhood": "Valley Ranch",
+    "ppsf": 205,
+    "lat": 32.8487,
+    "lng": -96.9745
+  },
+  {
+    "zip": "75040",
+    "city": "Garland",
+    "neighborhood": "Firewheel",
+    "ppsf": 180,
+    "lat": 32.926,
+    "lng": -96.615
+  },
+  {
+    "zip": "76248",
+    "city": "Keller",
+    "neighborhood": "Keller Town Center",
+    "ppsf": 235,
+    "lat": 32.93,
+    "lng": -97.229
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "team-01",
+    "name": "The Holloway Group",
+    "brokerageId": "brk-01",
+    "licensedMembers": 5
+  },
+  {
+    "id": "team-02",
+    "name": "Frisco Home Collective",
+    "brokerageId": "brk-05",
+    "licensedMembers": 4
+  }
+]

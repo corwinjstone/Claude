@@ -1,0 +1,1439 @@
+[
+  {
+    "id": "agt-001",
+    "name": "Ana Rivera",
+    "licenseNumber": "TX-548506",
+    "licenseVerified": true,
+    "licensedSince": 2016,
+    "brokerageId": "brk-01",
+    "teamId": "team-01",
+    "tier": "top-producer",
+    "sidesLast12Months": 44,
+    "zipsServed": [
+      "76116",
+      "76248",
+      "75218"
+    ],
+    "rating": 4.6,
+    "reviewCount": 154,
+    "avgResponseHours": 11.8,
+    "saleToListPct": 100.4,
+    "medianDaysOnMarket": 25,
+    "onTimeReportRate": 0.99,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 6,
+    "bidsThisWeek": 4,
+    "bio": "Experienced listing agent with a full-time team. Known for pricing and staging.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.91
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 5700
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2800
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1800
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 500
+      }
+    }
+  },
+  {
+    "id": "agt-002",
+    "name": "Mei Wilson",
+    "licenseNumber": "TX-676144",
+    "licenseVerified": true,
+    "licensedSince": 2012,
+    "brokerageId": "brk-01",
+    "teamId": "team-01",
+    "tier": "top-producer",
+    "sidesLast12Months": 19,
+    "zipsServed": [
+      "75208",
+      "75024",
+      "75214"
+    ],
+    "rating": 4.6,
+    "reviewCount": 136,
+    "avgResponseHours": 6.4,
+    "saleToListPct": 96.5,
+    "medianDaysOnMarket": 25,
+    "onTimeReportRate": 0.91,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 2,
+    "bidsThisWeek": 3,
+    "bio": "Experienced listing agent with a full-time team. Known for pricing and staging.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 2.44
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4900
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 3000
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1600
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 450
+      }
+    }
+  },
+  {
+    "id": "agt-003",
+    "name": "Tyler Tran",
+    "licenseNumber": "TX-609812",
+    "licenseVerified": true,
+    "licensedSince": 2009,
+    "brokerageId": "brk-01",
+    "teamId": "team-01",
+    "tier": "top-producer",
+    "sidesLast12Months": 38,
+    "zipsServed": [
+      "75218",
+      "76116",
+      "75230"
+    ],
+    "rating": 4.7,
+    "reviewCount": 78,
+    "avgResponseHours": 9,
+    "saleToListPct": 97.6,
+    "medianDaysOnMarket": 20,
+    "onTimeReportRate": 0.99,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 6,
+    "bidsThisWeek": 5,
+    "bio": "Veteran listing agent with a full-time team. Known for pricing and staging.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 2.16
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4800
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 3000
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1800
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 475
+      }
+    }
+  },
+  {
+    "id": "agt-004",
+    "name": "Yesenia Davis",
+    "licenseNumber": "TX-721844",
+    "licenseVerified": true,
+    "licensedSince": 2009,
+    "brokerageId": "brk-05",
+    "teamId": "team-02",
+    "tier": "top-producer",
+    "sidesLast12Months": 25,
+    "zipsServed": [
+      "75040",
+      "76012",
+      "75208"
+    ],
+    "rating": 4.6,
+    "reviewCount": 126,
+    "avgResponseHours": 7.4,
+    "saleToListPct": 96.3,
+    "medianDaysOnMarket": 44,
+    "onTimeReportRate": 0.96,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 2,
+    "bidsThisWeek": 4,
+    "bio": "Veteran listing agent with a full-time team. Known for pricing and staging.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 2.31
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 5200
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2700
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1600
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 500
+      }
+    }
+  },
+  {
+    "id": "agt-005",
+    "name": "Samuel Moore",
+    "licenseNumber": "TX-664219",
+    "licenseVerified": true,
+    "licensedSince": 2013,
+    "brokerageId": "brk-05",
+    "teamId": "team-02",
+    "tier": "top-producer",
+    "sidesLast12Months": 42,
+    "zipsServed": [
+      "75070",
+      "76092"
+    ],
+    "rating": 4.6,
+    "reviewCount": 207,
+    "avgResponseHours": 11.8,
+    "saleToListPct": 99.9,
+    "medianDaysOnMarket": 40,
+    "onTimeReportRate": 0.86,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 2,
+    "bidsThisWeek": 5,
+    "bio": "Experienced listing agent with a full-time team. Known for pricing and staging.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 2.1
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 5000
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2700
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1900
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 425
+      }
+    }
+  },
+  {
+    "id": "agt-006",
+    "name": "Zara Walker",
+    "licenseNumber": "TX-653433",
+    "licenseVerified": true,
+    "licensedSince": 2006,
+    "brokerageId": "brk-01",
+    "teamId": null,
+    "tier": "top-producer",
+    "sidesLast12Months": 19,
+    "zipsServed": [
+      "75206",
+      "76116",
+      "75040"
+    ],
+    "rating": 4.8,
+    "reviewCount": 48,
+    "avgResponseHours": 6.3,
+    "saleToListPct": 99.2,
+    "medianDaysOnMarket": 34,
+    "onTimeReportRate": 0.98,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 5,
+    "bidsThisWeek": 3,
+    "bio": "Veteran listing agent with a full-time team. Known for pricing and staging.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.82
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4700
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 3100
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1500
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 500
+      }
+    }
+  },
+  {
+    "id": "agt-007",
+    "name": "Jamal Rivera",
+    "licenseNumber": "TX-642473",
+    "licenseVerified": true,
+    "licensedSince": 2007,
+    "brokerageId": "brk-04",
+    "teamId": null,
+    "tier": "top-producer",
+    "sidesLast12Months": 52,
+    "zipsServed": [
+      "75204",
+      "75206",
+      "75019"
+    ],
+    "rating": 4.8,
+    "reviewCount": 155,
+    "avgResponseHours": 10.4,
+    "saleToListPct": 99.7,
+    "medianDaysOnMarket": 16,
+    "onTimeReportRate": 0.89,
+    "releasesLast12Months": 1,
+    "activeHousaClients": 4,
+    "bidsThisWeek": 3,
+    "bio": "Veteran listing agent with a full-time team. Known for pricing and staging.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 2.3
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 5100
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2900
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1800
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 500
+      }
+    }
+  },
+  {
+    "id": "agt-008",
+    "name": "Sofia Lopez",
+    "licenseNumber": "TX-670075",
+    "licenseVerified": true,
+    "licensedSince": 2010,
+    "brokerageId": "brk-05",
+    "teamId": null,
+    "tier": "top-producer",
+    "sidesLast12Months": 47,
+    "zipsServed": [
+      "75208",
+      "75093",
+      "75019"
+    ],
+    "rating": 4.8,
+    "reviewCount": 90,
+    "avgResponseHours": 2.8,
+    "saleToListPct": 96.7,
+    "medianDaysOnMarket": 25,
+    "onTimeReportRate": 0.93,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 2,
+    "bidsThisWeek": 1,
+    "bio": "Veteran listing agent with a full-time team. Known for pricing and staging.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.88
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4700
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2800
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1800
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 475
+      }
+    }
+  },
+  {
+    "id": "agt-009",
+    "name": "Diego Flores",
+    "licenseNumber": "TX-612617",
+    "licenseVerified": true,
+    "licensedSince": 2011,
+    "brokerageId": "brk-02",
+    "teamId": null,
+    "tier": "top-producer",
+    "sidesLast12Months": 44,
+    "zipsServed": [
+      "76092",
+      "75230",
+      "75024"
+    ],
+    "rating": 4.6,
+    "reviewCount": 129,
+    "avgResponseHours": 4.4,
+    "saleToListPct": 96.1,
+    "medianDaysOnMarket": 18,
+    "onTimeReportRate": 0.88,
+    "releasesLast12Months": 1,
+    "activeHousaClients": 5,
+    "bidsThisWeek": 5,
+    "bio": "Veteran listing agent with a full-time team. Known for pricing and staging.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 2.48
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 5200
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 3000
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1900
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 500
+      }
+    }
+  },
+  {
+    "id": "agt-010",
+    "name": "Yesenia Patel",
+    "licenseNumber": "TX-717451",
+    "licenseVerified": true,
+    "licensedSince": 2022,
+    "brokerageId": "brk-05",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 5,
+    "zipsServed": [
+      "75062",
+      "76107",
+      "76248"
+    ],
+    "rating": 5,
+    "reviewCount": 3,
+    "avgResponseHours": 0.9,
+    "saleToListPct": 98.4,
+    "medianDaysOnMarket": 43,
+    "onTimeReportRate": 0.93,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 1,
+    "bidsThisWeek": 1,
+    "bio": "Licensed since 2022. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.63
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4400
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2200
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1500
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 375
+      }
+    }
+  },
+  {
+    "id": "agt-011",
+    "name": "Leah Singh",
+    "licenseNumber": "TX-553796",
+    "licenseVerified": true,
+    "licensedSince": 2023,
+    "brokerageId": "brk-04",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 3,
+    "zipsServed": [
+      "75013",
+      "75214",
+      "75062"
+    ],
+    "rating": 4.8,
+    "reviewCount": 27,
+    "avgResponseHours": 4.4,
+    "saleToListPct": 96.6,
+    "medianDaysOnMarket": 9,
+    "onTimeReportRate": 0.88,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 0,
+    "bidsThisWeek": 2,
+    "bio": "Licensed since 2023. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.52
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4400
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2200
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1200
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 375
+      }
+    }
+  },
+  {
+    "id": "agt-012",
+    "name": "Luis Rivera",
+    "licenseNumber": "TX-674376",
+    "licenseVerified": true,
+    "licensedSince": 2016,
+    "brokerageId": "brk-01",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 7,
+    "zipsServed": [
+      "75034",
+      "75206",
+      "75093"
+    ],
+    "rating": 4.3,
+    "reviewCount": 4,
+    "avgResponseHours": 5.8,
+    "saleToListPct": 98.2,
+    "medianDaysOnMarket": 17,
+    "onTimeReportRate": 0.97,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 0,
+    "bidsThisWeek": 1,
+    "bio": "Licensed since 2016. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.66
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 3600
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2400
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1200
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 325
+      }
+    }
+  },
+  {
+    "id": "agt-013",
+    "name": "Chloe Walker",
+    "licenseNumber": "TX-597327",
+    "licenseVerified": true,
+    "licensedSince": 2017,
+    "brokerageId": "brk-03",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 13,
+    "zipsServed": [
+      "75218",
+      "75013",
+      "76092"
+    ],
+    "rating": 4.6,
+    "reviewCount": 3,
+    "avgResponseHours": 4.9,
+    "saleToListPct": 99.8,
+    "medianDaysOnMarket": 28,
+    "onTimeReportRate": 0.93,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 2,
+    "bidsThisWeek": 6,
+    "bio": "Licensed since 2017. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.49
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4400
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2000
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1200
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 400
+      }
+    }
+  },
+  {
+    "id": "agt-014",
+    "name": "Keisha Garcia",
+    "licenseNumber": "TX-767772",
+    "licenseVerified": true,
+    "licensedSince": 2024,
+    "brokerageId": "brk-03",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 7,
+    "zipsServed": [
+      "75206",
+      "76107",
+      "75019"
+    ],
+    "rating": 4.8,
+    "reviewCount": 4,
+    "avgResponseHours": 6.1,
+    "saleToListPct": 99.2,
+    "medianDaysOnMarket": 11,
+    "onTimeReportRate": 0.97,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 3,
+    "bidsThisWeek": 1,
+    "bio": "Licensed since 2024. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.31
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 3700
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2400
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1500
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 400
+      }
+    }
+  },
+  {
+    "id": "agt-015",
+    "name": "Emily Clark",
+    "licenseNumber": "TX-735732",
+    "licenseVerified": true,
+    "licensedSince": 2023,
+    "brokerageId": "brk-05",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 8,
+    "zipsServed": [
+      "75034",
+      "75093",
+      "76116"
+    ],
+    "rating": 4.5,
+    "reviewCount": 24,
+    "avgResponseHours": 4.7,
+    "saleToListPct": 97.4,
+    "medianDaysOnMarket": 38,
+    "onTimeReportRate": 1,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 0,
+    "bidsThisWeek": 6,
+    "bio": "Licensed since 2023. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.65
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 3700
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2000
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1500
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 375
+      }
+    }
+  },
+  {
+    "id": "agt-016",
+    "name": "Aisha Garcia",
+    "licenseNumber": "TX-535360",
+    "licenseVerified": true,
+    "licensedSince": 2022,
+    "brokerageId": "brk-01",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 13,
+    "zipsServed": [
+      "75218",
+      "75093",
+      "75206"
+    ],
+    "rating": 4.1,
+    "reviewCount": 4,
+    "avgResponseHours": 5.3,
+    "saleToListPct": 97.2,
+    "medianDaysOnMarket": 27,
+    "onTimeReportRate": 0.95,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 1,
+    "bidsThisWeek": 5,
+    "bio": "Licensed since 2022. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.39
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4200
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2000
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1400
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 300
+      }
+    }
+  },
+  {
+    "id": "agt-017",
+    "name": "Mei Patel",
+    "licenseNumber": "TX-563695",
+    "licenseVerified": true,
+    "licensedSince": 2025,
+    "brokerageId": "brk-04",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 3,
+    "zipsServed": [
+      "75208",
+      "76012",
+      "75013"
+    ],
+    "rating": 4.4,
+    "reviewCount": 5,
+    "avgResponseHours": 5.5,
+    "saleToListPct": 99.5,
+    "medianDaysOnMarket": 21,
+    "onTimeReportRate": 0.94,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 3,
+    "bidsThisWeek": 3,
+    "bio": "Licensed since 2025. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.3
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 3900
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2500
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1200
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 400
+      }
+    }
+  },
+  {
+    "id": "agt-018",
+    "name": "Noah Hernandez",
+    "licenseNumber": "TX-578873",
+    "licenseVerified": true,
+    "licensedSince": 2023,
+    "brokerageId": "brk-03",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 8,
+    "zipsServed": [
+      "75204",
+      "75013",
+      "76116"
+    ],
+    "rating": 4.6,
+    "reviewCount": 17,
+    "avgResponseHours": 6.1,
+    "saleToListPct": 99.4,
+    "medianDaysOnMarket": 43,
+    "onTimeReportRate": 0.87,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 3,
+    "bidsThisWeek": 7,
+    "bio": "Licensed since 2023. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.28
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 3700
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2000
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1200
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 325
+      }
+    }
+  },
+  {
+    "id": "agt-019",
+    "name": "Kevin Rivera",
+    "licenseNumber": "TX-761895",
+    "licenseVerified": true,
+    "licensedSince": 2024,
+    "brokerageId": "brk-01",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 11,
+    "zipsServed": [
+      "75230",
+      "75013",
+      "76107"
+    ],
+    "rating": 5,
+    "reviewCount": 24,
+    "avgResponseHours": 2.7,
+    "saleToListPct": 100,
+    "medianDaysOnMarket": 20,
+    "onTimeReportRate": 0.91,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 2,
+    "bidsThisWeek": 4,
+    "bio": "Licensed since 2024. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.34
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4300
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2000
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1500
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 325
+      }
+    }
+  },
+  {
+    "id": "agt-020",
+    "name": "Sofia Singh",
+    "licenseNumber": "TX-756237",
+    "licenseVerified": true,
+    "licensedSince": 2024,
+    "brokerageId": "brk-06",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 6,
+    "zipsServed": [
+      "75230",
+      "75040",
+      "75218"
+    ],
+    "rating": 4.4,
+    "reviewCount": 13,
+    "avgResponseHours": 6.1,
+    "saleToListPct": 99,
+    "medianDaysOnMarket": 16,
+    "onTimeReportRate": 1,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 2,
+    "bidsThisWeek": 6,
+    "bio": "Licensed since 2024. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.47
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 3600
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2100
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1500
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 350
+      }
+    }
+  },
+  {
+    "id": "agt-021",
+    "name": "Sofia Wilson",
+    "licenseNumber": "TX-596805",
+    "licenseVerified": true,
+    "licensedSince": 2017,
+    "brokerageId": "brk-02",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 7,
+    "zipsServed": [
+      "76248",
+      "76012"
+    ],
+    "rating": 4.8,
+    "reviewCount": 19,
+    "avgResponseHours": 0.6,
+    "saleToListPct": 99,
+    "medianDaysOnMarket": 33,
+    "onTimeReportRate": 0.87,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 3,
+    "bidsThisWeek": 3,
+    "bio": "Licensed since 2017. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.3
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 3800
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2300
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1500
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 350
+      }
+    }
+  },
+  {
+    "id": "agt-022",
+    "name": "Carlos Reyes",
+    "licenseNumber": "TX-650338",
+    "licenseVerified": true,
+    "licensedSince": 2023,
+    "brokerageId": "brk-04",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 1,
+    "zipsServed": [
+      "75034",
+      "76107",
+      "76012"
+    ],
+    "rating": 4.7,
+    "reviewCount": 2,
+    "avgResponseHours": 3.9,
+    "saleToListPct": 96.1,
+    "medianDaysOnMarket": 35,
+    "onTimeReportRate": 0.96,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 1,
+    "bidsThisWeek": 7,
+    "bio": "Licensed since 2023. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.45
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4000
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2000
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1200
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 350
+      }
+    }
+  },
+  {
+    "id": "agt-023",
+    "name": "Omar Okafor",
+    "licenseNumber": "TX-741064",
+    "licenseVerified": true,
+    "licensedSince": 2022,
+    "brokerageId": "brk-06",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 6,
+    "zipsServed": [
+      "76116",
+      "76107",
+      "75208"
+    ],
+    "rating": 4.5,
+    "reviewCount": 28,
+    "avgResponseHours": 1.5,
+    "saleToListPct": 100.4,
+    "medianDaysOnMarket": 43,
+    "onTimeReportRate": 0.86,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 2,
+    "bidsThisWeek": 7,
+    "bio": "Licensed since 2022. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.67
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4300
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2300
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1400
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 350
+      }
+    }
+  },
+  {
+    "id": "agt-024",
+    "name": "Olivia Thompson",
+    "licenseNumber": "TX-502807",
+    "licenseVerified": true,
+    "licensedSince": 2021,
+    "brokerageId": "brk-01",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 1,
+    "zipsServed": [
+      "75013",
+      "75019"
+    ],
+    "rating": 4.2,
+    "reviewCount": 26,
+    "avgResponseHours": 3,
+    "saleToListPct": 98.2,
+    "medianDaysOnMarket": 30,
+    "onTimeReportRate": 0.85,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 0,
+    "bidsThisWeek": 7,
+    "bio": "Licensed since 2021. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.72
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 3700
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2100
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1400
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 350
+      }
+    }
+  },
+  {
+    "id": "agt-025",
+    "name": "Jamal Lewis",
+    "licenseNumber": "TX-769927",
+    "licenseVerified": true,
+    "licensedSince": 2024,
+    "brokerageId": "brk-05",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 8,
+    "zipsServed": [
+      "75208",
+      "75230",
+      "75019"
+    ],
+    "rating": 4.5,
+    "reviewCount": 20,
+    "avgResponseHours": 5.5,
+    "saleToListPct": 98.9,
+    "medianDaysOnMarket": 33,
+    "onTimeReportRate": 0.89,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 2,
+    "bidsThisWeek": 5,
+    "bio": "Licensed since 2024. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.48
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4100
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2300
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1500
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 400
+      }
+    }
+  },
+  {
+    "id": "agt-026",
+    "name": "Fatima Washington",
+    "licenseNumber": "TX-758136",
+    "licenseVerified": true,
+    "licensedSince": 2020,
+    "brokerageId": "brk-06",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 0,
+    "zipsServed": [
+      "75206",
+      "75218",
+      "76107"
+    ],
+    "rating": 4.2,
+    "reviewCount": 12,
+    "avgResponseHours": 5,
+    "saleToListPct": 97.3,
+    "medianDaysOnMarket": 45,
+    "onTimeReportRate": 0.92,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 3,
+    "bidsThisWeek": 0,
+    "bio": "Licensed since 2020. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.68
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 3900
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2400
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1400
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 375
+      }
+    }
+  },
+  {
+    "id": "agt-027",
+    "name": "Kevin Flores",
+    "licenseNumber": "TX-586020",
+    "licenseVerified": true,
+    "licensedSince": 2022,
+    "brokerageId": "brk-03",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 14,
+    "zipsServed": [
+      "75206",
+      "76116",
+      "75013"
+    ],
+    "rating": 4.7,
+    "reviewCount": 27,
+    "avgResponseHours": 1.5,
+    "saleToListPct": 99,
+    "medianDaysOnMarket": 29,
+    "onTimeReportRate": 0.95,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 3,
+    "bidsThisWeek": 3,
+    "bio": "Licensed since 2022. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.26
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4500
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2300
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1400
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 400
+      }
+    }
+  },
+  {
+    "id": "agt-028",
+    "name": "Grace Johnson",
+    "licenseNumber": "TX-704547",
+    "licenseVerified": true,
+    "licensedSince": 2019,
+    "brokerageId": "brk-04",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 14,
+    "zipsServed": [
+      "76012",
+      "75013",
+      "75218"
+    ],
+    "rating": 4.7,
+    "reviewCount": 21,
+    "avgResponseHours": 6.4,
+    "saleToListPct": 98.2,
+    "medianDaysOnMarket": 42,
+    "onTimeReportRate": 0.96,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 2,
+    "bidsThisWeek": 5,
+    "bio": "Licensed since 2019. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.29
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4200
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2300
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1500
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 350
+      }
+    }
+  },
+  {
+    "id": "agt-029",
+    "name": "Leah Rivera",
+    "licenseNumber": "TX-687830",
+    "licenseVerified": true,
+    "licensedSince": 2024,
+    "brokerageId": "brk-04",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 14,
+    "zipsServed": [
+      "75062",
+      "76092",
+      "75019"
+    ],
+    "rating": 4.7,
+    "reviewCount": 26,
+    "avgResponseHours": 0.8,
+    "saleToListPct": 98.9,
+    "medianDaysOnMarket": 13,
+    "onTimeReportRate": 0.86,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 2,
+    "bidsThisWeek": 6,
+    "bio": "Licensed since 2024. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.62
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 4500
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2400
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1500
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 375
+      }
+    }
+  },
+  {
+    "id": "agt-030",
+    "name": "Ana Nguyen",
+    "licenseNumber": "TX-556703",
+    "licenseVerified": true,
+    "licensedSince": 2017,
+    "brokerageId": "brk-03",
+    "teamId": null,
+    "tier": "rising",
+    "sidesLast12Months": 7,
+    "zipsServed": [
+      "75230",
+      "75013",
+      "75218"
+    ],
+    "rating": 4.9,
+    "reviewCount": 13,
+    "avgResponseHours": 1.2,
+    "saleToListPct": 99.2,
+    "medianDaysOnMarket": 25,
+    "onTimeReportRate": 0.88,
+    "releasesLast12Months": 0,
+    "activeHousaClients": 2,
+    "bidsThisWeek": 4,
+    "bio": "Licensed since 2017. Full-time, with time for every client. I answer the same day.",
+    "packagePrices": {
+      "full-service": {
+        "kind": "percent",
+        "value": 1.28
+      },
+      "list-negotiate": {
+        "kind": "flat",
+        "value": 3800
+      },
+      "price-negotiate": {
+        "kind": "flat",
+        "value": 2200
+      },
+      "contract-to-close": {
+        "kind": "flat",
+        "value": 1200
+      },
+      "pricing-consult": {
+        "kind": "flat",
+        "value": 325
+      }
+    }
+  }
+]

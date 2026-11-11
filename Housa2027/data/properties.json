@@ -1,0 +1,1282 @@
+[
+  {
+    "id": "prop-001",
+    "address": {
+      "street": "309 Post Oak Pl",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75204"
+    },
+    "neighborhood": "Uptown",
+    "location": {
+      "lat": 32.80053,
+      "lng": -96.79024
+    },
+    "beds": 3,
+    "baths": 2.5,
+    "sqft": 2540,
+    "yearBuilt": 1966,
+    "lotSqft": 5300,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 825000,
+      "mid": 875000,
+      "high": 930000
+    },
+    "mortgagePayoff": 395000,
+    "owner": {
+      "name": "Ana Lewis",
+      "email": "ana.lewis@example.com",
+      "phone": "(214) 555-7475"
+    },
+    "interiorPhotos": 8
+  },
+  {
+    "id": "prop-002",
+    "address": {
+      "street": "8408 Mockingbird Ln",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75206"
+    },
+    "neighborhood": "Lower Greenville",
+    "location": {
+      "lat": 32.83432,
+      "lng": -96.77712
+    },
+    "beds": 2,
+    "baths": 1,
+    "sqft": 1950,
+    "yearBuilt": 1965,
+    "lotSqft": 5400,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 555000,
+      "mid": 588000,
+      "high": 625000
+    },
+    "mortgagePayoff": 134000,
+    "owner": {
+      "name": "Tyler Brown",
+      "email": "tyler.brown@example.com",
+      "phone": "(214) 555-0420"
+    },
+    "interiorPhotos": 12
+  },
+  {
+    "id": "prop-003",
+    "address": {
+      "street": "7852 Highland Park Way",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75214"
+    },
+    "neighborhood": "Lakewood",
+    "location": {
+      "lat": 32.82127,
+      "lng": -96.74235
+    },
+    "beds": 2,
+    "baths": 1,
+    "sqft": 1880,
+    "yearBuilt": 1950,
+    "lotSqft": 5900,
+    "condition": "needs-major-work",
+    "estValue": {
+      "low": 525000,
+      "mid": 561000,
+      "high": 595000
+    },
+    "mortgagePayoff": 272000,
+    "owner": {
+      "name": "Hannah Williams",
+      "email": "hannah.williams@example.com",
+      "phone": "(214) 555-2811"
+    },
+    "interiorPhotos": 8
+  },
+  {
+    "id": "prop-004",
+    "address": {
+      "street": "3485 Mockingbird Ln",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75218"
+    },
+    "neighborhood": "White Rock",
+    "location": {
+      "lat": 32.8409,
+      "lng": -96.69131
+    },
+    "beds": 4,
+    "baths": 3,
+    "sqft": 2900,
+    "yearBuilt": 1972,
+    "lotSqft": 9600,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 660000,
+      "mid": 704000,
+      "high": 745000
+    },
+    "mortgagePayoff": 288000,
+    "owner": {
+      "name": "Wei Reyes",
+      "email": "wei.reyes@example.com",
+      "phone": "(214) 555-3612"
+    },
+    "interiorPhotos": 6
+  },
+  {
+    "id": "prop-005",
+    "address": {
+      "street": "5884 Lone Star Trl",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75230"
+    },
+    "neighborhood": "Preston Hollow North",
+    "location": {
+      "lat": 32.90168,
+      "lng": -96.78915
+    },
+    "beds": 4,
+    "baths": 4,
+    "sqft": 3380,
+    "yearBuilt": 1978,
+    "lotSqft": 11150,
+    "condition": "needs-major-work",
+    "estValue": {
+      "low": 940000,
+      "mid": 998000,
+      "high": 1060000
+    },
+    "mortgagePayoff": 407000,
+    "owner": {
+      "name": "Nguyen Nguyen",
+      "email": "nguyen.nguyen@example.com",
+      "phone": "(214) 555-1613"
+    },
+    "interiorPhotos": 7
+  },
+  {
+    "id": "prop-006",
+    "address": {
+      "street": "6336 Prairie Wind Way",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75208"
+    },
+    "neighborhood": "Bishop Arts",
+    "location": {
+      "lat": 32.74001,
+      "lng": -96.83185
+    },
+    "beds": 2,
+    "baths": 2,
+    "sqft": 1870,
+    "yearBuilt": 2004,
+    "lotSqft": 5100,
+    "condition": "needs-major-work",
+    "estValue": {
+      "low": 450000,
+      "mid": 477000,
+      "high": 505000
+    },
+    "mortgagePayoff": 139000,
+    "owner": {
+      "name": "Marcus Okafor",
+      "email": "marcus.okafor@example.com",
+      "phone": "(214) 555-1810"
+    },
+    "interiorPhotos": 6
+  },
+  {
+    "id": "prop-007",
+    "address": {
+      "street": "5589 Prairie Wind Way",
+      "city": "Plano",
+      "state": "TX",
+      "zip": "75024"
+    },
+    "neighborhood": "Legacy",
+    "location": {
+      "lat": 33.07891,
+      "lng": -96.80459
+    },
+    "beds": 5,
+    "baths": 4.5,
+    "sqft": 3900,
+    "yearBuilt": 2000,
+    "lotSqft": 11850,
+    "condition": "move-in-ready",
+    "estValue": {
+      "low": 775000,
+      "mid": 823000,
+      "high": 870000
+    },
+    "mortgagePayoff": 409000,
+    "owner": {
+      "name": "James Chen",
+      "email": "james.chen@example.com",
+      "phone": "(214) 555-1385"
+    },
+    "interiorPhotos": 6
+  },
+  {
+    "id": "prop-008",
+    "address": {
+      "street": "8798 Live Oak St",
+      "city": "Plano",
+      "state": "TX",
+      "zip": "75093"
+    },
+    "neighborhood": "Willow Bend",
+    "location": {
+      "lat": 33.0272,
+      "lng": -96.8035
+    },
+    "beds": 5,
+    "baths": 1.5,
+    "sqft": 3330,
+    "yearBuilt": 1976,
+    "lotSqft": 10050,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 615000,
+      "mid": 654000,
+      "high": 695000
+    },
+    "mortgagePayoff": 253000,
+    "owner": {
+      "name": "James Patel",
+      "email": "james.patel@example.com",
+      "phone": "(214) 555-4984"
+    },
+    "interiorPhotos": 6
+  },
+  {
+    "id": "prop-009",
+    "address": {
+      "street": "8891 Brazos Ct",
+      "city": "Frisco",
+      "state": "TX",
+      "zip": "75034"
+    },
+    "neighborhood": "Starwood",
+    "location": {
+      "lat": 33.15213,
+      "lng": -96.83875
+    },
+    "beds": 5,
+    "baths": 2,
+    "sqft": 3380,
+    "yearBuilt": 1987,
+    "lotSqft": 8450,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 630000,
+      "mid": 670000,
+      "high": 710000
+    },
+    "mortgagePayoff": 374000,
+    "owner": {
+      "name": "Isabel Clark",
+      "email": "isabel.clark@example.com",
+      "phone": "(214) 555-0716"
+    },
+    "interiorPhotos": 6
+  },
+  {
+    "id": "prop-010",
+    "address": {
+      "street": "702 Lakeshore Dr",
+      "city": "McKinney",
+      "state": "TX",
+      "zip": "75070"
+    },
+    "neighborhood": "Stonebridge Ranch",
+    "location": {
+      "lat": 33.16423,
+      "lng": -96.67289
+    },
+    "beds": 4,
+    "baths": 1,
+    "sqft": 3410,
+    "yearBuilt": 1997,
+    "lotSqft": 8900,
+    "condition": "needs-major-work",
+    "estValue": {
+      "low": 570000,
+      "mid": 605000,
+      "high": 640000
+    },
+    "mortgagePayoff": 276000,
+    "owner": {
+      "name": "Emily Walker",
+      "email": "emily.walker@example.com",
+      "phone": "(214) 555-0333"
+    },
+    "interiorPhotos": 6
+  },
+  {
+    "id": "prop-011",
+    "address": {
+      "street": "4267 Pecan Valley Rd",
+      "city": "Allen",
+      "state": "TX",
+      "zip": "75013"
+    },
+    "neighborhood": "Twin Creeks",
+    "location": {
+      "lat": 33.12106,
+      "lng": -96.67242
+    },
+    "beds": 4,
+    "baths": 3,
+    "sqft": 2590,
+    "yearBuilt": 2001,
+    "lotSqft": 6600,
+    "condition": "move-in-ready",
+    "estValue": {
+      "low": 450000,
+      "mid": 481000,
+      "high": 510000
+    },
+    "mortgagePayoff": 188000,
+    "owner": {
+      "name": "Leah Flores",
+      "email": "leah.flores@example.com",
+      "phone": "(214) 555-9583"
+    },
+    "interiorPhotos": 5
+  },
+  {
+    "id": "prop-012",
+    "address": {
+      "street": "6488 Ranch View Ct",
+      "city": "Coppell",
+      "state": "TX",
+      "zip": "75019"
+    },
+    "neighborhood": "Old Coppell",
+    "location": {
+      "lat": 32.95782,
+      "lng": -96.97789
+    },
+    "beds": 3,
+    "baths": 3,
+    "sqft": 2260,
+    "yearBuilt": 1992,
+    "lotSqft": 6000,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 385000,
+      "mid": 408000,
+      "high": 430000
+    },
+    "mortgagePayoff": 267000,
+    "owner": {
+      "name": "Maria Anderson",
+      "email": "maria.anderson@example.com",
+      "phone": "(214) 555-7176"
+    },
+    "interiorPhotos": 9
+  },
+  {
+    "id": "prop-013",
+    "address": {
+      "street": "4692 Magnolia Ave",
+      "city": "Southlake",
+      "state": "TX",
+      "zip": "76092"
+    },
+    "neighborhood": "Timarron",
+    "location": {
+      "lat": 32.9526,
+      "lng": -97.14659
+    },
+    "beds": 4,
+    "baths": 3,
+    "sqft": 3200,
+    "yearBuilt": 1969,
+    "lotSqft": 8700,
+    "condition": "needs-major-work",
+    "estValue": {
+      "low": 805000,
+      "mid": 855000,
+      "high": 905000
+    },
+    "mortgagePayoff": 562000,
+    "owner": {
+      "name": "Kevin Chen",
+      "email": "kevin.chen@example.com",
+      "phone": "(214) 555-3008"
+    },
+    "interiorPhotos": 7
+  },
+  {
+    "id": "prop-014",
+    "address": {
+      "street": "3227 Brazos Ct",
+      "city": "Fort Worth",
+      "state": "TX",
+      "zip": "76107"
+    },
+    "neighborhood": "Arlington Heights",
+    "location": {
+      "lat": 32.74422,
+      "lng": -97.38929
+    },
+    "beds": 3,
+    "baths": 3.5,
+    "sqft": 2090,
+    "yearBuilt": 2012,
+    "lotSqft": 5550,
+    "condition": "needs-major-work",
+    "estValue": {
+      "low": 400000,
+      "mid": 425000,
+      "high": 450000
+    },
+    "mortgagePayoff": 218000,
+    "owner": {
+      "name": "Isabel Reyes",
+      "email": "isabel.reyes@example.com",
+      "phone": "(214) 555-6608"
+    },
+    "interiorPhotos": 12
+  },
+  {
+    "id": "prop-015",
+    "address": {
+      "street": "7789 Red Bud Dr",
+      "city": "Fort Worth",
+      "state": "TX",
+      "zip": "76109"
+    },
+    "neighborhood": "Tanglewood",
+    "location": {
+      "lat": 32.70994,
+      "lng": -97.39585
+    },
+    "beds": 4,
+    "baths": 3,
+    "sqft": 3180,
+    "yearBuilt": 1970,
+    "lotSqft": 11850,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 695000,
+      "mid": 741000,
+      "high": 785000
+    },
+    "mortgagePayoff": 224000,
+    "owner": {
+      "name": "Raj Walker",
+      "email": "raj.walker@example.com",
+      "phone": "(214) 555-0765"
+    },
+    "interiorPhotos": 7
+  },
+  {
+    "id": "prop-016",
+    "address": {
+      "street": "8095 Cottonwood Ln",
+      "city": "Fort Worth",
+      "state": "TX",
+      "zip": "76116"
+    },
+    "neighborhood": "Ridglea",
+    "location": {
+      "lat": 32.71865,
+      "lng": -97.43282
+    },
+    "beds": 4,
+    "baths": 3,
+    "sqft": 2850,
+    "yearBuilt": 2000,
+    "lotSqft": 9650,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 460000,
+      "mid": 489000,
+      "high": 520000
+    },
+    "mortgagePayoff": 102000,
+    "owner": {
+      "name": "Kevin Moore",
+      "email": "kevin.moore@example.com",
+      "phone": "(214) 555-9021"
+    },
+    "interiorPhotos": 8
+  },
+  {
+    "id": "prop-017",
+    "address": {
+      "street": "5773 Prairie Wind Way",
+      "city": "Arlington",
+      "state": "TX",
+      "zip": "76012"
+    },
+    "neighborhood": "Central Arlington",
+    "location": {
+      "lat": 32.74935,
+      "lng": -97.12683
+    },
+    "beds": 5,
+    "baths": 2.5,
+    "sqft": 3310,
+    "yearBuilt": 1948,
+    "lotSqft": 11800,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 500000,
+      "mid": 533000,
+      "high": 565000
+    },
+    "mortgagePayoff": 154000,
+    "owner": {
+      "name": "Rachel Reyes",
+      "email": "rachel.reyes@example.com",
+      "phone": "(214) 555-2879"
+    },
+    "interiorPhotos": 8
+  },
+  {
+    "id": "prop-018",
+    "address": {
+      "street": "8359 Prairie Wind Way",
+      "city": "Irving",
+      "state": "TX",
+      "zip": "75062"
+    },
+    "neighborhood": "Valley Ranch",
+    "location": {
+      "lat": 32.85612,
+      "lng": -96.96915
+    },
+    "beds": 5,
+    "baths": 1.5,
+    "sqft": 3100,
+    "yearBuilt": 1987,
+    "lotSqft": 11500,
+    "condition": "needs-major-work",
+    "estValue": {
+      "low": 455000,
+      "mid": 485000,
+      "high": 515000
+    },
+    "mortgagePayoff": 89000,
+    "owner": {
+      "name": "Aisha Chen",
+      "email": "aisha.chen@example.com",
+      "phone": "(214) 555-0400"
+    },
+    "interiorPhotos": 7
+  },
+  {
+    "id": "prop-019",
+    "address": {
+      "street": "8556 Prairie Wind Way",
+      "city": "Garland",
+      "state": "TX",
+      "zip": "75040"
+    },
+    "neighborhood": "Firewheel",
+    "location": {
+      "lat": 32.92168,
+      "lng": -96.61078
+    },
+    "beds": 5,
+    "baths": 3.5,
+    "sqft": 2980,
+    "yearBuilt": 1994,
+    "lotSqft": 10600,
+    "condition": "move-in-ready",
+    "estValue": {
+      "low": 430000,
+      "mid": 460000,
+      "high": 490000
+    },
+    "mortgagePayoff": 229000,
+    "owner": {
+      "name": "Mei Lewis",
+      "email": "mei.lewis@example.com",
+      "phone": "(214) 555-8166"
+    },
+    "interiorPhotos": 11
+  },
+  {
+    "id": "prop-020",
+    "address": {
+      "street": "7215 Brazos Ct",
+      "city": "Keller",
+      "state": "TX",
+      "zip": "76248"
+    },
+    "neighborhood": "Keller Town Center",
+    "location": {
+      "lat": 32.93497,
+      "lng": -97.23832
+    },
+    "beds": 3,
+    "baths": 3.5,
+    "sqft": 2620,
+    "yearBuilt": 1976,
+    "lotSqft": 8950,
+    "condition": "move-in-ready",
+    "estValue": {
+      "low": 510000,
+      "mid": 545000,
+      "high": 580000
+    },
+    "mortgagePayoff": 178000,
+    "owner": {
+      "name": "Ana Brown",
+      "email": "ana.brown@example.com",
+      "phone": "(214) 555-5770"
+    },
+    "interiorPhotos": 5
+  },
+  {
+    "id": "prop-021",
+    "address": {
+      "street": "6695 Cedar Springs Ct",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75204"
+    },
+    "neighborhood": "Uptown",
+    "location": {
+      "lat": 32.80624,
+      "lng": -96.80275
+    },
+    "beds": 3,
+    "baths": 3.5,
+    "sqft": 2580,
+    "yearBuilt": 2001,
+    "lotSqft": 5550,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 785000,
+      "mid": 834000,
+      "high": 885000
+    },
+    "mortgagePayoff": 297000,
+    "owner": {
+      "name": "Tyler Lewis",
+      "email": "tyler.lewis@example.com",
+      "phone": "(214) 555-8929"
+    },
+    "interiorPhotos": 12
+  },
+  {
+    "id": "prop-022",
+    "address": {
+      "street": "652 Post Oak Pl",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75206"
+    },
+    "neighborhood": "Lower Greenville",
+    "location": {
+      "lat": 32.83357,
+      "lng": -96.77587
+    },
+    "beds": 4,
+    "baths": 1,
+    "sqft": 3470,
+    "yearBuilt": 1990,
+    "lotSqft": 7250,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 940000,
+      "mid": 999000,
+      "high": 1060000
+    },
+    "mortgagePayoff": 516000,
+    "owner": {
+      "name": "Ben Garcia",
+      "email": "ben.garcia@example.com",
+      "phone": "(214) 555-5735"
+    },
+    "interiorPhotos": 11
+  },
+  {
+    "id": "prop-023",
+    "address": {
+      "street": "9072 Post Oak Pl",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75214"
+    },
+    "neighborhood": "Lakewood",
+    "location": {
+      "lat": 32.82799,
+      "lng": -96.75587
+    },
+    "beds": 2,
+    "baths": 1,
+    "sqft": 2100,
+    "yearBuilt": 1948,
+    "lotSqft": 8550,
+    "condition": "move-in-ready",
+    "estValue": {
+      "low": 540000,
+      "mid": 574000,
+      "high": 610000
+    },
+    "mortgagePayoff": 149000,
+    "owner": {
+      "name": "Jamal Brown",
+      "email": "jamal.brown@example.com",
+      "phone": "(214) 555-5879"
+    },
+    "interiorPhotos": 7
+  },
+  {
+    "id": "prop-024",
+    "address": {
+      "street": "6770 Sycamore Ln",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75218"
+    },
+    "neighborhood": "White Rock",
+    "location": {
+      "lat": 32.83575,
+      "lng": -96.69815
+    },
+    "beds": 3,
+    "baths": 3,
+    "sqft": 2520,
+    "yearBuilt": 1967,
+    "lotSqft": 6450,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 505000,
+      "mid": 536000,
+      "high": 570000
+    },
+    "mortgagePayoff": 0,
+    "owner": {
+      "name": "Olivia Lewis",
+      "email": "olivia.lewis@example.com",
+      "phone": "(214) 555-6236"
+    },
+    "interiorPhotos": 11
+  },
+  {
+    "id": "prop-025",
+    "address": {
+      "street": "6775 Ranch View Ct",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75230"
+    },
+    "neighborhood": "Preston Hollow North",
+    "location": {
+      "lat": 32.90174,
+      "lng": -96.78258
+    },
+    "beds": 4,
+    "baths": 4.5,
+    "sqft": 2450,
+    "yearBuilt": 1996,
+    "lotSqft": 4400,
+    "condition": "needs-major-work",
+    "estValue": {
+      "low": 600000,
+      "mid": 640000,
+      "high": 680000
+    },
+    "mortgagePayoff": 270000,
+    "owner": {
+      "name": "James Reyes",
+      "email": "james.reyes@example.com",
+      "phone": "(214) 555-8605"
+    },
+    "interiorPhotos": 4
+  },
+  {
+    "id": "prop-026",
+    "address": {
+      "street": "9795 Red Bud Dr",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75208"
+    },
+    "neighborhood": "Bishop Arts",
+    "location": {
+      "lat": 32.7473,
+      "lng": -96.83734
+    },
+    "beds": 2,
+    "baths": 1.5,
+    "sqft": 2490,
+    "yearBuilt": 1969,
+    "lotSqft": 8650,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 650000,
+      "mid": 689000,
+      "high": 730000
+    },
+    "mortgagePayoff": 249000,
+    "owner": {
+      "name": "Rachel Garcia",
+      "email": "rachel.garcia@example.com",
+      "phone": "(214) 555-8150"
+    },
+    "interiorPhotos": 4
+  },
+  {
+    "id": "prop-027",
+    "address": {
+      "street": "998 Lone Star Trl",
+      "city": "Plano",
+      "state": "TX",
+      "zip": "75024"
+    },
+    "neighborhood": "Legacy",
+    "location": {
+      "lat": 33.07094,
+      "lng": -96.80801
+    },
+    "beds": 4,
+    "baths": 2.5,
+    "sqft": 3050,
+    "yearBuilt": 1953,
+    "lotSqft": 6550,
+    "condition": "move-in-ready",
+    "estValue": {
+      "low": 650000,
+      "mid": 689000,
+      "high": 730000
+    },
+    "mortgagePayoff": 0,
+    "owner": {
+      "name": "Samuel Okafor",
+      "email": "samuel.okafor@example.com",
+      "phone": "(214) 555-4146"
+    },
+    "interiorPhotos": 6
+  },
+  {
+    "id": "prop-028",
+    "address": {
+      "street": "5768 Red Bud Dr",
+      "city": "Plano",
+      "state": "TX",
+      "zip": "75093"
+    },
+    "neighborhood": "Willow Bend",
+    "location": {
+      "lat": 33.0305,
+      "lng": -96.80822
+    },
+    "beds": 4,
+    "baths": 4,
+    "sqft": 3140,
+    "yearBuilt": 1983,
+    "lotSqft": 12250,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 590000,
+      "mid": 629000,
+      "high": 665000
+    },
+    "mortgagePayoff": 383000,
+    "owner": {
+      "name": "Keisha Hernandez",
+      "email": "keisha.hernandez@example.com",
+      "phone": "(214) 555-3503"
+    },
+    "interiorPhotos": 11
+  },
+  {
+    "id": "prop-029",
+    "address": {
+      "street": "5784 Shady Grove St",
+      "city": "Frisco",
+      "state": "TX",
+      "zip": "75034"
+    },
+    "neighborhood": "Starwood",
+    "location": {
+      "lat": 33.14935,
+      "lng": -96.82773
+    },
+    "beds": 5,
+    "baths": 1.5,
+    "sqft": 3790,
+    "yearBuilt": 1996,
+    "lotSqft": 14350,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 675000,
+      "mid": 720000,
+      "high": 765000
+    },
+    "mortgagePayoff": 0,
+    "owner": {
+      "name": "Maria Brown",
+      "email": "maria.brown@example.com",
+      "phone": "(214) 555-3724"
+    },
+    "interiorPhotos": 4
+  },
+  {
+    "id": "prop-030",
+    "address": {
+      "street": "8085 Willow Creek Dr",
+      "city": "McKinney",
+      "state": "TX",
+      "zip": "75070"
+    },
+    "neighborhood": "Stonebridge Ranch",
+    "location": {
+      "lat": 33.1785,
+      "lng": -96.6786
+    },
+    "beds": 2,
+    "baths": 2,
+    "sqft": 1660,
+    "yearBuilt": 1995,
+    "lotSqft": 5800,
+    "condition": "needs-major-work",
+    "estValue": {
+      "low": 280000,
+      "mid": 296000,
+      "high": 315000
+    },
+    "mortgagePayoff": 117000,
+    "owner": {
+      "name": "Omar Tran",
+      "email": "omar.tran@example.com",
+      "phone": "(214) 555-0575"
+    },
+    "interiorPhotos": 6
+  },
+  {
+    "id": "prop-031",
+    "address": {
+      "street": "7749 Mesquite Hollow Rd",
+      "city": "Allen",
+      "state": "TX",
+      "zip": "75013"
+    },
+    "neighborhood": "Twin Creeks",
+    "location": {
+      "lat": 33.11673,
+      "lng": -96.65915
+    },
+    "beds": 4,
+    "baths": 4.5,
+    "sqft": 2440,
+    "yearBuilt": 1965,
+    "lotSqft": 9300,
+    "condition": "move-in-ready",
+    "estValue": {
+      "low": 370000,
+      "mid": 393000,
+      "high": 415000
+    },
+    "mortgagePayoff": 233000,
+    "owner": {
+      "name": "Luis Moore",
+      "email": "luis.moore@example.com",
+      "phone": "(214) 555-3248"
+    },
+    "interiorPhotos": 9
+  },
+  {
+    "id": "prop-032",
+    "address": {
+      "street": "1415 Lone Star Trl",
+      "city": "Coppell",
+      "state": "TX",
+      "zip": "75019"
+    },
+    "neighborhood": "Old Coppell",
+    "location": {
+      "lat": 32.97363,
+      "lng": -96.98379
+    },
+    "beds": 2,
+    "baths": 2.5,
+    "sqft": 1930,
+    "yearBuilt": 2006,
+    "lotSqft": 3250,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 340000,
+      "mid": 360000,
+      "high": 380000
+    },
+    "mortgagePayoff": 183000,
+    "owner": {
+      "name": "Andre Moore",
+      "email": "andre.moore@example.com",
+      "phone": "(214) 555-6760"
+    },
+    "interiorPhotos": 10
+  },
+  {
+    "id": "prop-033",
+    "address": {
+      "street": "4928 Lone Star Trl",
+      "city": "Southlake",
+      "state": "TX",
+      "zip": "76092"
+    },
+    "neighborhood": "Timarron",
+    "location": {
+      "lat": 32.96293,
+      "lng": -97.14926
+    },
+    "beds": 3,
+    "baths": 2.5,
+    "sqft": 3040,
+    "yearBuilt": 1954,
+    "lotSqft": 7900,
+    "condition": "needs-major-work",
+    "estValue": {
+      "low": 750000,
+      "mid": 796000,
+      "high": 845000
+    },
+    "mortgagePayoff": 343000,
+    "owner": {
+      "name": "Nguyen Okafor",
+      "email": "nguyen.okafor@example.com",
+      "phone": "(214) 555-4867"
+    },
+    "interiorPhotos": 11
+  },
+  {
+    "id": "prop-034",
+    "address": {
+      "street": "4689 Prairie Wind Way",
+      "city": "Fort Worth",
+      "state": "TX",
+      "zip": "76107"
+    },
+    "neighborhood": "Arlington Heights",
+    "location": {
+      "lat": 32.74617,
+      "lng": -97.38382
+    },
+    "beds": 2,
+    "baths": 2.5,
+    "sqft": 2270,
+    "yearBuilt": 1993,
+    "lotSqft": 4050,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 495000,
+      "mid": 527000,
+      "high": 560000
+    },
+    "mortgagePayoff": 356000,
+    "owner": {
+      "name": "Noah Ramirez",
+      "email": "noah.ramirez@example.com",
+      "phone": "(214) 555-6368"
+    },
+    "interiorPhotos": 10
+  },
+  {
+    "id": "prop-035",
+    "address": {
+      "street": "7660 Cottonwood Ln",
+      "city": "Fort Worth",
+      "state": "TX",
+      "zip": "76109"
+    },
+    "neighborhood": "Tanglewood",
+    "location": {
+      "lat": 32.7073,
+      "lng": -97.3969
+    },
+    "beds": 3,
+    "baths": 3,
+    "sqft": 2020,
+    "yearBuilt": 1968,
+    "lotSqft": 3350,
+    "condition": "move-in-ready",
+    "estValue": {
+      "low": 415000,
+      "mid": 441000,
+      "high": 465000
+    },
+    "mortgagePayoff": 150000,
+    "owner": {
+      "name": "Leah Lopez",
+      "email": "leah.lopez@example.com",
+      "phone": "(214) 555-7903"
+    },
+    "interiorPhotos": 9
+  },
+  {
+    "id": "prop-036",
+    "address": {
+      "street": "1814 Mockingbird Ln",
+      "city": "Fort Worth",
+      "state": "TX",
+      "zip": "76116"
+    },
+    "neighborhood": "Ridglea",
+    "location": {
+      "lat": 32.71707,
+      "lng": -97.44631
+    },
+    "beds": 4,
+    "baths": 3,
+    "sqft": 3240,
+    "yearBuilt": 1968,
+    "lotSqft": 5550,
+    "condition": "move-in-ready",
+    "estValue": {
+      "low": 535000,
+      "mid": 570000,
+      "high": 605000
+    },
+    "mortgagePayoff": 158000,
+    "owner": {
+      "name": "Daniel Lopez",
+      "email": "daniel.lopez@example.com",
+      "phone": "(214) 555-2456"
+    },
+    "interiorPhotos": 11
+  },
+  {
+    "id": "prop-037",
+    "address": {
+      "street": "6163 Ranch View Ct",
+      "city": "Arlington",
+      "state": "TX",
+      "zip": "76012"
+    },
+    "neighborhood": "Central Arlington",
+    "location": {
+      "lat": 32.74965,
+      "lng": -97.12892
+    },
+    "beds": 3,
+    "baths": 2,
+    "sqft": 2610,
+    "yearBuilt": 1989,
+    "lotSqft": 10150,
+    "condition": "move-in-ready",
+    "estValue": {
+      "low": 355000,
+      "mid": 380000,
+      "high": 405000
+    },
+    "mortgagePayoff": 148000,
+    "owner": {
+      "name": "Fatima Nguyen",
+      "email": "fatima.nguyen@example.com",
+      "phone": "(214) 555-3519"
+    },
+    "interiorPhotos": 11
+  },
+  {
+    "id": "prop-038",
+    "address": {
+      "street": "5984 Willow Creek Dr",
+      "city": "Irving",
+      "state": "TX",
+      "zip": "75062"
+    },
+    "neighborhood": "Valley Ranch",
+    "location": {
+      "lat": 32.84682,
+      "lng": -96.97887
+    },
+    "beds": 4,
+    "baths": 2,
+    "sqft": 3220,
+    "yearBuilt": 1997,
+    "lotSqft": 10050,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 460000,
+      "mid": 492000,
+      "high": 520000
+    },
+    "mortgagePayoff": 310000,
+    "owner": {
+      "name": "Aisha Wilson",
+      "email": "aisha.wilson@example.com",
+      "phone": "(214) 555-8142"
+    },
+    "interiorPhotos": 5
+  },
+  {
+    "id": "prop-039",
+    "address": {
+      "street": "8606 Lakeshore Dr",
+      "city": "Garland",
+      "state": "TX",
+      "zip": "75040"
+    },
+    "neighborhood": "Firewheel",
+    "location": {
+      "lat": 32.92505,
+      "lng": -96.60864
+    },
+    "beds": 5,
+    "baths": 3,
+    "sqft": 3500,
+    "yearBuilt": 1999,
+    "lotSqft": 7050,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 500000,
+      "mid": 532000,
+      "high": 565000
+    },
+    "mortgagePayoff": 0,
+    "owner": {
+      "name": "Olivia Williams",
+      "email": "olivia.williams@example.com",
+      "phone": "(214) 555-6363"
+    },
+    "interiorPhotos": 9
+  },
+  {
+    "id": "prop-040",
+    "address": {
+      "street": "1725 Live Oak St",
+      "city": "Keller",
+      "state": "TX",
+      "zip": "76248"
+    },
+    "neighborhood": "Keller Town Center",
+    "location": {
+      "lat": 32.92114,
+      "lng": -97.23476
+    },
+    "beds": 5,
+    "baths": 2,
+    "sqft": 3390,
+    "yearBuilt": 1971,
+    "lotSqft": 11100,
+    "condition": "needs-minor-updates",
+    "estValue": {
+      "low": 625000,
+      "mid": 667000,
+      "high": 705000
+    },
+    "mortgagePayoff": 191000,
+    "owner": {
+      "name": "Fatima Jackson",
+      "email": "fatima.jackson@example.com",
+      "phone": "(214) 555-0828"
+    },
+    "interiorPhotos": 5
+  }
+]

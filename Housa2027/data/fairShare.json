@@ -1,0 +1,16 @@
+{
+  "risingAgentWindowHours": 12,
+  "risingAgentMaxSides": 15,
+  "bidSlotsPerRequest": 8,
+  "reservedRisingSlots": 3,
+  "bidsPerTeamPerRequest": 1,
+  "activeClientCap": {
+    "solo": 6,
+    "perTeamMember": 3,
+    "teamMax": 15
+  },
+  "weeklyBidCap": 10,
+  "marketShareCapPct": 10,
+  "releasesBeforePause": 2,
+  "pauseDays": 90
+}
