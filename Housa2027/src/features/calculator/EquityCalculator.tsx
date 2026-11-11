@@ -16,6 +16,7 @@ import type { AddressSuggestion, Fee, HomeEstimate } from '@/lib/types';
 import { SaveHomeDialog } from './SaveHomeDialog';
 import { buildScenarios, pctText, type ScenarioKey } from './scenarios';
 import { EquityBars } from './EquityBars';
+import { FeeZoom } from './FeeZoom';
 import { CompareTable } from './CompareTable';
 import { estimate as lookupEstimate } from '@/lib/addressService';
 
@@ -35,6 +36,7 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
   const [customFlat, setCustomFlat] = useState(6000);
   const [headline, setHeadline] = useState<ScenarioKey>('housa');
   const [saveOpen, setSaveOpen] = useState(false);
+  const [chartView, setChartView] = useState<'zoom' | 'whole'>('zoom');
 
   async function choose(s: AddressSuggestion) {
     setLoading(true);
@@ -184,11 +186,21 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
         <Box sx={{ gridArea: 'chart' }}>
           <Card>
             <CardContent sx={{ p: { xs: 2.5, sm: 3 } }}>
-              <Typography variant="h5" component="h2">Where your equity goes</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, mb: 2.5 }}>
-                Each bar is your {money(all.traditional.equity)} of equity. <Box component="strong" sx={{ color: 'text.primary' }}>Green is your cash at close.</Box> Everything after it is fees eating into it.
+              <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ sm: 'flex-start' }} spacing={1.5}>
+                <Typography variant="h5" component="h2">How much fees eat your cash</Typography>
+                <ToggleButtonGroup exclusive size="small" value={chartView} onChange={(_, v) => v && setChartView(v)} aria-label="Chart view">
+                  <ToggleButton value="zoom" sx={{ px: 2, borderRadius: '999px 0 0 999px' }}>Zoom on fees</ToggleButton>
+                  <ToggleButton value="whole" sx={{ px: 2, borderRadius: '0 999px 999px 0' }}>Whole equity</ToggleButton>
+                </ToggleButtonGroup>
+              </Stack>
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 1, mb: 2 }}>
+                {chartView === 'zoom' ? (
+                  <>Zoomed in on the top of your {money(all.traditional.equity)} equity. <Box component="strong" sx={{ color: 'text.primary' }}>The green dot is your cash at close.</Box> The colored span is what fees eat before you get paid. Further right means more cash.</>
+                ) : (
+                  <>Each bar is your whole {money(all.traditional.equity)} of equity. <Box component="strong" sx={{ color: 'text.primary' }}>Green is your cash at close.</Box> Everything after it is fees eating into it.</>
+                )}
               </Typography>
-              <EquityBars scenarios={list} selected={headline} />
+              {chartView === 'zoom' ? <FeeZoom scenarios={list} selected={headline} /> : <EquityBars scenarios={list} selected={headline} />}
             </CardContent>
           </Card>
         </Box>
