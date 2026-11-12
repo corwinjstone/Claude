@@ -17,15 +17,19 @@ type Row = { label: string; s: Scenario; highlight?: boolean; warn?: boolean };
  */
 export function EquityKept({ equity, rows, zoom = true }: { equity: number; rows: Row[]; zoom?: boolean }) {
   if (equity <= 0) return <Typography color="text.secondary">You owe more than this price, so there is no equity to show. Try a higher price or a lower mortgage balance.</Typography>;
-  // Zoomed: the scale starts a little below the smallest cash amount instead of $0, so gaps between options grow.
+  // Zoomed: the scale covers about 2.5 times the most that comes out of your equity, instead of all of it.
+  // That keeps the differences between options easy to see without stretching the bars to slivers.
+  const ZOOM = 2.5;
   const minCash = Math.max(0, Math.min(...rows.map((r) => r.s.youKeep)));
-  const step = 5000;
-  const lo = zoom ? Math.max(0, Math.floor((minCash - (equity - minCash) * 0.3) / step) * step) : 0;
+  const comesOut = Math.max(equity - minCash, 1);
+  // Clean dollar steps (1, 2, 2.5, 5 times a power of ten), so the first mark on the axis is where the bars start.
+  const tickStep = (() => { const raw = (comesOut * ZOOM) / 4; const mag = 10 ** Math.floor(Math.log10(raw)); return [1, 2, 2.5, 5, 10].map((m) => m * mag).find((x) => x >= raw)!; })();
+  const lo = zoom ? Math.max(0, Math.floor((equity - comesOut * ZOOM) / tickStep) * tickStep) : 0;
   const span = equity - lo;
   const pos = (v: number) => Math.max(0, Math.min(100, ((v - lo) / span) * 100));
-  const tickStep = (() => { const raw = span / 4; const mag = 10 ** Math.floor(Math.log10(raw)); return [1, 2, 2.5, 5, 10].map((m) => m * mag).find((x) => span / x <= 5)!; })();
+  // Marks from the start of the bars up to, but not crowding, the equity label at the right end.
   const ticks: number[] = [];
-  if (zoom) for (let t = Math.ceil(lo / tickStep) * tickStep; t < equity - tickStep * 0.4; t += tickStep) ticks.push(t);
+  if (zoom) for (let t = lo; t < equity - span * 0.14; t += tickStep) ticks.push(t);
   const rowGrid = { display: 'grid', alignItems: 'center', columnGap: 2, rowGap: 0.75, gridTemplateColumns: { xs: '1fr auto', md: '168px minmax(0, 1fr) 150px' } } as const;
   const track = { position: 'relative', display: 'flex', height: { xs: 32, md: 40 }, p: '3px', borderRadius: 999, bgcolor: 'm3.surfaceContainerHighest', overflow: 'hidden', gridColumn: { xs: '1 / -1', md: 'auto' }, order: { xs: 3, md: 0 } } as const;
   const amount = (n: number) => (
@@ -41,9 +45,8 @@ export function EquityKept({ equity, rows, zoom = true }: { equity: number; rows
         <Box sx={{ position: 'relative', height: 18, mx: '3px' }}>
           {zoom ? (
             <>
-              <Typography variant="caption" sx={{ position: 'absolute', left: 0, fontWeight: 600 }}>{moneyCompact(lo)}</Typography>
-              {ticks.filter((t) => t > lo).map((t) => (
-                <Typography key={t} variant="caption" sx={{ position: 'absolute', left: `${pos(t)}%`, transform: 'translateX(-50%)', fontWeight: 600 }}>{moneyCompact(t)}</Typography>
+              {ticks.map((t, i) => (
+                <Typography key={t} variant="caption" sx={{ position: 'absolute', left: `${pos(t)}%`, transform: i === 0 ? 'none' : 'translateX(-50%)', fontWeight: 600, whiteSpace: 'nowrap' }}>{moneyCompact(t)}</Typography>
               ))}
             </>
           ) : (
