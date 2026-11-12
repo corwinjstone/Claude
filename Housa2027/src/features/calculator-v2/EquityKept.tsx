@@ -2,6 +2,7 @@
 import { Box, Stack, Tooltip, Typography } from '@mui/material';
 import { money, moneyCompact } from '@/lib/money';
 import { pctText, type Scenario } from '@/features/calculator/scenarios';
+import { PLATFORM_FEE_NAME } from '@/lib/fees';
 
 const DARK = '#111318';
 const onCash = { color: '#fff', '[class~="dark"] &': { color: DARK } };
@@ -11,7 +12,8 @@ type Row = { label: string; s: Scenario; highlight?: boolean; warn?: boolean };
 
 /**
  * Compact rows on a 0–100% scale of your equity: label, bar, amount.
- * Solid green is the cash you keep, the striped end is fees, the gray end is title and closing.
+ * Solid green is the cash you keep, the striped part is agent fees, the small violet bar is the platform fee,
+ * and the gray end is estimated closing costs.
  */
 export function EquityKept({ equity, rows, zoom = true }: { equity: number; rows: Row[]; zoom?: boolean }) {
   if (equity <= 0) return <Typography color="text.secondary">You owe more than this price, so there is no equity to show. Try a higher price or a lower mortgage balance.</Typography>;
@@ -64,7 +66,7 @@ export function EquityKept({ equity, rows, zoom = true }: { equity: number; rows
           <Box sx={{ ...track, gridColumn: { xs: '1 / -1', md: 'auto' }, order: { xs: 3, md: 0 } }}>
             {showsBreak && breakMark}
             <Box sx={{ flex: 1, borderRadius: 999, bgcolor: 'm3.primaryContainer', color: 'm3.onPrimaryContainer', display: 'flex', alignItems: 'center', px: 2 }}>
-              <Typography component="span" sx={{ color: 'inherit', fontWeight: 700, letterSpacing: '0.04em', fontSize: '0.8125rem' }}>FULL EQUITY</Typography>
+              <Typography component="span" sx={{ color: 'inherit', fontWeight: 700, fontSize: '0.8125rem' }}>Full equity</Typography>
             </Box>
           </Box>
           {amount(equity)}
@@ -76,34 +78,39 @@ export function EquityKept({ equity, rows, zoom = true }: { equity: number; rows
             <Box key={s.key} sx={rowGrid}>
               <Typography variant="subtitle2" component="h3" sx={{ lineHeight: 1.4, fontWeight: highlight ? 700 : 500 }}>
                 {label}
-                <Box component="span" sx={{ display: 'block', fontWeight: 600, fontSize: '0.75rem', color: warn ? 'error.main' : 'text.secondary' }}>−{money(s.feesTotal)} fees</Box>
+                <Box component="span" sx={{ display: 'block', fontWeight: 600, fontSize: '0.75rem', color: warn ? 'error.main' : 'text.secondary' }}>−{money(s.agentDollarsTotal)} agent fees</Box>
               </Typography>
-              <Box sx={track} role="group" aria-label={`${label}: cash at close ${money(s.youKeep)}, fees ${money(s.feesTotal)}, title and closing ${money(s.otherClosing)}`}>
+              <Box sx={track} role="group" aria-label={`${label}: cash at close ${money(s.youKeep)}, agent fees ${money(s.agentDollarsTotal)}${s.platform ? `, platform fee ${money(s.platform)}` : ''}, estimated closing costs ${money(s.otherClosing)}`}>
                 {showsBreak && breakMark}
                 <Tooltip describeChild title={`Cash at close: ${money(s.youKeep)}`}>
                   <Box role="img" tabIndex={0} aria-label={`Cash at close: ${money(s.youKeep)}`} sx={{ width: `${pos(cash)}%`, borderRadius: '999px 4px 4px 999px', bgcolor: 'chart.cash', display: 'flex', alignItems: 'center', px: 1.5, minWidth: 0, overflow: 'hidden', ...onCash }}>
                     {/* On phones, only name the bar when it is wide enough to hold the words; the amount is printed above it. */}
-                    <Typography component="span" sx={{ display: { xs: pos(cash) >= 38 ? 'inline' : 'none', md: 'inline' }, color: 'inherit', fontWeight: 700, letterSpacing: '0.04em', fontSize: '0.75rem', whiteSpace: 'nowrap' }}>CASH AT CLOSE</Typography>
+                    <Typography component="span" sx={{ display: { xs: pos(cash) >= 38 ? 'inline' : 'none', md: 'inline' }, color: 'inherit', fontWeight: 700, fontSize: '0.8125rem', whiteSpace: 'nowrap' }}>Cash at close</Typography>
                   </Box>
                 </Tooltip>
-                <Tooltip describeChild title={`Fees: ${money(s.feesTotal)} (${s.platform ? `${pctText(s.agentPctTotal)} + ${money(s.platform)} Housa fee` : pctText(s.agentPctTotal)})`}>
+                <Tooltip describeChild title={`Agent fees: ${money(s.agentDollarsTotal)} (${pctText(s.agentPctTotal)} of the price)`}>
                   <Box
-                    role="img" tabIndex={0} aria-label={`Fees: ${money(s.feesTotal)}`}
+                    role="img" tabIndex={0} aria-label={`Agent fees: ${money(s.agentDollarsTotal)}`}
                     sx={(t) => ({
-                      width: `${(s.feesTotal / span) * 100}%`, ml: '2px', borderRadius: '4px', minWidth: 4, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      width: `${(s.agentDollarsTotal / span) * 100}%`, ml: '2px', borderRadius: '4px', minWidth: 4, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center',
                       backgroundImage: hatch(warn ? `color-mix(in srgb, ${t.vars!.palette.error.main} 45%, transparent)` : `color-mix(in srgb, ${t.vars!.palette.text.secondary} 40%, transparent)`),
                       bgcolor: warn ? 'm3.errorContainer' : 'transparent',
                     })}
                   >
-                    {s.feesTotal / span > 0.09 && (
+                    {s.agentDollarsTotal / span > 0.09 && (
                       <Typography component="span" sx={{ display: { xs: 'none', md: 'inline' }, fontWeight: 700, fontSize: '0.75rem', px: 0.5, borderRadius: 0.5, whiteSpace: 'nowrap', bgcolor: warn ? 'm3.errorContainer' : 'm3.surfaceContainerHighest', color: warn ? 'm3.onErrorContainer' : 'text.primary' }}>
-                        −{moneyCompact(s.feesTotal)}
+                        −{moneyCompact(s.agentDollarsTotal)}
                       </Typography>
                     )}
                   </Box>
                 </Tooltip>
-                <Tooltip describeChild title={`Title & closing: ${money(s.otherClosing)}`}>
-                  <Box role="img" tabIndex={0} aria-label={`Title and closing: ${money(s.otherClosing)}`} sx={{ flex: 1, ml: '2px', borderRadius: '4px 999px 999px 4px', bgcolor: 'chart.closing', minWidth: 4 }} />
+                {s.platform > 0 && (
+                  <Tooltip describeChild title={`${PLATFORM_FEE_NAME}: ${money(s.platform)}`}>
+                    <Box role="img" tabIndex={0} aria-label={`${PLATFORM_FEE_NAME}: ${money(s.platform)}`} sx={{ width: `${(s.platform / span) * 100}%`, ml: '2px', borderRadius: '4px', bgcolor: 'chart.platform', minWidth: 6 }} />
+                  </Tooltip>
+                )}
+                <Tooltip describeChild title={`Estimated closing costs: ${money(s.otherClosing)}`}>
+                  <Box role="img" tabIndex={0} aria-label={`Estimated closing costs: ${money(s.otherClosing)}`} sx={{ flex: 1, ml: '2px', borderRadius: '4px 999px 999px 4px', bgcolor: 'chart.closing', minWidth: 4 }} />
                 </Tooltip>
               </Box>
               {amount(s.youKeep)}
@@ -115,8 +122,9 @@ export function EquityKept({ equity, rows, zoom = true }: { equity: number; rows
       <Stack direction="row" component="ul" aria-label="Legend" sx={{ listStyle: 'none', p: 0, m: 0, mt: 2.5, columnGap: 2.5, rowGap: 1, flexWrap: 'wrap' }}>
         {[
           { label: 'Cash at close', sx: { bgcolor: 'chart.cash' } },
-          { label: 'Agent and Housa fees', sx: { backgroundImage: hatch('currentColor'), color: 'text.secondary' } },
-          { label: 'Title & closing (about 1%)', sx: { bgcolor: 'chart.closing' } },
+          { label: 'Agent fees', sx: { backgroundImage: hatch('currentColor'), color: 'text.secondary' } },
+          { label: 'Platform fee ($995)', sx: { bgcolor: 'chart.platform' } },
+          { label: 'Estimated closing costs', sx: { bgcolor: 'chart.closing' } },
         ].map((l) => (
           <Stack key={l.label} component="li" direction="row" alignItems="center" spacing={0.75}>
             <Box aria-hidden sx={{ width: 14, height: 10, borderRadius: 0.5, ...l.sx }} />

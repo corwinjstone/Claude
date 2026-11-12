@@ -12,10 +12,11 @@ import { HelpTip } from '@/components/HelpTip';
 import { estimate as lookupEstimate } from '@/lib/addressService';
 import type { GlossaryKey } from '@/lib/glossary';
 import { money } from '@/lib/money';
+import { PLATFORM_FEE, PLATFORM_FEE_NAME, PLATFORM_FEE_SHORT } from '@/lib/fees';
 import type { AddressSuggestion, HomeEstimate } from '@/lib/types';
 import type { Sample } from '@/features/calculator/EquityCalculator';
 import { SaveHomeDialog } from '@/features/calculator/SaveHomeDialog';
-import { buildScenarios, pctText } from '@/features/calculator/scenarios';
+import { buildScenarios, defaultClosingCosts, pctText } from '@/features/calculator/scenarios';
 import { EquityKept } from './EquityKept';
 
 const r5k = (n: number) => Math.round(n / 5000) * 5000;
@@ -24,6 +25,36 @@ const valueBox = {
   minWidth: 112, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', px: 1.5, borderRadius: 1.5, bgcolor: 'm3.surfaceContainerHighest',
   fontSize: '1rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', lineHeight: 1.2,
 } as const;
+
+/** A dollar amount you can type into. */
+function DollarField({ value, onChange, label }: { value: number; onChange: (v: number) => void; label: string }) {
+  return (
+    <TextField
+      size="small" value={value.toLocaleString('en-US')} fullWidth={false}
+      onChange={(e) => onChange(Math.min(Number(e.target.value.replace(/[^0-9]/g, '')) || 0, 10_000_000))}
+      sx={{ width: 148, '& .MuiOutlinedInput-root': { minHeight: 40, height: 40, fontWeight: 700, pr: 0.5 }, '& input': { textAlign: 'right', py: 0, pr: 1 } }}
+      slotProps={{ input: { startAdornment: <InputAdornment position="start" sx={{ mr: 0.25 }}>$</InputAdornment> }, htmlInput: { inputMode: 'numeric', 'aria-label': label } }}
+    />
+  );
+}
+
+/** The $995 fee. It is flat and set by Housa, so it is shown, not editable. Named as in the PRD. */
+function PlatformFeeCell() {
+  return (
+    <Box>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ columnGap: 1, minHeight: 48 }}>
+        <Stack direction="row" alignItems="center" spacing={0.25} sx={{ flex: '1 1 0', minWidth: 0 }}>
+          <Typography variant="subtitle2" component="h3" id="v2-platform">{PLATFORM_FEE_NAME}</Typography>
+          <HelpTip k="platformFee" />
+        </Stack>
+        <Box sx={{ ...valueBox, bgcolor: 'transparent', border: 1, borderColor: 'm3.outlineVariant', ml: 'auto', flexShrink: 0 }} aria-labelledby="v2-platform" role="text">{money(PLATFORM_FEE)}</Box>
+      </Stack>
+      <Typography variant="caption" color="text.secondary" component="p" sx={{ mt: 1, lineHeight: 1.6 }}>
+        A flat fee, paid from your sale money at closing. It never changes with your price.
+      </Typography>
+    </Box>
+  );
+}
 
 /** Percent / flat fee switch that sits under a slider's heading. */
 function FeeToggle({ value, onChange, label }: { value: 'percent' | 'flat'; onChange: (v: 'percent' | 'flat') => void; label: string }) {
@@ -41,12 +72,12 @@ function Dial(p: {
 }) {
   return (
     <Box>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ flexWrap: 'wrap', columnGap: 1, rowGap: 0.5, minHeight: 48 }}>
-        <Stack direction="row" alignItems="center" spacing={0.25} sx={{ flexShrink: 0 }}>
-          <Typography variant="subtitle2" component="h3" id={p.id} sx={{ whiteSpace: 'nowrap' }}>{p.label}</Typography>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ columnGap: 1, minHeight: 48 }}>
+        <Stack direction="row" alignItems="center" spacing={0.25} sx={{ flex: '1 1 0', minWidth: 0 }}>
+          <Typography variant="subtitle2" component="h3" id={p.id}>{p.label}</Typography>
           {p.help && <HelpTip k={p.help} />}
         </Stack>
-        <Box sx={{ ml: 'auto' }}>{p.box}</Box>
+        <Box sx={{ ml: 'auto', flexShrink: 0 }}>{p.box}</Box>
       </Stack>
       {p.toggle}
       <Slider aria-labelledby={p.id} getAriaValueText={p.text} value={p.value} min={p.min} max={p.max} step={p.step} onChange={(_, v) => p.onChange(v as number)} sx={{ display: 'block', mt: 1, mb: 0, py: '14px' }} />
@@ -69,6 +100,9 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
   const [buyerFlat, setBuyerFlat] = useState(15000);
   const [saveOpen, setSaveOpen] = useState(false);
   const [zoom, setZoom] = useState(true);
+  // Estimated closing costs start at about 1% of the price and follow it until you type your own number.
+  const [closingOverride, setClosingOverride] = useState<number | null>(null);
+  const closingCosts = closingOverride ?? defaultClosingCosts(price);
 
   async function choose(s: AddressSuggestion) {
     setLoading(true);
@@ -94,11 +128,11 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
     () =>
       estimate
         ? buildScenarios({
-            price, payoff, buyerPct, buyerFlat: buyerKind === 'flat' ? buyerFlat : undefined, typicalPct: typical.value,
+            price, payoff, buyerPct, buyerFlat: buyerKind === 'flat' ? buyerFlat : undefined, typicalPct: typical.value, closingCosts,
             customFee: agentKind === 'percent' ? { kind: 'percent', value: agentPct } : { kind: 'flat', value: agentFlat },
           })
         : null,
-    [estimate, price, payoff, agentKind, agentPct, agentFlat, buyerKind, buyerPct, buyerFlat, typical.value],
+    [estimate, price, payoff, agentKind, agentPct, agentFlat, buyerKind, buyerPct, buyerFlat, typical.value, closingCosts],
   );
 
   return (
@@ -151,6 +185,7 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
         };
         const min = r5k(estimate.low * 0.85), max = r5k(estimate.high * 1.15);
         const payoffMax = Math.max(max, payoff);
+        const closingMax = Math.max(30000, closingCosts);
         const cols = [{ s: trad, name: 'Traditional 6%' }, { s: mid, name: 'Typical Housa' }, { s: you, name: 'Your terms' }];
         const cell = { py: 1.5, px: { xs: 0.5, sm: 2 }, textAlign: 'right', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } as const;
         return (
@@ -175,7 +210,7 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
                   {you.vsTraditional >= 0 ? `${money(you.vsTraditional)} more` : `${money(-you.vsTraditional)} less`} than a traditional 6% sale
                 </Typography>
                 <Typography variant="body2" component="p" sx={{ mt: 1, lineHeight: 1.7 }}>
-                  Your fees {money(you.feesTotal)} ({pctText(you.agentPctTotal)} + $995) instead of <s>{money(trad.feesTotal)}</s>
+                  Agent fees {money(you.agentDollarsTotal)} + {money(PLATFORM_FEE)} platform fee, instead of <s>{money(trad.agentDollarsTotal)}</s>
                 </Typography>
                 <Stack direction="row" spacing={1} justifyContent="center" alignItems="center" sx={{ mt: 3 }}>
                   <Button variant="contained" onClick={() => router.push('/sell?from=calculator')}>Get offers from local agents</Button>
@@ -193,14 +228,7 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
                   <Dial id="v2-price" label="Home sale price" value={price} min={min} max={max} step={5000} onChange={setPrice} text={money} box={<Box sx={valueBox}>{money(price)}</Box>} />
                   <Dial
                     id="v2-payoff" label="Mortgage balance" help="payoff" value={Math.min(payoff, payoffMax)} min={0} max={payoffMax} step={5000} onChange={setPayoff} text={money}
-                    box={
-                      <TextField
-                        size="small" value={payoff.toLocaleString('en-US')} fullWidth={false}
-                        onChange={(e) => setPayoff(Math.min(Number(e.target.value.replace(/[^0-9]/g, '')) || 0, 10_000_000))}
-                        sx={{ width: 148, '& .MuiOutlinedInput-root': { minHeight: 40, height: 40, fontWeight: 700, pr: 0.5 }, '& input': { textAlign: 'right', py: 0, pr: 1 } }}
-                        slotProps={{ input: { startAdornment: <InputAdornment position="start" sx={{ mr: 0.25 }}>$</InputAdornment> }, htmlInput: { inputMode: 'numeric', 'aria-label': 'Mortgage balance in dollars' } }}
-                      />
-                    }
+                    box={<DollarField value={payoff} onChange={setPayoff} label="Mortgage balance in dollars" />}
                   />
                   <Dial
                     id="v2-agent" label={`Your agent · ${pctText((you.agent / price) * 100)}`} help="listingFee" box={<Box sx={valueBox}>{money(you.agent)}</Box>}
@@ -214,6 +242,19 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
                     value={buyerKind === 'percent' ? buyerPct : buyerFlat} min={0} max={buyerKind === 'percent' ? 3 : 30000} step={buyerKind === 'percent' ? 0.25 : 500}
                     onChange={buyerKind === 'percent' ? setBuyerPct : setBuyerFlat} text={buyerKind === 'percent' ? (v) => `${v}%` : money}
                   />
+                  <Dial
+                    id="v2-closing" label="Estimated closing costs" help="closingCosts"
+                    box={<DollarField value={closingCosts} onChange={setClosingOverride} label="Estimated closing costs in dollars" />}
+                    toggle={
+                      closingOverride != null ? (
+                        <Button size="small" variant="text" onClick={() => setClosingOverride(null)} sx={{ minHeight: 32, px: 0, mt: 0.5 }}>Reset to about 1% of the price</Button>
+                      ) : (
+                        <Typography variant="caption" color="text.secondary" component="p" sx={{ mt: 0.5, lineHeight: 1.6 }}>Starts at about 1% of the price. Change it to match your estimate.</Typography>
+                      )
+                    }
+                    value={Math.min(closingCosts, closingMax)} min={0} max={closingMax} step={250} onChange={setClosingOverride} text={money}
+                  />
+                  <PlatformFeeCell />
                 </Box>
                 <Box role="status" sx={{ mt: 3, borderRadius: 2, px: 2.5, py: 1.75, bgcolor: 'm3.secondaryContainer', color: 'm3.onSecondaryContainer', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 2, flexWrap: 'wrap' }}>
                   <Typography variant="body2">Total to agents: <strong>{pctText(you.agentPctTotal)}</strong> (traditional: 6%)</Typography>
@@ -231,7 +272,7 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
                   <Box>
                     <Typography variant="h6" component="h2">How much of your {money(you.equity)} equity you keep</Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, lineHeight: 1.7 }}>
-                      Green is your cash at close. The striped end is what fees take.
+                      Green is your cash at close. The striped part is agent fees and the small violet bar is the $995 platform fee.
                       {zoom ? <> <strong>Zoomed in: the bars start at the break mark, not at $0.</strong></> : null}
                     </Typography>
                   </Box>
@@ -262,7 +303,7 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
                       { k: 'Total fees', sub: (s: typeof you) => (s.platform ? `${pctText(s.agentPctTotal)} + $995` : pctText(s.agentPctTotal)), v: (s: typeof you) => money(s.feesTotal) },
                       { k: 'Your agent', v: (s: typeof you) => `${money(s.agent)}` },
                       { k: "Buyer's agent", v: (s: typeof you) => `${money(s.buyerAgent)}` },
-                      { k: 'Housa fee', v: (s: typeof you) => (s.platform ? money(s.platform) : '$0') },
+                      { k: PLATFORM_FEE_SHORT, v: (s: typeof you) => (s.platform ? money(s.platform) : '$0') },
                     ].map((r) => (
                       <TableRow key={r.k}>
                         <TableCell component="th" scope="row" sx={{ py: 1.5, px: 0, fontWeight: r.strong ? 700 : 400, fontSize: r.strong ? { xs: '0.875rem', sm: '1rem' } : { xs: '0.8125rem', sm: '0.875rem' }, whiteSpace: { xs: 'normal', sm: 'nowrap' }, lineHeight: 1.2 }}>{r.k}</TableCell>
@@ -277,7 +318,7 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
                   </TableBody>
                 </Table>
                 <Typography variant="caption" color="text.secondary" component="p" sx={{ mt: 2.5, lineHeight: 1.7 }}>
-                  Same in all three: mortgage {money(payoff)} and about {money(you.otherClosing)} for title and closing. Estimates only. Housa does not set agent fees.{' '}
+                  Same in all three: mortgage {money(payoff)} and estimated closing costs {money(you.otherClosing)}. The {money(PLATFORM_FEE)} {PLATFORM_FEE_NAME} is paid by the seller from the sale money at closing. Estimates only. Housa does not set agent fees.{' '}
                   <Link href="/">See the first design</Link>
                 </Typography>
               </CardContent>

@@ -1,6 +1,7 @@
 'use client';
 import { Box, Stack, Tooltip, Typography } from '@mui/material';
 import { money } from '@/lib/money';
+import { PLATFORM_FEE_NAME } from '@/lib/fees';
 import { pctText, type Scenario, type ScenarioKey } from './scenarios';
 
 type Part = 'cash' | 'agent' | 'buyerAgent' | 'platform' | 'closing';
@@ -8,8 +9,8 @@ const PARTS: { key: Part; label: string }[] = [
   { key: 'cash', label: 'Cash at close' },
   { key: 'agent', label: 'Your agent' },
   { key: 'buyerAgent', label: "Buyer's agent" },
-  { key: 'platform', label: 'Housa fee' },
-  { key: 'closing', label: 'Title & closing' },
+  { key: 'platform', label: 'Platform fee' },
+  { key: 'closing', label: 'Estimated closing costs' },
 ];
 
 // Text set inside a fill: white or near-black by the fill's lightness, per mode.
@@ -74,11 +75,11 @@ export function EquityBars({ scenarios, selected }: { scenarios: Scenario[]; sel
                 {parts.map((p) => {
                   const share = p.amount / scale;
                   return (
-                    <Tooltip key={p.key} describeChild title={`${p.label}: ${money(p.amount)} (${pctText((p.amount / equity) * 100)} of your equity)`}>
+                    <Tooltip key={p.key} describeChild title={`${p.key === 'platform' ? PLATFORM_FEE_NAME : p.label}: ${money(p.amount)} (${pctText((p.amount / equity) * 100)} of your equity)`}>
                       <Box
                         tabIndex={0}
                         role="img"
-                        aria-label={`${p.label}: ${money(p.amount)}`}
+                        aria-label={`${p.key === 'platform' ? PLATFORM_FEE_NAME : p.label}: ${money(p.amount)}`}
                         sx={{
                           flexGrow: p.amount, flexBasis: 0, minWidth: 4, borderRadius: '4px', bgcolor: `chart.${p.key}`,
                           display: 'flex', alignItems: 'center', px: 1.5, ...insideText[p.key],
@@ -96,7 +97,7 @@ export function EquityBars({ scenarios, selected }: { scenarios: Scenario[]; sel
               </Box>
               <Typography variant="body2" color="text.secondary" sx={{ mt: 0.75 }}>
                 Fees eat <Box component="strong" sx={{ color: 'text.primary' }}>{money(s.feesTotal)}</Box>
-                {' '}({s.platform ? `${pctText(s.agentPctTotal)} + ${money(s.platform)} Housa fee` : pctText(s.agentPctTotal)})
+                {' '}({s.platform ? `${pctText(s.agentPctTotal)} + ${money(s.platform)} platform fee` : pctText(s.agentPctTotal)})
                 {s.youKeep < 0 && ' · more than your equity'}
               </Typography>
             </Box>

@@ -1,14 +1,15 @@
 'use client';
 import { Box, Stack, Tooltip, Typography } from '@mui/material';
 import { money, moneyCompact } from '@/lib/money';
+import { PLATFORM_FEE_NAME } from '@/lib/fees';
 import { pctText, type Scenario, type ScenarioKey } from './scenarios';
 
 type Fee = 'agent' | 'buyerAgent' | 'platform' | 'closing';
 const FEES: { key: Fee; label: string }[] = [
   { key: 'agent', label: 'Your agent' },
   { key: 'buyerAgent', label: "Buyer's agent" },
-  { key: 'platform', label: 'Housa fee' },
-  { key: 'closing', label: 'Title & closing' },
+  { key: 'platform', label: 'Platform fee' },
+  { key: 'closing', label: 'Estimated closing costs' },
 ];
 const feeAmount = (s: Scenario, k: Fee) => (k === 'closing' ? s.otherClosing : s[k]);
 
@@ -107,11 +108,11 @@ export function FeeZoom({ scenarios, selected }: { scenarios: Scenario[]; select
                     sx={{ position: 'absolute', top: 34, height: 20, left: `${x(s.youKeep)}%`, width: `${x(equity) - x(s.youKeep)}%`, display: 'flex', gap: '2px' }}
                   >
                     {fees.map((f) => (
-                      <Tooltip key={f.key} describeChild title={`${f.label}: ${money(f.amount)}${f.key === 'agent' ? ` (${pctText(s.agentPctTotal - s.buyerAgentPct)} of the price)` : f.key === 'buyerAgent' ? ` (${pctText(s.buyerAgentPct)} of the price)` : ''}`}>
+                      <Tooltip key={f.key} describeChild title={`${f.key === 'platform' ? PLATFORM_FEE_NAME : f.label}: ${money(f.amount)}${f.key === 'agent' ? ` (${pctText(s.agentPctTotal - s.buyerAgentPct)} of the price)` : f.key === 'buyerAgent' ? ` (${pctText(s.buyerAgentPct)} of the price)` : ''}`}>
                         <Box
                           role="img"
                           tabIndex={0}
-                          aria-label={`${f.label}: ${money(f.amount)}`}
+                          aria-label={`${f.key === 'platform' ? PLATFORM_FEE_NAME : f.label}: ${money(f.amount)}`}
                           sx={{ flexGrow: f.amount, flexBasis: 0, minWidth: 4, borderRadius: '4px', bgcolor: `chart.${f.key}` }}
                         />
                       </Tooltip>

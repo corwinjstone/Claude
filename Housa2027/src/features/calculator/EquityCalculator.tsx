@@ -10,11 +10,11 @@ import LockOutlined from '@mui/icons-material/LockOutlined';
 import NotificationsActiveOutlined from '@mui/icons-material/NotificationsActiveOutlined';
 import { AddressSearch } from '@/components/AddressSearch';
 import { HelpTip } from '@/components/HelpTip';
-import { PLATFORM_FEE } from '@/lib/fees';
+import { PLATFORM_FEE, PLATFORM_FEE_NAME } from '@/lib/fees';
 import { about, money, pct } from '@/lib/money';
 import type { AddressSuggestion, Fee, HomeEstimate } from '@/lib/types';
 import { SaveHomeDialog } from './SaveHomeDialog';
-import { buildScenarios, pctText, type ScenarioKey } from './scenarios';
+import { buildScenarios, defaultClosingCosts, pctText, type ScenarioKey } from './scenarios';
 import { EquityBars } from './EquityBars';
 import { FeeZoom } from './FeeZoom';
 import { CompareTable } from './CompareTable';
@@ -31,6 +31,9 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
   const [price, setPrice] = useState(0);
   const [payoff, setPayoff] = useState(0);
   const [buyerPct, setBuyerPct] = useState(3);
+  // Estimated closing costs start at about 1% of the price and follow it until you type your own number.
+  const [closingOverride, setClosingOverride] = useState<number | null>(null);
+  const closingCosts = closingOverride ?? defaultClosingCosts(price);
   const [customKind, setCustomKind] = useState<Fee['kind']>('percent');
   const [customPct, setCustomPct] = useState(1.25);
   const [customFlat, setCustomFlat] = useState(6000);
@@ -64,8 +67,8 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
   const sc = useMemo(() => {
     if (!estimate) return null;
     const customFee: Fee = customKind === 'percent' ? { kind: 'percent', value: customPct } : { kind: 'flat', value: customFlat };
-    return buildScenarios({ price, payoff, buyerPct, typicalPct: typical.value, customFee });
-  }, [estimate, price, payoff, buyerPct, customKind, customPct, customFlat, typical.value]);
+    return buildScenarios({ price, payoff, buyerPct, typicalPct: typical.value, customFee, closingCosts });
+  }, [estimate, price, payoff, buyerPct, customKind, customPct, customFlat, typical.value, closingCosts]);
 
   // Adjusting your own fee puts it in the headline.
   const editCustom = <T,>(set: (v: T) => void) => (v: T) => { set(v); setHeadline('custom'); };
@@ -110,6 +113,7 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
   const sliderMin = Math.round((estimate.low * 0.85) / 5000) * 5000;
   const sliderMax = Math.round((estimate.high * 1.15) / 5000) * 5000;
   const payoffMax = Math.max(sliderMax, payoff);
+  const closingMax = Math.max(30000, closingCosts);
   const headlineName = headline === 'traditional' ? 'the traditional 6%' : headline === 'housa' ? 'a typical Housa bid' : 'your fee';
 
   return (
@@ -327,13 +331,44 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
                   />
                 </Box>
 
+                <Box>
+                  <Stack direction="row" alignItems="center" spacing={0.5}>
+                    <Typography variant="subtitle1" component="h2" id="closing-label">Estimated closing costs</Typography>
+                    <HelpTip k="closingCosts" />
+                  </Stack>
+                  <TextField
+                    sx={{ mt: 1 }}
+                    label="Closing costs"
+                    value={closingCosts.toLocaleString('en-US')}
+                    onChange={(e) => {
+                      const n = Number(e.target.value.replace(/[^0-9]/g, ''));
+                      if (Number.isFinite(n)) setClosingOverride(Math.min(n, 1_000_000));
+                    }}
+                    slotProps={{ input: { startAdornment: <InputAdornment position="start">$</InputAdornment> }, htmlInput: { inputMode: 'numeric' } }}
+                    helperText={closingOverride == null ? 'Starts at about 1% of the price. Change it to match your estimate.' : 'Your number. It no longer follows the price.'}
+                  />
+                  <Slider aria-labelledby="closing-label" getAriaValueText={(v) => money(v)} value={Math.min(closingCosts, closingMax)} min={0} max={closingMax} step={250} onChange={(_, v) => setClosingOverride(v as number)} />
+                  {closingOverride != null && <Button size="small" variant="text" onClick={() => setClosingOverride(null)} sx={{ minHeight: 32, px: 0 }}>Reset to about 1% of the price</Button>}
+                </Box>
+
+                <Box>
+                  <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
+                    <Stack direction="row" alignItems="center" spacing={0.5}>
+                      <Typography variant="subtitle1" component="h2" id="platform-label">{PLATFORM_FEE_NAME}</Typography>
+                      <HelpTip k="platformFee" />
+                    </Stack>
+                    <Typography component="p" aria-labelledby="platform-label" sx={{ fontWeight: 800, fontSize: '1.125rem', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{money(PLATFORM_FEE)}</Typography>
+                  </Stack>
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>A flat fee, paid from your sale money at closing. It never changes with your price.</Typography>
+                </Box>
+
                 <Box role="status" sx={{ bgcolor: 'm3.secondaryContainer', color: 'm3.onSecondaryContainer', borderRadius: 2, p: 2 }}>
                   <Typography variant="subtitle2" component="p">Your total fees</Typography>
                   <Typography variant="h5" component="p" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>
                     {pctText(all.custom.agentPctTotal)} = {money(all.custom.agentDollarsTotal)}
                   </Typography>
                   <Typography variant="body2">
-                    {customKind === 'percent' ? pctText(customPct) : money(customFlat)} to your agent + {pctText(buyerPct)} to the buyer’s agent, plus the {money(PLATFORM_FEE)} Housa fee.
+                    {customKind === 'percent' ? pctText(customPct) : money(customFlat)} to your agent + {pctText(buyerPct)} to the buyer’s agent, plus the {money(PLATFORM_FEE)} platform fee.
                     {' '}At 6% you would pay {money(t.agentDollarsTotal)}.
                   </Typography>
                 </Box>

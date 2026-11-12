@@ -17,12 +17,12 @@ export const glossary = {
     text: "Money you choose to offer toward the buyer's agent. Since 2024 this is up to you, and it can be $0. Offering some can bring more buyers.",
   },
   platformFee: {
-    term: 'Housa platform fee',
-    text: 'A flat $995 Platform Technology & Transaction Coordination Fee. It pays for milestone tracking, the closing packet for the title company, a secure document locker and your money tracker. You pay it only if your home sells. It never goes up with your price.',
+    term: 'Platform Technology & Transaction Coordination Fee',
+    text: 'A flat $995 fee for the software and coordination Housa provides: milestone tracking, the digital closing packet for the title company, a secure document locker and tracking of the money you keep. You pay it from your sale money at closing, and only if your home sells. It is never a percentage and never changes with your price.',
   },
   closingCosts: {
-    term: 'Title, escrow and other closing costs',
-    text: 'Fees for the title company, the title policy and tax adjustments. We use about 1% of the price as a rough guess.',
+    term: 'Estimated closing costs',
+    text: 'What the title company charges to close the sale: escrow, the title policy and tax adjustments. We start with about 1% of the price as a rough guess. Change it to match a real estimate.',
   },
   equity: {
     term: 'Your equity',
@@ -30,7 +30,7 @@ export const glossary = {
   },
   cashAtClose: {
     term: 'Cash at close',
-    text: 'The money you walk away with on closing day: your equity minus agent fees, the Housa fee, and title and closing costs.',
+    text: 'The money you walk away with on closing day: your equity minus agent fees, the Platform Technology & Transaction Coordination Fee, and your estimated closing costs.',
   },
   youKeep: {
     term: 'You keep',

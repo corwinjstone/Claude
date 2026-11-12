@@ -5,6 +5,9 @@ import type { Fee } from '@/lib/types';
 export type ScenarioKey = 'traditional' | 'housa' | 'custom';
 export const OTHER_CLOSING_PCT = 1;
 
+/** Where the editable "Estimated closing costs" start: about 1% of the price, to the nearest $50. */
+export const defaultClosingCosts = (price: number) => Math.round((price * OTHER_CLOSING_PCT) / 100 / 50) * 50;
+
 export interface Scenario {
   key: ScenarioKey;
   name: string;
@@ -14,7 +17,7 @@ export interface Scenario {
   buyerAgentPct: number;
   buyerAgent: number;
   platform: number;
-  /** Agent fees as a share of the sale price (your agent + buyer's agent), not counting the flat Housa fee. */
+  /** Agent fees as a share of the sale price (your agent + buyer's agent), not counting the flat $995 platform fee. */
   agentPctTotal: number;
   agentDollarsTotal: number;
   feesTotal: number;
@@ -28,11 +31,13 @@ export interface Scenario {
 
 export function buildScenarios(o: {
   price: number; payoff: number; buyerPct: number; /** A flat dollar offer to the buyer's agent. Wins over buyerPct when set. */ buyerFlat?: number; typicalPct: number; customFee: Fee;
+  /** Estimated closing costs in dollars. Defaults to about 1% of the price. */ closingCosts?: number;
 }): Record<ScenarioKey, Scenario> {
+  const closing = o.closingCosts ?? defaultClosingCosts(o.price);
   const make = (key: ScenarioKey, name: string, shortName: string, agentFee: Fee, buyerAgentPct: number, platform: number) => {
     const sheet = netSheet({
       salePrice: o.price, payoff: o.payoff, listingFee: agentFee,
-      buyerAgent: { kind: 'percent', value: buyerAgentPct }, platformFee: platform, otherClosingPct: OTHER_CLOSING_PCT,
+      buyerAgent: { kind: 'percent', value: buyerAgentPct }, platformFee: platform, otherClosingPct: (closing / o.price) * 100,
     });
     const agent = feeDollars(agentFee, o.price);
     const buyerAgent = (o.price * buyerAgentPct) / 100;
@@ -42,7 +47,7 @@ export function buildScenarios(o: {
       agentPctTotal: agentPct + buyerAgentPct,
       agentDollarsTotal: agent + buyerAgent,
       feesTotal: agent + buyerAgent + platform,
-      otherClosing: (o.price * OTHER_CLOSING_PCT) / 100,
+      otherClosing: closing,
       payoff: o.payoff,
       equity: o.price - o.payoff,
       youKeep: sheet.youKeep,

@@ -26,8 +26,8 @@ export function CompareTable({ scenarios, price, selected, onSelect }: {
     { key: 'equity', label: 'Your equity', help: 'equity', value: (s) => money(s.equity), strong: true, divider: true },
     { key: 'agent', label: 'Your agent', help: 'listingFee', value: (s) => `− ${money(s.agent)}`, sub: (s) => (s.agentFee.kind === 'percent' ? pctText(s.agentFee.value) : 'flat fee'), divider: true },
     { key: 'buyer', label: "Buyer's agent", help: 'buyerAgent', value: (s) => `− ${money(s.buyerAgent)}`, sub: (s) => pctText(s.buyerAgentPct) },
-    { key: 'platform', label: 'Housa fee', help: 'platformFee', value: (s) => (s.platform ? `− ${money(s.platform)}` : '$0'), sub: (s) => (s.platform ? 'flat' : null) },
-    { key: 'other', label: 'Title & closing (about 1%)', help: 'closingCosts', value: (s) => `− ${money(s.otherClosing)}` },
+    { key: 'platform', label: 'Platform fee', help: 'platformFee', value: (s) => (s.platform ? `− ${money(s.platform)}` : '$0'), sub: (s) => (s.platform ? 'flat' : null) },
+    { key: 'other', label: 'Estimated closing costs', help: 'closingCosts', value: (s) => `− ${money(s.otherClosing)}` },
     { key: 'cash', label: 'Cash at close', help: 'cashAtClose', value: (s) => <Box component="span" sx={{ color: 'success.main' }}>{money(s.youKeep)}</Box>, strong: true, divider: true },
     {
       key: 'more', label: 'More cash than 6%',
