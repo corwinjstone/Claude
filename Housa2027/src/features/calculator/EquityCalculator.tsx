@@ -74,11 +74,11 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
   if (!estimate) {
     return (
       <Container maxWidth="md" sx={{ pt: { xs: 4, md: 8 } }}>
-        <Typography variant="overline" color="primary" component="p">Free · No sign-up · Dallas–Fort Worth</Typography>
+        <Typography variant="overline" color="text.primary" component="p">Free · No sign-up · Dallas–Fort Worth</Typography>
         <Typography variant="h1" sx={{ mt: 1, fontSize: { xs: '2rem', md: '2.8125rem' }, lineHeight: 1.2 }}>
           How much would you keep if you sold your home?
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mt: 2, mb: 4, maxWidth: 560 }}>
+        <Typography variant="body1" color="text.primary" sx={{ mt: 2, mb: 4, maxWidth: 560 }}>
           Enter your address. We will show your home’s value, what you owe, and the cash you could keep at different agent fees.
         </Typography>
         <Card sx={{ p: { xs: 2, sm: 3 }, bgcolor: 'm3.surfaceContainer' }}>
@@ -94,7 +94,7 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
             ))}
           </Stack>
         </Card>
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 3, color: 'text.secondary' }}>
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 3, color: 'text.primary' }}>
           <LockOutlined fontSize="small" aria-hidden />
           <Typography variant="body2">Your address stays private. Agents only see it if you accept their bid.</Typography>
         </Stack>
@@ -147,7 +147,7 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
                 </Typography>
                 <HelpTip k="cashAtClose" />
               </Stack>
-              <Typography variant="moneyHero" component="p" aria-live="polite" sx={{ my: 1, fontSize: { xs: '3rem', sm: '4rem' }, lineHeight: 1.1 }}>
+              <Typography variant="moneyHero" component="p" aria-live="polite" sx={{ color: 'success.main', my: 1, fontSize: { xs: '3rem', sm: '4rem' }, lineHeight: 1.1 }}>
                 {about(h.youKeep)}
               </Typography>
               <Box
@@ -189,8 +189,8 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
               <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ sm: 'flex-start' }} spacing={1.5}>
                 <Typography variant="h5" component="h2">How much fees eat your cash</Typography>
                 <ToggleButtonGroup exclusive size="small" value={chartView} onChange={(_, v) => v && setChartView(v)} aria-label="Chart view">
-                  <ToggleButton value="zoom" sx={{ px: 2, borderRadius: '999px 0 0 999px' }}>Zoom on fees</ToggleButton>
-                  <ToggleButton value="whole" sx={{ px: 2, borderRadius: '0 999px 999px 0' }}>Whole equity</ToggleButton>
+                  <ToggleButton value="zoom" sx={{ px: 2, borderRadius: '7px 0 0 7px' }}>Zoom on fees</ToggleButton>
+                  <ToggleButton value="whole" sx={{ px: 2, borderRadius: '0 7px 7px 0' }}>Whole equity</ToggleButton>
                 </ToggleButtonGroup>
               </Stack>
               <Typography variant="body2" color="text.secondary" sx={{ mt: 1, mb: 2 }}>
@@ -293,8 +293,8 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
                     aria-label="Fee type"
                     sx={{ mt: 1, mb: 1 }}
                   >
-                    <ToggleButton value="percent" sx={{ px: 2.5, borderRadius: '999px 0 0 999px' }}>Percent</ToggleButton>
-                    <ToggleButton value="flat" sx={{ px: 2.5, borderRadius: '0 999px 999px 0' }}>Flat fee</ToggleButton>
+                    <ToggleButton value="percent" sx={{ px: 2.5, borderRadius: '7px 0 0 7px' }}>Percent</ToggleButton>
+                    <ToggleButton value="flat" sx={{ px: 2.5, borderRadius: '0 7px 7px 0' }}>Flat fee</ToggleButton>
                   </ToggleButtonGroup>
                   {customKind === 'percent' ? (
                     <>
@@ -341,13 +341,13 @@ export function EquityCalculator({ typical, samples }: { typical: { value: numbe
             </Card>
 
             <Stack spacing={1.5} sx={{ mt: 3 }}>
-              <Button variant="contained" size="large" onClick={() => router.push('/sell?from=calculator')}>
+              <Button variant="contained" color="success" size="large" onClick={() => router.push('/sell?from=calculator')}>
                 Get offers from local agents
               </Button>
               <Button variant="outlined" size="large" startIcon={<NotificationsActiveOutlined />} onClick={() => setSaveOpen(true)}>
                 Email me a monthly update
               </Button>
-              <Typography variant="caption" color="text.secondary" sx={{ px: 1 }}>
+              <Typography variant="caption" color="text.primary" sx={{ px: 1 }}>
                 These are estimates, not an appraisal or an offer. Housa does not set agent fees; agents set their own when they bid.
                 The typical Housa bid is the middle of {typical.sampleSize} sample full-service bids.
               </Typography>

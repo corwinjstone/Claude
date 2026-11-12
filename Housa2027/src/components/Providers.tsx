@@ -5,7 +5,7 @@ import { theme } from '@/theme/theme';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider theme={theme} defaultMode="system">
+    <ThemeProvider theme={theme} defaultMode="dark">
       <CssBaseline enableColorScheme />
       {children}
     </ThemeProvider>

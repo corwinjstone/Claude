@@ -29,8 +29,8 @@ const valueBox = {
 function FeeToggle({ value, onChange, label }: { value: 'percent' | 'flat'; onChange: (v: 'percent' | 'flat') => void; label: string }) {
   return (
     <ToggleButtonGroup exclusive size="small" value={value} onChange={(_, v) => v && onChange(v)} aria-label={label} sx={{ mt: 1 }}>
-      <ToggleButton value="percent" sx={{ px: 2, minHeight: 40, borderRadius: '999px 0 0 999px' }}>Percent</ToggleButton>
-      <ToggleButton value="flat" sx={{ px: 2, minHeight: 40, borderRadius: '0 999px 999px 0' }}>Flat fee</ToggleButton>
+      <ToggleButton value="percent" sx={{ px: 2, minHeight: 40, borderRadius: '7px 0 0 7px' }}>Percent</ToggleButton>
+      <ToggleButton value="flat" sx={{ px: 2, minHeight: 40, borderRadius: '0 7px 7px 0' }}>Flat fee</ToggleButton>
     </ToggleButtonGroup>
   );
 }
@@ -41,7 +41,7 @@ function Dial(p: {
 }) {
   return (
     <Box>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ flexWrap: 'wrap', columnGap: 1, rowGap: 0.5 }}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ flexWrap: 'wrap', columnGap: 1, rowGap: 0.5, minHeight: 48 }}>
         <Stack direction="row" alignItems="center" spacing={0.25} sx={{ flexShrink: 0 }}>
           <Typography variant="subtitle2" component="h3" id={p.id} sx={{ whiteSpace: 'nowrap' }}>{p.label}</Typography>
           {p.help && <HelpTip k={p.help} />}
@@ -129,9 +129,9 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
       </Card>
 
       {!estimate && (
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 2, color: 'text.secondary' }}>
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 2, color: 'text.primary' }}>
           <LockOutlined fontSize="small" aria-hidden />
-          <Typography variant="body2">Free, no sign-up. Your address stays private. Agents only see it if you accept their bid.</Typography>
+          <Typography variant="body2" color="text.primary">Free, no sign-up. Your address stays private. Agents only see it if you accept their bid.</Typography>
         </Stack>
       )}
 
@@ -168,7 +168,7 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
                   <Typography variant="subtitle2" component="h2">Estimated cash at close</Typography>
                   <HelpTip k="cashAtClose" />
                 </Stack>
-                <Typography component="p" aria-live="polite" sx={{ fontSize: { xs: '2.75rem', sm: '3.5rem' }, lineHeight: 1.15, my: 1, fontWeight: 700, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>
+                <Typography component="p" aria-live="polite" sx={{ color: 'success.main', fontSize: { xs: '2.75rem', sm: '3.5rem' }, lineHeight: 1.15, my: 1, fontWeight: 700, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>
                   {money(you.youKeep)}
                 </Typography>
                 <Typography variant="body1" component="p" sx={{ fontWeight: 600, lineHeight: 1.6 }}>
@@ -236,8 +236,8 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
                     </Typography>
                   </Box>
                   <ToggleButtonGroup exclusive size="small" value={zoom ? 'zoom' : 'full'} onChange={(_, v) => v && setZoom(v === 'zoom')} aria-label="Chart scale" sx={{ flexShrink: 0 }}>
-                    <ToggleButton value="zoom" sx={{ px: 2, borderRadius: '999px 0 0 999px' }}>Zoom in</ToggleButton>
-                    <ToggleButton value="full" sx={{ px: 2, borderRadius: '0 999px 999px 0' }}>Full scale</ToggleButton>
+                    <ToggleButton value="zoom" sx={{ px: 2, borderRadius: '7px 0 0 7px' }}>Zoom in</ToggleButton>
+                    <ToggleButton value="full" sx={{ px: 2, borderRadius: '0 7px 7px 0' }}>Full scale</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
                 <Box sx={{ mt: 3 }} />

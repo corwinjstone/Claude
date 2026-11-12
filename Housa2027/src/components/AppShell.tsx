@@ -6,6 +6,7 @@ import {
   AppBar, Box, Button, Container, Divider, Drawer, IconButton, List, ListItemButton, ListItemText, Toolbar, Tooltip, Typography, useColorScheme,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Logo } from './Logo';
 import DarkMode from '@mui/icons-material/DarkModeOutlined';
 import LightMode from '@mui/icons-material/LightModeOutlined';
 
@@ -54,14 +55,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <IconButton aria-label="Open menu" onClick={() => setOpen(true)} sx={{ display: { md: 'none' }, ml: -1 }}>
             <MenuIcon />
           </IconButton>
-          <Typography
-            component={Link}
-            href="/"
-            variant="h5"
-            sx={{ fontWeight: 700, color: 'primary.main', textDecoration: 'none', mr: 2, letterSpacing: '-0.02em' }}
-          >
-            housa
-          </Typography>
+          <Box component={Link} href="/" aria-label="Housa home" sx={{ display: 'flex', color: 'text.primary', mr: 2, py: 0.5 }}>
+            <Logo height={52} />
+          </Box>
           <Box component="nav" aria-label="Main" sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5, flexGrow: 1 }}>
             {NAV.map((n) => (
               <Button
@@ -70,22 +66,26 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 href={n.href}
                 aria-current={isActive(n.href) ? 'page' : undefined}
                 color="inherit"
-                sx={{ bgcolor: isActive(n.href) ? 'm3.secondaryContainer' : undefined, color: isActive(n.href) ? 'm3.onSecondaryContainer' : 'text.primary' }}
+                sx={{
+                  color: 'text.primary', borderRadius: 0, px: 2,
+                  boxShadow: (t) => (isActive(n.href) ? `inset 0 -3px 0 ${t.vars?.palette.success.main}` : 'none'),
+                  fontWeight: 800,
+                }}
               >
                 {n.label}
               </Button>
             ))}
           </Box>
           <Box sx={{ flexGrow: { xs: 1, md: 0 } }} />
-          <Typography variant="caption" sx={{ color: 'text.secondary', display: { xs: 'none', sm: 'block' } }}>
+          <Typography variant="caption" sx={{ color: 'text.primary', display: { xs: 'none', sm: 'block' } }}>
             Prototype · dummy data
           </Typography>
           <ThemeToggle />
         </Toolbar>
       </AppBar>
-      <Drawer open={open} onClose={() => setOpen(false)} slotProps={{ paper: { sx: { width: 300, borderRadius: '0 16px 16px 0', bgcolor: 'm3.surfaceContainerLow' } } }}>
+      <Drawer open={open} onClose={() => setOpen(false)} slotProps={{ paper: { sx: { width: 300, borderRadius: 0, bgcolor: 'm3.surfaceContainerLow' } } }}>
         <Box component="nav" aria-label="Main" sx={{ p: 1.5 }}>
-          <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.main', px: 2, py: 2 }}>housa</Typography>
+          <Box sx={{ px: 2, py: 2, color: 'text.primary' }}><Logo height={64} /></Box>
           <List>
             {NAV.map((n) => (
               <ListItemButton
@@ -95,7 +95,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 selected={isActive(n.href)}
                 aria-current={isActive(n.href) ? 'page' : undefined}
                 onClick={() => setOpen(false)}
-                sx={{ borderRadius: 999, minHeight: 56, '&.Mui-selected': { bgcolor: 'm3.secondaryContainer' } }}
+                sx={{ borderRadius: '7px', minHeight: 56, '&.Mui-selected': { bgcolor: 'm3.secondaryContainer' } }}
               >
                 <ListItemText primary={n.label} />
               </ListItemButton>

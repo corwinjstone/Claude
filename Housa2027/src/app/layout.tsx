@@ -14,8 +14,14 @@ export const viewport: Viewport = { width: 'device-width', initialScale: 1 };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Housa brand type is Avenir (installed on Apple devices). Nunito Sans is the closest free match for everyone else. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" />
+      </head>
       <body>
-        <InitColorSchemeScript attribute="class" defaultMode="system" />
+        <InitColorSchemeScript attribute="class" defaultMode="dark" />
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <Providers>
             <AppShell>{children}</AppShell>

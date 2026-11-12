@@ -65,6 +65,27 @@ The key is read only on the server (`src/lib/places.ts`) and is never sent to th
 - Every ⓘ button opens a plain-language "What does this mean?" tip.
 - "Email me a monthly update" saves the home in the browser (no email is sent). "Get offers from local agents" carries the numbers to screen 2 through `sessionStorage`, so the address never goes in the URL.
 
+## Brand
+
+The look comes from the **"Housa - Splash Blue"** Figma file (frame "My listings"). Everything lives in `src/theme/` and `scripts/generate-theme.mjs`, so a change there re-skins both calculators.
+
+| Brand piece | From the Figma file | Where it is used |
+|---|---|---|
+| Splash blue `#005FF2` | page background, buttons | page, "Get offers" button, "full equity" bar |
+| Navy panels `#001330` | black at 80% over the blue | cards, dialogs, footer |
+| Field fill `#293951` | white at 16% over a panel | inputs, value boxes, chart tracks |
+| Lime `#85FF00` | active state, good news | cash at close, savings, links, focus ring, page-level buttons |
+| Red | `#D0021B` (destructive) | traditional-fee tint; text uses a lighter red to pass contrast |
+| Avenir | Heavy for labels and numbers, Book for sentences | all text |
+| Shapes | 5px panels, 10px fields, 7px buttons | theme shape and component overrides |
+| Slider | yellow, lime, green, red rail with a white thumb | every slider |
+| Logo | the H mark over the "housa" wordmark | `src/components/Logo.tsx`, `public/brand/` |
+
+- **Two looks:** the brand look (blue page, navy panels) is the default. The sun/moon button switches to a lighter daytime variant made from the same blue.
+- **Avenir:** it is licensed and comes with Apple devices. Everyone else gets the closest free match, Nunito Sans, from Google Fonts (see `src/app/layout.tsx`). To self-host Avenir, add the font files and point `FONT` in `theme.ts` at them.
+- **Contrast:** lime on blue is only 4.2:1, so it is never used for small text on the blue page; the active nav item uses a lime underline instead. All text still passes WCAG 2.2 AA.
+- **Regenerate colors:** edit `BRAND` in `scripts/generate-theme.mjs`, then run `npm run theme`.
+
 ## Stack
 
 - **Next.js 15** (App Router, server rendering) with TypeScript

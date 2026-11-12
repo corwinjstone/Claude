@@ -63,7 +63,7 @@ export function EquityKept({ equity, rows, zoom = true }: { equity: number; rows
           <Typography variant="subtitle2" component="h3" sx={{ lineHeight: 1.4 }}>Your equity<Box component="span" sx={{ display: 'block', fontWeight: 400, color: 'text.secondary', fontSize: '0.75rem' }}>price − mortgage</Box></Typography>
           <Box sx={{ ...track, gridColumn: { xs: '1 / -1', md: 'auto' }, order: { xs: 3, md: 0 } }}>
             {showsBreak && breakMark}
-            <Box sx={{ flex: 1, borderRadius: 999, bgcolor: 'm3.successContainer', color: 'm3.onSuccessContainer', display: 'flex', alignItems: 'center', px: 2 }}>
+            <Box sx={{ flex: 1, borderRadius: 999, bgcolor: 'm3.primaryContainer', color: 'm3.onPrimaryContainer', display: 'flex', alignItems: 'center', px: 2 }}>
               <Typography component="span" sx={{ color: 'inherit', fontWeight: 700, letterSpacing: '0.04em', fontSize: '0.8125rem' }}>FULL EQUITY</Typography>
             </Box>
           </Box>
@@ -81,8 +81,9 @@ export function EquityKept({ equity, rows, zoom = true }: { equity: number; rows
               <Box sx={track} role="group" aria-label={`${label}: cash at close ${money(s.youKeep)}, fees ${money(s.feesTotal)}, title and closing ${money(s.otherClosing)}`}>
                 {showsBreak && breakMark}
                 <Tooltip describeChild title={`Cash at close: ${money(s.youKeep)}`}>
-                  <Box role="img" tabIndex={0} aria-label={`Cash at close: ${money(s.youKeep)}`} sx={{ width: `${pos(cash)}%`, borderRadius: '999px 4px 4px 999px', bgcolor: 'chart.cash', display: 'flex', alignItems: 'center', px: 1.5, minWidth: 0, ...onCash }}>
-                    <Typography component="span" sx={{ color: 'inherit', fontWeight: 700, letterSpacing: '0.04em', fontSize: '0.75rem', whiteSpace: 'nowrap' }}>CASH AT CLOSE</Typography>
+                  <Box role="img" tabIndex={0} aria-label={`Cash at close: ${money(s.youKeep)}`} sx={{ width: `${pos(cash)}%`, borderRadius: '999px 4px 4px 999px', bgcolor: 'chart.cash', display: 'flex', alignItems: 'center', px: 1.5, minWidth: 0, overflow: 'hidden', ...onCash }}>
+                    {/* On phones, only name the bar when it is wide enough to hold the words; the amount is printed above it. */}
+                    <Typography component="span" sx={{ display: { xs: pos(cash) >= 38 ? 'inline' : 'none', md: 'inline' }, color: 'inherit', fontWeight: 700, letterSpacing: '0.04em', fontSize: '0.75rem', whiteSpace: 'nowrap' }}>CASH AT CLOSE</Typography>
                   </Box>
                 </Tooltip>
                 <Tooltip describeChild title={`Fees: ${money(s.feesTotal)} (${s.platform ? `${pctText(s.agentPctTotal)} + ${money(s.platform)} Housa fee` : pctText(s.agentPctTotal)})`}>
