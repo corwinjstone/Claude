@@ -20,7 +20,8 @@ Housa2027/
 │   └── generate-theme.mjs    # npm run theme (M3 tokens from the seed color)
 └── src/
     ├── app/                  # Next.js routes (App Router)
-    │   ├── page.tsx          # 1. Equity calculator (public)
+    │   ├── page.tsx          # Home page (brand splash); the logo leads here
+    │   ├── calculator/       # 1. Equity calculator (public)
     │   ├── sell/             # 2. Seller request
     │   ├── seller/           # 4. Bids, 5. accept and sign, 7. problems and milestones
     │   ├── agent/            # 3. Feed, gate, bid; 6. closing intake

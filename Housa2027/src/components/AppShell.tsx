@@ -11,7 +11,7 @@ import DarkMode from '@mui/icons-material/DarkModeOutlined';
 import LightMode from '@mui/icons-material/LightModeOutlined';
 
 export const NAV = [
-  { href: '/', label: 'Home value' },
+  { href: '/calculator', label: 'Home value' },
   { href: '/v2', label: 'Home value B' },
   { href: '/sell', label: 'Sell my home' },
   { href: '/seller/bids', label: 'My bids' },
@@ -36,7 +36,16 @@ function ThemeToggle() {
 export function AppShell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const [open, setOpen] = useState(false);
-  const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+  const isActive = (href: string) => path.startsWith(href);
+  // The home page is a full-bleed brand page with its own header and footer.
+  if (path === '/') {
+    return (
+      <>
+        <Box component="a" href="#main" sx={{ position: 'absolute', left: 8, top: -64, zIndex: 2000, p: 1.5, borderRadius: 1, bgcolor: 'primary.main', color: 'primary.contrastText', '&:focus': { top: 8 } }}>Skip to main content</Box>
+        <Box component="main" id="main" tabIndex={-1} sx={{ outline: 'none' }}>{children}</Box>
+      </>
+    );
+  }
 
   return (
     <>

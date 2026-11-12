@@ -14,7 +14,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open http://localhost:3000. The Housa logo always leads back to the home page.
 
 For a production build: `npm run build && npm start`.
 
@@ -46,7 +46,8 @@ The key is read only on the server (`src/lib/places.ts`) and is never sent to th
 
 | # | Screen | Route | Status |
 |---|--------|-------|--------|
-| 1 | Home Equity Calculator (public, no login) | `/` | ✅ Built |
+| — | Home page (from the "Housa - Splashpage" Figma frame); the Housa logo leads here | `/` | ✅ Built |
+| 1 | Home Equity Calculator (public, no login) | `/calculator` | ✅ Built |
 | 1B | Home Equity Calculator, design B (for comparison) | `/v2` | ✅ Built |
 | 2 | Seller request, address hidden | `/sell` | Placeholder |
 | 3 | Agent console: feed, attribution gate, bid form | `/agent` | Placeholder |
@@ -55,6 +56,10 @@ The key is read only on the server (`src/lib/places.ts`) and is never sent to th
 | 6 | Agent closing intake and title packet | — | Not started |
 | 7 | Report a problem, release notice, milestones | — | Not started |
 | 8 | Admin: view logs and fee status | `/admin` | Placeholder |
+
+### Home page
+
+Built from the Figma frame "Housa - Splashpage": hero with the phone photo, three numbered steps (a live mini calculator, agents bidding, choosing an agent), and a footer with links to every prototype page. Photos are compressed to WebP in `public/brand/splash/`. The sample numbers use the same rules as the calculators, so the $995 Platform Technology & Transaction Coordination Fee and about 1% closing costs are included.
 
 ### Screen 1: try it
 

@@ -273,7 +273,7 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
                     <Typography variant="h6" component="h2">How much of your {money(you.equity)} equity you keep</Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, lineHeight: 1.7 }}>
                       Green is your cash at close. The striped part is agent fees and the small violet bar is the $995 platform fee.
-                      {zoom ? <> <strong>Zoomed in: the bars start at the break mark, not at $0.</strong></> : null}
+                      {zoom ? <> <strong>Zoomed in: the bars start at the first dollar amount on the scale, not at $0.</strong></> : null}
                     </Typography>
                   </Box>
                   <ToggleButtonGroup exclusive size="small" value={zoom ? 'zoom' : 'full'} onChange={(_, v) => v && setZoom(v === 'zoom')} aria-label="Chart scale" sx={{ flexShrink: 0 }}>
@@ -319,7 +319,7 @@ export function CalculatorV2({ typical, samples }: { typical: { value: number; s
                 </Table>
                 <Typography variant="caption" color="text.secondary" component="p" sx={{ mt: 2.5, lineHeight: 1.7 }}>
                   Same in all three: mortgage {money(payoff)} and estimated closing costs {money(you.otherClosing)}. The {money(PLATFORM_FEE)} {PLATFORM_FEE_NAME} is paid by the seller from the sale money at closing. Estimates only. Housa does not set agent fees.{' '}
-                  <Link href="/">See the first design</Link>
+                  <Link href="/calculator">See the first design</Link>
                 </Typography>
               </CardContent>
             </Card>

@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   pageExtensions: pages ? ['tsx', 'ts'] : ['tsx', 'ts', 'server.ts'],
   ...(pages && { output: 'export', basePath, trailingSlash: true, images: { unoptimized: true } }),
-  env: { NEXT_PUBLIC_STATIC_EXPORT: pages ? '1' : '0' },
+  env: { NEXT_PUBLIC_STATIC_EXPORT: pages ? '1' : '0', NEXT_PUBLIC_BASE_PATH: basePath },
   // Tree-shake MUI icon imports.
   experimental: { optimizePackageImports: ['@mui/icons-material', '@mui/material'] },
 };
