@@ -1,0 +1,10 @@
+{
+  "name": "market-moves-2027",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch": "node fetch.mjs",
+    "test": "node --test test/*.test.mjs",
+    "serve": "python3 -m http.server 8080 -d site"
+  }
+}

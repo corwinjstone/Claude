@@ -1,0 +1,55 @@
+name: Update Market Moves 2027
+
+on:
+  schedule:
+    # Every 30 minutes, 6am-9pm US Eastern on weekdays (EDGAR accepts filings 6am-10pm ET).
+    - cron: '7,37 10-23 * * 1-5'
+    - cron: '7,37 0-2 * * 2-6'
+  push:
+    branches: [main]
+    paths:
+      - 'MarketMoves2027/**'
+      - '.github/workflows/deploy-marketmoves2027.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-marketmoves2027
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run parser tests
+        working-directory: MarketMoves2027
+        run: npm test
+
+      - name: Restore previous data from gh-pages
+        run: |
+          git fetch --depth=1 origin gh-pages || exit 0
+          git show FETCH_HEAD:marketmoves2027/data.json > MarketMoves2027/site/data.json || rm -f MarketMoves2027/site/data.json
+
+      - name: Fetch new events
+        working-directory: MarketMoves2027
+        run: node fetch.mjs
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+          UW_API_TOKEN: ${{ secrets.UW_API_TOKEN }}
+
+      - name: Deploy to gh-pages/marketmoves2027
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./MarketMoves2027/site
+          destination_dir: marketmoves2027
+          keep_files: true
+          commit_message: 'Update Market Moves 2027 data'
