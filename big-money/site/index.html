@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Big Money Tracker</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one column. Sources (ordered fastest disclosure to slowest) -> filters -> dollar chart -> the tape. */
+:root {
+  --bg: #f3f5f7; --surface: #ffffff; --ink: #14181d; --ink-2: #5b6570; --line: #e1e5ea; --line-2: #c3cad2;
+  --buy: #257de0; --sell: #ec4647; --focus: #1b64be; --chip: #e9edf1;
+  --ok: #006c10; --warn: #8a5a00; --bad: #b3261e;
+  --sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c0f12; --surface: #14181d; --ink: #edf0f3; --ink-2: #98a2ad; --line: #252b33; --line-2: #3b444f;
+    --buy: #338ced; --sell: #eb6263; --focus: #84b9f3; --chip: #1e242b;
+    --ok: #53c556; --warn: #fbb315; --bad: #eb6263; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0c0f12; --surface: #14181d; --ink: #edf0f3; --ink-2: #98a2ad; --line: #252b33; --line-2: #3b444f;
+  --buy: #338ced; --sell: #eb6263; --focus: #84b9f3; --chip: #1e242b;
+  --ok: #53c556; --warn: #fbb315; --bad: #eb6263; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 var(--sans); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 24px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 20px; }
+h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+h2 { font-size: 15px; font-weight: 600; margin: 0; }
+.sub { color: var(--ink-2); margin: 0; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+header.top { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; }
+.banner { border: 1px dashed var(--line-2); border-radius: 6px; padding: 10px 12px; background: var(--surface); }
+.banner b { font-weight: 600; }
+
+/* sources */
+.sources { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.src { all: unset; box-sizing: border-box; cursor: pointer; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; border-left: 1px solid var(--line); min-width: 0; }
+.src:first-child { border-left: 0; }
+.src:hover { background: var(--chip); }
+.src:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.src[aria-pressed="true"] { box-shadow: inset 0 -3px 0 var(--ink); }
+.src .delay { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); }
+.src .name { font-weight: 600; }
+.src .count { font: 600 24px/1.1 var(--sans); }
+.src .count small { font: 400 12px var(--sans); color: var(--ink-2); margin-left: 4px; }
+.src .note { color: var(--ink-2); font-size: 12px; overflow-wrap: anywhere; }
+.status { font-size: 12px; font-weight: 600; }
+.status.ok { color: var(--ok); } .status.off { color: var(--ink-2); } .status.error { color: var(--bad); } .status.stale { color: var(--warn); }
+
+/* filters */
+.filters { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+.filters label { display: flex; align-items: center; gap: 6px; color: var(--ink-2); font-size: 12px; }
+select, input[type="search"] { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line-2); border-radius: 6px; padding: 6px 8px; }
+input[type="search"] { width: 150px; }
+.seg { display: inline-flex; border: 1px solid var(--line-2); border-radius: 6px; overflow: hidden; background: var(--surface); }
+.seg button { all: unset; cursor: pointer; padding: 6px 10px; font-size: 13px; border-left: 1px solid var(--line-2); }
+.seg button:first-child { border-left: 0; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+.clear { all: unset; cursor: pointer; color: var(--focus); font-size: 13px; text-decoration: underline; }
+
+/* panels */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.panel-head { display: flex; flex-wrap: wrap; gap: 4px 16px; justify-content: space-between; align-items: baseline; }
+.legend { display: flex; gap: 14px; color: var(--ink-2); font-size: 12px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+
+/* diverging bars: sells grow left from the centre line, buys grow right */
+.bars { display: grid; grid-template-columns: 64px minmax(0, 1fr); row-gap: 6px; align-items: center; }
+.bars .tk { font: 600 13px var(--mono); }
+.bar-row { display: grid; grid-template-columns: 1fr 1fr; position: relative; height: 18px; cursor: default; }
+.bar-row::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--line-2); }
+.half { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.half.l { flex-direction: row-reverse; }
+.half .b { height: 14px; flex: none; min-width: 2px; }
+.half.l .b { background: var(--sell); border-radius: 4px 0 0 4px; }
+.half.r .b { background: var(--buy); border-radius: 0 4px 4px 0; }
+.half span { font: 12px var(--mono); color: var(--ink-2); white-space: nowrap; }
+.bar-row:hover .b { filter: brightness(1.12); }
+#tip { position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--surface); border-radius: 6px; padding: 8px 10px; font-size: 12px; line-height: 1.5; max-width: 260px; }
+
+/* tape */
+.scroll { overflow-x: auto; margin: 0 -16px; padding: 0 16px; }
+table { border-collapse: collapse; width: 100%; min-width: 860px; }
+th { text-align: left; font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); padding: 0 10px 8px 0; border-bottom: 1px solid var(--line-2); white-space: nowrap; }
+td { padding: 9px 10px 9px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th.n, td.n { text-align: right; }
+td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+.when { white-space: nowrap; color: var(--ink-2); font-size: 12px; }
+.when b { display: block; color: var(--ink); font-weight: 500; font-size: 13px; }
+.tick { font: 600 13px var(--mono); }
+.dim { color: var(--ink-2); font-size: 12px; }
+.clip { max-width: 240px; overflow-wrap: anywhere; }
+.act { display: inline-block; font: 600 11px var(--mono); letter-spacing: 0.05em; padding: 2px 6px; border-radius: 4px; border: 1px solid currentColor; white-space: nowrap; }
+.act.buy, .act.call { color: var(--buy); } .act.sell, .act.put { color: var(--sell); } .act.stake, .act.block { color: var(--ink-2); }
+.tag { display: inline-block; background: var(--chip); border-radius: 4px; padding: 1px 6px; font-size: 11px; margin: 2px 4px 0 0; white-space: nowrap; }
+.tag.hot { background: var(--ink); color: var(--surface); }
+a { color: inherit; text-underline-offset: 2px; }
+.empty { color: var(--ink-2); padding: 24px 0; text-align: center; }
+.more { align-self: center; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line-2); border-radius: 6px; padding: 7px 14px; cursor: pointer; }
+footer { color: var(--ink-2); font-size: 12px; max-width: 75ch; }
+@media (max-width: 820px) {
+  .sources { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .src:nth-child(odd) { border-left: 0; }
+  .src:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 440px) {
+  .sources { grid-template-columns: 1fr; }
+  .src { border-left: 0; border-top: 1px solid var(--line); }
+  .src:first-child { border-top: 0; }
+  .half span { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Big Money Tracker</h1>
+      <p class="sub">Institutional buying and selling, from the fastest public disclosures available.</p>
+    </div>
+    <p class="sub mono" id="updated">Loading…</p>
+  </header>
+
+  <div class="banner" id="sample" hidden><b>Sample rows, not real trades.</b> No real events have been collected yet, so the page is showing made-up companies to demonstrate the layout. They disappear as soon as the first real event arrives.</div>
+
+  <section class="sources" id="sources" aria-label="Data sources"></section>
+
+  <div class="filters" role="group" aria-label="Filters">
+    <div class="seg" id="win" role="group" aria-label="Time window">
+      <button type="button" data-d="1">24h</button><button type="button" data-d="7">7 days</button><button type="button" data-d="30">30 days</button>
+    </div>
+    <label for="dir">Direction
+      <select id="dir"><option value="">All</option><option value="buy">Buying</option><option value="sell">Selling</option></select>
+    </label>
+    <label for="min">Size
+      <select id="min"><option value="0">Any</option><option value="1000000">$1M+</option><option value="10000000">$10M+</option><option value="50000000">$50M+</option></select>
+    </label>
+    <label for="who">Filer
+      <select id="who"><option value="">Anyone</option><option value="fund">Funds and 10% owners only</option></select>
+    </label>
+    <input type="search" id="q" placeholder="Ticker or name" aria-label="Search ticker or name">
+    <button type="button" class="clear" id="clear" hidden>Clear filters</button>
+  </div>
+
+  <section class="panel" id="chartPanel">
+    <div class="panel-head">
+      <div><h2>Where the dollars went</h2><p class="sub">Disclosed dollar value by ticker, largest first. ETF trades and Form 4 only.</p></div>
+      <div class="legend"><span><i style="background:var(--sell)"></i>Sold</span><span><i style="background:var(--buy)"></i>Bought</span></div>
+    </div>
+    <div class="bars" id="bars"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>The tape</h2><p class="sub" id="tapeCount"></p></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Disclosed</th><th>Source</th><th>Stock</th><th>Who</th><th>Action</th><th class="n">Shares</th><th class="n">Price</th><th class="n">Value</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <button type="button" class="more" id="more" hidden>Show more</button>
+  </section>
+
+  <footer>
+    Hedge funds only have to reveal full portfolios quarterly (13F), so nothing here shows a private fund's live order book. These are the faster windows: daily active-ETF holdings, Form 4 filings from insiders and 10% owners, and 13D/13G filings when someone crosses 5% of a company. Dark-pool and options prints show size but never who traded. Not investment advice.
+  </footer>
+</div>
+<div id="tip" hidden></div>
+
+<script>
+const SOURCES = [
+  { key: 'etf', name: 'Active ETF trades', delay: 'Same day, after close', named: 'Names the fund', ev: ['etf'] },
+  { key: 'form4', name: 'Form 4 insiders and 10% owners', delay: 'Within 2 business days', named: 'Names the filer', ev: ['form4'] },
+  { key: 'sched13', name: '13D / 13G stakes over 5%', delay: '5 to 10 days', named: 'Names the fund', ev: ['sched13'] },
+  { key: 'flow', name: 'Dark pool and options flow', delay: 'Minutes', named: 'Anonymous size', ev: ['darkpool', 'options'] },
+];
+const SRC_LABEL = { etf: 'ETF', form4: 'Form 4', sched13: '13D/G', darkpool: 'Dark pool', options: 'Options' };
+const STATUS = { ok: '● Live', off: '○ Not connected', error: '▲ Failing', stale: '▲ Stale' };
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const money = (v) => v == null ? '–' : v >= 1e9 ? `$${(v / 1e9).toFixed(2)}B` : v >= 1e6 ? `$${(v / 1e6).toFixed(1)}M` : v >= 1e3 ? `$${Math.round(v / 1e3)}K` : `$${Math.round(v)}`;
+const count = (v) => v == null ? '–' : v >= 1e6 ? `${(v / 1e6).toFixed(2)}M` : Math.round(v).toLocaleString('en-US');
+const ago = (t) => { const m = (Date.now() - Date.parse(t)) / 6e4; return m < 1 ? 'just now' : m < 60 ? `${Math.round(m)}m ago` : m < 1440 ? `${Math.round(m / 60)}h ago` : `${Math.round(m / 1440)}d ago`; };
+const stamp = (t) => new Date(t).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+
+let data = { sources: {}, events: [] };
+let sample = false;
+let limit = 60;
+const f = { src: '', days: 7, dir: '', min: 0, who: '', q: '' };
+try { Object.assign(f, JSON.parse(localStorage.getItem('bmt-filters') || '{}')); } catch {}
+
+function sampleEvents() {
+  const h = (n) => new Date(Date.now() - n * 36e5).toISOString();
+  const e = (id, source, hrs, ticker, company, actor, action, shares, price, tags, extra = {}) =>
+    ({ id, source, time: h(hrs), ticker, company, actor, action, shares, price, value: price ? shares * price : null, tags, url: '', ...extra });
+  return [
+    e('s1', 'etf', 3, 'EXMP', 'Example Robotics Inc', 'Sample Active ETF', 'buy', 412000, 48.2, ['Added'], { detail: '3.10% of fund' }),
+    e('s2', 'etf', 3, 'DEMO', 'Demo Genomics Corp', 'Sample Active ETF', 'sell', 950000, 21.75, ['Trimmed'], { detail: '1.42% of fund' }),
+    e('s3', 'form4', 7, 'ACME', 'Acme Holdings (sample)', 'Sample Capital Partners LP', 'buy', 1250000, 14.6, ['10% owner'], { tenPct: true, detail: 'Holds 18,400,000 after' }),
+    e('s4', 'form4', 20, 'WDGT', 'Widget Works (sample)', 'J. Placeholder', 'sell', 80000, 132.4, ['Director']),
+    e('s5', 'sched13', 28, null, 'Northwind Sample Co', 'Placeholder Activist Fund', 'stake', 6200000, null, ['13D activist', 'New filing'], { pct: 7.4, activist: true }),
+    e('s6', 'form4', 52, 'DEMO', 'Demo Genomics Corp', 'Sample Capital Partners LP', 'sell', 2100000, 22.1, ['10% owner'], { tenPct: true }),
+    e('s7', 'etf', 27, 'ACME', 'Acme Holdings (sample)', 'Sample Active ETF', 'buy', 300000, 14.9, ['New position'], { detail: '0.55% of fund' }),
+    e('s8', 'sched13', 75, null, 'Contoso Sample Ltd', 'Example Index Advisors', 'stake', 11800000, null, ['13G passive', 'Amended'], { pct: 5.2 }),
+  ];
+}
+
+const isFund = (e) => e.source === 'etf' || e.source === 'sched13' || e.tenPct;
+function visible() {
+  const cut = Date.now() - f.days * 864e5;
+  const q = f.q.trim().toLowerCase();
+  const group = SOURCES.find((s) => s.key === f.src)?.ev;
+  return data.events.filter((e) =>
+    Date.parse(e.time) >= cut &&
+    (!group || group.includes(e.source)) &&
+    (!f.dir || e.action === f.dir || (f.dir === 'buy' && e.action === 'call') || (f.dir === 'sell' && e.action === 'put')) &&
+    (!f.min || (e.value ?? 0) >= f.min) &&
+    (!f.who || isFund(e)) &&
+    (!q || `${e.ticker} ${e.company} ${e.actor}`.toLowerCase().includes(q)));
+}
+
+function renderSources() {
+  const cut = Date.now() - f.days * 864e5;
+  $('sources').innerHTML = SOURCES.map((s) => {
+    const meta = data.sources[s.key] ?? { status: 'off', note: 'No data yet.' };
+    const n = data.events.filter((e) => s.ev.includes(e.source) && Date.parse(e.time) >= cut).length;
+    const status = meta.status;
+    return `<button type="button" class="src" data-src="${s.key}" aria-pressed="${f.src === s.key}">
+      <span class="delay">${s.delay} · ${s.named}</span>
+      <span class="name">${s.name}</span>
+      <span class="count">${n}<small>in ${f.days === 1 ? '24h' : f.days + ' days'}</small></span>
+      <span class="status ${status}">${STATUS[status] ?? status}</span>
+      <span class="note">${esc(meta.note ?? '')}</span>
+    </button>`;
+  }).join('');
+}
+
+function renderBars(list) {
+  const by = new Map();
+  for (const e of list) {
+    if (!e.ticker || !e.value || !['etf', 'form4'].includes(e.source) || !['buy', 'sell'].includes(e.action)) continue;
+    const r = by.get(e.ticker) ?? { ticker: e.ticker, company: e.company, buy: 0, sell: 0, n: 0 };
+    r[e.action] += e.value; r.n++;
+    by.set(e.ticker, r);
+  }
+  const rows = [...by.values()].sort((a, b) => (b.buy + b.sell) - (a.buy + a.sell)).slice(0, 12);
+  $('chartPanel').hidden = rows.length === 0;
+  const max = Math.max(1, ...rows.flatMap((r) => [r.buy, r.sell]));
+  // Each half reserves ~64px for its value label, so a full-scale bar is calc(100% - 64px).
+  const w = (v) => `calc((100% - 64px) * ${(v / max).toFixed(4)})`;
+  $('bars').innerHTML = rows.map((r) => `
+    <span class="tk">${esc(r.ticker)}</span>
+    <div class="bar-row" data-tip="${esc(`<b>${r.ticker}</b> ${r.company}<br>Bought ${money(r.buy)} · Sold ${money(r.sell)}<br>Net ${r.buy >= r.sell ? '+' : '−'}${money(Math.abs(r.buy - r.sell))} across ${r.n} disclosure${r.n > 1 ? 's' : ''}`)}">
+      <div class="half l">${r.sell ? `<i class="b" style="width:${w(r.sell)}"></i><span>${money(r.sell)}</span>` : ''}</div>
+      <div class="half r">${r.buy ? `<i class="b" style="width:${w(r.buy)}"></i><span>${money(r.buy)}</span>` : ''}</div>
+    </div>`).join('');
+}
+
+function renderRows(list) {
+  $('tapeCount').textContent = `${list.length} event${list.length === 1 ? '' : 's'}`;
+  $('more').hidden = list.length <= limit;
+  if (!list.length) {
+    $('rows').innerHTML = `<tr><td colspan="8" class="empty">Nothing matches these filters. Widen the time window or clear the filters.</td></tr>`;
+    return;
+  }
+  $('rows').innerHTML = list.slice(0, limit).map((e) => {
+    const size = e.source === 'sched13' ? (e.pct != null ? `${e.pct}% of company` : '') : '';
+    const tags = (e.tags ?? []).map((t) => `<span class="tag${/10% owner|activist|New position|Sweep/.test(t) ? ' hot' : ''}">${esc(t)}</span>`).join('');
+    const stock = `<span class="tick">${esc(e.ticker ?? '')}</span>${e.ticker ? '<br>' : ''}<span class="${e.ticker ? 'dim' : ''}">${esc(e.company)}</span>`;
+    return `<tr>
+      <td class="when"><b>${ago(e.time)}</b>${stamp(e.time)}</td>
+      <td>${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${SRC_LABEL[e.source]}</a>` : SRC_LABEL[e.source]}</td>
+      <td class="clip">${stock}</td>
+      <td class="clip">${esc(e.actor)}<br>${tags}</td>
+      <td><span class="act ${e.action}">${e.action.toUpperCase()}</span>${size || e.detail ? `<div class="dim">${esc(size || e.detail)}</div>` : ''}</td>
+      <td class="n">${count(e.shares)}</td>
+      <td class="n">${e.price ? '$' + e.price.toFixed(2) : '–'}</td>
+      <td class="n">${money(e.value)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function render() {
+  try { localStorage.setItem('bmt-filters', JSON.stringify(f)); } catch {}
+  document.querySelectorAll('#win button').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.d) === f.days)));
+  $('dir').value = f.dir; $('min').value = String(f.min); $('who').value = f.who; $('q').value = f.q;
+  $('clear').hidden = !(f.src || f.dir || f.min || f.who || f.q);
+  const list = visible();
+  renderSources(); renderBars(list); renderRows(list);
+}
+
+$('sources').addEventListener('click', (ev) => { const b = ev.target.closest('.src'); if (b) { f.src = f.src === b.dataset.src ? '' : b.dataset.src; limit = 60; render(); } });
+$('win').addEventListener('click', (ev) => { const b = ev.target.closest('button'); if (b) { f.days = Number(b.dataset.d); render(); } });
+$('dir').addEventListener('change', (ev) => { f.dir = ev.target.value; render(); });
+$('min').addEventListener('change', (ev) => { f.min = Number(ev.target.value); render(); });
+$('who').addEventListener('change', (ev) => { f.who = ev.target.value; render(); });
+$('q').addEventListener('input', (ev) => { f.q = ev.target.value; const list = visible(); renderBars(list); renderRows(list); $('clear').hidden = false; });
+$('clear').addEventListener('click', () => { Object.assign(f, { src: '', dir: '', min: 0, who: '', q: '' }); render(); });
+$('more').addEventListener('click', () => { limit += 100; renderRows(visible()); });
+
+const tip = $('tip');
+$('bars').addEventListener('mousemove', (ev) => {
+  const row = ev.target.closest('.bar-row');
+  if (!row) { tip.hidden = true; return; }
+  tip.innerHTML = row.dataset.tip; tip.hidden = false;
+  tip.style.left = Math.min(ev.clientX + 14, innerWidth - tip.offsetWidth - 8) + 'px';
+  tip.style.top = ev.clientY + 16 + 'px';
+});
+$('bars').addEventListener('mouseleave', () => { tip.hidden = true; });
+
+async function load() {
+  try {
+    const res = await fetch('data.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error(res.status);
+    const d = await res.json();
+    data = { sources: d.sources ?? {}, events: d.events ?? [] };
+    $('updated').textContent = d.updatedAt ? `Updated ${stamp(d.updatedAt)} (${ago(d.updatedAt)})` : '';
+  } catch {
+    $('updated').textContent = 'No data file yet';
+  }
+  sample = data.events.length === 0;
+  $('sample').hidden = !sample;
+  if (sample) data.events = sampleEvents().sort((a, b) => Date.parse(b.time) - Date.parse(a.time));
+  render();
+}
+load();
+setInterval(load, 5 * 60 * 1000);
+</script>
+</body>
+</html>
