@@ -141,7 +141,7 @@ export function form4Events(filing, parsed, { minValue = 0 } = {}) {
       id: `f4:${filing.accession}:${action}`,
       source: 'form4',
       time: filing.updated,
-      tradeDate: fills.map((t) => t.date).sort().at(-1),
+      tradeDate: fills.map((t) => String(t.date).slice(0, 10)).sort().at(-1), // drop "-05:00" style offsets
       ticker: parsed.ticker,
       cik: parsed.issuerCik,
       company: parsed.issuer,
