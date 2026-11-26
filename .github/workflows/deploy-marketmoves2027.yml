@@ -1,4 +1,4 @@
-name: Update Big Money Tracker
+name: Update Market Moves 2027
 
 on:
   schedule:
@@ -8,15 +8,15 @@ on:
   push:
     branches: [main]
     paths:
-      - 'big-money/**'
-      - '.github/workflows/big-money-tracker.yml'
+      - 'MarketMoves2027/**'
+      - '.github/workflows/deploy-marketmoves2027.yml'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: big-money-tracker
+  group: deploy-marketmoves2027
   cancel-in-progress: false
 
 jobs:
@@ -30,26 +30,26 @@ jobs:
           node-version: 22
 
       - name: Run parser tests
-        working-directory: big-money
+        working-directory: MarketMoves2027
         run: npm test
 
       - name: Restore previous data from gh-pages
         run: |
           git fetch --depth=1 origin gh-pages || exit 0
-          git show FETCH_HEAD:big-money/data.json > big-money/site/data.json || rm -f big-money/site/data.json
+          git show FETCH_HEAD:marketmoves2027/data.json > MarketMoves2027/site/data.json || rm -f MarketMoves2027/site/data.json
 
       - name: Fetch new events
-        working-directory: big-money
+        working-directory: MarketMoves2027
         run: node fetch.mjs
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
           UW_API_TOKEN: ${{ secrets.UW_API_TOKEN }}
 
-      - name: Deploy to gh-pages/big-money
+      - name: Deploy to gh-pages/marketmoves2027
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./big-money/site
-          destination_dir: big-money
+          publish_dir: ./MarketMoves2027/site
+          destination_dir: marketmoves2027
           keep_files: true
-          commit_message: 'Update Big Money Tracker data'
+          commit_message: 'Update Market Moves 2027 data'

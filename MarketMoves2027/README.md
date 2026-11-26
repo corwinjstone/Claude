@@ -1,8 +1,8 @@
-# Big Money Tracker
+# Market Moves 2027
 
 A static dashboard of institutional buying and selling, built from the fastest
 public disclosures. A scheduled GitHub Action runs `fetch.mjs`, which merges new
-events into `data.json`, and publishes the page to GitHub Pages at `/big-money/`.
+events into `data.json`, and publishes the page to GitHub Pages at `/marketmoves2027/`.
 
 | Source | Delay | Names the fund? | Where it comes from | Status |
 |---|---|---|---|---|
@@ -21,7 +21,7 @@ In the GitHub repo, under Settings > Secrets and variables > Actions:
 2. **Secret `UW_API_TOKEN`** (optional): an Unusual Whales API key, to turn on
    dark-pool prints and options flow alerts of $1M+ premium.
 
-The workflow (`.github/workflows/big-money-tracker.yml`) runs every 30 minutes
+The workflow (`.github/workflows/deploy-marketmoves2027.yml`) runs every 30 minutes
 on weekdays once it is on `main`, and can be started by hand from the Actions tab.
 
 ## Run locally
