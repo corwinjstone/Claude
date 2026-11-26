@@ -323,9 +323,11 @@ const normName = (s) =>
 export function tickerIndex(json) {
   const byCik = new Map();
   const byName = new Map();
+  const byTicker = new Map();
   for (const r of Object.values(json ?? {})) {
     const cik = String(r.cik_str);
     if (!byCik.has(cik)) byCik.set(cik, r.ticker);
+    if (!byTicker.has(r.ticker)) byTicker.set(r.ticker, cik);
     const n = normName(r.title);
     if (n && !byName.has(n)) byName.set(n, r.ticker);
   }
@@ -333,6 +335,7 @@ export function tickerIndex(json) {
   return {
     size: byCik.size,
     known: (t) => known.has(t),
+    cikOf: (t) => byTicker.get(t) ?? byTicker.get(String(t).replace('.', '-')) ?? null,
     lookup: (e) => (e.cik && byCik.get(String(Number(e.cik)))) || byName.get(normName(e.company)) || null,
   };
 }
