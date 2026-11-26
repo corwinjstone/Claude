@@ -5,31 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Market Moves 2027</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: one column. Sources (ordered fastest disclosure to slowest) -> filters -> dollar chart -> the tape. */
 :root {
   --bg: #f3f5f7; --surface: #ffffff; --ink: #14181d; --ink-2: #5b6570; --line: #e1e5ea; --line-2: #c3cad2;
   --buy: #257de0; --sell: #ec4647; --focus: #1b64be; --chip: #e9edf1;
   --ok: #006c10; --warn: #8a5a00; --bad: #b3261e;
-  --sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --up: #0a7d32; --down: #c9302c; --scrim: rgba(12, 18, 26, 0.16); --shadow: -16px 0 40px rgba(12, 18, 26, 0.14);
+  --sans: "Google Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: var(--sans); /* one family everywhere; numbers use tabular figures */
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0c0f12; --surface: #14181d; --ink: #edf0f3; --ink-2: #98a2ad; --line: #252b33; --line-2: #3b444f;
     --buy: #338ced; --sell: #eb6263; --focus: #84b9f3; --chip: #1e242b;
     --ok: #53c556; --warn: #fbb315; --bad: #eb6263; color-scheme: dark;
+    --up: #53c556; --down: #eb6263; --scrim: rgba(0, 0, 0, 0.42); --shadow: -16px 0 40px rgba(0, 0, 0, 0.5);
   }
 }
 :root[data-theme="dark"] {
   --bg: #0c0f12; --surface: #14181d; --ink: #edf0f3; --ink-2: #98a2ad; --line: #252b33; --line-2: #3b444f;
   --buy: #338ced; --sell: #eb6263; --focus: #84b9f3; --chip: #1e242b;
   --ok: #53c556; --warn: #fbb315; --bad: #eb6263; color-scheme: dark;
+  --up: #53c556; --down: #eb6263; --scrim: rgba(0, 0, 0, 0.42); --shadow: -16px 0 40px rgba(0, 0, 0, 0.5);
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 var(--sans); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 var(--sans); font-variant-numeric: tabular-nums; }
 .wrap { max-width: 1180px; margin: 0 auto; padding-block: 24px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 20px; }
 h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
 h2 { font-size: 15px; font-weight: 600; margin: 0; }
@@ -83,19 +86,32 @@ input[type="search"] { width: 150px; }
 .half.r .b { background: var(--buy); border-radius: 0 4px 4px 0; }
 .half span { font: 12px var(--mono); color: var(--ink-2); white-space: nowrap; }
 .bar-row:hover .b { filter: brightness(1.12); }
-#tip { position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--surface); border-radius: 6px; padding: 8px 10px; font-size: 12px; line-height: 1.5; max-width: 260px; }
+#tip { position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--surface); border-radius: 6px; padding: 10px 12px; font-size: 12px; line-height: 1.5; width: max-content; max-width: min(340px, calc(100vw - 16px)); }
+#tip .tt-h { font-weight: 600; font-size: 13px; }
+#tip .tt-sec { margin-top: 6px; font-weight: 600; }
+#tip .tt-sec.buy::before, #tip .tt-sec.sell::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; }
+#tip .tt-sec.buy::before { background: var(--buy); } #tip .tt-sec.sell::before { background: var(--sell); }
+#tip .tt-row { display: flex; justify-content: space-between; gap: 16px; }
+#tip .tt-row span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 230px; opacity: 0.85; }
+#tip .tt-foot { margin-top: 6px; padding-top: 6px; border-top: 1px solid color-mix(in srgb, var(--surface) 25%, transparent); }
 
 /* tape */
-.scroll { overflow-x: auto; margin: 0 -16px; padding: 0 16px; }
-table { border-collapse: collapse; width: 100%; min-width: 860px; }
-th { text-align: left; font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); padding: 0 10px 8px 0; border-bottom: 1px solid var(--line-2); white-space: nowrap; }
+.scroll { overflow: auto; max-height: min(80vh, 1100px); margin: 0 -16px; padding: 0 16px; overscroll-behavior: contain; }
+table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 900px; }
+th { position: sticky; top: 0; z-index: 2; background: var(--surface); text-align: left; padding: 0; border-bottom: 1px solid var(--line-2); white-space: nowrap; }
+th button { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: 4px; width: 100%; padding: 4px 10px 8px 0; font: 600 11px var(--sans); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); }
+th.n button { justify-content: flex-end; }
+th button:hover, th[aria-sort] button { color: var(--ink); }
+th button::after { content: "↕"; opacity: 0.35; font-size: 11px; }
+th[aria-sort="ascending"] button::after { content: "↑"; opacity: 1; }
+th[aria-sort="descending"] button::after { content: "↓"; opacity: 1; }
 td { padding: 9px 10px 9px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
 th.n, td.n { text-align: right; }
 td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
 tr:last-child td { border-bottom: 0; }
 .when { white-space: nowrap; color: var(--ink-2); font-size: 12px; }
 .when b { display: block; color: var(--ink); font-weight: 500; font-size: 13px; }
-.tick { font: 600 13px var(--mono); }
+.tick { font: 700 13px var(--sans); letter-spacing: 0.02em; }
 .dim { color: var(--ink-2); font-size: 12px; }
 .clip { max-width: 240px; overflow-wrap: anywhere; }
 .act { display: inline-block; font: 600 11px var(--mono); letter-spacing: 0.05em; padding: 2px 6px; border-radius: 4px; border: 1px solid currentColor; white-space: nowrap; }
@@ -104,8 +120,76 @@ tr:last-child td { border-bottom: 0; }
 .tag.hot { background: var(--ink); color: var(--surface); }
 a { color: inherit; text-underline-offset: 2px; }
 .empty { color: var(--ink-2); padding: 24px 0; text-align: center; }
-.more { align-self: center; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line-2); border-radius: 6px; padding: 7px 14px; cursor: pointer; }
 footer { color: var(--ink-2); font-size: 12px; max-width: 75ch; }
+/* ---- stock drawer: slides in from the right; the scrim dims the page but never blocks it */
+.tk-btn { all: unset; cursor: pointer; font: inherit; color: inherit; border-bottom: 1px dotted var(--line-2); }
+.tk-btn:hover { color: var(--focus); border-bottom-color: var(--focus); }
+.tk-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+.scrim { position: fixed; inset: 0; z-index: 30; background: var(--scrim); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+.scrim.on { opacity: 1; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 31; width: min(600px, 100vw); display: flex; flex-direction: column; background: var(--surface); border-left: 1px solid var(--line); box-shadow: var(--shadow); transform: translateX(100%); visibility: hidden; transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s linear 0.32s; }
+.drawer.open { transform: none; visibility: visible; transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.d-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: calc(env(safe-area-inset-top, 0px) + 18px) max(24px, env(safe-area-inset-right, 0px)) 14px 24px; border-bottom: 1px solid var(--line); }
+.d-sym { font-size: 22px; font-weight: 700; letter-spacing: 0.01em; }
+.d-name { color: var(--ink-2); font-size: 13px; }
+.d-close { all: unset; cursor: pointer; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 6px; color: var(--ink-2); font-size: 22px; line-height: 1; flex: none; }
+.d-close:hover { background: var(--chip); color: var(--ink); }
+.d-close:focus-visible { outline: 2px solid var(--focus); }
+.d-body > * { flex-shrink: 0; }
+.d-body { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 18px max(24px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 32px) 24px; display: flex; flex-direction: column; gap: 22px; }
+.d-px { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.d-px .px { font-size: 34px; font-weight: 600; letter-spacing: -0.01em; }
+.d-px .px small { font-size: 13px; font-weight: 500; color: var(--ink-2); margin-left: 4px; }
+.chg { font-size: 15px; font-weight: 600; }
+.chg.up { color: var(--up); } .chg.down { color: var(--down); }
+.chg .dim { font-weight: 400; }
+.d-asof { color: var(--ink-2); font-size: 12px; width: 100%; }
+.ranges { display: flex; flex-wrap: wrap; gap: 2px; border-bottom: 1px solid var(--line); }
+.ranges button { all: unset; cursor: pointer; padding: 6px 10px 8px; font-size: 13px; font-weight: 600; color: var(--ink-2); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.ranges button:hover { color: var(--ink); }
+.ranges button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.ranges button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.d-chart { position: relative; height: 250px; touch-action: pan-y; }
+.d-chart svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.d-chart .axis { fill: var(--ink-2); font-size: 11px; font-variant-numeric: tabular-nums; }
+.d-chart .grid { stroke: var(--line); stroke-width: 1; }
+.d-chart .base { stroke: var(--line-2); stroke-dasharray: 3 4; }
+.readout { position: absolute; top: 0; left: 0; font-size: 12px; color: var(--ink-2); background: var(--surface); padding: 0 6px 2px 0; pointer-events: none; }
+.readout b { color: var(--ink); font-weight: 600; font-size: 13px; }
+.d-msg { color: var(--ink-2); padding: 24px 0; text-align: center; margin: 0; }
+.d-sec { display: flex; flex-direction: column; gap: 10px; }
+.d-sec h3 { margin: 0; font-size: 14px; font-weight: 600; }
+.d-sec .note { color: var(--ink-2); font-size: 12px; margin: 0; }
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
+.stat { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.stat span:first-child { color: var(--ink-2); }
+.stat span:last-child { font-weight: 600; text-align: right; }
+.rng { display: grid; gap: 4px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; grid-column: 1 / -1; }
+.rng .lbl { display: flex; justify-content: space-between; }
+.rng .lbl span:first-child { color: var(--ink-2); }
+.rng .track { position: relative; height: 4px; border-radius: 2px; background: var(--line); }
+.rng .mark { position: absolute; top: -4px; width: 2px; height: 12px; background: var(--ink); border-radius: 1px; }
+.rng .ends { display: flex; justify-content: space-between; color: var(--ink-2); font-size: 12px; }
+.qbars { height: 140px; }
+.qbars svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.qbars .bar { fill: var(--buy); }
+.qbars .bar.neg { fill: var(--sell); }
+.qbars .qb:hover .bar { filter: brightness(1.12); }
+.qbars .lbl { fill: var(--ink-2); font-size: 11px; }
+.qbars .val { fill: var(--ink); font-size: 11px; font-weight: 600; }
+.qtable { width: 100%; min-width: 0; border-collapse: collapse; font-size: 13px; }
+.qtable th { position: static; padding: 0 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); background: none; }
+.qtable td { padding: 7px 0; border-bottom: 1px solid var(--line); }
+.qtable td:not(:first-child), .qtable th:not(:first-child) { text-align: right; }
+.yoy.up { color: var(--up); } .yoy.down { color: var(--down); }
+.acts { display: flex; flex-direction: column; }
+.acts > div { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.acts .who { overflow-wrap: anywhere; }
+.acts .v { text-align: right; white-space: nowrap; font-weight: 600; }
+.d-links { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; }
+.d-foot { color: var(--ink-2); font-size: 11px; margin: 0; }
+@media (prefers-reduced-motion: reduce) { .drawer, .drawer.open, .scrim { transition: none; } }
+@media (max-width: 520px) { .stats { grid-template-columns: 1fr; } .d-px .px { font-size: 28px; } }
 @media (max-width: 820px) {
   .sources { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .src:nth-child(odd) { border-left: 0; }
@@ -162,17 +246,34 @@ footer { color: var(--ink-2); font-size: 12px; max-width: 75ch; }
     <div class="panel-head"><h2>The tape</h2><p class="sub" id="tapeCount"></p></div>
     <div class="scroll">
       <table>
-        <thead><tr><th>Disclosed</th><th>Source</th><th>Stock</th><th>Who</th><th>Action</th><th class="n">Shares</th><th class="n">Price</th><th class="n">Value</th></tr></thead>
+        <thead><tr id="heads">
+          <th data-k="time"><button type="button">Disclosed</button></th>
+          <th data-k="ticker"><button type="button">Ticker</button></th>
+          <th data-k="price" class="n"><button type="button">Price</button></th>
+          <th data-k="company"><button type="button">Company</button></th>
+          <th data-k="actor"><button type="button">Who</button></th>
+          <th data-k="action"><button type="button">Action</button></th>
+          <th data-k="source"><button type="button">Source</button></th>
+          <th data-k="shares" class="n"><button type="button">Shares</button></th>
+          <th data-k="value" class="n"><button type="button">Value</button></th>
+        </tr></thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
-    <button type="button" class="more" id="more" hidden>Show more</button>
   </section>
 
   <footer>
     Hedge funds only have to reveal full portfolios quarterly (13F), so nothing here shows a private fund's live order book. These are the faster windows: daily active-ETF holdings, Form 4 filings from insiders and 10% owners, and 13D/13G filings when someone crosses 5% of a company. Dark-pool and options prints show size but never who traded. Not investment advice.
   </footer>
 </div>
+<div class="scrim" id="scrim" aria-hidden="true"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="false" aria-labelledby="dSym" inert>
+  <header class="d-head">
+    <div><div class="d-sym" id="dSym"></div><div class="d-name" id="dName"></div></div>
+    <button type="button" class="d-close" id="dClose" aria-label="Close stock details">×</button>
+  </header>
+  <div class="d-body" id="dBody"></div>
+</aside>
 <div id="tip" hidden></div>
 
 <script>
@@ -186,16 +287,33 @@ const SRC_LABEL = { etf: 'ETF', form4: 'Form 4', sched13: '13D/G', darkpool: 'Da
 const STATUS = { ok: '● Live', off: '○ Not connected', error: '▲ Failing', stale: '▲ Stale' };
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const money = (v) => v == null ? '–' : v >= 1e9 ? `$${(v / 1e9).toFixed(2)}B` : v >= 1e6 ? `$${(v / 1e6).toFixed(1)}M` : v >= 1e3 ? `$${Math.round(v / 1e3)}K` : `$${Math.round(v)}`;
+const money = (v) => v == null ? '–' : v >= 1e12 ? `$${(v / 1e12).toFixed(2)}T` : v >= 1e9 ? `$${(v / 1e9).toFixed(2)}B` : v >= 1e6 ? `$${(v / 1e6).toFixed(1)}M` : v >= 1e3 ? `$${Math.round(v / 1e3)}K` : `$${Math.round(v)}`;
 const count = (v) => v == null ? '–' : v >= 1e6 ? `${(v / 1e6).toFixed(2)}M` : Math.round(v).toLocaleString('en-US');
 const ago = (t) => { const m = (Date.now() - Date.parse(t)) / 6e4; return m < 1 ? 'just now' : m < 60 ? `${Math.round(m)}m ago` : m < 1440 ? `${Math.round(m / 60)}h ago` : `${Math.round(m / 1440)}d ago`; };
 const stamp = (t) => new Date(t).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 
-let data = { sources: {}, events: [] };
+let data = { sources: {}, events: [], quotesBase: 'quotes/' };
 let sample = false;
-let limit = 60;
+// Sorting. Empty values always sink to the bottom, whichever direction.
+const sort = { key: 'time', dir: 'desc' };
+const SORT_VAL = {
+  time: (e) => Date.parse(e.time), ticker: (e) => e.ticker, price: (e) => e.price, company: (e) => e.company?.toLowerCase(),
+  actor: (e) => e.actor?.toLowerCase(), action: (e) => e.action, source: (e) => SRC_LABEL[e.source],
+  shares: (e) => e.shares, value: (e) => e.value,
+};
+const TEXT_KEYS = new Set(['ticker', 'company', 'actor', 'action', 'source']);
+function sorted(list) {
+  const get = SORT_VAL[sort.key];
+  const sign = sort.dir === 'asc' ? 1 : -1;
+  return [...list].sort((a, b) => {
+    const x = get(a), y = get(b);
+    const xe = x == null || x === '' || Number.isNaN(x), ye = y == null || y === '' || Number.isNaN(y);
+    if (xe || ye) return xe - ye;
+    return sign * (typeof x === 'string' ? x.localeCompare(y) : x - y);
+  });
+}
 const f = { src: '', days: 7, dir: '', min: 0, who: '', q: '' };
-try { Object.assign(f, JSON.parse(localStorage.getItem('bmt-filters') || '{}')); } catch {}
+try { Object.assign(f, JSON.parse(localStorage.getItem('bmt-filters') || '{}')); Object.assign(sort, JSON.parse(localStorage.getItem('bmt-sort') || '{}')); } catch {}
 
 function sampleEvents() {
   const h = (n) => new Date(Date.now() - n * 36e5).toISOString();
@@ -243,12 +361,28 @@ function renderSources() {
   }).join('');
 }
 
+function firmLines(map, side, label) {
+  if (!map.size) return '';
+  const rows = [...map].sort((a, b) => b[1] - a[1]);
+  const shown = rows.slice(0, 5).map(([who, v]) => `<div class="tt-row"><span>${esc(who)}</span><span>${money(v)}</span></div>`).join('');
+  const rest = rows.length > 5 ? `<div class="tt-row"><span>+${rows.length - 5} more</span><span>${money(rows.slice(5).reduce((s, x) => s + x[1], 0))}</span></div>` : '';
+  return `<div class="tt-sec ${side}">${label} ${money([...map.values()].reduce((s, v) => s + v, 0))}</div>${shown}${rest}`;
+}
+function tipHtml(r) {
+  const net = r.buy - r.sell;
+  return `<div class="tt-h">${esc(r.ticker)} · ${esc(r.company)}</div>` +
+    firmLines(r.firms.buy, 'buy', 'Bought') + firmLines(r.firms.sell, 'sell', 'Sold') +
+    `<div class="tt-foot">Net ${net >= 0 ? '+' : '−'}${money(Math.abs(net))} across ${r.n} disclosure${r.n > 1 ? 's' : ''}</div>`;
+}
+
 function renderBars(list) {
   const by = new Map();
   for (const e of list) {
     if (!e.ticker || !e.value || !['etf', 'form4'].includes(e.source) || !['buy', 'sell'].includes(e.action)) continue;
-    const r = by.get(e.ticker) ?? { ticker: e.ticker, company: e.company, buy: 0, sell: 0, n: 0 };
+    const r = by.get(e.ticker) ?? { ticker: e.ticker, company: e.company, buy: 0, sell: 0, n: 0, firms: { buy: new Map(), sell: new Map() } };
     r[e.action] += e.value; r.n++;
+    const who = e.actor || 'Undisclosed';
+    r.firms[e.action].set(who, (r.firms[e.action].get(who) ?? 0) + e.value);
     by.set(e.ticker, r);
   }
   const rows = [...by.values()].sort((a, b) => (b.buy + b.sell) - (a.buy + a.sell)).slice(0, 12);
@@ -257,8 +391,8 @@ function renderBars(list) {
   // Each half reserves ~64px for its value label, so a full-scale bar is calc(100% - 64px).
   const w = (v) => `calc((100% - 64px) * ${(v / max).toFixed(4)})`;
   $('bars').innerHTML = rows.map((r) => `
-    <span class="tk">${esc(r.ticker)}</span>
-    <div class="bar-row" data-tip="${esc(`<b>${r.ticker}</b> ${r.company}<br>Bought ${money(r.buy)} · Sold ${money(r.sell)}<br>Net ${r.buy >= r.sell ? '+' : '−'}${money(Math.abs(r.buy - r.sell))} across ${r.n} disclosure${r.n > 1 ? 's' : ''}`)}">
+    <span class="tk"><button type="button" class="tk-btn" data-ticker="${esc(r.ticker)}">${esc(r.ticker)}</button></span>
+    <div class="bar-row" data-tip="${esc(tipHtml(r))}">
       <div class="half l">${r.sell ? `<i class="b" style="width:${w(r.sell)}"></i><span>${money(r.sell)}</span>` : ''}</div>
       <div class="half r">${r.buy ? `<i class="b" style="width:${w(r.buy)}"></i><span>${money(r.buy)}</span>` : ''}</div>
     </div>`).join('');
@@ -266,23 +400,26 @@ function renderBars(list) {
 
 function renderRows(list) {
   $('tapeCount').textContent = `${list.length} event${list.length === 1 ? '' : 's'}`;
-  $('more').hidden = list.length <= limit;
   if (!list.length) {
-    $('rows').innerHTML = `<tr><td colspan="8" class="empty">Nothing matches these filters. Widen the time window or clear the filters.</td></tr>`;
+    $('rows').innerHTML = `<tr><td colspan="9" class="empty">Nothing matches these filters. Widen the time window or clear the filters.</td></tr>`;
     return;
   }
-  $('rows').innerHTML = list.slice(0, limit).map((e) => {
+  document.querySelectorAll('#heads th').forEach((th) => {
+    if (th.dataset.k === sort.key) th.setAttribute('aria-sort', sort.dir === 'asc' ? 'ascending' : 'descending');
+    else th.removeAttribute('aria-sort');
+  });
+  $('rows').innerHTML = sorted(list).map((e) => {
     const size = e.source === 'sched13' ? (e.pct != null ? `${e.pct}% of company` : '') : '';
     const tags = (e.tags ?? []).map((t) => `<span class="tag${/10% owner|activist|New position|Sweep/.test(t) ? ' hot' : ''}">${esc(t)}</span>`).join('');
-    const stock = `<span class="tick">${esc(e.ticker ?? '')}</span>${e.ticker ? '<br>' : ''}<span class="${e.ticker ? 'dim' : ''}">${esc(e.company)}</span>`;
     return `<tr>
       <td class="when"><b>${ago(e.time)}</b>${stamp(e.time)}</td>
-      <td>${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${SRC_LABEL[e.source]}</a>` : SRC_LABEL[e.source]}</td>
-      <td class="clip">${stock}</td>
+      <td class="tick">${e.ticker ? `<button type="button" class="tk-btn" data-ticker="${esc(e.ticker)}">${esc(e.ticker)}</button>` : '<span class="dim">–</span>'}</td>
+      <td class="n">${e.price ? '$' + e.price.toFixed(2) : '–'}</td>
+      <td class="clip">${esc(e.company)}</td>
       <td class="clip">${esc(e.actor)}<br>${tags}</td>
       <td><span class="act ${e.action}">${e.action.toUpperCase()}</span>${size || e.detail ? `<div class="dim">${esc(size || e.detail)}</div>` : ''}</td>
+      <td>${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${SRC_LABEL[e.source]}</a>` : SRC_LABEL[e.source]}</td>
       <td class="n">${count(e.shares)}</td>
-      <td class="n">${e.price ? '$' + e.price.toFixed(2) : '–'}</td>
       <td class="n">${money(e.value)}</td>
     </tr>`;
   }).join('');
@@ -297,31 +434,339 @@ function render() {
   renderSources(); renderBars(list); renderRows(list);
 }
 
-$('sources').addEventListener('click', (ev) => { const b = ev.target.closest('.src'); if (b) { f.src = f.src === b.dataset.src ? '' : b.dataset.src; limit = 60; render(); } });
+$('sources').addEventListener('click', (ev) => { const b = ev.target.closest('.src'); if (b) { f.src = f.src === b.dataset.src ? '' : b.dataset.src; render(); } });
 $('win').addEventListener('click', (ev) => { const b = ev.target.closest('button'); if (b) { f.days = Number(b.dataset.d); render(); } });
 $('dir').addEventListener('change', (ev) => { f.dir = ev.target.value; render(); });
 $('min').addEventListener('change', (ev) => { f.min = Number(ev.target.value); render(); });
 $('who').addEventListener('change', (ev) => { f.who = ev.target.value; render(); });
 $('q').addEventListener('input', (ev) => { f.q = ev.target.value; const list = visible(); renderBars(list); renderRows(list); $('clear').hidden = false; });
 $('clear').addEventListener('click', () => { Object.assign(f, { src: '', dir: '', min: 0, who: '', q: '' }); render(); });
-$('more').addEventListener('click', () => { limit += 100; renderRows(visible()); });
+$('heads').addEventListener('click', (ev) => {
+  const th = ev.target.closest('th');
+  if (!th) return;
+  const k = th.dataset.k;
+  if (sort.key === k) sort.dir = sort.dir === 'asc' ? 'desc' : 'asc';
+  else Object.assign(sort, { key: k, dir: TEXT_KEYS.has(k) ? 'asc' : 'desc' });
+  try { localStorage.setItem('bmt-sort', JSON.stringify(sort)); } catch {}
+  renderRows(visible());
+});
 
 const tip = $('tip');
-$('bars').addEventListener('mousemove', (ev) => {
+function showTip(ev) {
   const row = ev.target.closest('.bar-row');
   if (!row) { tip.hidden = true; return; }
   tip.innerHTML = row.dataset.tip; tip.hidden = false;
-  tip.style.left = Math.min(ev.clientX + 14, innerWidth - tip.offsetWidth - 8) + 'px';
-  tip.style.top = ev.clientY + 16 + 'px';
+  tip.style.left = Math.max(8, Math.min(ev.clientX + 14, innerWidth - tip.offsetWidth - 8)) + 'px';
+  const below = ev.clientY + 16;
+  tip.style.top = (below + tip.offsetHeight > innerHeight - 8 ? Math.max(8, ev.clientY - tip.offsetHeight - 12) : below) + 'px';
+}
+$('bars').addEventListener('pointermove', showTip);
+$('bars').addEventListener('pointerdown', showTip);
+$('bars').addEventListener('pointerleave', () => { tip.hidden = true; });
+addEventListener('scroll', () => { tip.hidden = true; }, { passive: true });
+
+// ------------------------------------------------------------ stock drawer
+// Opens from a ticker click and from the URL hash (#stock-COHR), so a drawer
+// can be linked to and the browser's Back button closes it.
+
+const RANGES = ['1H', '1D', '5D', '1M', '6M', 'YTD', '1Y', '5Y'];
+const drawer = { ticker: null, range: '1D', quote: null, trigger: null };
+const quoteCache = new Map();
+const pct = (v, d = 2) => v == null || !Number.isFinite(v) ? '–' : `${v >= 0 ? '+' : '−'}${Math.abs(v * 100).toFixed(d)}%`;
+const px = (v) => v == null ? '–' : v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: v < 1 ? 4 : 2 });
+const signed = (v) => v == null ? '–' : `${v >= 0 ? '+' : '−'}${px(Math.abs(v))}`;
+const bigNum = (v) => v == null ? '–' : v >= 1e9 ? `${(v / 1e9).toFixed(2)}B` : v >= 1e6 ? `${(v / 1e6).toFixed(2)}M` : v >= 1e3 ? `${(v / 1e3).toFixed(1)}K` : String(Math.round(v));
+const usd = (v) => v == null ? '–' : (v < 0 ? '−' : '') + money(Math.abs(v));
+const hashFor = (t) => `stock-${t.replace(/[^A-Za-z0-9-]/g, '-')}`;
+const ET = 'America/New_York';
+const fmtT = (sec, opts) => new Date(sec * 1000).toLocaleString('en-US', { timeZone: ET, ...opts });
+
+function openStock(ticker, trigger) {
+  drawer.trigger = trigger ?? document.activeElement;
+  if (location.hash === `#${hashFor(ticker)}`) showDrawer(ticker);
+  else location.hash = hashFor(ticker);
+}
+function closeStock() {
+  if (location.hash.startsWith('#stock-')) location.hash = 'tape';
+  else hideDrawer();
+}
+function syncHash() {
+  const m = /^#stock-([A-Za-z0-9-]+)$/.exec(location.hash);
+  if (!m) { hideDrawer(); return; }
+  const want = m[1].toUpperCase();
+  const known = data.events.find((e) => e.ticker && hashFor(e.ticker).slice(6) === want)?.ticker;
+  showDrawer(known ?? want);
+}
+function hideDrawer() {
+  if (!drawer.ticker) return;
+  drawer.ticker = null;
+  $('drawer').classList.remove('open');
+  $('drawer').inert = true;
+  $('scrim').classList.remove('on');
+  tip.hidden = true;
+  if (drawer.trigger?.isConnected) drawer.trigger.focus({ preventScroll: true });
+}
+async function showDrawer(ticker) {
+  const first = !drawer.ticker;
+  drawer.ticker = ticker;
+  drawer.quote = null;
+  const ev = data.events.find((e) => e.ticker === ticker);
+  $('dSym').textContent = ticker;
+  $('dName').textContent = ev?.company ?? '';
+  $('dBody').innerHTML = `<p class="d-msg">Loading ${esc(ticker)}…</p>`;
+  $('dBody').scrollTop = 0;
+  $('drawer').inert = false;
+  $('drawer').classList.add('open');
+  $('scrim').classList.add('on');
+  if (first) $('dClose').focus({ preventScroll: true });
+  try {
+    if (!quoteCache.has(ticker)) {
+      quoteCache.set(ticker, fetch(`${data.quotesBase}${encodeURIComponent(ticker)}.json`, { cache: 'no-cache' }).then((r) => {
+        if (!r.ok) throw new Error(r.status);
+        return r.json();
+      }));
+    }
+    const q = await quoteCache.get(ticker);
+    if (drawer.ticker !== ticker) return;
+    drawer.quote = q;
+    $('dName').textContent = [q.name ?? ev?.company, q.exchange].filter(Boolean).join(' · ');
+    renderDrawer();
+  } catch {
+    quoteCache.delete(ticker);
+    if (drawer.ticker !== ticker) return;
+    $('dBody').innerHTML = `<p class="d-msg">No price data for ${esc(ticker)} yet. Prices are added for every ticker on the tape at the next update, within about 15 minutes. Some tickers (private companies, foreign listings, warrants) have no public quote.</p>
+      ${activityHtml(ticker)}`;
+  }
+}
+
+/** Points for the chosen range, and the value its change is measured from. */
+function seriesFor(q, range) {
+  const last = (q.i1m.at(-1) ?? q.daily.at(-1) ?? [0])[0];
+  const since = (months) => { const d = new Date(last * 1000); d.setMonth(d.getMonth() - months); return d.getTime() / 1000; };
+  let pts;
+  switch (range) {
+    case '1H': pts = q.i1m.filter((p) => p[0] >= last - 3600); break;
+    case '1D': pts = q.i1m; break;
+    case '5D': pts = q.i15m; break;
+    case '1M': pts = q.daily.filter((p) => p[0] >= since(1)); break;
+    case '6M': pts = q.daily.filter((p) => p[0] >= since(6)); break;
+    case 'YTD': { const y = fmtT(last, { year: 'numeric' }); pts = q.daily.filter((p) => fmtT(p[0], { year: 'numeric' }) === y); break; }
+    case '1Y': pts = q.daily.filter((p) => p[0] >= since(12)); break;
+    default: pts = q.daily.filter((p, i, a) => i % 5 === 0 || i === a.length - 1);
+  }
+  if (range !== '1H' && range !== '1D' && q.price != null && pts.length) pts = [...pts.slice(0, -1), [pts.at(-1)[0], q.price]];
+  const base = range === '1D' ? q.prevClose ?? pts[0]?.[1] : pts[0]?.[1];
+  return { pts, base };
+}
+
+function renderDrawer() {
+  const q = drawer.quote;
+  const { pts, base } = seriesFor(q, drawer.range);
+  const end = pts.at(-1)?.[1] ?? q.price;
+  const diff = end != null && base != null ? end - base : null;
+  const dir = diff == null || diff >= 0 ? 'up' : 'down';
+  const open = (Date.now() - Date.parse(q.asOf)) < 20 * 60e3;
+  const f = q.fundamentals;
+  const eps = f?.ttm?.eps;
+  const cap = f?.shares && q.price ? f.shares * q.price : null;
+  const pe = eps > 0 && q.price ? q.price / eps : null;
+  const margin = f?.ttm?.revenue ? f.ttm.netIncome / f.ttm.revenue : null;
+  const pos = q.wk52High > q.wk52Low ? Math.min(1, Math.max(0, (q.price - q.wk52Low) / (q.wk52High - q.wk52Low))) : null;
+  const stat = (k, v) => `<div class="stat"><span>${k}</span><span>${v}</span></div>`;
+  $('dBody').innerHTML = `
+    <section class="d-px">
+      <span class="px">${px(q.price)}<small>${esc(q.currency)}</small></span>
+      <span class="chg ${dir}">${diff == null ? '' : `${dir === 'up' ? '▲' : '▼'} ${signed(diff)} (${pct(diff / base)})`} <span class="dim">${drawer.range === '1D' ? 'today' : drawer.range}</span></span>
+      <span class="d-asof">${q.asOf ? `As of ${new Date(q.asOf).toLocaleString('en-US', { timeZone: ET, month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })} ET` : ''}${open ? '' : ' · Market closed'} · Delayed, refreshed every 15 minutes</span>
+    </section>
+    <div class="ranges" role="tablist" aria-label="Chart range">
+      ${RANGES.map((r) => `<button type="button" role="tab" data-range="${r}" aria-selected="${r === drawer.range}">${r}</button>`).join('')}
+    </div>
+    <div class="d-chart" id="dChart">${pts.length > 1 ? '' : '<p class="d-msg">No trades in this window.</p>'}</div>
+    <section class="d-sec">
+      <h3>Key statistics</h3>
+      <div class="stats">
+        ${stat('Previous close', px(q.prevClose))}
+        ${stat('Open', px(q.open))}
+        ${stat('Day’s range', q.dayLow != null ? `${px(q.dayLow)} – ${px(q.dayHigh)}` : '–')}
+        ${stat('Volume', bigNum(q.volume))}
+        ${stat('Market cap', cap ? money(cap) : '–')}
+        ${stat('P/E ratio (TTM)', pe ? pe.toFixed(1) + '×' : eps != null && eps <= 0 ? 'n/m (loss)' : '–')}
+        ${stat('EPS (TTM, diluted)', eps != null ? (eps < 0 ? '−$' : '$') + Math.abs(eps).toFixed(2) : '–')}
+        ${stat('Revenue (TTM)', usd(f?.ttm?.revenue))}
+        ${stat('Net margin (TTM)', margin != null ? pct(margin, 1).replace('+', '') : '–')}
+        ${stat('Shares outstanding', bigNum(f?.shares))}
+        ${pos != null ? `<div class="rng"><div class="lbl"><span>52-week range</span><span>${Math.round(pos * 100)}% of range</span></div>
+          <div class="track"><i class="mark" style="left:calc(${(pos * 100).toFixed(1)}% - 1px)"></i></div>
+          <div class="ends"><span>${px(q.wk52Low)}</span><span>${px(q.wk52High)}</span></div></div>` : ''}
+      </div>
+      ${f ? '' : '<p class="note">Earnings and ratios come from SEC filings and are added within a few days of a ticker reaching the tape. Funds, foreign listings and private companies have none.</p>'}
+    </section>
+    ${earningsHtml(f)}
+    ${activityHtml(drawer.ticker)}
+    <section class="d-sec">
+      <div class="d-links">
+        <a href="https://finance.yahoo.com/quote/${encodeURIComponent(drawer.ticker.replace('.', '-'))}" target="_blank" rel="noopener">Yahoo Finance ↗</a>
+        ${f?.cik ? `<a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${f.cik}&type=10-&dateb=&owner=include&count=40" target="_blank" rel="noopener">SEC filings ↗</a>` : ''}
+      </div>
+      <p class="d-foot">Prices from Yahoo Finance, delayed. Financials from SEC XBRL filings${f?.lastFiled ? `, latest filed ${f.lastFiled}` : ''}. P/E uses diluted EPS over the last four reported quarters. Not investment advice.</p>
+    </section>`;
+  if (pts.length > 1) drawPrice($('dChart'), pts, base, drawer.range, dir);
+  if (f?.quarters?.length) drawQuarters($('dQbars'), f.quarters);
+}
+
+function earningsHtml(f) {
+  if (!f?.quarters?.length) return '';
+  const rows = [...f.quarters].reverse();
+  const qName = (end) => new Date(end + 'T12:00Z').toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+  return `<section class="d-sec">
+    <h3>Earnings</h3>
+    <p class="note">Revenue by quarter. Hover a bar for that quarter’s results.</p>
+    <div class="qbars" id="dQbars"></div>
+    <div class="scroll" style="max-height:none;margin:0;padding:0"><table class="qtable">
+      <thead><tr><th>Quarter ended</th><th>Revenue</th><th>YoY</th><th>Net income</th><th>EPS</th></tr></thead>
+      <tbody>${rows.map((r) => `<tr>
+        <td>${qName(r.end)}${r.derived ? '*' : ''}</td>
+        <td>${usd(r.revenue)}</td>
+        <td class="yoy ${r.revenueYoY == null ? '' : r.revenueYoY >= 0 ? 'up' : 'down'}">${pct(r.revenueYoY, 1)}</td>
+        <td>${usd(r.netIncome)}</td>
+        <td>${r.eps == null ? '–' : (r.eps < 0 ? '−$' : '$') + Math.abs(r.eps).toFixed(2)}</td>
+      </tr>`).join('')}</tbody>
+    </table></div>
+    ${rows.some((r) => r.derived) ? '<p class="note">* Fourth quarter worked out as the annual report minus the first three quarters.</p>' : ''}
+  </section>`;
+}
+
+function activityHtml(ticker) {
+  const list = data.events.filter((e) => e.ticker === ticker).slice(0, 25);
+  if (!list.length) return '';
+  return `<section class="d-sec">
+    <h3>Big money in ${esc(ticker)}</h3>
+    <div class="acts">${list.map((e) => `<div>
+      <span class="dim">${fmtT(Date.parse(e.time) / 1000, { month: 'short', day: 'numeric' })}</span>
+      <span class="who">${esc(e.actor)} <span class="act ${e.action}">${e.action.toUpperCase()}</span></span>
+      <span class="v">${e.value != null ? money(e.value) : e.pct != null ? e.pct + '%' : count(e.shares)}</span>
+    </div>`).join('')}</div>
+  </section>`;
+}
+
+const svgEl = (tag, attrs) => `<${tag} ${Object.entries(attrs).map(([k, v]) => `${k}="${v}"`).join(' ')}/>`;
+function niceTicks(lo, hi, n = 4) {
+  const step0 = (hi - lo) / n || 1;
+  const mag = 10 ** Math.floor(Math.log10(step0));
+  const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= step0);
+  const out = [];
+  for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) out.push(Number(v.toPrecision(10)));
+  return out;
+}
+
+/** Price line, x by sample index so nights and weekends leave no gaps. */
+function drawPrice(box, pts, base, range, dir) {
+  const W = box.clientWidth || 550, H = box.clientHeight || 250;
+  const L = 0, R = 56, T = 26, B = 24;
+  const vals = pts.map((p) => p[1]).concat(range === '1D' && base != null ? [base] : []);
+  let lo = Math.min(...vals), hi = Math.max(...vals);
+  const pad = (hi - lo) * 0.08 || hi * 0.01 || 1;
+  lo -= pad; hi += pad;
+  const x = (i) => L + (i / (pts.length - 1)) * (W - L - R);
+  const y = (v) => T + (1 - (v - lo) / (hi - lo)) * (H - T - B);
+  const color = `var(--${dir})`;
+  const line = pts.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(p[1]).toFixed(1)}`).join('');
+  const area = `${line}L${x(pts.length - 1).toFixed(1)},${H - B}L${x(0)},${H - B}Z`;
+  const ticks = niceTicks(lo, hi);
+  const xFmt = { '1H': { hour: 'numeric', minute: '2-digit' }, '1D': { hour: 'numeric', minute: '2-digit' }, '5D': { weekday: 'short' },
+    '1M': { month: 'short', day: 'numeric' }, '6M': { month: 'short' }, YTD: { month: 'short' }, '1Y': { month: 'short' }, '5Y': { year: 'numeric' } }[range];
+  const xLabels = [];
+  let lastLbl = '';
+  const slots = 5;
+  for (let k = 0; k < slots; k++) {
+    const i = Math.round((k / (slots - 1)) * (pts.length - 1));
+    const lbl = fmtT(pts[i][0], xFmt);
+    if (lbl !== lastLbl) xLabels.push([i, lbl]);
+    lastLbl = lbl;
+  }
+  const gid = `g${Math.random().toString(36).slice(2, 8)}`;
+  box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(drawer.ticker)} price, ${range}">
+    <defs><linearGradient id="${gid}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity="0.18"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>
+    ${ticks.map((v) => `${svgEl('line', { class: 'grid', x1: L, x2: W - R, y1: y(v).toFixed(1), y2: y(v).toFixed(1) })}<text class="axis" x="${W - R + 8}" y="${(y(v) + 4).toFixed(1)}">${px(v)}</text>`).join('')}
+    ${range === '1D' && base != null ? `${svgEl('line', { class: 'base', x1: L, x2: W - R, y1: y(base).toFixed(1), y2: y(base).toFixed(1) })}<text class="axis" x="${W - R + 8}" y="${(y(base) - 6).toFixed(1)}">Prev</text>` : ''}
+    <path d="${area}" fill="url(#${gid})"/>
+    <path d="${line}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    ${svgEl('circle', { cx: x(pts.length - 1).toFixed(1), cy: y(pts.at(-1)[1]).toFixed(1), r: 4, fill: color, stroke: 'var(--surface)', 'stroke-width': 2 })}
+    ${xLabels.map(([i, l], k) => `<text class="axis" x="${x(i).toFixed(1)}" y="${H - 6}" text-anchor="${k === 0 ? 'start' : i === pts.length - 1 ? 'end' : 'middle'}">${l}</text>`).join('')}
+    <line id="xh" x1="0" x2="0" y1="${T}" y2="${H - B}" stroke="var(--ink-2)" stroke-width="1" visibility="hidden"/>
+    <circle id="xd" r="4.5" fill="${color}" stroke="var(--surface)" stroke-width="2" visibility="hidden"/>
+    <rect x="0" y="0" width="${W - R}" height="${H}" fill="transparent" id="hit"/>
+  </svg><div class="readout" id="readout"></div>`;
+  const tFmt = ['1H', '1D', '5D'].includes(range) ? { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' } : { month: 'short', day: 'numeric', year: 'numeric' };
+  const ro = box.querySelector('#readout'), xh = box.querySelector('#xh'), xd = box.querySelector('#xd'), svg = box.querySelector('svg');
+  const idle = () => { ro.innerHTML = `<b>${px(pts.at(-1)[1])}</b> · ${fmtT(pts.at(-1)[0], tFmt)}`; xh.setAttribute('visibility', 'hidden'); xd.setAttribute('visibility', 'hidden'); };
+  idle();
+  const move = (ev) => {
+    const r = svg.getBoundingClientRect();
+    const sx = ((ev.clientX - r.left) / r.width) * W;
+    const i = Math.max(0, Math.min(pts.length - 1, Math.round(((sx - L) / (W - L - R)) * (pts.length - 1))));
+    const [t, v] = pts[i];
+    xh.setAttribute('x1', x(i)); xh.setAttribute('x2', x(i)); xh.setAttribute('visibility', 'visible');
+    xd.setAttribute('cx', x(i)); xd.setAttribute('cy', y(v)); xd.setAttribute('visibility', 'visible');
+    ro.innerHTML = `<b>${px(v)}</b> · ${fmtT(t, tFmt)} · <span class="${v - base >= 0 ? 'yoy up' : 'yoy down'}">${pct((v - base) / base)}</span>`;
+  };
+  svg.addEventListener('pointermove', move);
+  svg.addEventListener('pointerdown', move);
+  svg.addEventListener('pointerleave', idle);
+}
+
+function drawQuarters(box, quarters) {
+  const W = box.clientWidth || 550, H = box.clientHeight || 140, T = 18, B = 20;
+  const vals = quarters.map((r) => r.revenue ?? 0);
+  const max = Math.max(...vals.map(Math.abs), 1);
+  const n = quarters.length, gap = 8, bw = Math.min(56, (W - gap * (n - 1)) / n);
+  const total = n * bw + gap * (n - 1), x0 = (W - total) / 2;
+  const h = (v) => (Math.abs(v) / max) * (H - T - B);
+  box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Quarterly revenue">
+    ${quarters.map((r, i) => {
+      const x = x0 + i * (bw + gap), v = r.revenue ?? 0, bh = Math.max(2, h(v)), y = H - B - bh;
+      const label = new Date(r.end + 'T12:00Z').toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' }) + ' ’' + r.end.slice(2, 4);
+      const tipText = `<div class="tt-h">Quarter ended ${esc(new Date(r.end + 'T12:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }))}</div><div class="tt-row"><span>Revenue</span><span>${usd(r.revenue)}</span></div><div class="tt-row"><span>Year over year</span><span>${pct(r.revenueYoY, 1)}</span></div><div class="tt-row"><span>Net income</span><span>${usd(r.netIncome)}</span></div><div class="tt-row"><span>EPS (diluted)</span><span>${r.eps == null ? '–' : '$' + r.eps.toFixed(2)}</span></div>`;
+      return `<g class="qb" data-tip="${esc(tipText)}">
+        <rect x="${x - gap / 2}" y="0" width="${bw + gap}" height="${H}" fill="transparent"/>
+        <path class="bar${v < 0 ? ' neg' : ''}" d="M${x},${H - B}V${y + 4}q0,-4 4,-4H${x + bw - 4}q4,0 4,4V${H - B}Z"/>
+        ${i === n - 1 ? `<text class="val" x="${x + bw / 2}" y="${y - 5}" text-anchor="middle">${usd(v)}</text>` : ''}
+        <text class="lbl" x="${x + bw / 2}" y="${H - 5}" text-anchor="middle">${label}</text>
+      </g>`;
+    }).join('')}
+  </svg>`;
+  const show = (ev) => {
+    const g = ev.target.closest('.qb');
+    if (!g) { tip.hidden = true; return; }
+    tip.innerHTML = g.dataset.tip; tip.hidden = false;
+    tip.style.left = Math.max(8, Math.min(ev.clientX + 14, innerWidth - tip.offsetWidth - 8)) + 'px';
+    tip.style.top = Math.max(8, ev.clientY - tip.offsetHeight - 12) + 'px';
+  };
+  box.addEventListener('pointermove', show);
+  box.addEventListener('pointerdown', show);
+  box.addEventListener('pointerleave', () => { tip.hidden = true; });
+}
+
+document.addEventListener('click', (ev) => {
+  const b = ev.target.closest('.tk-btn');
+  if (b) { ev.preventDefault(); openStock(b.dataset.ticker, b); }
 });
-$('bars').addEventListener('mouseleave', () => { tip.hidden = true; });
+$('dClose').addEventListener('click', closeStock);
+$('dBody').addEventListener('click', (ev) => {
+  const r = ev.target.closest('[data-range]');
+  if (r && drawer.quote) { drawer.range = r.dataset.range; const top = $('dBody').scrollTop; renderDrawer(); $('dBody').scrollTop = top; }
+});
+$('dBody').addEventListener('scroll', () => { tip.hidden = true; }, { passive: true });
+addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && drawer.ticker) closeStock(); });
+new ResizeObserver(() => { if (drawer.quote) { const top = $('dBody').scrollTop; renderDrawer(); $('dBody').scrollTop = top; } }).observe($('drawer'));
 
 async function load() {
   try {
     const res = await fetch('data.json', { cache: 'no-store' });
     if (!res.ok) throw new Error(res.status);
     const d = await res.json();
-    data = { sources: d.sources ?? {}, events: d.events ?? [] };
+    data = { sources: d.sources ?? {}, events: d.events ?? [], quotesBase: d.quotesBase ?? 'quotes/' };
     $('updated').textContent = d.updatedAt ? `Updated ${stamp(d.updatedAt)} (${ago(d.updatedAt)})` : '';
   } catch {
     $('updated').textContent = 'No data file yet';
@@ -331,7 +776,8 @@ async function load() {
   if (sample) data.events = sampleEvents().sort((a, b) => Date.parse(b.time) - Date.parse(a.time));
   render();
 }
-load();
+load().then(syncHash);
+addEventListener('hashchange', syncHash);
 setInterval(load, 5 * 60 * 1000);
 </script>
 </body>
