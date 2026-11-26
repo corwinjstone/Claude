@@ -9,7 +9,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseEdgarFeed, parseForm4, form4Events, schedule13Event, parseArkHoldings, diffHoldings } from './lib/parse.mjs';
+import { parseEdgarFeed, parseForm4, form4Events, schedule13Event, parseArkHoldings, diffHoldings, tickerIndex, fillTickers } from './lib/parse.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const DATA = resolve(process.env.DATA_FILE ?? `${HERE}/site/data.json`);
@@ -190,6 +190,17 @@ for (const { key, run, needs } of SOURCES) {
   } catch (e) {
     data.sources[key] = { status: 'error', note: e.message, lastSuccess: was.lastSuccess ?? null };
     console.error(`${key}: FAILED ${e.message}`);
+  }
+}
+
+// 13D/13G filings name the company but not its ticker, and some Form 4s carry
+// "NONE". Fill both from the SEC's CIK-to-ticker list (also backfills old rows).
+if (CFG.secUserAgent) {
+  try {
+    const index = tickerIndex(JSON.parse(await sec('https://www.sec.gov/files/company_tickers.json')));
+    console.log(`tickers: filled ${fillTickers(data.events, index)} from ${index.size} companies`);
+  } catch (e) {
+    console.warn(`tickers: lookup unavailable (${e.message})`);
   }
 }
 
