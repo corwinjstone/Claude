@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseEdgarFeed, parseForm4, form4Events, schedule13Event, parseArkHoldings, diffHoldings } from '../lib/parse.mjs';
+import { parseEdgarFeed, parseForm4, form4Events, schedule13Event, parseArkHoldings, diffHoldings, tickerIndex, fillTickers, cleanSymbol } from '../lib/parse.mjs';
 
 const FEED = `<?xml version="1.0" encoding="ISO-8859-1" ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
@@ -131,4 +131,36 @@ test('holdings diff ignores proportional fund flows', () => {
   assert.deepEqual(ev.NEW.tags, ['New position']);
   assert.deepEqual(ev.OLD.tags, ['Exited']);
   assert.equal(diffHoldings(next, next).length, 0);
+});
+
+test('missing tickers are filled by CIK, then by company name', () => {
+  const index = tickerIndex({
+    0: { cik_str: 1652044, ticker: 'GOOGL', title: 'Alphabet Inc.' },
+    1: { cik_str: 1652044, ticker: 'GOOG', title: 'Alphabet Inc.' },
+    2: { cik_str: 3333333, ticker: 'SMTH', title: 'SMITH & SONS CORP' },
+    3: { cik_str: 1838615, ticker: 'ALTI', title: 'AlTi Global, Inc.' },
+  });
+  const events = [
+    { source: 'sched13', ticker: null, cik: '1652044', company: 'Alphabet Inc.' },
+    { source: 'sched13', ticker: null, company: 'Smith & Sons Corp' },          // old row, no CIK stored
+    { source: 'form4', ticker: 'NONE', cik: '1838615', company: 'AlTi Global, Inc.' },
+    { source: 'form4', ticker: 'N/A', cik: '999', company: 'Private Thing LLC' },
+    { source: 'form4', ticker: 'SMTH', cik: '1652044', company: 'x' },          // recognised ticker kept
+    { source: 'form4', ticker: 'ASXALTI', cik: '1838615', company: 'AlTi' },     // mangled ticker repaired
+    { source: 'form4', ticker: 'ZZZQ', cik: '42', company: 'Unlisted Co' },     // unknown, nothing better: kept
+  ];
+  assert.equal(fillTickers(events, index), 4);
+  assert.deepEqual(events.map((e) => e.ticker), ['GOOGL', 'SMTH', 'ALTI', null, 'SMTH', 'ALTI', 'ZZZQ']);
+  const f = schedule13Event(parseEdgarFeed(FEED)[1]);
+  assert.equal(f.cik, '3333333');
+  assert.equal(parseForm4(FORM4).issuerCik, '1111111');
+});
+
+test('trading symbols are cleaned', () => {
+  assert.equal(cleanSymbol('acme'), 'ACME');
+  assert.equal(cleanSymbol('LNW, ASX:LNW'), 'LNW');
+  assert.equal(cleanSymbol('ASX:LNW'), 'LNW');
+  assert.equal(cleanSymbol('BRK.B'), 'BRK.B');
+  assert.equal(cleanSymbol('None'), null);
+  assert.equal(cleanSymbol(''), null);
 });

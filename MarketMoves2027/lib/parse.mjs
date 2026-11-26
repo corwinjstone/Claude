@@ -67,6 +67,17 @@ export function parseEdgarFeed(xml) {
 
 // -------------------------------------------------------------------- Form 4
 
+/**
+ * issuerTradingSymbol is free text: "LNW", "LNW, ASX:LNW", "ASX:LNW", "None".
+ * Prefer a bare US symbol; otherwise take the part after an exchange prefix.
+ */
+export function cleanSymbol(raw) {
+  const parts = String(raw ?? '').toUpperCase().split(/[,;/\s]+|\bAND\b/).map((p) => p.trim()).filter(Boolean);
+  const pick = parts.find((p) => !p.includes(':')) ?? parts[0]?.split(':').pop();
+  const t = (pick ?? '').replace(/[^A-Z0-9.\-]/g, '');
+  return t && !/^(NONE|N\/?A|NA)$/.test(t) ? t : null;
+}
+
 const TX_CODES = { P: 'buy', S: 'sell' };
 
 /**
@@ -102,7 +113,8 @@ export function parseForm4(text) {
   }
   return {
     issuer: val(doc, 'issuerName'),
-    ticker: (val(doc, 'issuerTradingSymbol') || '').toUpperCase().replace(/[^A-Z.\-]/g, '') || null,
+    issuerCik: val(doc, 'issuerCik') ? String(Number(val(doc, 'issuerCik'))) : null,
+    ticker: cleanSymbol(val(doc, 'issuerTradingSymbol')),
     owners,
     trades,
   };
@@ -131,6 +143,7 @@ export function form4Events(filing, parsed, { minValue = 0 } = {}) {
       time: filing.updated,
       tradeDate: fills.map((t) => t.date).sort().at(-1),
       ticker: parsed.ticker,
+      cik: parsed.issuerCik,
       company: parsed.issuer,
       actor: parsed.owners.map((o) => o.name).filter(Boolean).slice(0, 2).join(', ') +
         (parsed.owners.length > 2 ? ` +${parsed.owners.length - 2}` : ''),
@@ -178,6 +191,7 @@ export function schedule13Event(filing, text = '') {
     source: 'sched13',
     time: filing.updated,
     ticker: null,
+    cik: subject ? String(Number(subject.cik)) : null,
     company: subject?.name ?? '(unknown issuer)',
     actor: filers.map((f) => f.name).slice(0, 2).join(', ') + (filers.length > 2 ? ` +${filers.length - 2}` : ''),
     action: 'stake',
@@ -292,4 +306,49 @@ export function diffHoldings(prev, next, { tolerance = 0.005 } = {}) {
   }
   for (const [k, old] of before) if (!after.has(k)) push(old, -old.shares, 'Exited');
   return events;
+}
+
+// ------------------------------------------------------------ ticker lookup
+
+const normName = (s) =>
+  String(s ?? '').toUpperCase().replace(/&AMP;/g, '&').replace(/[.,'"()]/g, ' ')
+    .replace(/\b(INC|CORP|CORPORATION|CO|COMPANY|LTD|LIMITED|PLC|LLC|LP|HOLDINGS?|GROUP|SA|NV|AG|SE|THE|CLASS [A-Z])\b/g, ' ')
+    .replace(/[^A-Z0-9&]+/g, ' ').trim();
+
+/**
+ * SEC company_tickers.json -> lookup by CIK and by normalised name. The file
+ * is ordered by market value, so the first ticker seen for a CIK is its
+ * primary listing (e.g. GOOGL before GOOG).
+ */
+export function tickerIndex(json) {
+  const byCik = new Map();
+  const byName = new Map();
+  const byTicker = new Map();
+  for (const r of Object.values(json ?? {})) {
+    const cik = String(r.cik_str);
+    if (!byCik.has(cik)) byCik.set(cik, r.ticker);
+    if (!byTicker.has(r.ticker)) byTicker.set(r.ticker, cik);
+    const n = normName(r.title);
+    if (n && !byName.has(n)) byName.set(n, r.ticker);
+  }
+  const known = new Set([...Object.values(json ?? {})].map((r) => r.ticker));
+  return {
+    size: byCik.size,
+    known: (t) => known.has(t),
+    cikOf: (t) => byTicker.get(t) ?? byTicker.get(String(t).replace('.', '-')) ?? null,
+    lookup: (e) => (e.cik && byCik.get(String(Number(e.cik)))) || byName.get(normName(e.company)) || null,
+  };
+}
+
+/** Fill in missing or placeholder tickers in place. Returns how many were filled. */
+export function fillTickers(events, index) {
+  let n = 0;
+  for (const e of events) {
+    if (e.source === 'etf') continue;
+    // Keep a ticker the SEC list recognises; re-resolve placeholders and mangled ones.
+    if (e.ticker && index.known(e.ticker)) continue;
+    const t = index.lookup(e);
+    if (t) { if (t !== e.ticker) n++; e.ticker = t; } else if (e.ticker && /^(NONE|N\/?A|NA)$/.test(e.ticker)) e.ticker = null;
+  }
+  return n;
 }
