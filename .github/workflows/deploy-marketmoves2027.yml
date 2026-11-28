@@ -42,7 +42,7 @@ jobs:
           git fetch --depth=1 origin gh-pages || exit 0
           git show FETCH_HEAD:marketmoves2027/data.json > MarketMoves2027/site/data.json || rm -f MarketMoves2027/site/data.json
 
-      # Per-ticker price files live on their own branch, replaced on every run
+      # Per-ticker price files and the fetcher's bookkeeping live on their own branch, replaced on every run
       # (no history), so 15-minute refreshes don't bloat the repository.
       - name: Restore price files
         run: |
@@ -57,6 +57,7 @@ jobs:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
           UW_API_TOKEN: ${{ secrets.UW_API_TOKEN }}
           QUOTES_DIR: ${{ github.workspace }}/market-data/quotes
+          STATE_FILE: ${{ github.workspace }}/market-data/state.json
           QUOTES_BASE: https://raw.githubusercontent.com/${{ github.repository }}/${{ env.DATA_BRANCH }}/quotes/
 
       - name: Publish price files

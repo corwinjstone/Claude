@@ -46,6 +46,31 @@ npm test
   the filing's structured data when present and is blank otherwise.
 - Until real events exist the page shows clearly labelled sample rows.
 
+## Coverage, watchlist and sectors
+
+Form 4 filings arrive three ways, deduplicated by accession number:
+
+1. **Live feed**: the newest filings since the previous run.
+2. **Watchlist**: the Magnificent 7 (AAPL, MSFT, GOOGL/GOOG, AMZN, META,
+   NVDA, TSLA) and large chipmakers (AVGO, AMD, INTC, QCOM, MU, TXN, ADI,
+   MRVL, AMAT, LRCX, KLAC, NXPI, MCHP, ON, MPWR, TER, SMCI). Their insider
+   filings for the last 45 days are read from each company's SEC filing
+   history, so they are never missed. They always have price files for the
+   drawer, with or without events. Edit `WATCHLIST` in `lib/sec.mjs`.
+3. **Daily-index backfill**: the SEC's nightly list of every filing, worked
+   through newest day first (`FORM4_BACKFILL_DAYS`, default 14), 300 filings
+   per run. This fills the first two weeks and any gap from missed runs. The
+   Form 4 card on the dashboard shows progress.
+
+Sectors come from each company's SEC industry code (SIC), grouped into broad
+sectors with **Semiconductors** split out of technology. A few chip-equipment
+makers with machinery codes are named explicitly. The page's **Group** filter
+picks the Magnificent 7; **Sector** lists the sectors on the tape with counts.
+
+Fetcher bookkeeping (filings already read, ETF snapshots, backfill progress,
+industry codes) is kept in `state.json` on the data branch, not in the
+published `data.json`.
+
 ## Stock drawer
 
 Click any ticker (in the chart or the tape) to open a 600px panel from the

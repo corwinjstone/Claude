@@ -84,7 +84,7 @@ header.top { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baselin
 .banner b { font-weight: 600; }
 
 /* sources */
-.sources { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.sources { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .src { all: unset; box-sizing: border-box; cursor: pointer; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; background: var(--surface); min-width: 0; }
 .src:hover { background: var(--chip); }
 .src:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
@@ -227,6 +227,8 @@ footer { color: var(--ink-2); font-size: 12px; max-width: 75ch; }
 .d-foot { color: var(--ink-2); font-size: 11px; margin: 0; }
 @media (prefers-reduced-motion: reduce) { .drawer, .drawer.open, .scrim { transition: none; } }
 @media (max-width: 520px) { .stats { grid-template-columns: 1fr; } .d-px .px { font-size: 28px; } }
+@media (min-width: 1500px) { .sources { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .sources { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 1279px) {
   .app { grid-template-columns: 220px minmax(0, 1fr); grid-template-areas: "nav main"; }
   /* The summary becomes a floating card that appears when a row is selected. */
@@ -263,6 +265,12 @@ footer { color: var(--ink-2); font-size: 12px; max-width: 75ch; }
         </div>
       </div>
       <div class="fgroup"><label for="q">Search</label><input type="search" id="q" placeholder="Ticker, company or filer"></div>
+      <div class="fgroup"><label for="grp">Group</label>
+        <select id="grp"><option value="">All stocks</option><option value="mag7">Magnificent 7</option></select>
+      </div>
+      <div class="fgroup"><label for="sector">Sector</label>
+        <select id="sector"><option value="">All sectors</option></select>
+      </div>
       <div class="fgroup"><label for="srcSel">Source</label>
         <select id="srcSel"><option value="">All sources</option><option value="etf">Active ETF trades</option><option value="form4">Form 4 insiders and 10% owners</option><option value="sched13">13D / 13G stakes</option><option value="flow">Dark pool and options</option></select>
       </div>
@@ -373,7 +381,9 @@ function sorted(list) {
     return sign * (typeof x === 'string' ? x.localeCompare(y) : x - y);
   });
 }
-const f = { src: '', days: 7, dir: '', min: 0, who: '', q: '' };
+const f = { src: '', days: 7, dir: '', min: 0, who: '', q: '', grp: '', sector: '' };
+const MAG7 = new Set(['AAPL', 'MSFT', 'GOOGL', 'GOOG', 'AMZN', 'META', 'NVDA', 'TSLA']);
+const sectorFor = (t) => data.profiles?.[t]?.sector ?? null;
 try { Object.assign(f, JSON.parse(localStorage.getItem('bmt-filters') || '{}')); Object.assign(sort, JSON.parse(localStorage.getItem('bmt-sort') || '{}')); } catch {}
 
 function sampleEvents() {
@@ -403,6 +413,8 @@ function visible() {
     (!f.dir || e.action === f.dir || (f.dir === 'buy' && e.action === 'call') || (f.dir === 'sell' && e.action === 'put')) &&
     (!f.min || (e.value ?? 0) >= f.min) &&
     (!f.who || isFund(e)) &&
+    (!f.grp || MAG7.has(e.ticker)) &&
+    (!f.sector || sectorFor(e.ticker) === f.sector) &&
     (!q || `${e.ticker} ${e.company} ${e.actor}`.toLowerCase().includes(q)));
 }
 
@@ -477,7 +489,7 @@ function renderRows(list) {
       <td class="when"><b>${ago(e.time)}</b>${stamp(e.time)}</td>
       <td class="tick">${e.ticker ? `<button type="button" class="tk-btn" data-ticker="${esc(e.ticker)}">${esc(e.ticker)}</button>` : '<span class="dim">–</span>'}</td>
       <td class="n">${e.price ? '$' + e.price.toFixed(2) : '–'}</td>
-      <td class="clip">${esc(nice(e.company))}</td>
+      <td class="clip">${esc(nice(e.company))}${sectorFor(e.ticker) ? `<div class="dim">${esc(sectorFor(e.ticker))}</div>` : ''}</td>
       <td class="clip">${esc(nice(e.actor))}<br>${tags}</td>
       <td><span class="act ${e.action}">${ACTION_LABEL[e.action] ?? e.action}</span>${size || e.detail ? `<div class="dim">${esc(size || e.detail)}</div>` : ''}</td>
       <td>${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${SRC_LABEL[e.source]}</a>` : SRC_LABEL[e.source]}</td>
@@ -490,8 +502,9 @@ function renderRows(list) {
 function render() {
   try { localStorage.setItem('bmt-filters', JSON.stringify(f)); } catch {}
   document.querySelectorAll('#win button').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.d) === f.days)));
-  $('dir').value = f.dir; $('min').value = String(f.min); $('who').value = f.who; $('q').value = f.q; $('srcSel').value = f.src;
-  $('clear').hidden = !(f.src || f.dir || f.min || f.who || f.q);
+  renderSectorOptions();
+  $('dir').value = f.dir; $('min').value = String(f.min); $('who').value = f.who; $('q').value = f.q; $('srcSel').value = f.src; $('grp').value = f.grp; $('sector').value = f.sector;
+  $('clear').hidden = !(f.src || f.dir || f.min || f.who || f.q || f.grp || f.sector);
   const list = visible();
   renderSources(); renderBars(list); renderRows(list); renderSummary(list);
 }
@@ -503,7 +516,23 @@ $('min').addEventListener('change', (ev) => { f.min = Number(ev.target.value); r
 $('who').addEventListener('change', (ev) => { f.who = ev.target.value; render(); });
 $('q').addEventListener('input', (ev) => { f.q = ev.target.value; const list = visible(); renderBars(list); renderRows(list); renderSummary(list); $('clear').hidden = false; });
 $('srcSel').addEventListener('change', (ev) => { f.src = ev.target.value; render(); });
-$('clear').addEventListener('click', () => { Object.assign(f, { src: '', dir: '', min: 0, who: '', q: '' }); render(); });
+$('grp').addEventListener('change', (ev) => { f.grp = ev.target.value; render(); });
+$('sector').addEventListener('change', (ev) => { f.sector = ev.target.value; render(); });
+
+/** Sector choices with how many disclosures each has in the time window. */
+function renderSectorOptions() {
+  const cut = Date.now() - f.days * 864e5;
+  const counts = new Map();
+  for (const e of data.events) {
+    const s = sectorFor(e.ticker);
+    if (s && Date.parse(e.time) >= cut) counts.set(s, (counts.get(s) ?? 0) + 1);
+  }
+  if (f.sector && !counts.has(f.sector)) counts.set(f.sector, 0);
+  const opts = [...counts].sort((a, b) => (a[0] === 'Semiconductors' ? -1 : b[0] === 'Semiconductors' ? 1 : a[0].localeCompare(b[0])));
+  $('sector').innerHTML = `<option value="">All sectors</option>` + opts.map(([s, n]) => `<option value="${esc(s)}">${esc(s)} (${n})</option>`).join('');
+  $('sector').value = f.sector;
+}
+$('clear').addEventListener('click', () => { Object.assign(f, { src: '', dir: '', min: 0, who: '', q: '', grp: '', sector: '' }); render(); });
 $('heads').addEventListener('click', (ev) => {
   const th = ev.target.closest('th');
   if (!th) return;
@@ -916,8 +945,9 @@ function tickerContext(e) {
 
 function overview(list) {
   const win = f.days === 1 ? 'day' : `${f.days} days`;
-  const filtered = f.src || f.dir || f.min || f.who || f.q;
-  if (!list.length) return `<p>Nothing on the tape matches these filters. Widen the time window or clear the filters.</p>`;
+  const filtered = f.src || f.dir || f.min || f.who || f.q || f.grp || f.sector;
+  const scope = [f.grp === 'mag7' && 'Magnificent 7', f.sector].filter(Boolean).join(' · ');
+  if (!list.length) return `<p>Nothing on the tape matches these filters${scope ? ` (${esc(scope)})` : ''} in the last ${win}. Try the 30-day window or clear the filters.</p>`;
   const buys = list.filter((e) => e.action === 'buy' && e.value), sells = list.filter((e) => e.action === 'sell' && e.value);
   const tot = (xs) => xs.reduce((s, e) => s + e.value, 0);
   const top = (xs) => xs.reduce((m, e) => (!m || e.value > m.value ? e : m), null);
@@ -926,7 +956,7 @@ function overview(list) {
   for (const e of list) if (e.ticker) counts.set(e.ticker, (counts.get(e.ticker) ?? 0) + 1);
   const busiest = [...counts].sort((a, b) => b[1] - a[1])[0];
   const stakes = list.filter((e) => e.source === 'sched13');
-  const out = [`In the last ${win}, the tape shows ${list.length} disclosure${list.length > 1 ? 's' : ''}${filtered ? ' matching your filters' : ''}.`];
+  const out = [`In the last ${win}, the tape shows ${list.length} disclosure${list.length > 1 ? 's' : ''}${scope ? ` in ${scope}` : ''}${filtered && !scope ? ' matching your filters' : ''}.`];
   if (buys.length || sells.length) out.push(`Disclosed trades add up to ${money(tot(buys))} of buying and ${money(tot(sells))} of selling.`);
   if (tb) out.push(`The biggest purchase was ${nice(tb.actor)} buying ${money(tb.value)} of ${tb.ticker ?? nice(tb.company)}.`);
   if (ts) out.push(`The biggest sale was ${nice(ts.actor)} selling ${money(ts.value)} of ${ts.ticker ?? nice(ts.company)}.`);
@@ -995,7 +1025,7 @@ async function load() {
     const res = await fetch('data.json', { cache: 'no-store' });
     if (!res.ok) throw new Error(res.status);
     const d = await res.json();
-    data = { sources: d.sources ?? {}, events: d.events ?? [], quotesBase: d.quotesBase ?? 'quotes/' };
+    data = { sources: d.sources ?? {}, events: d.events ?? [], quotesBase: d.quotesBase ?? 'quotes/', profiles: d.profiles ?? {} };
     $('updated').textContent = d.updatedAt ? `Updated ${stamp(d.updatedAt)} (${ago(d.updatedAt)})` : '';
   } catch {
     $('updated').textContent = 'No data file yet';
